@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\GameStates">
+      <UniqueIdentifier>{e7115fdb-d8c7-4fce-8dff-6a7199c3b08f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStates">
+      <UniqueIdentifier>{337d211a-af8c-4896-a98c-3fe10af36e5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InputHandlers">
+      <UniqueIdentifier>{d71025c1-19cf-46e0-8415-5a36c300b5a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputHandlers">
+      <UniqueIdentifier>{358ff6da-c4ec-4995-b740-da9efc474f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menu">
+      <UniqueIdentifier>{9309537b-d3f1-45e8-b94d-bbbb703aa49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{bab85d96-fa9b-486c-a193-9dec5e5d7d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectsRelated">
+      <UniqueIdentifier>{0f26e1b1-e2aa-466c-9a45-0590e25b2e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectsRelated\Interfaces">
+      <UniqueIdentifier>{ad4c9a4a-70ef-41af-8d5a-89515a85bb8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectsRelated\GameObjects">
+      <UniqueIdentifier>{43f3f319-7ecf-47d0-8281-b4b7be2e4afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectsRelated\GameObjectDecorators">
+      <UniqueIdentifier>{dd8bad12-2c23-456e-ab31-95642ea1bc5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectsRelated">
+      <UniqueIdentifier>{b4c84ac1-9987-4a2b-ac5e-8c40a5916bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectsRelated\GameObjects">
+      <UniqueIdentifier>{a7248e7a-ff64-45ad-b9f4-2e9d768c67da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectsRelated\GameObjectsDecorators">
+      <UniqueIdentifier>{cec4c4b5-97c9-4d91-b5e2-51a820f7025d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectsRelated\GameObjectsFactories">
+      <UniqueIdentifier>{0ac10a5c-926e-4eb3-84ed-57a85dbe8a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectsRelated\GameObjectsFactories">
+      <UniqueIdentifier>{9e2f72a9-1f6c-4be9-9d97-edbb6475f664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interfaces and abstract classes">
+      <UniqueIdentifier>{c2ef2c5f-4fda-48d4-ac9a-a13dc8fc804d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interfaces and abstract classes">
+      <UniqueIdentifier>{7d78b36c-9bce-4dec-beee-3b54ed515b76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseInputHandler.cpp">
+      <Filter>Source Files\InputHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingInputHandler.cpp">
+      <Filter>Source Files\InputHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordsState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordsStateInputHandlers.cpp">
+      <Filter>Source Files\InputHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordsStateMenus.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMenuInputHandler.cpp">
+      <Filter>Source Files\InputHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWinnedState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWinnedMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreCounter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BallObjectDecorator.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjectsDecorators</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformObjectDecorator.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjectsDecorators</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectDecorator.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjectsDecorators</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockObjectDecorator.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjectsDecorators</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockFactory.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjectsFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusFactory.cpp">
+      <Filter>Source Files\GameObjectsRelated\GameObjectsFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="NotPlayingWindow.cpp">
+      <Filter>Source Files\Interfaces and abstract classes</Filter>
+    </ClCompile>
+    <ClCompile Include="IListDrawable.cpp">
+      <Filter>Source Files\Interfaces and abstract classes</Filter>
+    </ClCompile>
+    <ClCompile Include="IDelayedAction.cpp">
+      <Filter>Source Files\Interfaces and abstract classes</Filter>
+    </ClCompile>
+    <ClCompile Include="IObserver.cpp">
+      <Filter>Source Files\Interfaces and abstract classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayingState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseInputHandler.h">
+      <Filter>Header Files\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayingInputHandler.h">
+      <Filter>Header Files\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralMenu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordsState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordsStateInputHandlers.h">
+      <Filter>Header Files\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMenuInputHandler.h">
+      <Filter>Header Files\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordsStateMenus.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWinnedMenu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWinnedState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Randomizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameObject.h">
+      <Filter>Header Files\GameObjectsRelated\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IBallObject.h">
+      <Filter>Header Files\GameObjectsRelated\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Collidable.h">
+      <Filter>Header Files\GameObjectsRelated\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="IBlockObject.h">
+      <Filter>Header Files\GameObjectsRelated\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IBonusObject.h">
+      <Filter>Header Files\GameObjectsRelated\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlatformObject.h">
+      <Filter>Header Files\GameObjectsRelated\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectDecorator.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjectDecorators</Filter>
+    </ClInclude>
+    <ClInclude Include="BallObjectDecorator.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjectDecorators</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformObjectDecorator.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjectDecorators</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockObjectDecorator.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjectDecorators</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockFactory.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjectsFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusFactory.h">
+      <Filter>Header Files\GameObjectsRelated\GameObjectsFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="IDelayedAction.h">
+      <Filter>Header Files\Interfaces and abstract classes</Filter>
+    </ClInclude>
+    <ClInclude Include="IListDrawable.h">
+      <Filter>Header Files\Interfaces and abstract classes</Filter>
+    </ClInclude>
+    <ClInclude Include="IObserver.h">
+      <Filter>Header Files\Interfaces and abstract classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ISaveable.h">
+      <Filter>Header Files\Interfaces and abstract classes</Filter>
+    </ClInclude>
+    <ClInclude Include="NotPlayingWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\levels.cnfg" />
+    <None Include="Resources\winTestlevels.cnfg" />
+  </ItemGroup>
+</Project>
