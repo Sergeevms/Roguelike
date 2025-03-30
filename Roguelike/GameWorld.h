@@ -6,8 +6,6 @@
 namespace Roguelike
 {
 	enum class ActionsTypesOnInput;
-	enum class BlockType;
-	enum class BonusType;
 
 	class GameWorld
 	{
@@ -25,27 +23,7 @@ namespace Roguelike
 		int screenWidth;
 		int screenHeight;
 		std::wstring gameName;
-		std::wstring defaultPlayerName;
-		float popUpSpacing;
-		float popUpBorder;
 		float timePerFrame;
-		float sessionDelayTime;
-		int smallRecordsSize;
-		int bigRecordsSize;
-
-		sf::Color halfTrasparentWhite;
-
-		//Block settings
-		int blocksInRow;
-		int blockRowCount;
-		float blockSpacing;
-		sf::Vector2f blockSize;
-		std::vector<BlockType> availiableBlockTypes;
-		std::unordered_map<BlockType, sf::Color> blockColors;
-		std::unordered_map<BlockType, int> blockScore;
-		std::unordered_map<char, BlockType> mapCharToBlockTypeMapping;
-		float smoothBlockDestroyTime;
-		int multiHitBlockCount;
 
 		//Sound settings
 
@@ -59,36 +37,9 @@ namespace Roguelike
 		std::string fontPath;
 		std::string texturePath;
 		std::string recordsFileName;
-		std::string levelConfig;
-		std::string saveFile;
 		
 		//Control settings
 		std::unordered_map<sf::Keyboard::Key, ActionsTypesOnInput> keyMap;
-
-		//Platform settings
-
-		sf::Vector2f platformSize;
-		float platformSpeed;
-
-		//Ball settings
-
-		float ballDiameter;
-		float ballSpeed;
-		float angleRandomChange;
-		float anglePlatformReboundChange;
-
-		float bonusSize;
-		float bonusSpeed;
-		float bonusDuration;
-		float bonusAppearanceChance;
-
-		std::vector<BonusType> avaliableBonuses;
-		std::unordered_map<BonusType, sf::Color> bonusColors;
-
-		float platformBonusFactor;
-		float ballSpeedBonusFactor;
-		sf::Color acceleratedBallColor;
-		sf::Color oneHitBlockColor;
 	private:
 		GameWorld();
 		~GameWorld() = default;

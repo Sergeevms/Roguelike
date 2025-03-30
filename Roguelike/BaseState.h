@@ -10,10 +10,7 @@ namespace Roguelike
 	{
 		None,
 		MainMenu,
-		Playing,
-		Records,
-		GameWinned,
-		Pause
+		Playing
 	};
 
 	//Base game state class

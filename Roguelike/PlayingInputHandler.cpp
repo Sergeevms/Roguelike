@@ -1,35 +1,18 @@
 #include "PlayingInputHandler.h"
 #include "BaseState.h"
-#include "PlayingState.h"
 #include "Application.h"
-#include "Platform.h"
-#include "Utility.h"
 
 namespace Roguelike
 {
-	PlayingInputHandler::PlayingInputHandler(Platform* platform) : BaseInputHandler(), platform(platform)		
+	PlayingInputHandler::PlayingInputHandler() : BaseInputHandler()
 	{
-		actionMapping[ActionsTypesOnInput::Pause] = 
-			[](BaseInputHandler* handler)
-			{
-				if (auto state = dynamic_cast<PlayingState*>(Application::GetInstance().GetGame()->GetState()))
-				{
-					state->ResetSessionDelay();
-				}
-				Application::GetInstance().GetGame()->PauseGame();
-			};
 	}
 
 	void PlayingInputHandler::HandleInputEvents(const std::vector<sf::Event>& input)
 	{
-		BaseInputHandler::HandleInputEvents(input);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
-			platform->SetMovingDirection(Direction::Left);
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-		{
-			platform->SetMovingDirection(Direction::Rigth);
+			Application::GetInstance().GetGame()->ToMainMenu();
 		}
 	}
 }

@@ -6,15 +6,10 @@
 
 namespace Roguelike
 {
-	class Platform;
-	enum class Direction;
-
 	class PlayingInputHandler : public BaseInputHandler
 	{
 	public:
-		PlayingInputHandler(Platform* platform);
+		PlayingInputHandler();
 		virtual void HandleInputEvents(const std::vector<sf::Event>& input) override;
-	private:
-		Platform* platform;
 	};
 }

@@ -21,21 +21,6 @@ namespace Roguelike
 				Application::GetInstance().GetGame()->StartGame();
 			});
 
-		if (std::filesystem::exists(GameWorld::GetWorld()->saveFile))
-		{
-			InitializeNode(currentNode, L"Загрузить игру", &normalStyle,
-				[](MenuNode*)
-				{
-					Application::GetInstance().GetGame()->LoadSavedGame();
-				});
-		}
-
-		InitializeNode(currentNode, L"Таблица рекордов", &normalStyle, 
-			[](MenuNode*) 
-			{
-				Application::GetInstance().GetGame()->ShowRecords();
-			});
-
 		MenuNode* worldNode = InitializeNode(currentNode, L"Настройки", &normalStyle, nullptr, &subMenuStyle);
 
 		InitializeNode(currentNode, L"Выход", &normalStyle,
