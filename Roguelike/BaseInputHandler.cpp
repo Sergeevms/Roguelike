@@ -1,0 +1,23 @@
+#include "BaseInputHandler.h"
+#include "Application.h"
+#include "GameWorld.h"
+#include "Game.h"
+
+namespace Roguelike
+{
+	void BaseInputHandler::HandleInputEvents(const std::vector<sf::Event>& input)
+	{	
+		GameWorld* world = GameWorld::GetWorld();
+		Game* game = Application::GetInstance().GetGame();
+		for (auto& inputEvent : input)
+		{
+			if (world->keyMap.contains(inputEvent.key.code))
+			{
+				if (actionMapping.contains(world->keyMap[inputEvent.key.code]))
+				{
+					actionMapping.at(world->keyMap[inputEvent.key.code]) (this);
+				}
+			}
+		}		
+	}
+}
