@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 
-namespace Roguelike
+namespace Engine
 {
 	void InitSprite(sf::Sprite& sprite, float desiredWidth, float desiredHeight, const sf::Texture& texture);
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidth, float desiredHeight);

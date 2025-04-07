@@ -1,13 +1,22 @@
 #pragma once
 
-namespace Roguelike
+namespace Engine
 {
 	template<typename T>
 	struct Vector2D
 	{
-		T x = T(0);
-		T y = T(0);
+		T x;
+		T y;
 
+		Vector2D() : x(T(0)), y(T(0)) {};
+		Vector2D(T x, T y) : x(x), y(y) {};
+
+		Vector2D& operator-()
+		{
+			x *= -1;
+			y *= -1;
+			return *this;
+		}
 		Vector2D& operator+= (const Vector2D& other)
 		{
 			x += other.x;
@@ -25,6 +34,21 @@ namespace Roguelike
 			x *= scalar;
 			y *= scalar;
 			return *this;
+		}
+		//Hadamard product
+		Vector2D& operator*= (const Vector2D& other)
+		{
+			x *= other.x;
+			y *= other.y;
+			return *this;
+		}
+		T DotProduct(const Vector2D& other)
+		{
+			return x * other.x + y * other.y;
+		}
+		float GetLength()
+		{
+			return sqrtf(x * x + y * y);
 		}
 	};
 
@@ -45,15 +69,40 @@ namespace Roguelike
 	}
 
 	template<typename T>
-	Vector2D<T> operator==(const Vector2D<T>& left, const Vector2D<T>& right)
+	bool operator==(const Vector2D<T>& left, const Vector2D<T>& right)
 	{
-		return left.x == right.x && left.y == right.y;
+		return (left.x == right.x) && (left.y == right.y);
 	}
 
 	template<typename T>
-	float GetVectorLength(const Vector2D<T>& vector)
+	bool operator!=(const Vector2D<T>& left, const Vector2D<T>& right)
 	{
-		return sqrtf(vector.x * vector.x + vector.y * vector.y);
+		return !(left == right);
+	}	
+
+	template<typename T>
+	T DotProduct(Vector2D<T> left, const Vector2D<T>& right)
+	{
+		return left.DotProduct(right);
+	}
+
+	//Hadamard product
+	template<typename T>
+	Vector2D<T> operator*(Vector2D<T> left, const Vector2D<T>& rigth)
+	{
+		return left *= rigth;
+	}
+
+	template<typename T>
+	Vector2D<T> operator*(Vector2D<T> left, const T scalar)
+	{
+		return left *= scalar;
+	}
+
+	template<typename T>
+	Vector2D<T> operator*(const T scalar, Vector2D<T> rigth)
+	{
+		return rigth *= scalar;
 	}
 
 	template<typename U, typename V>
