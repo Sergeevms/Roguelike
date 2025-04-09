@@ -2,16 +2,19 @@
 #include "Engine.h"
 #include <iostream>
 
-Engine::Engine()
+namespace MaxrEngine
 {
-}
+	Engine::Engine()
+	{
+	}
 
-void Engine::Initialize()
-{
-	std::cout << "Движок инциализирован" << std::endl;
-}
+	void Engine::Initialize()
+	{
+		std::cout << "Движок инциализирован" << std::endl;
+	}
 
-void Engine::Run()
-{
-	std::cout << "Движок запущен!" << std::endl;
+	void Engine::Run()
+	{
+		std::cout << "Движок запущен!" << std::endl;
+	}
 }

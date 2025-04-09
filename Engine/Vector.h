@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Engine
+namespace MaxrEngine
 {
 	template<typename T>
 	struct Vector2D

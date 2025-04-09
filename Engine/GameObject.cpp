@@ -1,24 +1,35 @@
 #include "pch.h"
 #include "GameObject.h"
-#include <assert.h>
-#include "Sprite.h"
-namespace Engine
+
+namespace MaxrEngine
 {
-	GameObject::GameObject(const std::string& texturePath, const sf::Vector2f& position, float width, float height)
-		: startPosition(position)
+	GameObject::GameObject()
 	{
-		assert(texture.loadFromFile(texturePath));
-		InitSprite(sprite, width, height, texture);
-		sprite.setPosition(position);
+		AddComponent<TransformComponent>();
 	}
 
-	void GameObject::Draw(sf::RenderWindow& window)
+	GameObject::~GameObject()
 	{
-		window.draw(sprite);
+		for (auto component : components)
+		{
+			delete component;
+		}
+		components.clear();
 	}
 
-	void GameObject::Restart()
+	void GameObject::Update(float deltaTime)
 	{
-		sprite.setPosition(startPosition);
+		for (auto& component : components)
+		{
+			component->Update(deltaTime);
+		}
+	}
+
+	void GameObject::Render()
+	{
+		for (auto& component : components)
+		{
+			component->Render();
+		}
 	}
 }

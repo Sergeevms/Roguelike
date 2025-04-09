@@ -1,22 +1,65 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "TransformComponent.h"
 
-namespace Engine
+namespace MaxrEngine
 {
+	class TransformComponent;
+
 	class GameObject
 	{
 	public:
-		GameObject(const std::string& texturePath, const sf::Vector2f& position, float width, float height);
-		virtual ~GameObject() = default;
-		virtual void Update(const float timeDelta) = 0;
-		virtual void Draw(sf::RenderWindow& window);
-		const sf::Vector2f& GetPosition() const { return sprite.getPosition(); };
-		sf::FloatRect GetRect() const { return sprite.getGlobalBounds(); };
-		virtual void Restart();
-	protected:
-		sf::Sprite sprite;
-		sf::Texture texture;
-		const sf::Vector2f startPosition;
+		GameObject();
+		~GameObject();
+
+		void Update(float deltaTime);
+		void Render();
+
+		template<typename T>
+		T* AddComponent()
+		{
+			if constexpr (!std::is_base_of<Component, T>::value)
+			{
+				std::cout << "T mus be derived from Component." << std::endl;
+				return nullptr;
+			}
+
+			if constexpr (!std::is_same<T, TransformComponent>::value)
+			{
+				if (GetComponent<TransformComponent>() != nullptr)
+				{
+					std::cout << "T mus be derived from Component." << std::endl;
+					return nullptr;
+				}
+			}
+			T* newComponent = new T(this);
+			components.push_back(newComponent);
+			std::cout << "Added new component: " << newComponent << std::endl;
+			return newComponent;
+		}
+
+		void RemoveComponent(Component* component)
+		{
+			components.erase(std::remove_if(components.begin(), components.end(), [component](Component* obj) {return obj == component; }), components.end());
+			delete component;
+			std::cout << "Deleted component." << std::endl;
+		}
+
+		template<typename T>
+		T* GetComponent() const
+		{
+			for (auto& component : components)
+			{
+				if (auto casted = dynamic_cast<T*>(component))
+				{
+					return casted;
+				}
+			}
+			return nullptr;
+		};
+	private:
+		std::vector<Component*> components = {};
 	};
 }
 
