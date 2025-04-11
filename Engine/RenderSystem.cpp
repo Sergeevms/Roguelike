@@ -19,6 +19,12 @@ namespace MaxrEngine
 		return *window;
 	}
 
+	sf::RenderWindow& RenderSystem::CrateMainWindow(const sf::VideoMode mode, sf::String title)
+	{
+		window = new sf::RenderWindow(mode, title);
+		return *window;
+	}
+
 	void RenderSystem::Render(const sf::Drawable& drawable)
 	{
 		window->draw(drawable);

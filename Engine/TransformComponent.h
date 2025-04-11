@@ -2,10 +2,11 @@
 #include "Component.h"
 #include "GameObject.h"
 #include "Vector.h"
+#include "EngineAPI.h"
 
 namespace MaxrEngine
 {
-	class TransformComponent :
+	class ENGINE_API TransformComponent :
 		public Component
 	{
 	public:

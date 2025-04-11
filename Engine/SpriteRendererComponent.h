@@ -2,9 +2,11 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include <SFML/Graphics.hpp>
+#include "EngineAPI.h"
+
 namespace MaxrEngine
 {
-	class SpriteRendererComponent :
+	class ENGINE_API SpriteRendererComponent :
 		public Component
 	{
 	public:

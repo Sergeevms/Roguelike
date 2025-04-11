@@ -2,10 +2,11 @@
 #include "Component.h"
 #include <SFML/Graphics.hpp>
 #include "TransformComponent.h"
+#include "EngineAPI.h"
 
 namespace MaxrEngine
 {
-	class CameraComponent :
+	class ENGINE_API CameraComponent :
 		public Component
 	{
 	public:

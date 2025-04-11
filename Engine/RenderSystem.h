@@ -1,15 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "EngineAPI.h"
 
 namespace MaxrEngine
 {
-	class RenderSystem
+	class ENGINE_API RenderSystem
 	{
 	public:
 		static RenderSystem* Instance();
 
 		void SetMainWindow(sf::RenderWindow* newWindow);
 		sf::RenderWindow& GetMainWindow() const;
+		sf::RenderWindow& CrateMainWindow(const sf::VideoMode mode, sf::String title);
 
 		void Render(const sf::Drawable& drawable);
 

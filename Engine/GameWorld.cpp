@@ -55,7 +55,8 @@ namespace MaxrEngine
 
 	void GameWorld::DestroyGameObjectImmediate(GameObject* gameObject)
 	{
-		gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), [gameObject](GameObject* obj) {return obj == gameObject; }), gameObjects.end());
+		gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), 
+			[gameObject](GameObject* obj) {return obj == gameObject; }), gameObjects.end());
 		markedToDestroyGameObjects.erase(std::remove_if(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), 
 			[gameObject](GameObject* obj) {return obj == gameObject; }), markedToDestroyGameObjects.end());
 

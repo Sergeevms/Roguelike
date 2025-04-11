@@ -1,8 +1,10 @@
 #pragma once
 #include "Component.h"
+#include "EngineAPI.h"
+
 namespace MaxrEngine
 {
-	class InputComponent :
+	class ENGINE_API InputComponent :
 		public Component
 	{
 	public:

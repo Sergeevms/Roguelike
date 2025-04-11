@@ -1,13 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "EngineAPI.h"
+#include "Component.h"
 #include "TransformComponent.h"
 
 namespace MaxrEngine
 {
+	class Component;
 	class TransformComponent;
-
-	class GameObject
+	
+	class ENGINE_API GameObject
 	{
 	public:
 		GameObject();
@@ -21,15 +24,15 @@ namespace MaxrEngine
 		{
 			if constexpr (!std::is_base_of<Component, T>::value)
 			{
-				std::cout << "T mus be derived from Component." << std::endl;
+				std::cout << "T must be derived from Component." << std::endl;
 				return nullptr;
 			}
 
-			if constexpr (!std::is_same<T, TransformComponent>::value)
+			if constexpr (std::is_same<T, TransformComponent>::value)
 			{
 				if (GetComponent<TransformComponent>() != nullptr)
 				{
-					std::cout << "T mus be derived from Component." << std::endl;
+					std::cout << "Can't add Transform, because it will break the engine loop." << std::endl;
 					return nullptr;
 				}
 			}
@@ -41,7 +44,8 @@ namespace MaxrEngine
 
 		void RemoveComponent(Component* component)
 		{
-			components.erase(std::remove_if(components.begin(), components.end(), [component](Component* obj) {return obj == component; }), components.end());
+			components.erase(std::remove_if(components.begin(), components.end(),
+				[component](Component* obj) {return obj == component; }), components.end());
 			delete component;
 			std::cout << "Deleted component." << std::endl;
 		}
@@ -49,7 +53,7 @@ namespace MaxrEngine
 		template<typename T>
 		T* GetComponent() const
 		{
-			for (auto& component : components)
+			for (const auto& component : components)
 			{
 				if (auto casted = dynamic_cast<T*>(component))
 				{

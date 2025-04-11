@@ -1,9 +1,10 @@
 #pragma once
+#include "EngineAPI.h"
 namespace MaxrEngine
 {
 	class GameObject;
 
-	class Component
+	class ENGINE_API Component
 	{
 	public:
 		Component(GameObject* gameObject);

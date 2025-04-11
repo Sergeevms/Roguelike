@@ -1,20 +1,54 @@
 #include "pch.h"
 #include "Engine.h"
-#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "RenderSystem.h"
+#include "GameWorld.h"
 
 namespace MaxrEngine
 {
 	Engine::Engine()
 	{
+		unsigned int seed = static_cast<unsigned int>(time(nullptr));
+		srand(seed);
 	}
 
-	void Engine::Initialize()
+	Engine* Engine::Instance()
 	{
-		std::cout << "Движок инциализирован" << std::endl;
+		static Engine instance;
+		return &instance;
 	}
 
 	void Engine::Run()
 	{
-		std::cout << "Движок запущен!" << std::endl;
+		sf::Clock gameClock;
+		sf::Event event;
+
+		while (RenderSystem::Instance()->GetMainWindow().isOpen())
+		{
+			sf::Time dt = gameClock.restart();
+			float deltaTime = dt.asSeconds();
+
+			while (RenderSystem::Instance()->GetMainWindow().pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+				{
+					RenderSystem::Instance()->GetMainWindow().close();
+				}
+			}
+
+			if (!RenderSystem::Instance()->GetMainWindow().isOpen())
+			{
+				break;
+			}
+
+			RenderSystem::Instance()->GetMainWindow().clear();
+
+			GameWorld::Instance()->Update(deltaTime);
+			GameWorld::Instance()->Render();
+			GameWorld::Instance()->LateUpdate();
+
+			RenderSystem::Instance()->GetMainWindow().display();
+
+		}
 	}
 }
