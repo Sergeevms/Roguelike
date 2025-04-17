@@ -4,18 +4,18 @@
 
 namespace MaxrEngine
 {
-	class ENGINE_API GameWorld
+	class GameWorld
 	{
 	public:
-		static GameWorld* Instance();
+		ENGINE_API static GameWorld* Instance();
 
 		void Update(float deltaTime);
 		void Render();
 		void LateUpdate();
 
-		GameObject* CreateGameObject();
-		void DestroyGameObject(GameObject* gameObject);
-		void Clear();
+		ENGINE_API GameObject* CreateGameObject();
+		ENGINE_API void DestroyGameObject(GameObject* gameObject);
+		ENGINE_API void Clear();
 	private:
 		GameWorld() {};
 		~GameWorld() {};

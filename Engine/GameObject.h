@@ -10,14 +10,22 @@ namespace MaxrEngine
 	class Component;
 	class TransformComponent;
 	
-	class ENGINE_API GameObject
+	class GameObject
 	{
 	public:
 		GameObject();
+		GameObject(const std::string& newName);
+
 		~GameObject();
+
+		ENGINE_API std::string GetName() const;
+		ENGINE_API void Print(int depth = 0);
 
 		void Update(float deltaTime);
 		void Render();
+
+		ENGINE_API void AddChild(GameObject* child);
+		ENGINE_API void RemoveChild(GameObject* child);
 
 		template<typename T>
 		T* AddComponent()
@@ -62,8 +70,46 @@ namespace MaxrEngine
 			}
 			return nullptr;
 		};
+
+		template<typename T>
+		T* GetComponentInChildren() const
+		{
+			T* component = GetComponent<T>();
+			if (component || children.size() == 0)
+			{
+				return component;
+			}
+
+			for (const auto& child : children)
+			{
+				T* childComponent = child->GetComponentInChildren<T>();
+				if (childComponent)
+				{
+					return childComponent;
+				}
+			}
+
+			return nullptr;
+		}
+
+		template<typename T>
+		std::vector<T*> GetComponents() const
+		{
+			std::vector<T*> result;
+			for (const auto& component : components)
+			{
+				if (auto casted = dynamic_cast<T*>(component))
+				{
+					result.push_back(casted);
+				}
+			}
+			return result;
+		}
+
 	private:
 		std::vector<Component*> components = {};
+		std::string name;
+		std::vector<GameObject*> children = {};
 	};
 }
 

@@ -7,6 +7,7 @@ namespace MaxrEngine
 	SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject) : Component(gameObject)
 	{
 		sprite = new sf::Sprite();
+		scale = { 1, -1 };
 		sprite->setScale({ 1, -1 });
 		transform = gameObject->GetComponent<TransformComponent>();
 	}
@@ -27,6 +28,7 @@ namespace MaxrEngine
 		{
 			sprite->setPosition(Convert<sf::Vector2f, Vector2Df>(transform->GetWorldPosition()));
 			sprite->setRotation(transform->GetWorldRotation());
+			sprite->setScale(Convert<sf::Vector2f, Vector2Df>(scale * transform->GetWorldScale()));
 			RenderSystem::Instance()->Render(*sprite);
 		}
 	}
@@ -46,15 +48,14 @@ namespace MaxrEngine
 	void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight)
 	{
 		auto originalSize = sprite->getTexture()->getSize();
-		sprite->setScale(static_cast<float>(newWidth) / static_cast<float>(originalSize.x), -static_cast<float>(newHeight) / static_cast<float>(originalSize.y));
+		scale = { static_cast<float>(newWidth) / static_cast<float>(originalSize.x), -static_cast<float>(newHeight) / static_cast<float>(originalSize.y) };
 	}
 
 	void SpriteRendererComponent::FlipX(bool flip)
 	{
 		if (flip != isFlipX)
 		{
-			auto scale = sprite->getScale();
-			sprite->setScale({ -scale.x, scale.y });
+			scale.x *= -1;
 			isFlipX = flip;
 		}
 	}
@@ -63,8 +64,7 @@ namespace MaxrEngine
 	{
 		if (flip != isFlipY)
 		{
-			auto scale = sprite->getScale();
-			sprite->setScale({ scale.x, -scale.y });
+			scale.y *= -1;
 			isFlipY = flip;
 		}
 	}
