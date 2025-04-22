@@ -30,8 +30,8 @@ namespace MaxrEngine
         float cosA = cos(angle * PI / 180.f);
         float sinA = sin(angle * PI / 180.f);
         m[0][0] = cosA * scale.x;
-        m[0][1] = sinA;
-        m[1][0] = -sinA;
+        m[0][1] = sinA * scale.x;
+        m[1][0] = -sinA * scale.y;
         m[1][1] = cosA * scale.y;
 
         m[2][0] = 0.f;

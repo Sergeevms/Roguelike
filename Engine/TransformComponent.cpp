@@ -39,10 +39,9 @@ namespace MaxrEngine
 			localTransform = parent->GetWorldTransform().GetInversed() * newWorldTransform;
 
 			SetLocalInfoFrom(localTransform);
-
-			isUpdated = false;
-			UpdateLocalTransform();
 		}
+
+		isUpdated = false;
 	}
 
 	void TransformComponent::SetWorldPosition(float positionX, float positionY)
@@ -86,11 +85,10 @@ namespace MaxrEngine
 			Matrix2D newWorldTransform = CreateTransform(GetWorldPosition(), angle, GetWorldScale());
 			localTransform = parent->GetWorldTransform().GetInversed() * newWorldTransform;
 
-			SetLocalInfoFrom(localTransform);
-
-			isUpdated = false;
-			UpdateLocalTransform();
+			SetLocalInfoFrom(localTransform);			
+			
 		}
+		isUpdated = false;
 	}
 
 	void TransformComponent::SetLocalRotation(float angle)
@@ -130,15 +128,14 @@ namespace MaxrEngine
 			localTransform = parent->GetWorldTransform().GetInversed() * newWorldTransform;
 
 			SetLocalInfoFrom(localTransform);
-
-			isUpdated = false;
-			UpdateLocalTransform();
 		}
+
+		isUpdated = false;
 	}
 
 	void TransformComponent::SetWorldScale(float scaleX, float scaleY)
 	{
-		SetLocalScale({ scaleX, scaleY });
+		SetWorldScale({ scaleX, scaleY });
 	}
 
 	void TransformComponent::SetLocalScale(const Vector2Df& scale)

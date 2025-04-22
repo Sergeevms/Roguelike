@@ -48,7 +48,6 @@ namespace MaxrEngine
 			GameWorld::Instance()->LateUpdate();
 
 			RenderSystem::Instance()->GetMainWindow().display();
-
 		}
 	}
 }
