@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameWorld.h"
+#include "PhysicsSystem.h"
 
 namespace MaxrEngine
 {
@@ -14,6 +15,16 @@ namespace MaxrEngine
 		for (auto& object : gameObjects)
 		{
 			object->Update(deltaTime);
+		}
+	}
+
+	void GameWorld::FixedUpdate(float deltaTime)
+	{
+		fixedCounter += deltaTime;
+		if (fixedCounter > PhysicsSystem::Instance()->GetFixedDeltaTime())
+		{
+			fixedCounter -= PhysicsSystem::Instance()->GetFixedDeltaTime();
+			PhysicsSystem::Instance()->Update();
 		}
 	}
 

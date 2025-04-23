@@ -5,6 +5,7 @@
 #include "SpriteRendererComponent.h"
 #include "CameraComponent.h"
 #include "InputComponent.h"
+#include "SpriteColliderComponent.h"
 
 namespace Roguelike
 {
@@ -23,6 +24,8 @@ namespace Roguelike
 		auto playerInput = gameObject->AddComponent<MaxrEngine::InputComponent>();
 
 		auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
+
+		auto collider = gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
 	}
 
 	MaxrEngine::GameObject* Player::GetGameObject()
