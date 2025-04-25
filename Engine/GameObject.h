@@ -50,7 +50,7 @@ namespace MaxrEngine
 			return newComponent;
 		}
 
-		void RemoveComponent(Component* component)
+		ENGINE_API void RemoveComponent(Component* component)
 		{
 			components.erase(std::remove_if(components.begin(), components.end(),
 				[component](Component* obj) {return obj == component; }), components.end());

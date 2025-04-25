@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <vector>
+#include "EngineAPI.h"
 
 namespace MaxrEngine
 {
@@ -8,13 +9,13 @@ namespace MaxrEngine
 	class PhysicsSystem
 	{
 	public:
-		static PhysicsSystem* Instance();
+		ENGINE_API static PhysicsSystem* Instance();
 
 		void Update();
 
-		float GetFixedDeltaTime() const;
-		void Subscribe(ColliderComponent* collider);
-		void Unsubscribe(ColliderComponent* collider);
+		ENGINE_API float GetFixedDeltaTime() const;
+		ENGINE_API void Subscribe(ColliderComponent* collider);
+		ENGINE_API void Unsubscribe(ColliderComponent* collider);
 	private:
 		PhysicsSystem() {};
 		~PhysicsSystem() {};

@@ -13,21 +13,21 @@ namespace MaxrEngine
 		public Component
 	{
 	public:
-		ColliderComponent(GameObject* gameObject);
+		ENGINE_API ColliderComponent(GameObject* gameObject);
 
 		virtual void Update(float deltaTime) = 0;
 		virtual void Render() = 0;
 
-		void SetTrigger(bool newIsTrigger);
+		ENGINE_API void SetTrigger(bool newIsTrigger);
 
-		void SubscribeCollision(std::function<void(Collision)> onCollisionAction);
-		void UnsubscribeCollision(std::function<void(Collision)> onCollisionAction);
+		ENGINE_API void SubscribeCollision(std::function<void(Collision)> onCollisionAction);
+		ENGINE_API void UnsubscribeCollision(std::function<void(Collision)> onCollisionAction);
 
-		void SubscribeTriggerEntered(std::function<void(Trigger)> onTriggerEntered);
-		void UnsubscribeTriggerEntered(std::function<void(Trigger)> onTriggerEntered);
+		ENGINE_API void SubscribeTriggerEntered(std::function<void(Trigger)> onTriggerEntered);
+		ENGINE_API void UnsubscribeTriggerEntered(std::function<void(Trigger)> onTriggerEntered);
 
-		void SubscribeTriggerExit(std::function<void(Trigger)> onTriggerExit);
-		void UnsubscribeTriggerExit(std::function<void(Trigger)> onTriggerExit);
+		ENGINE_API void SubscribeTriggerExit(std::function<void(Trigger)> onTriggerExit);
+		ENGINE_API void UnsubscribeTriggerExit(std::function<void(Trigger)> onTriggerExit);
 
 		friend class PhysicsSystem;
 

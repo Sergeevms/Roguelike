@@ -51,6 +51,13 @@ namespace MaxrEngine
 		return newGameObject;
 	}
 
+	GameObject* GameWorld::CreateGameObject(std::string name)
+	{
+		GameObject* newGameObject = new GameObject(name);
+		gameObjects.push_back(newGameObject);
+		return newGameObject;
+	}
+
 	void GameWorld::DestroyGameObject(GameObject* gameObject)
 	{
 		markedToDestroyGameObjects.push_back(gameObject);
@@ -61,6 +68,21 @@ namespace MaxrEngine
 		for (int i = static_cast<int>(gameObjects.size()) - 1; i >= 0; --i)
 		{
 			DestroyGameObjectImmediate(gameObjects[i]);
+		}
+	}
+
+	void GameWorld::Print() const
+	{
+		for (auto& obj : gameObjects)
+		{
+			if (obj == nullptr)
+			{
+				continue;
+			}
+			if (obj->GetComponent<TransformComponent>()->GetParent() == nullptr)
+			{
+				obj->Print();
+			}
 		}
 	}
 

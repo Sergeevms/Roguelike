@@ -15,10 +15,11 @@ namespace MaxrEngine
 		void LateUpdate();
 
 		ENGINE_API GameObject* CreateGameObject();
+		ENGINE_API GameObject* CreateGameObject(std::string name);
 		ENGINE_API void DestroyGameObject(GameObject* gameObject);
 		ENGINE_API void Clear();
 
-		void Print() const;
+		ENGINE_API void Print() const;
 	private:
 		GameWorld() {};
 		~GameWorld() {};

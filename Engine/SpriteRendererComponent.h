@@ -20,8 +20,8 @@ namespace MaxrEngine
 		ENGINE_API void SetTexture(const sf::Texture& newTexture);
 		ENGINE_API void SetPixelSize(int newWidth, int newHeight);
 
-		void FlipX(bool flip);
-		void FlipY(bool flip);
+		ENGINE_API void FlipX(bool flip);
+		ENGINE_API void FlipY(bool flip);
 	private:
 		Vector2Df scale;
 		sf::Sprite* sprite;
