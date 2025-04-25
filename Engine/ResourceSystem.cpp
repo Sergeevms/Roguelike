@@ -160,10 +160,104 @@ namespace MaxrEngine
 		textureMaps.erase(textureMap);
 	}
 
+	void ResourceSystem::LoadSound(const std::string& name, std::string sourcePath)
+	{
+		if (soundBuffers.contains(name))
+		{
+			return;
+		}
+
+		sf::SoundBuffer* buffer = new sf::SoundBuffer();
+		if (buffer->loadFromFile(sourcePath))
+		{
+			soundBuffers.emplace(std::pair<std::string, sf::SoundBuffer*>(name, buffer));
+		}
+		else
+		{
+			delete buffer;
+		}
+	}
+
+	const sf::SoundBuffer* ResourceSystem::GetSoundShared(const std::string& name) const
+	{
+		auto soundBufferPair = soundBuffers.find(name);
+		if (soundBufferPair != soundBuffers.end())
+		{
+			return soundBufferPair->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	sf::SoundBuffer* ResourceSystem::GetSoundCopy(const std::string& name) const
+	{
+		auto soundBufferPair = soundBuffers.find(name);
+		if (soundBufferPair != soundBuffers.end())
+		{
+			sf::SoundBuffer* newBuffer = new sf::SoundBuffer(*soundBufferPair->second);
+			return newBuffer;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	void ResourceSystem::DeleteSound(const std::string& name)
+	{
+		auto soundBufferPair = soundBuffers.find(name);
+		if (soundBufferPair != soundBuffers.end())
+		{
+			delete soundBufferPair->second;
+			soundBuffers.erase(soundBufferPair);
+		}
+	}
+
+	void ResourceSystem::LoadMusic(const std::string& name, std::string sourcePath)
+	{
+		if (musics.contains(name))
+		{
+			return;
+		}
+
+		auto music = new sf::Music();
+		if (music->openFromFile(sourcePath))
+		{
+			musics.emplace(std::pair<std::string, sf::Music*>(name, music));
+		}
+	}
+
+	const sf::Music* ResourceSystem::GetMusicShared(const std::string& name) const
+	{
+		auto musicPair = musics.find(name);
+		if (musicPair != musics.end())
+		{
+			return musicPair->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	void ResourceSystem::DeleteMusic(const std::string& name)
+	{
+		auto musicPair = musics.find(name);
+		if (musicPair != musics.end())
+		{
+			delete musicPair->second;
+			musics.erase(musicPair);
+		}
+	}
+
 	void ResourceSystem::Clear()
 	{
 		DeleteAllTextures();
 		DeleteAllTextureMaps();
+		DeleteAllSounds();
+		DeleteAllMusics();
 	}
 
 	void ResourceSystem::DeleteAllTextures()
@@ -185,6 +279,32 @@ namespace MaxrEngine
 		for (const auto& textureMapPair : textureMaps)
 		{
 			keysToDelete.push_back(textureMapPair.first);
+		}
+		for (const auto& key : keysToDelete)
+		{
+			DeleteSharedTextureMap(key);
+		}
+	}
+
+	void ResourceSystem::DeleteAllSounds()
+	{
+		std::vector<std::string> keysToDelete;
+		for (const auto& soundPair : soundBuffers)
+		{
+			keysToDelete.push_back(soundPair.first);
+		}
+		for (const auto& key : keysToDelete)
+		{
+			DeleteSharedTextureMap(key);
+		}
+	}
+
+	void ResourceSystem::DeleteAllMusics()
+	{
+		std::vector<std::string> keysToDelete;
+		for (const auto& musicPair : musics)
+		{
+			keysToDelete.push_back(musicPair.first);
 		}
 		for (const auto& key : keysToDelete)
 		{
