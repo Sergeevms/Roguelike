@@ -29,7 +29,8 @@ namespace Roguelike
 		std::string textureMapsPath;
 
 		int playerSize;
-		int mapTileSize;
+		float playerSpeed;
+		int mapTileSize;		
 		
 	private:
 		Settings();

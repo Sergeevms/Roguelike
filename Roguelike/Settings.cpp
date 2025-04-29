@@ -13,8 +13,9 @@ namespace Roguelike
 		screenWidth = 1280;
 		screenHeight = 720;
 		gameName = L"Roguelike";
-		playerSize = 32.f;
-		mapTileSize = 36.f;
+		playerSize = 32;
+		playerSpeed = 400.f;
+		mapTileSize = 36;
 	}
 
 	MaxrEngine::Vector2Df Settings::ScreenCenter()
