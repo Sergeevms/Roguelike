@@ -49,7 +49,7 @@ namespace MaxrEngine
                     {
                         float intersectionWidth = intersection.width;
                         float intersectionHeight = intersection.height;
-                        Vector2Df intersectionPosition = { intersection.left + 0.5f * intersectionWidth, intersection.top + 0.5f * intersectionHeight };
+                        Vector2Df intersectionPosition = { intersection.left - 0.5f * intersectionWidth, intersection.top - 0.5f * intersectionHeight };
 
                         Vector2Df aPosition = { colliders[i]->bounds.left, colliders[i]->bounds.top };
 
