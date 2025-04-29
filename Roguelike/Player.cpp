@@ -1,22 +1,24 @@
 #include "Player.h"
 #include "ResourceSystem.h"
 #include "RenderSystem.h"
-#include "..\Engine\GameWorld.h"
+#include "GameWorld.h"
 #include "SpriteRendererComponent.h"
 #include "CameraComponent.h"
 #include "InputComponent.h"
 #include "SpriteColliderComponent.h"
 #include "RigidBodyComponent.h"
+#include "Settings.h"
 
 namespace Roguelike
 {
 	Player::Player()
 	{
-		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
+		auto settings = Settings::Instance();
+		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject("Player");
 
 		auto playerRender = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
-		playerRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureShared("ball"));
-		playerRender->SetPixelSize(32, 32);
+		playerRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared("PlayerTextures", 0));
+		playerRender->SetPixelSize(settings->playerSize, settings->playerSize);
 
 		auto playerCamera = gameObject->AddComponent<MaxrEngine::CameraComponent>();
 		playerCamera->SetWindow(&MaxrEngine::RenderSystem::Instance()->GetMainWindow());
