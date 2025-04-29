@@ -150,45 +150,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BaseInputHandler.cpp" />
-    <ClCompile Include="BaseMenuInputHandler.cpp" />
-    <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
-    <ClCompile Include="IListDrawable.cpp" />
     <ClCompile Include="IObserver.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="MainMenuState.cpp" />
-    <ClCompile Include="GeneralMenu.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayingInputHandler.cpp" />
-    <ClCompile Include="PlayingState.cpp" />
-    <ClCompile Include="GameWorld.cpp" />
-    <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseInputHandler.h" />
-    <ClInclude Include="BaseMenuInputHandler.h" />
-    <ClInclude Include="BaseState.h" />
     <ClInclude Include="DeveloperLevel.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="IDelayedAction.h" />
-    <ClInclude Include="IListDrawable.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="ISaveable.h" />
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="MainMenuState.h" />
-    <ClInclude Include="GeneralMenu.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayingInputHandler.h" />
-    <ClInclude Include="PlayingState.h" />
     <ClInclude Include="Randomizer.h" />
-    <ClInclude Include="GameWorld.h" />
-    <ClInclude Include="Utility.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">

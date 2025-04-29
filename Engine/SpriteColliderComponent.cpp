@@ -2,6 +2,7 @@
 #include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
 #include "RenderSystem.h"
+#include "PhysicsSystem.h"
 
 namespace MaxrEngine
 {
@@ -10,13 +11,13 @@ namespace MaxrEngine
 		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 		if (spriteRenderer == nullptr)
 		{
-			std::cout << "SpriteRendereerComponent required to SpriteCollidedComponent." << std::endl;
+			std::cout << "SpriteRendererComponent required to SpriteCollidedComponent." << std::endl;
 			gameObject->RemoveComponent(this);
 			return;
 		}
 
 		sprite = spriteRenderer->GetSprite();
-		//PhysicsSystem::Instance->Subscribe(this);
+		PhysicsSystem::Instance()->Subscribe(this);
 	}
 
 	SpriteColliderComponent::~SpriteColliderComponent()
@@ -25,7 +26,7 @@ namespace MaxrEngine
 		{
 			std::destroy_at(&bounds);
 		}
-		//PhysicsSystem::Instance->Unsubscribe(this);
+		PhysicsSystem::Instance()->Unsubscribe(this);
 	}
 
 	void SpriteColliderComponent::Update(float deltaTime)
