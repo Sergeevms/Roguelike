@@ -151,8 +151,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DeveloperLevel.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
     <ClCompile Include="IObserver.cpp" />
+    <ClCompile Include="Labyrinth.cpp" />
+    <ClCompile Include="LabyrinthBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Settings.cpp" />
@@ -160,12 +163,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeveloperLevel.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="ISaveable.h" />
+    <ClInclude Include="Labyrinth.h" />
+    <ClInclude Include="LabyrinthBuilder.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Randomizer.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="Utility.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
