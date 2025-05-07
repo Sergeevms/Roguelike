@@ -13,7 +13,7 @@ namespace Roguelike
 	{
 	public:
 		LabyrinthBuilder();
-		//Resets current labyrinth and set new size and center position
+		//Resets current labyrinth and set new size
 		void StartBuilding(MaxrEngine::Vector2Di newTileSize);
 
 		/*Adds Rectangle element (floor surronded by wall) (not bigger than predefined labyrinth tileSize)

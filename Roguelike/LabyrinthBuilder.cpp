@@ -189,7 +189,8 @@ namespace Roguelike
 	}
 	MaxrEngine::Vector2Df LabyrinthBuilder::GetCenterInTyles()
 	{
-		return MaxrEngine::Convert<MaxrEngine::Vector2Df, MaxrEngine::Vector2Di>(GetTileSize()) * 0.5f;
+		MaxrEngine::Vector2Df oneVector(1.f, 1.f);
+		return (MaxrEngine::Convert<MaxrEngine::Vector2Df, MaxrEngine::Vector2Di>(GetTileSize()) - oneVector) * 0.5f;
 	}
 
 	MaxrEngine::Vector2Df LabyrinthBuilder::GetTylePosition(MaxrEngine::Vector2Di tilePosition)

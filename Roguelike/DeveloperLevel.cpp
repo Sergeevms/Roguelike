@@ -10,7 +10,7 @@ namespace Roguelike
         auto settings = Settings::Instance();
         LabyrinthBuilder labyrinthBuilder;
         labyrinthBuilder.StartBuilding({ 20, 20 });
-        labyrinthBuilder.AddRect({ 5, 0 }, { 30, 30 });
+        labyrinthBuilder.AddRect({ 5, 5 }, { 15, 15 });
         labyrinthBuilder.AddRect({ 0, 0 }, { 15,15 });
         labyrinth = labyrinthBuilder.ConstructLabyrinth();
         player = std::make_shared<Player>();
