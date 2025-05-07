@@ -23,4 +23,9 @@ namespace Roguelike
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
 	}
+
+	MaxrEngine::GameObject* Wall::GetGameObject()
+	{
+		return gameObject;
+	}
 }
