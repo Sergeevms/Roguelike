@@ -12,10 +12,10 @@
 
 namespace Roguelike
 {
-	Player::Player()
+	Player::Player() :
+		GameObjectContainer("Player")
 	{
 		auto settings = Settings::Instance();
-		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject("Player");
 
 		auto playerRender = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
 		playerRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared("PlayerTextures", 0));
@@ -23,7 +23,7 @@ namespace Roguelike
 
 		auto playerCamera = gameObject->AddComponent<MaxrEngine::CameraComponent>();
 		playerCamera->SetWindow(&MaxrEngine::RenderSystem::Instance()->GetMainWindow());
-		playerCamera->SetBaseResolution(1280, 720);
+		playerCamera->SetBaseResolution(settings->screenWidth, settings->screenHeight);
 
 		auto playerInput = gameObject->AddComponent<MaxrEngine::InputComponent>();
 
@@ -36,10 +36,5 @@ namespace Roguelike
 		body->SetKinematic(false);
 
 		auto collider = gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
-	}
-
-	MaxrEngine::GameObject* Player::GetGameObject()
-	{
-		return gameObject;
 	}
 }

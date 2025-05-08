@@ -2,7 +2,7 @@
 #include "TransformComponent.h"
 #include "GameWorld.h"
 
-constexpr float EPS = 5e-6;
+constexpr float EPS = 5e-6f;
 TEST(TransformComponent, Constructor)
 {
 	MaxrEngine::TransformComponent* component = new MaxrEngine::TransformComponent(nullptr);

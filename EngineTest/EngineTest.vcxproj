@@ -50,6 +50,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Engine\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)SFML\SFML-2.5.1\bin\openal32.dll" "$(SolutionDir)$(Platform)\$(Configuration)\openal32.dll"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -68,6 +71,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Engine\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)SFML\SFML-2.5.1\bin\openal32.dll" "$(SolutionDir)$(Platform)\$(Configuration)\openal32.dll"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -87,6 +93,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Engine\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)SFML\SFML-2.5.1\bin\openal32.dll" "$(SolutionDir)$(Platform)\$(Configuration)\openal32.dll"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -106,6 +115,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Engine\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)SFML\SFML-2.5.1\bin\openal32.dll" "$(SolutionDir)$(Platform)\$(Configuration)\openal32.dll"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

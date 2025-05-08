@@ -14,6 +14,7 @@ namespace Roguelike
         labyrinthBuilder.AddRect({ 0, 0 }, { 15,15 });
         labyrinth = labyrinthBuilder.ConstructLabyrinth();
         player = std::make_shared<Player>();
+        backgroundMusic = std::make_shared<BackgroundMusic>();
     }
 
     void DeveloperLevel::Restart()

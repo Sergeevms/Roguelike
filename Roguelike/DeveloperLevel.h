@@ -2,9 +2,8 @@
 #include "Scene.h"
 #include <memory>
 #include "Player.h"
-#include "Wall.h"
-#include "Floor.h"
 #include "Labyrinth.h"
+#include "BackgroundMusic.h"
 
 
 namespace Roguelike
@@ -18,8 +17,7 @@ namespace Roguelike
 		virtual void Stop() override;
 	private:
 		std::shared_ptr<Player> player;
-		std::shared_ptr<Wall> testWall;
-		std::shared_ptr<Floor> testFloor;
+		std::shared_ptr<BackgroundMusic> backgroundMusic;
 		std::shared_ptr<Labyrinth> labyrinth;
 	};
 

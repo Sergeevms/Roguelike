@@ -25,11 +25,22 @@ namespace MaxrEngine
 		ENGINE_API int GetTextureMapElementsCount(const std::string& name) const;
 		ENGINE_API void DeleteSharedTextureMap(const std::string& name);
 
+		ENGINE_API void LoadSound(const std::string& name, std::string sourcePath);
+		ENGINE_API const sf::SoundBuffer* GetSoundShared(const std::string& name) const;
+		ENGINE_API sf::SoundBuffer* GetSoundCopy(const std::string& name) const;
+		ENGINE_API void DeleteSound(const std::string& name);
+
+		ENGINE_API void LoadMusic(const std::string& name, std::string sourcePath);
+		ENGINE_API sf::Music* GetMusicShared(const std::string& name) const;
+		ENGINE_API void DeleteMusic(const std::string& name);
+
 		ENGINE_API void Clear();
 
 	private:
 		std::map<std::string, sf::Texture*> textures;
 		std::map<std::string, std::vector<sf::Texture*>> textureMaps;
+		std::map<std::string, sf::SoundBuffer*> soundBuffers;
+		std::map<std::string, sf::Music*> musics;
 
 		ResourceSystem() {};
 		~ResourceSystem() {};
@@ -39,6 +50,8 @@ namespace MaxrEngine
 
 		void DeleteAllTextures();
 		void DeleteAllTextureMaps();
+		void DeleteAllSounds();
+		void DeleteAllMusics();
 	};
 }
 
