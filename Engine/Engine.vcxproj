@@ -190,6 +190,7 @@
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Matrix2D.h" />
+    <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MusicComponent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsSystem.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Matrix2D.cpp" />
+    <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MusicComponent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

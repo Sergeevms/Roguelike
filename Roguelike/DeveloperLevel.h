@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include <memory>
 #include "Player.h"
+#include "Labyrinth.h"
 #include "BackgroundMusic.h"
 
 
@@ -17,6 +18,7 @@ namespace Roguelike
 	private:
 		std::shared_ptr<Player> player;
 		std::shared_ptr<BackgroundMusic> backgroundMusic;
+		std::shared_ptr<Labyrinth> labyrinth;
 	};
 
 }

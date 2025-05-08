@@ -1,0 +1,31 @@
+#include "Wall.h"
+#include "GameWorld.h"
+#include "SpriteColliderComponent.h"
+#include "TransformComponent.h"
+#include "SpriteRendererComponent.h"
+#include "ResourceSystem.h"
+#include "RigidBodyComponent.h"
+
+namespace Roguelike
+{
+	Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex, const MaxrEngine::Vector2Di size)
+	{
+		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject("Wall");
+		auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
+		transform->SetWorldPosition(position);
+
+		auto spriteRenderer = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
+		spriteRenderer->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared("WallTextures", textureIndex));
+		spriteRenderer->SetPixelSize(size.x, size.y);
+
+		auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
+		body->SetKinematic(true);
+
+		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+	}
+
+	MaxrEngine::GameObject* Wall::GetGameObject()
+	{
+		return gameObject;
+	}
+}
