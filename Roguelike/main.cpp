@@ -21,6 +21,7 @@ int main()
 	
 	MaxrEngine::RenderSystem::Instance()->CrateMainWindow(sf::VideoMode(1280, 720), "Roguelike");
 	MaxrEngine::ResourceSystem::Instance()->LoadTexture("ball", "Resources/Textures/ball.png");
+	MaxrEngine::ResourceSystem::Instance()->LoadMusic("background", "Resources/Sounds/Clinthammer__Background_Music.wav");
 
 	auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();
 	developerLevel->Start();

@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
 #include "SFML/Audio.hpp"
+#include "EngineAPI.h"
 
 namespace MaxrEngine
 {
-	class SoundComponent : 
+	class ENGINE_API SoundComponent :
 		public Component
 	{
 	public:

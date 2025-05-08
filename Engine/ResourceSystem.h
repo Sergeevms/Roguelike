@@ -31,7 +31,7 @@ namespace MaxrEngine
 		ENGINE_API void DeleteSound(const std::string& name);
 
 		ENGINE_API void LoadMusic(const std::string& name, std::string sourcePath);
-		ENGINE_API const sf::Music* GetMusicShared(const std::string& name) const;
+		ENGINE_API sf::Music* GetMusicShared(const std::string& name) const;
 		ENGINE_API void DeleteMusic(const std::string& name);
 
 		ENGINE_API void Clear();

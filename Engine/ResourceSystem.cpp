@@ -229,7 +229,7 @@ namespace MaxrEngine
 		}
 	}
 
-	const sf::Music* ResourceSystem::GetMusicShared(const std::string& name) const
+	sf::Music* ResourceSystem::GetMusicShared(const std::string& name) const
 	{
 		auto musicPair = musics.find(name);
 		if (musicPair != musics.end())

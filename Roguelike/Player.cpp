@@ -10,10 +10,9 @@
 
 namespace Roguelike
 {
-	Player::Player()
+	Player::Player() :
+		GameObjectContainer("Player")
 	{
-		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
-
 		auto playerRender = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
 		playerRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureShared("ball"));
 		playerRender->SetPixelSize(32, 32);
@@ -29,10 +28,5 @@ namespace Roguelike
 		auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
 
 		auto collider = gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
-	}
-
-	MaxrEngine::GameObject* Player::GetGameObject()
-	{
-		return gameObject;
 	}
 }

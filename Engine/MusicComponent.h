@@ -1,9 +1,10 @@
 #pragma once
 #include "Component.h"
 #include <SFML/Audio.hpp>
+#include "EngineAPI.h"
 namespace MaxrEngine
 {
-	class MusicComponent :
+	class ENGINE_API MusicComponent :
 		public Component
 	{
 	public:
@@ -13,7 +14,7 @@ namespace MaxrEngine
 		void Update(float deltaTime) override;
 		void Render() override;
 
-		void SetMusic(sf::Music * newMusic);
+		void SetMusic(sf::Music* newMusic);
 		void SetLoop(bool newLoop);
 
 		void SetVolume(float volume);

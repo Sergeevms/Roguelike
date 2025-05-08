@@ -6,6 +6,7 @@ namespace Roguelike
     void DeveloperLevel::Start() 
     {
         player = std::make_shared<Player>();
+        backgroundMusic = std::make_shared<BackgroundMusic>();
     }
 
     void DeveloperLevel::Restart()

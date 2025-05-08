@@ -150,11 +150,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="BaseInputHandler.cpp" />
     <ClCompile Include="BaseMenuInputHandler.cpp" />
     <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObjectContainer.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
     <ClCompile Include="IListDrawable.cpp" />
     <ClCompile Include="IObserver.cpp" />
@@ -170,11 +172,13 @@
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="BaseInputHandler.h" />
     <ClInclude Include="BaseMenuInputHandler.h" />
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="DeveloperLevel.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObjectContainer.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="IListDrawable.h" />
     <ClInclude Include="IObserver.h" />

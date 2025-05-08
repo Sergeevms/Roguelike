@@ -3,12 +3,11 @@
 
 namespace Roguelike
 {
-	class Player :
+	class BackgroundMusic :
 		GameObjectContainer
 	{
 	public:
-		Player();
-	private:
+		BackgroundMusic();
 	};
 }
 
