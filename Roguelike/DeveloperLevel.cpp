@@ -2,6 +2,7 @@
 #include "GameWorld.h"
 #include "Settings.h"
 #include "LabyrinthBuilder.h"
+#include "AIInputComponent.h"
 
 namespace Roguelike
 {
@@ -13,8 +14,12 @@ namespace Roguelike
         labyrinthBuilder.AddRect({ 5, 5 }, { 15, 15 });
         labyrinthBuilder.AddRect({ 0, 0 }, { 15,15 });
         labyrinth = labyrinthBuilder.ConstructLabyrinth();
-        player = std::make_shared<Player>();
+        player = std::make_shared<Player>();        
         backgroundMusic = std::make_shared<BackgroundMusic>();
+        enemy = std::make_shared<Enemy>();
+        auto playerTransform = player->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
+        auto enemyMovement = enemy->GetGameObject()->GetComponent<MaxrEngine::AIInputComponent>();
+        enemyMovement->SetTargetLocation(playerTransform->GetWorldPosition());
     }
 
     void DeveloperLevel::Restart()

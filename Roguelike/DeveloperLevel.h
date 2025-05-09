@@ -3,6 +3,7 @@
 #include <memory>
 #include "Player.h"
 #include "Labyrinth.h"
+#include "Enemy.h"
 #include "BackgroundMusic.h"
 
 
@@ -17,6 +18,7 @@ namespace Roguelike
 		virtual void Stop() override;
 	private:
 		std::shared_ptr<Player> player;
+		std::shared_ptr<Enemy> enemy;
 		std::shared_ptr<BackgroundMusic> backgroundMusic;
 		std::shared_ptr<Labyrinth> labyrinth;
 	};

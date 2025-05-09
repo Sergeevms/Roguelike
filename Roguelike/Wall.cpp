@@ -8,9 +8,9 @@
 
 namespace Roguelike
 {
-	Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex, const MaxrEngine::Vector2Di size)
+	Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex, const MaxrEngine::Vector2Di size) :
+		GameObjectContainer("Wall")
 	{
-		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject("Wall");
 		auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
@@ -22,10 +22,5 @@ namespace Roguelike
 		body->SetKinematic(true);
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
-	}
-
-	MaxrEngine::GameObject* Wall::GetGameObject()
-	{
-		return gameObject;
 	}
 }

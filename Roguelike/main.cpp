@@ -23,6 +23,7 @@ int main()
 	MaxrEngine::ResourceSystem::Instance()->LoadTextureMap("PlayerTextures", settings->textureMapsPath + "Player.png", { 48, 63 }, 9, false);
 	MaxrEngine::ResourceSystem::Instance()->LoadTextureMap("WallTextures", settings->textureMapsPath + "Wall.png", {16, 16}, 48, false);
 	MaxrEngine::ResourceSystem::Instance()->LoadTextureMap("FloorTextures", settings->textureMapsPath + "Floor.png", { 16, 16 }, 49, false);
+	MaxrEngine::ResourceSystem::Instance()->LoadTexture("Ball", settings->texturePath + "Ball.png", false);
 	MaxrEngine::ResourceSystem::Instance()->LoadMusic("background", "Resources/Sounds/Clinthammer__Background_Music.wav");
 
 	auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();

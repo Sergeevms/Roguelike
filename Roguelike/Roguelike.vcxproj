@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObjectContainer.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="DeveloperLevel.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="IObserver.h" />

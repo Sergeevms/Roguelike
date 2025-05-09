@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineAPI.h"
+#include <cmath>
 
 namespace MaxrEngine
 {
