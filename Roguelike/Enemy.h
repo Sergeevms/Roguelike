@@ -3,12 +3,12 @@
 
 namespace Roguelike
 {
-	class Player :
+	class Enemy :
 		public GameObjectContainer
 	{
 	public:
-		Player();
-	private:
+		Enemy();
+		MaxrEngine::Vector2Df target;
 	};
-}
 
+}

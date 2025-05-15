@@ -1,16 +1,15 @@
 #pragma once
 #include "Vector.h"
-#include "GameObject.h"
+#include "GameObjectContainer.h"
+
 
 namespace Roguelike
 {
-	class Wall
+	class Wall :
+		public GameObjectContainer
 	{
 	public:
 		Wall(const MaxrEngine::Vector2Df position, int textureIndex, const MaxrEngine::Vector2Di size);
-		MaxrEngine::GameObject* GetGameObject();
-	private:
-		MaxrEngine::GameObject* gameObject;
 	};
 }
 

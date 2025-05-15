@@ -10,12 +10,12 @@ namespace MaxrEngine
 	public:
 		InputComponent(GameObject* gameObject);
 
-		virtual void Update(float deltaTime) override;
+		virtual void Update(float deltaTime) = 0;
 		virtual void Render() override;
 
 		float GetHorizontalAxis() const;
 		float GetVerticalAxis() const;
-	private:
+	protected:
 		float horizontalAxis = 0.f;
 		float verticalAxis = 0.f;
 	};

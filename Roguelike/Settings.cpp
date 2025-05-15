@@ -16,6 +16,11 @@ namespace Roguelike
 		playerSize = 32;
 		playerSpeed = 400.f;
 		mapTileSize = 36;
+
+		enemySpeed = 350.f;
+		enemyDetectionRadius = 250.f;
+		enemyChaseMaxRadius = 250.f;
+		enemyChaseMinRadius = 20.f;
 	}
 
 	MaxrEngine::Vector2Df Settings::ScreenCenter()

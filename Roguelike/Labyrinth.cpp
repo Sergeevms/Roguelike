@@ -3,15 +3,11 @@
 
 namespace Roguelike
 {
-	Labyrinth::Labyrinth()
+	Labyrinth::Labyrinth() :
+		GameObjectContainer("Labyrinth")
 	{
-		gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject("Labyrinth");
 	}
 
-	MaxrEngine::GameObject* Labyrinth::GetGameObject()
-	{
-		return gameObject;
-	}
 	const std::vector<std::shared_ptr<Wall>>& Roguelike::Labyrinth::GetWalls() const
 	{
 		return walls;

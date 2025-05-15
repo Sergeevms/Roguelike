@@ -8,6 +8,7 @@
 #include "SpriteColliderComponent.h"
 #include "RigidBodyComponent.h"
 #include "MovementComponent.h"
+#include "KeyboardInputComponent.h"
 #include "Settings.h"
 
 namespace Roguelike
@@ -25,16 +26,14 @@ namespace Roguelike
 		playerCamera->SetWindow(&MaxrEngine::RenderSystem::Instance()->GetMainWindow());
 		playerCamera->SetBaseResolution(settings->screenWidth, settings->screenHeight);
 
-		auto playerInput = gameObject->AddComponent<MaxrEngine::InputComponent>();
+		gameObject->AddComponent<MaxrEngine::KeyboardInputComponent>();
 
 		auto playerMovement = gameObject->AddComponent<MaxrEngine::MovementComponent>();
 		playerMovement->SetSpeed(settings->playerSpeed);
 
-		auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
-
 		auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
 		body->SetKinematic(false);
 
-		auto collider = gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
 	}
 }
