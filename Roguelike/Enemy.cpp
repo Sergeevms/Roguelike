@@ -7,6 +7,9 @@
 #include "AIInputComponent.h"
 #include "MovementComponent.h"
 #include "SpriteRendererComponent.h"
+#include "AIBlackboard.h"
+#include "AITargetSearchComponent.h"
+#include "AIChaseTargetComponent.h"
 
 namespace Roguelike
 {
@@ -19,17 +22,22 @@ namespace Roguelike
 		enemyRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureShared("Ball"));
 		enemyRender->SetPixelSize(settings->playerSize, settings->playerSize);
 
-		auto enemyInput = gameObject->AddComponent<MaxrEngine::AIInputComponent>();
+		gameObject->AddComponent<MaxrEngine::AIInputComponent>();
 
 		auto enemyMovement = gameObject->AddComponent<MaxrEngine::MovementComponent>();
-		enemyMovement->SetSpeed(settings->playerSpeed * 0.7f);
-
-		auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
-		transform->MoveBy({ settings->playerSize * 10.f, settings->playerSize * 8.f });
-
+		enemyMovement->SetSpeed(settings->playerSpeed * 0.5f);
+		
 		auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
 		body->SetKinematic(false);
 
-		auto collider = gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+		auto enemyChase = gameObject->AddComponent<AIChaseTargetComponent>();
+		enemyChase->SetMinimumChaseRadius(settings->enemyChaseMinRadius);
+		enemyChase->SetMaximumChaseRadius(settings->enemyChaseMaxRadius);
+
+		gameObject->AddComponent<AIBlackboard>();
+
+		auto enemyTarget = gameObject->AddComponent<AITargetSearchComponent>();
+		enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);		
 	}
 }

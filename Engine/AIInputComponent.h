@@ -11,9 +11,7 @@ namespace MaxrEngine
 
 		ENGINE_API void Update(float deltaTime) override;
 
-		ENGINE_API void SetTargetLocation(Vector2Df newTarget);
-	private:
-		Vector2Df target;
+		ENGINE_API void SetDirection(Vector2Df direction);
 	};
 }
 

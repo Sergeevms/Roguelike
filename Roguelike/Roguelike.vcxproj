@@ -150,6 +150,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIChaseTargetComponent.cpp" />
+    <ClCompile Include="AIBlackboard.cpp" />
+    <ClCompile Include="AITargetSearchComponent.cpp" />
     <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -165,6 +168,9 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIChaseTargetComponent.h" />
+    <ClInclude Include="AIBlackboard.h" />
+    <ClInclude Include="AITargetSearchComponent.h" />
     <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="DeveloperLevel.h" />
     <ClInclude Include="Enemy.h" />

@@ -11,16 +11,16 @@ namespace MaxrEngine
 	}
 
 	void AIInputComponent::Update(float deltaTime)
-	{
-		auto transform = gameObject->GetComponent<TransformComponent>();
-		auto direction = target - transform->GetWorldPosition();
-		direction *= 1.f / direction.GetLength();
-		verticalAxis = direction.y;
-		horizontalAxis = direction.x;
+	{		
 	}
 
-	void AIInputComponent::SetTargetLocation(Vector2Df newTarget)
+	void MaxrEngine::AIInputComponent::SetDirection(Vector2Df direction)
 	{
-		target = newTarget;
+		if (auto length = direction.GetLength() > 1.f)
+		{
+			direction *= 1.f / direction.GetLength();
+		}		
+		verticalAxis = direction.y;
+		horizontalAxis = direction.x;
 	}
 }

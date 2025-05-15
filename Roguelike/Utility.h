@@ -10,4 +10,10 @@ namespace Roguelike
 		return (rectTopLeft.x <= position.x && position.x < bottomRight.x)
 			&& (rectTopLeft.y <= position.y && position.y < bottomRight.y);
 	}
+
+	template <typename T>
+	bool InRange(T value, T minValue, T maxValue)
+	{
+		return minValue <= value && value <= maxValue;
+	}
 }

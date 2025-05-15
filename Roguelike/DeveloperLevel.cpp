@@ -2,7 +2,8 @@
 #include "GameWorld.h"
 #include "Settings.h"
 #include "LabyrinthBuilder.h"
-#include "AIInputComponent.h"
+#include "AITargetSearchComponent.h"
+#include "AIChaseTargetComponent.h"
 
 namespace Roguelike
 {
@@ -10,16 +11,23 @@ namespace Roguelike
     {
         auto settings = Settings::Instance();
         LabyrinthBuilder labyrinthBuilder;
-        labyrinthBuilder.StartBuilding({ 20, 20 });
-        labyrinthBuilder.AddRect({ 5, 5 }, { 15, 15 });
-        labyrinthBuilder.AddRect({ 0, 0 }, { 15,15 });
+        labyrinthBuilder.StartBuilding({ 30, 30 });
+        labyrinthBuilder.AddRect({ 10, 10 }, { 20, 20 });
+        labyrinthBuilder.AddRect({ 0, 0 }, { 20, 20 });
+        for (int i = 0; i < 10; ++i)
+        {
+            labyrinthBuilder.SetWall({20, 10 + i});
+        }        
         labyrinth = labyrinthBuilder.ConstructLabyrinth();
         player = std::make_shared<Player>();        
         backgroundMusic = std::make_shared<BackgroundMusic>();
         enemy = std::make_shared<Enemy>();
-        auto playerTransform = player->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
-        auto enemyMovement = enemy->GetGameObject()->GetComponent<MaxrEngine::AIInputComponent>();
-        enemyMovement->SetTargetLocation(playerTransform->GetWorldPosition());
+        
+        auto enemyTransform = enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
+        enemyTransform->SetWorldPosition({ 7.f * settings->playerSize, 7.f * settings->playerSize });
+        auto enemyTarget = enemy->GetGameObject()->GetComponent<AITargetSearchComponent>();
+        enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);
+        enemyTarget->SetSearchTarget(player->GetGameObject());
     }
 
     void DeveloperLevel::Restart()
