@@ -41,6 +41,7 @@ namespace MaxrEngine
                             auto trigger = new Trigger(colliders[i], colliders[j]);
                             colliders[i]->OnTriggerEntered(*trigger);
                             colliders[j]->OnTriggerEntered(*trigger);
+                            delete trigger;
 
                             triggersEnteredPair.emplace(colliders[i], colliders[j]);
                         }
@@ -85,6 +86,7 @@ namespace MaxrEngine
                         auto collision = new Collision(colliders[i], colliders[j], intersection);
                         colliders[i]->OnCollision(*collision);
                         colliders[j]->OnCollision(*collision);
+                        delete collision;
                     }
                 }
                 
@@ -96,6 +98,7 @@ namespace MaxrEngine
                         auto trigger = new Trigger(triggeredPair->first, triggeredPair->second);
                         triggeredPair->first->OnTriggerExit(*trigger);
                         triggeredPair->second->OnTriggerExit(*trigger);
+                        delete trigger;
 
                         triggersEnteredPair.erase(triggeredPair);
                     }
