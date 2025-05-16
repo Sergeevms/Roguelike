@@ -16,15 +16,15 @@ namespace Roguelike
 			auto targetTransform = target->GetComponent<MaxrEngine::TransformComponent>();
 			auto selfTransform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 			auto betweenVector = targetTransform->GetWorldPosition() - selfTransform->GetWorldPosition();
-			auto controller = GetGameObject()->GetComponent<AIBlackboard>();
+			auto blackBoard = GetGameObject()->GetComponent<AIBlackboard>();
 			if (betweenVector.GetLength() <= detectionRange)
 			{				
-				controller->SetTargetVisible(true);
-				controller->SetLastTargetPosition(targetTransform->GetWorldPosition());
+				blackBoard->Set("isTargetVisible", true);
+				blackBoard->Set("lastTargetPosition", targetTransform->GetWorldPosition());
 			}
 			else
 			{
-				controller->SetTargetVisible(false);
+				blackBoard->Set("isTargetVisible", true);
 			}
 		}
 	}
