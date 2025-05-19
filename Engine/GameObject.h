@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include <iostream>
+#include "Logger.h"
 #include "EngineAPI.h"
 #include "Component.h"
 #include "TransformComponent.h"
@@ -46,7 +48,10 @@ namespace MaxrEngine
 			}
 			T* newComponent = new T(this);
 			components.push_back(newComponent);
-			std::cout << "Added new component: " << newComponent << std::endl;
+			std::ostringstream message;
+			message << "Added new component: " << std::string(typeid(*newComponent).name()) << " " << newComponent;
+			LOG_INFO(message.str());
+			//std::cout << "Added new component: " << newComponent << std::endl;
 			return newComponent;
 		}
 

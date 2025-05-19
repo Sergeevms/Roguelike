@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TransformComponent.h"
+#include "Logger.h"
 #include "GameWorld.h"
 
 constexpr float EPS = 5e-6f;

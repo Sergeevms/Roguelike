@@ -20,6 +20,7 @@ namespace MaxrEngine
 
 	void Engine::Run()
 	{
+		LOG_INFO("Engine runned");
 		sf::Clock gameClock;
 		sf::Event event;
 
