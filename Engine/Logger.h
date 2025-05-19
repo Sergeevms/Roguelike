@@ -8,9 +8,9 @@
 
 namespace MaxrEngine
 {
-	enum class LogLevel
+	enum LogLevel
 	{
-		INFO = 0,
+		INFO = 1,
 		WARNING = 2,
 		ERROR = 4,
 		ALL = INFO | WARNING | ERROR
@@ -20,9 +20,11 @@ namespace MaxrEngine
 	{
 	public:
 		virtual void Log(LogLevel logLevel, const std::string& message) = 0;
+		void ENGINE_API SetLoggedLevels(LogLevel newLoggingLevels);
 		virtual ~LogSink() = default;
 	protected:
 		std::string LogLevelToString(LogLevel logLevel);
+		LogLevel loggingLevels = LogLevel::ALL;
 	};
 
 	class ConsoleSink : public LogSink
@@ -49,8 +51,10 @@ namespace MaxrEngine
 		void ENGINE_API Info(const std::string& message);
 		void ENGINE_API Warn(const std::string& message);
 		void ENGINE_API Error(const std::string& message);
+		void ENGINE_API SetLoggedLevels(LogLevel newLoggingLevels);
 	private:
 		std::vector<std::shared_ptr<LogSink>> sinks;
+		LogLevel loggingLevels = LogLevel::ALL;
 		std::mutex mutex;
 	};
 
@@ -72,7 +76,7 @@ namespace MaxrEngine
 		LoggerRegister(const LoggerRegister&) = delete;
 		LoggerRegister& operator=(const LoggerRegister&) = delete;
 		std::unordered_map<std::string, std::shared_ptr<Logger>> loggers;
-		std::shared_ptr<Logger> defaultLogger;
+		std::shared_ptr<Logger> defaultLogger = std::make_shared<Logger>();
 		std::mutex mutex;
 	};
 }

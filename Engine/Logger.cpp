@@ -3,6 +3,11 @@
 
 namespace MaxrEngine
 {
+    void LogSink::SetLoggedLevels(LogLevel newLoggingLevels)
+    {
+        loggingLevels = newLoggingLevels;
+    }
+
     std::string LogSink::LogLevelToString(LogLevel logLevel)
     {
         switch (logLevel)
@@ -20,7 +25,10 @@ namespace MaxrEngine
 
     void ConsoleSink::Log(LogLevel logLevel, const std::string& message)
     {
-        std::cout << LogLevelToString(logLevel) << message << std::endl;
+        if (logLevel & loggingLevels)
+        {
+            std::cout << LogLevelToString(logLevel) << message << std::endl;
+        }
     }
 
     FileSink::FileSink(const std::string& fileName)
@@ -38,9 +46,12 @@ namespace MaxrEngine
 
     void FileSink::Log(LogLevel logLevel, const std::string& message)
     {
-        if (logFile.is_open())
+        if (logLevel & loggingLevels)
         {
-            logFile << message << std::endl;
+            if (logFile.is_open())
+            {
+                logFile << message << std::endl;
+            }
         }
     }
 
@@ -51,10 +62,13 @@ namespace MaxrEngine
 
     void Logger::Log(LogLevel logLevel, const std::string& message)
     {
-        std::lock_guard<std::mutex> lock(mutex);
-        for (auto& sink : sinks)
+        if (logLevel & loggingLevels)
         {
-            sink->Log(logLevel, message);
+            std::lock_guard<std::mutex> lock(mutex);
+            for (auto& sink : sinks)
+            {
+                sink->Log(logLevel, message);
+            }
         }
     }
 
@@ -73,6 +87,11 @@ namespace MaxrEngine
         Log(LogLevel::ERROR, message);
     }
 
+    void ENGINE_API Logger::SetLoggedLevels(LogLevel newLoggingLevels)
+    {
+        loggingLevels = newLoggingLevels;
+    }
+
     std::shared_ptr<Logger> LoggerRegister::GetLogger(const std::string& name)
     {
         auto it = loggers.find(name);
@@ -80,7 +99,7 @@ namespace MaxrEngine
         {
             return it->second;
         }
-        return defaultLogger;
+        return defaultLogger;        
     }
 
     void LoggerRegister::SetDefaultLogger(std::shared_ptr<Logger> logger)
