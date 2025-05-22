@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CameraComponent.h"
 #include <iostream>
+#include <cassert>
 
 namespace MaxrEngine
 {
@@ -28,9 +29,10 @@ namespace MaxrEngine
 
 	void CameraComponent::Render()
 	{
+		assert(window != nullptr && "NULL window render");
 		if (!window)
 		{
-			std::cout << "NULL window render." << std::endl;
+			LOG_ERROR("NULL window render.");
 		}
 	}
 
@@ -41,9 +43,10 @@ namespace MaxrEngine
 
 	void CameraComponent::ZoomBy(float newZoom)
 	{
+		assert(newZoom > 0.f && "Not allowed zoom lesser or equal than zero.");
 		if (newZoom <= 0)
 		{
-			std::cout << "Not allowed zoom lesser or equal than zero." << std::endl;
+			LOG_WARN("Not allowed zoom lesser or equal than zero.");
 			return;
 		}
 		view->zoom(newZoom);

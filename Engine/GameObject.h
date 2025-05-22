@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
+#include <cassert>
 #include "Logger.h"
 #include "EngineAPI.h"
 #include "Component.h"
@@ -34,7 +35,7 @@ namespace MaxrEngine
 		{
 			if constexpr (!std::is_base_of<Component, T>::value)
 			{
-				std::cout << "T must be derived from Component." << std::endl;
+				LOG_WARN("T must be derived from Component.");
 				return nullptr;
 			}
 
@@ -42,7 +43,7 @@ namespace MaxrEngine
 			{
 				if (GetComponent<TransformComponent>() != nullptr)
 				{
-					std::cout << "Can't add Transform, because it will break the engine loop." << std::endl;
+					LOG_WARN("Can't add Transform, because it will break the engine loop.");
 					return nullptr;
 				}
 			}
@@ -51,7 +52,6 @@ namespace MaxrEngine
 			std::ostringstream message;
 			message << "Added new component: " << std::string(typeid(*newComponent).name()) << " " << newComponent;
 			LOG_INFO(message.str());
-			//std::cout << "Added new component: " << newComponent << std::endl;
 			return newComponent;
 		}
 
@@ -60,7 +60,8 @@ namespace MaxrEngine
 			components.erase(std::remove_if(components.begin(), components.end(),
 				[component](Component* obj) {return obj == component; }), components.end());
 			delete component;
-			std::cout << "Deleted component." << std::endl;
+			std::ostringstream message;
+			message << "Deleted component: " << std::string(typeid(*component).name()) << " " << component;
 		}
 
 		template<typename T>
@@ -73,6 +74,9 @@ namespace MaxrEngine
 					return casted;
 				}
 			}
+			std::ostringstream message;
+			message << typeid(T).name() << " component not found";
+			LOG_INFO(message.str());
 			return nullptr;
 		};
 
@@ -93,7 +97,9 @@ namespace MaxrEngine
 					return childComponent;
 				}
 			}
-
+			std::ostringstream message;
+			message << typeid(T).name() << " component not found";
+			LOG_INFO(message);
 			return nullptr;
 		}
 

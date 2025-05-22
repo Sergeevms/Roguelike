@@ -21,8 +21,8 @@ int main()
 	freopen_s(&fp, "CONOUT$", "w", stdout);
 	globalLogger->AddSink(std::make_shared<MaxrEngine::ConsoleSink>());
 #endif // CREATE_CONSOLE_FOR_ENGINE_PRINT_OUTPUT
-	globalLogger->AddSink(std::make_shared<MaxrEngine::FileSink>("Log.txt"));
-	globalLogger->SetLoggedLevels(MaxrEngine::LogLevel::ERROR);
+	//globalLogger->AddSink(std::make_shared<MaxrEngine::FileSink>("Log.txt"));
+	globalLogger->SetLoggedLevels(MaxrEngine::LogLevel::ALL);
 	LOG_INFO("ProgramStarted");
 	auto settings = Roguelike::Settings::Instance();
 	MaxrEngine::RenderSystem::Instance()->CrateMainWindow(sf::VideoMode(settings->screenWidth, settings->screenHeight), settings->gameName);
@@ -31,6 +31,7 @@ int main()
 	MaxrEngine::ResourceSystem::Instance()->LoadTextureMap("FloorTextures", settings->textureMapsPath + "Floor.png", { 16, 16 }, 49, false);
 	MaxrEngine::ResourceSystem::Instance()->LoadTexture("Ball", settings->texturePath + "Ball.png", false);
 	MaxrEngine::ResourceSystem::Instance()->LoadMusic("background", "Resources/Sounds/Clinthammer__Background_Music.wav");
+	MaxrEngine::ResourceSystem::Instance()->DeleteSharedTexture("Some");
 
 	auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();
 	developerLevel->Start();

@@ -11,7 +11,7 @@ namespace MaxrEngine
 		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 		if (spriteRenderer == nullptr)
 		{
-			std::cout << "SpriteRendererComponent required to SpriteCollidedComponent." << std::endl;
+			LOG_ERROR("SpriteRendererComponent required to SpriteCollidedComponent.");
 			gameObject->RemoveComponent(this);
 			return;
 		}

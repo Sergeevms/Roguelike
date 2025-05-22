@@ -6,7 +6,8 @@
 constexpr float EPS = 5e-6f;
 TEST(TransformComponent, Constructor)
 {
-	MaxrEngine::TransformComponent* component = new MaxrEngine::TransformComponent(nullptr);
+	MaxrEngine::GameObject* gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
+	MaxrEngine::TransformComponent* component = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 	MaxrEngine::Vector2Df zeroVector;
 	MaxrEngine::Vector2Df oneVector (1.f, 1.f);
 	EXPECT_EQ(component->GetLocalPosition(), zeroVector);
@@ -15,12 +16,12 @@ TEST(TransformComponent, Constructor)
 	EXPECT_EQ(component->GetWorldScale(), oneVector);
 	EXPECT_EQ(component->GetLocalRotation(), 0.f);
 	EXPECT_EQ(component->GetWorldRotation(), 0.f);
-	delete component;
 }
 
 TEST(TransformComponent, MoveBy)
 {
-	MaxrEngine::TransformComponent* transform = new MaxrEngine::TransformComponent(nullptr);
+	MaxrEngine::GameObject* gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
+	MaxrEngine::TransformComponent* transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 	MaxrEngine::Vector2Df zeroVector;
 	MaxrEngine::Vector2Df oneVector(1.f, 1.f);
 	MaxrEngine::Vector2Df vector(3.f, 10.f);
@@ -31,12 +32,12 @@ TEST(TransformComponent, MoveBy)
 	EXPECT_EQ(transform->GetWorldScale(), oneVector);
 	EXPECT_EQ(transform->GetLocalRotation(), 0.f);
 	EXPECT_EQ(transform->GetWorldRotation(), 0.f);
-	delete transform;
 }
 
 TEST(TransformComponent, ScaleBy)
 {
-	MaxrEngine::TransformComponent* transform = new MaxrEngine::TransformComponent(nullptr);
+	MaxrEngine::GameObject* gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
+	MaxrEngine::TransformComponent* transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 	MaxrEngine::Vector2Df zeroVector;
 	MaxrEngine::Vector2Df vector(3.f, 10.f);
 	transform->ScaleBy(vector);
@@ -46,12 +47,12 @@ TEST(TransformComponent, ScaleBy)
 	EXPECT_EQ(transform->GetWorldScale(), vector);
 	EXPECT_EQ(transform->GetLocalRotation(), 0.f);
 	EXPECT_EQ(transform->GetWorldRotation(), 0.f);
-	delete transform;
 }
 
 TEST(TransformComponent, RotateBy)
 {
-	MaxrEngine::TransformComponent* transform = new MaxrEngine::TransformComponent(nullptr);
+	MaxrEngine::GameObject* gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
+	MaxrEngine::TransformComponent* transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 	MaxrEngine::Vector2Df zeroVector;
 	MaxrEngine::Vector2Df oneVector(1.f, 1.f);
 	float angle = 75.f;
@@ -62,12 +63,12 @@ TEST(TransformComponent, RotateBy)
 	EXPECT_EQ(transform->GetWorldScale(), oneVector);
 	EXPECT_EQ(transform->GetLocalRotation(), angle);
 	EXPECT_EQ(transform->GetWorldRotation(), angle);
-	delete transform;
 }
 
 TEST(TransformComponent, RotationMovingScaling)
 {
-	MaxrEngine::TransformComponent* transform = new MaxrEngine::TransformComponent(nullptr);
+	MaxrEngine::GameObject* gameObject = MaxrEngine::GameWorld::Instance()->CreateGameObject();
+	MaxrEngine::TransformComponent* transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
 	MaxrEngine::Vector2Df zeroVector;
 	MaxrEngine::Vector2Df oneVector(1.f, 1.f);
 	MaxrEngine::Vector2Df moveVector(10.f, 0.f);
@@ -82,7 +83,6 @@ TEST(TransformComponent, RotationMovingScaling)
 	EXPECT_EQ(transform->GetWorldScale(), scaleVector);
 	EXPECT_EQ(transform->GetLocalRotation(), angle);
 	EXPECT_EQ(transform->GetWorldRotation(), angle);
-	delete transform;
 }
 
 TEST(TransformComponent, ParentRotation)

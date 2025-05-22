@@ -16,18 +16,22 @@ namespace MaxrEngine
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
+			LOG_INFO("Forward input");
 			verticalAxis += 1.0f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
+			LOG_INFO("Backward input");
 			verticalAxis -= 1.0f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
+			LOG_INFO("Up input");
 			horizontalAxis += 1.0f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
+			LOG_INFO("Up input");
 			horizontalAxis -= 1.0f;
 		}
 	}

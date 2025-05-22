@@ -11,7 +11,8 @@ namespace MaxrEngine
 
 		if (input == nullptr)
 		{
-			std::cout << "Need InputComponent for movement." << std::endl;
+			LOG_ERROR("Need InputComponent for movement.");
+			gameObject->RemoveComponent(this);
 		}
 	}
 

@@ -51,5 +51,6 @@ namespace MaxrEngine
 
 			RenderSystem::Instance()->GetMainWindow().display();
 		}
+		LOG_INFO("Engine stopped");
 	}
 }

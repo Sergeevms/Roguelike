@@ -34,10 +34,13 @@ namespace MaxrEngine
                 sf::FloatRect intersection;
                 if (colliders[i]->bounds.intersects(colliders[j]->bounds, intersection))
                 {
+                    std::ostringstream message;
                     if (colliders[i]->isTrigger != colliders[j]->isTrigger)
                     {
                         if (triggersEnteredPair.find(colliders[i]) == triggersEnteredPair.end() && triggersEnteredPair.find(colliders[j]) == triggersEnteredPair.end())
                         {
+                            message << "Entered trigger " << colliders[i] << " " << colliders[j];
+                            LOG_INFO(message.str());
                             auto trigger = new Trigger(colliders[i], colliders[j]);
                             colliders[i]->OnTriggerEntered(*trigger);
                             colliders[j]->OnTriggerEntered(*trigger);
@@ -61,12 +64,14 @@ namespace MaxrEngine
                             if (intersectionPosition.y > aPosition.y)
                             {
                                 aTransform->MoveBy(0.f, -intersectionHeight);
-                                std::cout << "Top collision" << std::endl;
+                                message << "Top collision " << colliders[i] << " " << colliders[j];
+                                LOG_INFO(message.str());
                             }
                             else
                             {
                                 aTransform->MoveBy(0.f, intersectionHeight);
-                                std::cout << "Bottom collision" << std::endl;
+                                message << "Bottom collision " << colliders[i] << " " << colliders[j];
+                                LOG_INFO(message.str());
                             }
                         }
                         else
@@ -74,12 +79,14 @@ namespace MaxrEngine
                             if (intersectionPosition.x > aPosition.x)
                             {
                                 aTransform->MoveBy(-intersectionWidth, 0.f);
-                                std::cout << "Rigth collision" << std::endl;
+                                message << "Rigth collision " << colliders[i] << " " << colliders[j];
+                                LOG_INFO(message.str());
                             }
                             else
                             {
                                 aTransform->MoveBy(intersectionWidth, 0.f);
-                                std::cout << "Left collision" << std::endl;
+                                message << "Left collision " << colliders[i] << " " << colliders[j];
+                                LOG_INFO(message.str());
                             }
                         }
 
@@ -95,6 +102,8 @@ namespace MaxrEngine
                     ++nextTriggeredPair;
                     if (!triggeredPair->first->bounds.intersects(triggeredPair->second->bounds))
                     {
+                        std::ostringstream message;
+                        message << "Exited trigger " << triggeredPair->first << " " << triggeredPair->second;
                         auto trigger = new Trigger(triggeredPair->first, triggeredPair->second);
                         triggeredPair->first->OnTriggerExit(*trigger);
                         triggeredPair->second->OnTriggerExit(*trigger);
@@ -114,13 +123,17 @@ namespace MaxrEngine
 
     void PhysicsSystem::Subscribe(ColliderComponent* collider)
     {
-        std::cout << "Subscribe " << collider << std::endl;
+        std::ostringstream message;
+        message << "Subscribe collider " << collider;
+        LOG_INFO(message.str());
         colliders.push_back(collider);
     }
 
     void PhysicsSystem::Unsubscribe(ColliderComponent* collider)
     {
-        std::cout << "Unsubscribe " << collider << std::endl;
+        std::ostringstream message;
+        message << "Unsubscribe collider " << collider;
+        LOG_INFO(message.str());
         colliders.erase(std::remove_if(colliders.begin(), colliders.end(), [collider](ColliderComponent* obj) {return collider == obj; }), colliders.end());
     }
 

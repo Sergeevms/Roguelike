@@ -50,7 +50,7 @@ namespace MaxrEngine
         {
             if (logFile.is_open())
             {
-                logFile << message << std::endl;
+                logFile << LogLevelToString(logLevel) << message << std::endl;
             }
         }
     }

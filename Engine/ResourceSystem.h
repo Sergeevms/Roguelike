@@ -20,7 +20,7 @@ namespace MaxrEngine
 
 		ENGINE_API void LoadTextureMap(const std::string& name, std::string sourcePath, sf::Vector2u elementPixelSize,
 			int totalElements, bool isSmooth = true);
-		ENGINE_API const sf::Texture* GetTextureMapElementShared(const std::string& name, int elementIndex) const;
+		ENGINE_API const sf::Texture * GetTextureMapElementShared(const std::string& name, size_t elementIndex) const;
 		ENGINE_API sf::Texture* GetTextureMapElementCopy(const std::string& name, int elementIndex) const;
 		ENGINE_API int GetTextureMapElementsCount(const std::string& name) const;
 		ENGINE_API void DeleteSharedTextureMap(const std::string& name);
