@@ -10,6 +10,8 @@
 #include "AIBlackboard.h"
 #include "AITargetSearchComponent.h"
 #include "AIChaseTargetComponent.h"
+#include "HealthComponent.h"
+#include "ArmorComponent.h"
 
 namespace Roguelike
 {
@@ -38,6 +40,13 @@ namespace Roguelike
 		gameObject->AddComponent<AIBlackboard>();
 
 		auto enemyTarget = gameObject->AddComponent<AITargetSearchComponent>();
-		enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);		
+		enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);
+
+		auto health = gameObject->AddComponent<MaxrEngine::HealthComponent>();
+		health->SetMaxHealth(settings->enemyHealth);
+
+		auto armor = gameObject->AddComponent<MaxrEngine::ArmorComponent>();
+		armor->SetDamageReduction(settings->armorDamageReduction);
+		armor->SetMaxArmorPoints(settings->enemyHealth);
 	}
 }

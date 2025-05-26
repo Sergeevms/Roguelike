@@ -8,6 +8,8 @@
 #include "SpriteColliderComponent.h"
 #include "RigidBodyComponent.h"
 #include "MovementComponent.h"
+#include "HealthComponent.h"
+#include "ArmorComponent.h"
 #include "KeyboardInputComponent.h"
 #include "Settings.h"
 
@@ -35,5 +37,12 @@ namespace Roguelike
 		body->SetKinematic(false);
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+
+		auto health = gameObject->AddComponent<MaxrEngine::HealthComponent>();
+		health->SetMaxHealth(settings->playerHealth);
+
+		auto armor = gameObject->AddComponent<MaxrEngine::ArmorComponent>();
+		armor->SetDamageReduction(settings->armorDamageReduction);
+		armor->SetMaxArmorPoints(settings->playerHealth);
 	}
 }

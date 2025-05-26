@@ -35,6 +35,10 @@ namespace Roguelike
 		float enemyChaseMaxRadius;
 		float enemyChaseMinRadius;
 		int mapTileSize;
+
+		int playerHealth;
+		int enemyHealth;
+		float armorDamageReduction;
 		
 	private:
 		Settings();
