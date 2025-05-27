@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorRegisterSystem.h" />
+    <ClInclude Include="AITypedBlackboardComponent.h" />
     <ClInclude Include="AIInputComponent.h" />
     <ClInclude Include="ArmorComponent.h" />
     <ClInclude Include="CameraComponent.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AITypedBlackboardComponent.cpp" />
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="ActorRegisterSystem.cpp" />
     <ClCompile Include="AIInputComponent.cpp" />
