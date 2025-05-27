@@ -12,6 +12,7 @@
 #include "ArmorComponent.h"
 #include "KeyboardInputComponent.h"
 #include "Settings.h"
+#include "ActorComponent.h"
 
 namespace Roguelike
 {
@@ -44,5 +45,8 @@ namespace Roguelike
 		auto armor = gameObject->AddComponent<MaxrEngine::ArmorComponent>();
 		armor->SetDamageReduction(settings->armorDamageReduction);
 		armor->SetMaxArmorPoints(settings->playerHealth);
+
+		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
+		actorComponent->SetGroupID(ActorsGroups::PlayerGroup);
 	}
 }

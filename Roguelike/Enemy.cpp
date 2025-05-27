@@ -12,6 +12,7 @@
 #include "AIChaseTargetComponent.h"
 #include "HealthComponent.h"
 #include "ArmorComponent.h"
+#include "ActorComponent.h"
 
 namespace Roguelike
 {
@@ -48,5 +49,8 @@ namespace Roguelike
 		auto armor = gameObject->AddComponent<MaxrEngine::ArmorComponent>();
 		armor->SetDamageReduction(settings->armorDamageReduction);
 		armor->SetMaxArmorPoints(settings->enemyHealth);
+
+		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
+		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
 	}
 }

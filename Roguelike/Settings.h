@@ -46,4 +46,10 @@ namespace Roguelike
 		Settings(const Settings&) = delete;
 		Settings operator= (const Settings&) = delete;
 	};
+
+	enum ActorsGroups
+	{
+		PlayerGroup,
+		EnemyGroup
+	};
 };

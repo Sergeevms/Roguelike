@@ -92,9 +92,9 @@ namespace MaxrEngine
 			[gameObject](GameObject* obj) {return obj == gameObject; }), gameObjects.end());
 		markedToDestroyGameObjects.erase(std::remove_if(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), 
 			[gameObject](GameObject* obj) {return obj == gameObject; }), markedToDestroyGameObjects.end());
-		delete gameObject;
 		std::ostringstream message;
 		message << gameObject << " deleted";
 		LOG_INFO(message.str());
+		delete gameObject;
 	}
 }
