@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineAPI.h"
 #include <cmath>
+#include <numbers>
 
 namespace MaxrEngine
 {
@@ -44,11 +45,11 @@ namespace MaxrEngine
 			y *= other.y;
 			return *this;
 		}
-		T DotProduct(const Vector2D& other)
+		T DotProduct(const Vector2D& other) const
 		{
 			return x * other.x + y * other.y;
 		}
-		float GetLength()
+		float GetLength() const
 		{
 			return sqrtf(x * x + y * y);
 		}
@@ -111,5 +112,20 @@ namespace MaxrEngine
 	U Convert(const V& v)
 	{
 		return { static_cast<decltype(U::x)>(v.x), static_cast<decltype(U::y)>(v.y) };
+	}
+
+	//Returns angle in degree
+	template<typename T>
+	float AngleDegree(const Vector2D<T> firstVector, const Vector2D<T> secondVector)
+	{
+		return Angle(firstVector, secondVector) * 180 * std::numbers::inv_pi_v<float>;
+	}
+
+	//Returns angle in radian
+	template<typename T>
+	float Angle(const Vector2D<T> firstVector, const Vector2D<T> secondVector)
+	{
+		float angleCos = DotProduct(firstVector, secondVector) / (firstVector.GetLength() * secondVector.GetLength());
+		return acosf(angleCos);
 	}
 }

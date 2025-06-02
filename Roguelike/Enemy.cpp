@@ -8,11 +8,12 @@
 #include "MovementComponent.h"
 #include "SpriteRendererComponent.h"
 #include "AIBlackboard.h"
-#include "AITargetSearchComponent.h"
+#include "AITargetSelector.h"
 #include "AIChaseTargetComponent.h"
 #include "HealthComponent.h"
 #include "ArmorComponent.h"
 #include "ActorComponent.h"
+#include "AIPerceptionComponent.h"
 
 namespace Roguelike
 {
@@ -40,9 +41,14 @@ namespace Roguelike
 
 		gameObject->AddComponent<AIBlackboard>();
 
-		auto enemyTarget = gameObject->AddComponent<AITargetSearchComponent>();
-		enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);
+		auto perceptionComponent = gameObject->AddComponent<AIPerceptionComponent>();
+		perceptionComponent->SetSenseRadius(150.f);
+		perceptionComponent->SetVisionRadius(250.f);
+		perceptionComponent->SetVisionAngle(180.f);
+		perceptionComponent->SetVisionDirection({ -1.f, 0.f });
 
+		gameObject->AddComponent<AITargetSelector>();
+		
 		auto health = gameObject->AddComponent<MaxrEngine::HealthComponent>();
 		health->SetMaxHealth(settings->enemyHealth);
 
@@ -52,5 +58,7 @@ namespace Roguelike
 
 		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
+
+		
 	}
 }

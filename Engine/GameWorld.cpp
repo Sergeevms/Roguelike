@@ -20,12 +20,15 @@ namespace MaxrEngine
 
 	void GameWorld::FixedUpdate(float deltaTime)
 	{
-		fixedCounter += deltaTime;
-		if (fixedCounter > PhysicsSystem::Instance()->GetFixedDeltaTime())
+		for (auto& system : fixedUpdateSystems)
 		{
-			fixedCounter -= PhysicsSystem::Instance()->GetFixedDeltaTime();
-			PhysicsSystem::Instance()->Update();
-		}
+			system.second += deltaTime;
+			if (system.second >= system.first->GetFixedUpdateTime())
+			{
+				system.first->Update();
+				system.second -= system.first->GetFixedUpdateTime();
+			}
+		}		
 	}
 
 	void GameWorld::Render()
@@ -68,6 +71,20 @@ namespace MaxrEngine
 		for (int i = static_cast<int>(gameObjects.size()) - 1; i >= 0; --i)
 		{
 			DestroyGameObjectImmediate(gameObjects[i]);
+		}
+	}
+
+	ENGINE_API void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSytem* system)
+	{
+		fixedUpdateSystems[system] = 0.f;
+	}
+
+	ENGINE_API void GameWorld::UnRegisterFixedUpdateSytem(IFixedUpdateSytem* system)
+	{
+		auto it = fixedUpdateSystems.find(system);
+		if (it != fixedUpdateSystems.end())
+		{
+			fixedUpdateSystems.erase(it);
 		}
 	}
 

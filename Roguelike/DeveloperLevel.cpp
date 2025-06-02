@@ -25,9 +25,6 @@ namespace Roguelike
         
         auto enemyTransform = enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
         enemyTransform->SetWorldPosition({ 7.f * settings->playerSize, 7.f * settings->playerSize });
-        auto enemyTarget = enemy->GetGameObject()->GetComponent<AITargetSearchComponent>();
-        enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);
-        enemyTarget->SetSearchTarget(player->GetGameObject());
     }
 
     void DeveloperLevel::Restart()

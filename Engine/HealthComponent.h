@@ -8,8 +8,8 @@ namespace MaxrEngine
 	public:
 		HealthComponent(GameObject* gameObject);
 
-		virtual void Update(float deltaTime);
-		virtual void Render();
+		virtual void Update(float deltaTime) override;
+		virtual void Render() override;
 
 		//Set maxHealth & currentHealth to newMaxHealth
 		virtual void SetMaxHealth(const int newMaxHealth);

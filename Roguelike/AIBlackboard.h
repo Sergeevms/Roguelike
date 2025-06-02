@@ -3,5 +3,5 @@
 #include "Vector.h"
 namespace Roguelike
 {
-	using AIBlackboard = MaxrEngine::AITypedBlackboardComponent<bool, float, MaxrEngine::Vector2Df>;
+	using AIBlackboard = MaxrEngine::AITypedBlackboardComponent<bool, float, MaxrEngine::Vector2Df, std::vector<MaxrEngine::GameObject*>*>;
 }
