@@ -131,3 +131,27 @@ TEST(VectorTests, AngleDegree)
 	EXPECT_FLOAT_EQ(MaxrEngine::AngleDegree(vectorF2, vectorF4), 30.f);
 	EXPECT_FLOAT_EQ(MaxrEngine::AngleDegree(vectorF1, vectorF5), 180.f);
 }
+TEST(VectorTests, Normalize)
+{
+	MaxrEngine::Vector2Df vectorF1(1.f, 0.f);
+	EXPECT_TRUE(MaxrEngine::Normalized(vectorF1) == vectorF1);
+	MaxrEngine::Vector2Df vectorF2(10.f, 0.f);
+	EXPECT_TRUE(MaxrEngine::Normalized(vectorF2) == vectorF1);
+	MaxrEngine::Vector2Df vectorF3(-std::numbers::sqrt2_v<float> / 2.f, std::numbers::sqrt2_v<float> / 2.f);
+	MaxrEngine::Vector2Df normalizedF3 = MaxrEngine::Normalized(vectorF3);
+	EXPECT_FLOAT_EQ(vectorF3.x, normalizedF3.x);
+	EXPECT_FLOAT_EQ(vectorF3.y, normalizedF3.y);
+	MaxrEngine::Vector2Df vectorF4(-5.f, 5.f);
+	MaxrEngine::Vector2Df normalizedF4 = MaxrEngine::Normalized(vectorF4);
+	EXPECT_FLOAT_EQ(vectorF3.x, normalizedF4.x);
+	EXPECT_FLOAT_EQ(vectorF3.y, normalizedF4.y);
+	MaxrEngine::Vector2Df vectorF5(0.5f, -std::numbers::sqrt3_v<float> / 2.f);
+	MaxrEngine::Vector2Df vectorF6(1.f, -std::numbers::sqrt3_v<float>);
+	MaxrEngine::Vector2Df normalizedF6 = MaxrEngine::Normalized(vectorF6);
+	EXPECT_FLOAT_EQ(vectorF5.x, normalizedF6.x);
+	EXPECT_FLOAT_EQ(vectorF5.y, normalizedF6.y);
+	MaxrEngine::Vector2Df zeroVector;
+	MaxrEngine::Vector2Df normalizedZeroVector = MaxrEngine::Normalized(zeroVector);
+	EXPECT_FLOAT_EQ(zeroVector.x, normalizedZeroVector.x);
+	EXPECT_FLOAT_EQ(zeroVector.y, normalizedZeroVector.y);
+}

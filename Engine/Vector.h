@@ -2,6 +2,7 @@
 #include "EngineAPI.h"
 #include <cmath>
 #include <numbers>
+#include <concepts>
 
 namespace MaxrEngine
 {
@@ -116,16 +117,31 @@ namespace MaxrEngine
 
 	//Returns angle in degree
 	template<typename T>
-	float AngleDegree(const Vector2D<T> firstVector, const Vector2D<T> secondVector)
+	float AngleDegree(const Vector2D<T>& firstVector, const Vector2D<T>& secondVector)
 	{
 		return Angle(firstVector, secondVector) * 180 * std::numbers::inv_pi_v<float>;
 	}
 
 	//Returns angle in radian
 	template<typename T>
-	float Angle(const Vector2D<T> firstVector, const Vector2D<T> secondVector)
+	float Angle(const Vector2D<T>& firstVector, const Vector2D<T>& secondVector)
 	{
-		float angleCos = DotProduct(firstVector, secondVector) / (firstVector.GetLength() * secondVector.GetLength());
+		float angleCos = static_cast<float>(DotProduct(firstVector, secondVector)) / (firstVector.GetLength() * secondVector.GetLength());
 		return acosf(angleCos);
+	}
+
+	template<typename T>
+	requires std::floating_point<T>
+	Vector2D<T> Normalized(const Vector2D<T>& vector)
+	{
+		float length = vector.GetLength();
+		if (length > 0.f)
+		{
+			return vector * (1.f / vector.GetLength());
+		}
+		else
+		{
+			return { 0.f, 0.f };
+		}
 	}
 }

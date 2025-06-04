@@ -10,7 +10,7 @@ namespace MaxrEngine
 	class IObserver
 	{
 	public:
-		ENGINE_API virtual void Notify(std::shared_ptr<IObservable> observable) = 0;
+		virtual void Notify(std::shared_ptr<IObservable> observable) = 0;
 	};
 
 	class IObservable : public std::enable_shared_from_this<IObservable>

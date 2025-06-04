@@ -57,7 +57,14 @@ namespace MaxrEngine
 
     void PerceptionComponent::SetVisionDirection(const Vector2Df& newVisionDirection)
     {
-        visionDirection = newVisionDirection;
+        if (newVisionDirection.GetLength() > 0.f)
+        {
+            visionDirection = Normalized(newVisionDirection);
+        }
+        else
+        {
+            LOG_WARN("vision direction must not be zero vector");
+        }
     }
 
     const Vector2Df& MaxrEngine::PerceptionComponent::GetVisionDirection() const

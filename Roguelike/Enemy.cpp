@@ -26,7 +26,7 @@ namespace Roguelike
 		enemyRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureShared("Ball"));
 		enemyRender->SetPixelSize(settings->playerSize, settings->playerSize);
 
-		gameObject->AddComponent<MaxrEngine::AIInputComponent>();
+		auto input = gameObject->AddComponent<MaxrEngine::AIInputComponent>();
 
 		auto enemyMovement = gameObject->AddComponent<MaxrEngine::MovementComponent>();
 		enemyMovement->SetSpeed(settings->playerSpeed * 0.5f);
@@ -47,6 +47,7 @@ namespace Roguelike
 		perceptionComponent->SetVisionRadius(250.f);
 		perceptionComponent->SetVisionAngle(180.f);
 		perceptionComponent->SetVisionDirection({ -1.f, 0.f });
+		input->AddObserver(perceptionComponent);
 
 		auto targetSelector = gameObject->AddComponent<AITargetSelector>();
 
