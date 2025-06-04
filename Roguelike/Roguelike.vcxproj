@@ -161,7 +161,6 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObjectContainer.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
-    <ClCompile Include="IObserver.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="LabyrinthBuilder.cpp" />
     <ClCompile Include="main.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="IDelayedAction.h" />
-    <ClInclude Include="IObserver.h" />
     <ClInclude Include="ISaveable.h" />
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="LabyrinthBuilder.h" />

@@ -1,5 +1,6 @@
 #pragma once
-#include <PerceptionComponent.h>
+#include "PerceptionComponent.h"
+#include "IObserver.h"
 namespace Roguelike
 {
 	class AIPerceptionComponent :

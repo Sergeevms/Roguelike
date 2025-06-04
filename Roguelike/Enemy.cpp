@@ -35,6 +35,7 @@ namespace Roguelike
 		body->SetKinematic(false);
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+
 		auto enemyChase = gameObject->AddComponent<AIChaseTargetComponent>();
 		enemyChase->SetMinimumChaseRadius(settings->enemyChaseMinRadius);
 		enemyChase->SetMaximumChaseRadius(settings->enemyChaseMaxRadius);
@@ -47,7 +48,9 @@ namespace Roguelike
 		perceptionComponent->SetVisionAngle(180.f);
 		perceptionComponent->SetVisionDirection({ -1.f, 0.f });
 
-		gameObject->AddComponent<AITargetSelector>();
+		auto targetSelector = gameObject->AddComponent<AITargetSelector>();
+
+		perceptionComponent->AddObserver(targetSelector);
 		
 		auto health = gameObject->AddComponent<MaxrEngine::HealthComponent>();
 		health->SetMaxHealth(settings->enemyHealth);
@@ -57,8 +60,6 @@ namespace Roguelike
 		armor->SetMaxArmorPoints(settings->enemyHealth);
 
 		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
-		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
-
-		
+		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);		
 	}
 }

@@ -1,7 +1,8 @@
+#include "pch.h"
 #include "IObserver.h"
 #include <algorithm>
 
-namespace Roguelike
+namespace MaxrEngine
 {
 	void IObservable::AddObserver(std::weak_ptr<IObserver> observer)
 	{

@@ -86,6 +86,7 @@ namespace MaxrEngine
                 detectedActors.push_back(actor);
             }
         }
+        Emit();
     }
 
     const std::vector<GameObject*>* PerceptionComponent::GetDetectedActors()

@@ -2,10 +2,11 @@
 #include "Component.h"
 #include "Vector.h"
 #include "TransformComponent.h"
+#include "IObserver.h"
 namespace MaxrEngine
 {
 	class PerceptionComponent :
-		public Component
+		public Component, public IObservable
 	{
 	public:
 		ENGINE_API PerceptionComponent(GameObject* gameObject);
