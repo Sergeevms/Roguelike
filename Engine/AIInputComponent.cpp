@@ -16,11 +16,21 @@ namespace MaxrEngine
 
 	void MaxrEngine::AIInputComponent::SetDirection(Vector2Df direction)
 	{
-		if (auto length = direction.GetLength() > 1.f)
+		auto length = direction.GetLength();
+		if (length > 1.f)
 		{
 			direction *= 1.f / direction.GetLength();
 		}		
 		verticalAxis = direction.y;
 		horizontalAxis = direction.x;
+		if (length > 0.f)
+		{
+			Emit();
+		}
+	}
+
+	Vector2Df AIInputComponent::GetDirection() const
+	{
+		return { horizontalAxis, verticalAxis  };
 	}
 }

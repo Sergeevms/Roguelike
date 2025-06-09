@@ -5,6 +5,7 @@
 #include "SpriteRendererComponent.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
+#include "SpriteOpaqueComponent.h"
 
 namespace Roguelike
 {
@@ -22,5 +23,7 @@ namespace Roguelike
 		body->SetKinematic(true);
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+
+		gameObject->AddComponent<MaxrEngine::SpriteOpaqueComponent>();
 	}
 }

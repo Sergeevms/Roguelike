@@ -1,6 +1,8 @@
 #pragma once
 #include "EngineAPI.h"
 #include <cmath>
+#include <numbers>
+#include <concepts>
 
 namespace MaxrEngine
 {
@@ -44,11 +46,11 @@ namespace MaxrEngine
 			y *= other.y;
 			return *this;
 		}
-		T DotProduct(const Vector2D& other)
+		T DotProduct(const Vector2D& other) const
 		{
 			return x * other.x + y * other.y;
 		}
-		float GetLength()
+		float GetLength() const
 		{
 			return sqrtf(x * x + y * y);
 		}
@@ -111,5 +113,60 @@ namespace MaxrEngine
 	U Convert(const V& v)
 	{
 		return { static_cast<decltype(U::x)>(v.x), static_cast<decltype(U::y)>(v.y) };
+	}
+
+	template<typename T>
+	requires std::floating_point<T>
+	T DegreeToRadian(const T angle)
+	{
+		return angle * std::numbers::pi_v<T> / 180.f;
+	}
+
+	template<typename T>
+		requires std::floating_point<T>
+	T RadianToDegree(const T angle)
+	{
+		return angle * std::numbers::inv_pi_v<T> * 180.f;
+	}
+
+	//Returns angle in degree
+	template<typename T>
+	float AngleDegree(const Vector2D<T>& firstVector, const Vector2D<T>& secondVector)
+	{
+		return RadianToDegree(Angle(firstVector, secondVector));
+	}
+
+	//Returns angle in radian
+	template<typename T>
+	float Angle(const Vector2D<T>& firstVector, const Vector2D<T>& secondVector)
+	{
+		float angleCos = static_cast<float>(DotProduct(firstVector, secondVector)) / (firstVector.GetLength() * secondVector.GetLength());
+		return acosf(angleCos);
+	}
+
+	template<typename T>
+		requires std::floating_point<T>
+	Vector2D<T> Normalized(const Vector2D<T>& vector)
+	{
+		float length = vector.GetLength();
+		if (length > 0.f)
+		{
+			return vector * (1.f / vector.GetLength());
+		}
+		else
+		{
+			return { 0.f, 0.f };
+		}
+	}
+
+	template<typename T>
+		requires std::floating_point<T>
+	void Rotate(Vector2D<T>& vector, float angle)
+	{
+		auto radianAngle = DegreeToRadian(angle);
+		T newX = cosf(radianAngle) * vector.x - sinf(radianAngle) * vector.y;
+		T newY = sinf(radianAngle) * vector.x + cosf(radianAngle) * vector.y;
+		vector.x = newX;
+		vector.y = newY;
 	}
 }

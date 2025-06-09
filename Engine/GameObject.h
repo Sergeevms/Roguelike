@@ -31,7 +31,7 @@ namespace MaxrEngine
 		ENGINE_API void RemoveChild(GameObject* child);
 
 		template<typename T>
-		T* AddComponent()
+		std::shared_ptr<T> AddComponent()
 		{
 			if constexpr (!std::is_base_of<Component, T>::value)
 			{
@@ -46,9 +46,9 @@ namespace MaxrEngine
 					LOG_WARN("Can't add Transform, because it will break the engine loop.");
 					return nullptr;
 				}
-			}
-			T* newComponent = new T(this);
-			components.push_back(newComponent);
+			}			
+			std::shared_ptr<T> newComponent = std::make_shared<T>(this);
+			components.emplace_back(newComponent);
 			std::ostringstream message;
 			message << "Added new component: " << std::string(typeid(*newComponent).name()) << " " << newComponent;
 			LOG_INFO(message.str());
@@ -57,11 +57,21 @@ namespace MaxrEngine
 
 		ENGINE_API void RemoveComponent(Component* component)
 		{
-			components.erase(std::remove_if(components.begin(), components.end(),
-				[component](Component* obj) {return obj == component; }), components.end());
-			delete component;
 			std::ostringstream message;
-			message << "Deleted component: " << std::string(typeid(*component).name()) << " " << component;
+			message << "Deleting component: " << std::string(typeid(*component).name()) << " " << component;
+			LOG_INFO(message.str());
+			components.erase(std::remove_if(components.begin(), components.end(),
+				[component](std::shared_ptr<Component> obj) {return obj.get() == component; }), components.end());
+		}
+
+		ENGINE_API void RemoveComponent(std::weak_ptr<Component> component)
+		{
+			std::ostringstream message;
+			auto componentPtr = component.lock();
+			message << "Deleting component: " << std::string(typeid(componentPtr).name()) << " " << componentPtr;
+			LOG_INFO(message.str());
+			components.erase(std::remove_if(components.begin(), components.end(),
+				[componentPtr](std::shared_ptr<Component> obj) {return obj == componentPtr; }), components.end());
 		}
 
 		template<typename T>
@@ -69,9 +79,9 @@ namespace MaxrEngine
 		{
 			for (const auto& component : components)
 			{
-				if (auto casted = dynamic_cast<T*>(component))
+				if (auto casted = std::dynamic_pointer_cast<T>(component))
 				{
-					return casted;
+					return casted.get();
 				}
 			}
 			std::ostringstream message;
@@ -79,6 +89,22 @@ namespace MaxrEngine
 			LOG_INFO(message.str());
 			return nullptr;
 		};
+
+		template<typename T>
+		std::weak_ptr<T> GetComponentWeakPtr() const
+		{
+			for (const auto& component : components)
+			{
+				if (auto casted = std::dynamic_pointer_cast<T>(component))
+				{
+					return casted;
+				}
+			}
+			std::ostringstream message;
+			message << typeid(T).name() << " component not found";
+			LOG_INFO(message.str());
+			return std::weak_ptr<T>();
+		}
 
 		template<typename T>
 		T* GetComponentInChildren() const
@@ -99,7 +125,7 @@ namespace MaxrEngine
 			}
 			std::ostringstream message;
 			message << typeid(T).name() << " component not found";
-			LOG_INFO(message);
+			LOG_INFO(message.str());
 			return nullptr;
 		}
 
@@ -109,16 +135,16 @@ namespace MaxrEngine
 			std::vector<T*> result;
 			for (const auto& component : components)
 			{
-				if (auto casted = dynamic_cast<T*>(component))
+				if (auto casted = std::dynamic_pointer_cast<T>(component))
 				{
-					result.push_back(casted);
+					result.push_back(casted.get());
 				}
 			}
 			return result;
 		}
 
 	private:
-		std::vector<Component*> components = {};
+		std::vector<std::shared_ptr<Component>> components = {};
 		std::string name;
 		std::vector<GameObject*> children = {};
 	};

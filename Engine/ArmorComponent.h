@@ -8,8 +8,8 @@ namespace MaxrEngine
 	public:
 		ArmorComponent(GameObject* gameObject);
 
-		virtual void Update(float deltaTime);
-		virtual void Render();
+		virtual void Update(float deltaTime) override;
+		virtual void Render() override;
 
 		virtual void SetMaxArmorPoints(const int newMaxArmorPoints);
 		int GetMaxArmorPoints() const;

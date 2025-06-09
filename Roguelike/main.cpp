@@ -30,8 +30,8 @@ int main()
 	MaxrEngine::ResourceSystem::Instance()->LoadTextureMap("WallTextures", settings->textureMapsPath + "Wall.png", {16, 16}, 48, false);
 	MaxrEngine::ResourceSystem::Instance()->LoadTextureMap("FloorTextures", settings->textureMapsPath + "Floor.png", { 16, 16 }, 49, false);
 	MaxrEngine::ResourceSystem::Instance()->LoadTexture("Ball", settings->texturePath + "Ball.png", false);
-	MaxrEngine::ResourceSystem::Instance()->LoadMusic("background", "Resources/Sounds/Clinthammer__Background_Music.wav");
-	MaxrEngine::ResourceSystem::Instance()->DeleteSharedTexture("Some");
+	MaxrEngine::ResourceSystem::Instance()->LoadMusic("background", settings->soundPath + "Clinthammer__Background_Music.wav");
+	MaxrEngine::ResourceSystem::Instance()->LoadFont("default", settings->fontPath + "Roboto-Regular.ttf");
 
 	auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();
 	developerLevel->Start();

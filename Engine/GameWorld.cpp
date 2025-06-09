@@ -20,12 +20,15 @@ namespace MaxrEngine
 
 	void GameWorld::FixedUpdate(float deltaTime)
 	{
-		fixedCounter += deltaTime;
-		if (fixedCounter > PhysicsSystem::Instance()->GetFixedDeltaTime())
+		for (auto& system : fixedUpdateSystems)
 		{
-			fixedCounter -= PhysicsSystem::Instance()->GetFixedDeltaTime();
-			PhysicsSystem::Instance()->Update();
-		}
+			system.second += deltaTime;
+			if (system.second >= system.first->GetFixedUpdateTime())
+			{
+				system.first->Update();
+				system.second -= system.first->GetFixedUpdateTime();
+			}
+		}		
 	}
 
 	void GameWorld::Render()
@@ -71,6 +74,20 @@ namespace MaxrEngine
 		}
 	}
 
+	ENGINE_API void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSytem* system)
+	{
+		fixedUpdateSystems[system] = 0.f;
+	}
+
+	ENGINE_API void GameWorld::UnRegisterFixedUpdateSytem(IFixedUpdateSytem* system)
+	{
+		auto it = fixedUpdateSystems.find(system);
+		if (it != fixedUpdateSystems.end())
+		{
+			fixedUpdateSystems.erase(it);
+		}
+	}
+
 	void GameWorld::Print() const
 	{
 		for (auto& obj : gameObjects)
@@ -92,9 +109,9 @@ namespace MaxrEngine
 			[gameObject](GameObject* obj) {return obj == gameObject; }), gameObjects.end());
 		markedToDestroyGameObjects.erase(std::remove_if(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), 
 			[gameObject](GameObject* obj) {return obj == gameObject; }), markedToDestroyGameObjects.end());
-		delete gameObject;
 		std::ostringstream message;
 		message << gameObject << " deleted";
 		LOG_INFO(message.str());
+		delete gameObject;
 	}
 }
