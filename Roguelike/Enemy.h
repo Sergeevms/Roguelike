@@ -8,7 +8,6 @@ namespace Roguelike
 	{
 	public:
 		Enemy();
-		MaxrEngine::Vector2Df target;
 	};
 
 }

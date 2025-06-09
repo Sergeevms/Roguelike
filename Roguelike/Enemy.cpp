@@ -14,6 +14,7 @@
 #include "ArmorComponent.h"
 #include "ActorComponent.h"
 #include "AIPerceptionComponent.h"
+#include "PerceptionComponentDebugDraw.h"
 
 namespace Roguelike
 {
@@ -29,7 +30,7 @@ namespace Roguelike
 		auto input = gameObject->AddComponent<MaxrEngine::AIInputComponent>();
 
 		auto enemyMovement = gameObject->AddComponent<MaxrEngine::MovementComponent>();
-		enemyMovement->SetSpeed(settings->playerSpeed * 0.5f);
+		enemyMovement->SetSpeed(settings->enemySpeed);
 		
 		auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
 		body->SetKinematic(false);
@@ -43,11 +44,13 @@ namespace Roguelike
 		gameObject->AddComponent<AIBlackboard>();
 
 		auto perceptionComponent = gameObject->AddComponent<AIPerceptionComponent>();
-		perceptionComponent->SetSenseRadius(150.f);
-		perceptionComponent->SetVisionRadius(250.f);
-		perceptionComponent->SetVisionAngle(180.f);
+		perceptionComponent->SetSenseRadius(settings->enemySenseRadius);
+		perceptionComponent->SetVisionRadius(settings->enemyVisionRadius);
+		perceptionComponent->SetVisionAngle(settings->enemyVisionAngle);
 		perceptionComponent->SetVisionDirection({ -1.f, 0.f });
 		input->AddObserver(perceptionComponent);
+
+		auto perceptionDebugDraw = gameObject->AddComponent<MaxrEngine::PerceptionComponentDebugDraw>();
 
 		auto targetSelector = gameObject->AddComponent<AITargetSelector>();
 

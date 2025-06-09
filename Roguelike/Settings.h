@@ -30,8 +30,10 @@ namespace Roguelike
 
 		int playerSize;
 		float playerSpeed;
-		float enemySpeed;
-		float enemyDetectionRadius;
+		float enemySpeed;		
+		float enemyVisionRadius;
+		float enemyVisionAngle;
+		float enemySenseRadius;
 		float enemyChaseMaxRadius;
 		float enemyChaseMinRadius;
 		int mapTileSize;

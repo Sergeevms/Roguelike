@@ -28,7 +28,7 @@ namespace Roguelike
 		std::map<float, MaxrEngine::GameObject*> targets;
 		if (detectedActors)
 		{
-			auto position = gameObject->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition();
+			auto& position = gameObject->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition();
 			for (auto& actor : *detectedActors)
 			{
 				if (actor->GetComponent<MaxrEngine::ActorComponent>()->GetGroupID() == ActorsGroups::PlayerGroup)

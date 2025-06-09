@@ -129,6 +129,12 @@
     <ClInclude Include="IObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PerceptionComponentDebugDraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteOpaqueComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -234,6 +240,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IObserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PerceptionComponentDebugDraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteOpaqueComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

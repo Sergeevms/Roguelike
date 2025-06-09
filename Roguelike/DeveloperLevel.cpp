@@ -2,8 +2,6 @@
 #include "GameWorld.h"
 #include "Settings.h"
 #include "LabyrinthBuilder.h"
-#include "AITargetSearchComponent.h"
-#include "AIChaseTargetComponent.h"
 
 namespace Roguelike
 {
@@ -24,7 +22,7 @@ namespace Roguelike
         enemy = std::make_shared<Enemy>();
         
         auto enemyTransform = enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
-        enemyTransform->SetWorldPosition({ 7.f * settings->playerSize, 7.f * settings->playerSize });
+        enemyTransform->SetWorldPosition({ 8.f * settings->playerSize, 2.f * settings->playerSize });
     }
 
     void DeveloperLevel::Restart()

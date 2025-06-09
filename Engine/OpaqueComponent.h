@@ -9,7 +9,11 @@ namespace MaxrEngine
 		public Component
 	{
 	public:
-		OpaqueComponent(GameObject* gameObject);
+		ENGINE_API OpaqueComponent(GameObject* gameObject);
+		ENGINE_API ~OpaqueComponent();
+
+		ENGINE_API virtual void Update(float deltaTime) override;
+		ENGINE_API virtual void Render() override;
 		friend class PerceptionSystem;
 	protected:
 		sf::FloatRect bounds;

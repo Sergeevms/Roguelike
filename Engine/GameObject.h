@@ -103,7 +103,7 @@ namespace MaxrEngine
 			std::ostringstream message;
 			message << typeid(T).name() << " component not found";
 			LOG_INFO(message.str());
-			return nullptr;
+			return std::weak_ptr<T>();
 		}
 
 		template<typename T>

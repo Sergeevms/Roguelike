@@ -17,9 +17,11 @@ namespace Roguelike
 		playerSpeed = 400.f;
 		mapTileSize = 36;
 
-		enemySpeed = 350.f;
-		enemyDetectionRadius = 250.f;
-		enemyChaseMaxRadius = 250.f;
+		enemySpeed = playerSpeed / 2.f;
+		enemyVisionRadius = 300.f;
+		enemyVisionAngle = 145.f;
+		enemySenseRadius = 150.f;
+		enemyChaseMaxRadius = enemyVisionRadius;
 		enemyChaseMinRadius = 20.f;
 
 		playerHealth = 200;

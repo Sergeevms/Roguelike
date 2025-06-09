@@ -22,24 +22,24 @@ namespace MaxrEngine
 		}
 	}
 
-	bool PerceptionSystem::CanDetect(PerceptionComponent* perception, GameObject* target) const
+	bool PerceptionSystem::CanDetect(PerceptionComponent* perceptionComponent, GameObject* target) const
 	{
-		auto perceptionPosition = perception->GetTransform()->GetWorldPosition();
-		auto targetPosition = target->GetComponent<TransformComponent>()->GetWorldPosition();
+		auto& perceptionPosition = perceptionComponent->GetTransform()->GetWorldPosition();
+		auto& targetPosition = target->GetComponent<TransformComponent>()->GetWorldPosition();
 		Vector2Df betweenVector = targetPosition - perceptionPosition;
 		float distance = betweenVector.GetLength();
-		if (distance <= perception->GetSenseRadius())
+		if (distance <= perceptionComponent->GetSenseRadius())
 		{
 			return true;
 		}
-		if (distance > perception->GetVisionRadius())
+		if (distance > perceptionComponent->GetVisionRadius())
 		{
 			return false;
 		}
 		else
 		{
-			float angle = AngleDegree(perception->GetVisionDirection(), betweenVector);
-			if (angle > perception->GetVisionAngle() / 2.f)
+			float angle = AngleDegree(perceptionComponent->GetVisionDirection(), betweenVector);
+			if (angle > perceptionComponent->GetVisionAngle() / 2.f)
 			{
 				return false;
 			}
@@ -50,56 +50,30 @@ namespace MaxrEngine
 	bool MaxrEngine::PerceptionSystem::LineClear(const Vector2Df& startPoint, const Vector2Df& endPoint) const
 	{
 		auto direction = endPoint - startPoint;
-		bool parallelToXAxis = std::abs(direction.x) < std::numeric_limits<float>::epsilon();
-		float invDirX = parallelToXAxis ? std::numeric_limits<float>::infinity() : 1.f / direction.x;
-		bool parallelToYAxis = std::abs(direction.y) < std::numeric_limits<float>::epsilon();
-		float invDirY = parallelToYAxis ? std::numeric_limits<float>::infinity() : 1.f / direction.y;
+		auto directionLength = direction.GetLength();
+		direction = Normalized(direction);
+		float invDirX = 1.f / direction.x;
+		bool positiveX = invDirX >= 0.f;
+		float invDirY = 1.f / direction.y;
+		bool positiveY = invDirY >= 0.f;
 
-		for (auto& opacque : opaqueComponents)
+		for (auto& opaque : opaqueComponents)
 		{
 			float tMin = 0.f;
-			float tMax = std::numeric_limits<float>::max();
-
-			if (parallelToXAxis)
+			float tMax = directionLength;
+			float tMinX = ((positiveX ? opaque->bounds.left : opaque->bounds.left + opaque->bounds.width) - startPoint.x) * invDirX;
+			float tMaxX = ((positiveX ? opaque->bounds.left + opaque->bounds.width : opaque->bounds.left) - startPoint.x) * invDirX;
+			if (tMin > tMaxX || tMax < tMinX)
 			{
-				if (startPoint.x < opacque->bounds.left || startPoint.x > opacque->bounds.left + opacque->bounds.width)
-				{
-					continue;
-				}
+				continue;
 			}
-			else
+			tMin = std::max(tMin, tMinX);
+			tMax = std::min(tMax, tMaxX);
+			float tMinY = ((positiveY ? opaque->bounds.top : opaque->bounds.top + opaque->bounds.height) - startPoint.y) * invDirY;
+			float tMaxY = ((positiveY ? opaque->bounds.top + opaque->bounds.height : opaque->bounds.top) - startPoint.y) * invDirY;
+			if (tMin > tMaxY || tMax < tMinY)
 			{
-				float t1 = (opacque->bounds.left - startPoint.x) * invDirX;
-				float t2 = (opacque->bounds.left + opacque->bounds.width - startPoint.x) * invDirX;
-
-				tMin = std::max(tMin, std::min(t1, t2));
-				tMax = std::min(tMax, std::max(t1, t2));
-
-				if (tMax < tMin)
-				{
-					continue;
-				}
-			}
-
-			if (parallelToYAxis)
-			{
-				if (startPoint.y < opacque->bounds.top || startPoint.y > opacque->bounds.top + opacque->bounds.height)
-				{
-					continue;
-				}
-			}
-			else
-			{			
-				float t1 = (opacque->bounds.top - startPoint.x) * invDirX;
-				float t2 = (opacque->bounds.top + opacque->bounds.height - startPoint.x) * invDirX;
-
-				tMin = std::max(tMin, std::min(t1, t2));
-				tMax = std::min(tMax, std::max(t1, t2));
-
-				if (tMax < tMin)
-				{
-					continue;
-				}			
+				continue;
 			}
 			return false;
 		}

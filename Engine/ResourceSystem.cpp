@@ -283,6 +283,73 @@ namespace MaxrEngine
 		}
 	}
 
+	void ResourceSystem::LoadFont(const std::string& name, std::string sourcePath)
+	{
+		if (fonts.contains(name))
+		{
+			LOG_WARN(name + " font already loaded");
+			return;
+		}
+
+		sf::Font* font = new sf::Font();
+		assert(font->loadFromFile(sourcePath) && "Font not loaded");
+		if (font->loadFromFile(sourcePath))
+		{
+			fonts.emplace(std::pair<std::string, sf::Font*>(name, font));
+		}
+		else
+		{
+			LOG_WARN(name + " font not loaded from " + sourcePath);
+			delete font;
+		}
+	}
+
+	const sf::Font* ResourceSystem::GetFontShared(const std::string& name) const
+	{
+		auto fontPair = fonts.find(name);
+		assert(fontPair != fonts.end() && "Font not loaded");
+		if (fontPair != fonts.end())
+		{
+			return fontPair->second;
+		}
+		else
+		{
+			LOG_WARN(name + " font not loaded");
+			return nullptr;
+		}
+	}
+
+	ENGINE_API sf::Font* ResourceSystem::GetFontCopy(const std::string& name) const
+	{
+		auto fontPair = fonts.find(name);
+		assert(fontPair != fonts.end() && "Font not loaded");
+		if (fontPair != fonts.end())
+		{
+			sf::Font* newFont = new sf::Font(*fontPair->second);
+			return newFont;
+		}
+		else
+		{
+			LOG_WARN(name + " font not loaded");
+			return nullptr;
+		}
+	}
+
+	ENGINE_API void ResourceSystem::DeleteFont(const std::string& name)
+	{
+		auto fontPair = fonts.find(name);
+		assert(fontPair != fonts.end() && "Sound not loaded");
+		if (fontPair != fonts.end())
+		{
+			delete fontPair->second;
+			fonts.erase(fontPair);
+		}
+		else
+		{
+			LOG_WARN(name + " sound not loaded before delete attempt")
+		}
+	}
+
 	void ResourceSystem::LoadMusic(const std::string& name, std::string sourcePath)
 	{
 		if (musics.contains(name))
@@ -338,6 +405,7 @@ namespace MaxrEngine
 		DeleteAllTextureMaps();
 		DeleteAllSounds();
 		DeleteAllMusics();
+		DeleteAllFonts();
 	}
 
 	void ResourceSystem::DeleteAllTextures()
@@ -375,7 +443,7 @@ namespace MaxrEngine
 		}
 		for (const auto& key : keysToDelete)
 		{
-			DeleteSharedTextureMap(key);
+			DeleteSound(key);
 		}
 	}
 
@@ -388,7 +456,20 @@ namespace MaxrEngine
 		}
 		for (const auto& key : keysToDelete)
 		{
-			DeleteSharedTextureMap(key);
+			DeleteMusic(key);
+		}
+	}
+
+	void ResourceSystem::DeleteAllFonts()
+	{
+		std::vector<std::string> keysToDelete;
+		for (const auto& fontPair : fonts)
+		{
+			keysToDelete.push_back(fontPair.first);
+		}
+		for (const auto& key : keysToDelete)
+		{
+			DeleteFont(key);
 		}
 	}
 }

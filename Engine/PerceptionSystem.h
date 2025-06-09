@@ -15,7 +15,7 @@ namespace MaxrEngine
 		static PerceptionSystem* Instance();
 
 		void Update() override;
-		bool CanDetect(PerceptionComponent* perception, GameObject* target) const;
+		bool CanDetect(PerceptionComponent* perceptionComponent, GameObject* target) const;
 		bool LineClear(const Vector2Df& startPoint, const Vector2Df& endPoint) const;
 
 		void RegisterOpaqueComponent(OpaqueComponent* component);

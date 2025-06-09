@@ -31,6 +31,6 @@ namespace MaxrEngine
 
 	Vector2Df AIInputComponent::GetDirection() const
 	{
-		return { verticalAxis, horizontalAxis };
+		return { horizontalAxis, verticalAxis  };
 	}
 }

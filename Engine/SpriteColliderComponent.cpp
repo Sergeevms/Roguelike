@@ -6,12 +6,12 @@
 
 namespace MaxrEngine
 {
-	SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject) : ColliderComponent(gameObject)
+	SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject) : ColliderComponent(gameObject), sprite(nullptr)
 	{
 		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 		if (spriteRenderer == nullptr)
 		{
-			LOG_ERROR("SpriteRendererComponent required to SpriteCollidedComponent.");
+			LOG_ERROR("SpriteRendererComponent required to SpriteColliderComponent.");
 			gameObject->RemoveComponent(this);
 			return;
 		}
