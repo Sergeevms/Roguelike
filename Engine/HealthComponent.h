@@ -12,18 +12,18 @@ namespace MaxrEngine
 		virtual void Render() override;
 
 		//Set maxHealth & currentHealth to newMaxHealth
-		virtual void SetMaxHealth(const int newMaxHealth);
-		int GetMaxHealth() const;
+		virtual void SetMaxHealth(const float newMaxHealth);
+		float GetMaxHealth() const;
 
 		int GetCurrentHealth() const;
 		//Decrease health and return overdamage 
-		virtual int DecreaseHealth(const int damageAmount);
+		virtual float DecreaseHealth(const float damageAmount);
 		//Increase health and return overheal
-		virtual int IncreaseHealth(const int healingAmount);
+		virtual float IncreaseHealth(const float healingAmount);
 		bool IsAlive() const;
 	protected:
-		int maxHealth = 0;
-		int currentHealth = 0;
+		float maxHealth = 0.f;
+		float currentHealth = 0.f;
 	};
 }
 

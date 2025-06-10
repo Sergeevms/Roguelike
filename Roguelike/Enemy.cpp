@@ -15,6 +15,7 @@
 #include "ActorComponent.h"
 #include "AIPerceptionComponent.h"
 #include "PerceptionComponentDebugDraw.h"
+#include "AtackComponent.h"
 
 namespace Roguelike
 {
@@ -64,6 +65,8 @@ namespace Roguelike
 		armor->SetMaxArmorPoints(settings->enemyHealth);
 
 		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
-		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);		
+		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
+		auto atackComponent = gameObject->AddComponent<MaxrEngine::AtackComponent>();
+		input->AddObserver(atackComponent);
 	}
 }

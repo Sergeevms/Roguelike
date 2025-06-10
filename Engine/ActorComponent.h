@@ -7,7 +7,7 @@ namespace MaxrEngine
 		public Component
 	{
 	public:
-		ActorComponent(GameObject* gameObject);
+		ActorComponent(GameObject* gameObject, int groupID = 0);
 		~ActorComponent();
 
 		virtual void Update(float deltaTime);
@@ -16,6 +16,6 @@ namespace MaxrEngine
 		int GetGroupID() const;
 		void SetGroupID(const int newGroupID);
 	private:
-		int groupID = 0;
+		int groupID;
 	};
 }

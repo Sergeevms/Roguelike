@@ -30,8 +30,8 @@ namespace MaxrEngine
 		ENGINE_API void AddChild(GameObject* child);
 		ENGINE_API void RemoveChild(GameObject* child);
 
-		template<typename T>
-		std::shared_ptr<T> AddComponent()
+		template<typename T, typename... ArgsT>
+		std::shared_ptr<T> AddComponent(ArgsT... args)
 		{
 			if constexpr (!std::is_base_of<Component, T>::value)
 			{
@@ -47,7 +47,7 @@ namespace MaxrEngine
 					return nullptr;
 				}
 			}			
-			std::shared_ptr<T> newComponent = std::make_shared<T>(this);
+			std::shared_ptr<T> newComponent = std::make_shared<T>(this, args...);
 			components.emplace_back(newComponent);
 			std::ostringstream message;
 			message << "Added new component: " << std::string(typeid(*newComponent).name()) << " " << newComponent;

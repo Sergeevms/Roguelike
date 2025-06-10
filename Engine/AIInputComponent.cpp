@@ -14,15 +14,15 @@ namespace MaxrEngine
 	{		
 	}
 
-	void MaxrEngine::AIInputComponent::SetDirection(Vector2Df direction)
+	void MaxrEngine::AIInputComponent::SetDirection(Vector2Df newDirection)
 	{
-		auto length = direction.GetLength();
+		auto length = newDirection.GetLength();
 		if (length > 1.f)
 		{
-			direction *= 1.f / direction.GetLength();
+			newDirection *= 1.f / newDirection.GetLength();
 		}		
-		verticalAxis = direction.y;
-		horizontalAxis = direction.x;
+		verticalAxis = newDirection.y;
+		horizontalAxis = newDirection.x;
 		if (length > 0.f)
 		{
 			Emit();
@@ -32,5 +32,14 @@ namespace MaxrEngine
 	Vector2Df AIInputComponent::GetDirection() const
 	{
 		return { horizontalAxis, verticalAxis  };
+	}
+
+	void AIInputComponent::SetAtack(const bool newAtack)
+	{
+		atack = newAtack;
+		if (atack)
+		{
+			Emit();
+		}
 	}
 }

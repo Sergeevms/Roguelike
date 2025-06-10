@@ -24,9 +24,12 @@ namespace Roguelike
 		enemyChaseMaxRadius = enemyVisionRadius;
 		enemyChaseMinRadius = 20.f;
 
-		playerHealth = 200;
-		enemyHealth = 100;
+		playerHealth = 200.f;
+		enemyHealth = 100.f;
 		armorDamageReduction = 0.75f;
+		atackRange = 75.f;
+		atackCooldown = 2.f;
+		atackDamage = 30.f;
 	}
 
 	MaxrEngine::Vector2Df Settings::ScreenCenter()

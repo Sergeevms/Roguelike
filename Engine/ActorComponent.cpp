@@ -5,8 +5,8 @@
 
 namespace MaxrEngine
 {
-	ActorComponent::ActorComponent(GameObject* gameObject)
-		: Component(gameObject)
+	MaxrEngine::ActorComponent::ActorComponent(GameObject* gameObject, int groupID)
+		: Component(gameObject), groupID(groupID)
 	{
 		if (gameObject->GetComponent<ActorComponent>() != nullptr)
 		{

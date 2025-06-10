@@ -1,23 +1,26 @@
 #pragma once
 #include "Component.h"
 #include "EngineAPI.h"
+#include "IObserver.h"
 
 namespace MaxrEngine
 {
-	class ENGINE_API InputComponent :
-		public Component
+	class InputComponent :
+		public Component, public IObservable
 	{
 	public:
-		InputComponent(GameObject* gameObject);
+		ENGINE_API InputComponent(GameObject* gameObject);
 
-		virtual void Update(float deltaTime) = 0;
-		virtual void Render() override;
+		ENGINE_API virtual void Update(float deltaTime) = 0;
+		ENGINE_API virtual void Render() override;
 
-		float GetHorizontalAxis() const;
-		float GetVerticalAxis() const;
+		ENGINE_API float GetHorizontalAxis() const;
+		ENGINE_API float GetVerticalAxis() const;
+		ENGINE_API bool getAtack() const;
 	protected:
 		float horizontalAxis = 0.f;
 		float verticalAxis = 0.f;
+		bool atack = false;
 	};
 }
 

@@ -11,22 +11,22 @@ namespace MaxrEngine
 		virtual void Update(float deltaTime) override;
 		virtual void Render() override;
 
-		virtual void SetMaxArmorPoints(const int newMaxArmorPoints);
-		int GetMaxArmorPoints() const;
+		virtual void SetMaxArmorPoints(const float newMaxArmorPoints);
+		float GetMaxArmorPoints() const;
 
 		//Sets damage reduction in 0.f - 1.f range
 		//1.f for absorbing 100% at each damage applies, 0.1f for absorbing 10% of damage applied and 90% moving throw armor
 		void SetDamageReduction(const float newDamageReduction);
 
-		int GetCurrentArmorPoints() const;
+		float GetCurrentArmorPoints() const;
 		//Return damage gone throw armor 
-		virtual int ApplyDamage(const int damageAmount);
+		virtual float ApplyDamage(const float damageAmount);
 		//Increase armorPoints
-		virtual int IncreaseArmorPoints(const int armorPointAmount);
+		virtual float IncreaseArmorPoints(const float armorPointAmount);
 		bool IsNotBroken() const;
 	protected:
-		int maxArmorPoints = 0;
-		int currentArmorPoints = 0;
+		float maxArmorPoints = 0;
+		float currentArmorPoints = 0;
 		float damageReduction = 1.f;
 	};
 }

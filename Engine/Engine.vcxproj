@@ -183,6 +183,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AtackComponent.h" />
+    <ClInclude Include="AtackSystem.h" />
     <ClInclude Include="PerceptionComponentDebugDraw.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="ActorComponent.h" />
@@ -225,6 +227,8 @@
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AtackComponent.cpp" />
+    <ClCompile Include="AtackSystem.cpp" />
     <ClCompile Include="PerceptionComponentDebugDraw.cpp" />
     <ClCompile Include="IObserver.cpp" />
     <ClCompile Include="AITypedBlackboardComponent.cpp" />

@@ -135,6 +135,12 @@
     <ClInclude Include="SpriteOpaqueComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AtackComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AtackSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -246,6 +252,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpriteOpaqueComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AtackComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AtackSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

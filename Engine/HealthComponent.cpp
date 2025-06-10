@@ -17,10 +17,10 @@ namespace MaxrEngine
 	{
 	}
 
-	void HealthComponent::SetMaxHealth(const int newMaxHealth)
+	void MaxrEngine::HealthComponent::SetMaxHealth(const float newMaxHealth)
 	{
-		assert(newMaxHealth >= 0 && "maxHealth supposed to be positive");
-		if (newMaxHealth < 0)
+		assert(newMaxHealth >= 0.f && "maxHealth supposed to be positive");
+		if (newMaxHealth < 0.f)
 		{
 			LOG_WARN("maxHealth supposed to be positive")
 		}
@@ -28,7 +28,7 @@ namespace MaxrEngine
 		currentHealth = maxHealth;
 	}
 
-	int HealthComponent::GetMaxHealth() const
+	float MaxrEngine::HealthComponent::GetMaxHealth() const
 	{
 		return maxHealth;
 	}
@@ -38,30 +38,30 @@ namespace MaxrEngine
 		return currentHealth;
 	}
 
-	int HealthComponent::DecreaseHealth(const int damageAmount)
+	float MaxrEngine::HealthComponent::DecreaseHealth(const float damageAmount)
 	{
 		std::ostringstream message;
 		message << this << " recieved " << damageAmount << " damage ";
 		LOG_INFO(message.str());
 
-		if (currentHealth <= 0)
+		if (currentHealth <= 0.f)
 		{
 			message.clear();
-			message << "Trying to damage " << this << " which has 0 HP will have no effect";
+			message << "Trying to damage " << this << " which has 0.f HP will have no effect";
 			LOG_WARN(message.str());
 		}
 
 		currentHealth -= damageAmount;
-		if (currentHealth < 0)
+		if (currentHealth < 0.f)
 		{
 			int overDamage = -currentHealth;
-			currentHealth = 0;
+			currentHealth = 0.f;
 			return overDamage;
 		}
 		return 0;
 	}
 
-	int HealthComponent::IncreaseHealth(const int healingAmount)
+	float MaxrEngine::HealthComponent::IncreaseHealth(const float healingAmount)
 	{
 		std::ostringstream message;
 		message << this << " recieved " << healingAmount << " healing ";
@@ -85,11 +85,11 @@ namespace MaxrEngine
 			message.clear();
 			return overHeal;
 		}
-		return 0;
+		return 0.f;
 	}
 
 	bool HealthComponent::IsAlive() const
 	{
-		return currentHealth > 0;
+		return currentHealth > 0.f;
 	}
 }

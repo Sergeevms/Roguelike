@@ -2,13 +2,13 @@
 #include "InputComponent.h"
 namespace MaxrEngine
 {
-	class ENGINE_API KeyboardInputComponent :
+	class KeyboardInputComponent :
 		public InputComponent
 	{
 	public:
-		KeyboardInputComponent(GameObject* gameObject);
+		ENGINE_API KeyboardInputComponent(GameObject* gameObject);
 
-		virtual void Update(float deltaTime) override;
+		ENGINE_API virtual void Update(float deltaTime) override;
 	};
 }
 

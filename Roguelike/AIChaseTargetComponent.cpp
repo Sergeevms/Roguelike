@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Utility.h"
 #include "AIInputComponent.h"
+#include <AtackComponent.h>
 
 namespace Roguelike
 {
@@ -19,18 +20,24 @@ namespace Roguelike
 		if (blackBoard->Get("isTargetVisible", isTargetVisible) && isTargetVisible)
 		{
 			auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
-			MaxrEngine::Vector2Df lastTargetPosition;
-			if (blackBoard->Get("lastTargetPosition", lastTargetPosition))
+			MaxrEngine::GameObject* target;
+			if (blackBoard->Get("lastTarget", target))
 			{
-				auto betweenVector = lastTargetPosition - transform->GetWorldPosition();
-				if (InRange(betweenVector.GetLength(), minumumChaseRadius, maximumChaseRadius))
+				auto inputComponent = gameObject->GetComponent<MaxrEngine::AIInputComponent>();
+				auto betweenVector = target->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
+				auto distance = betweenVector.GetLength();
+				if (InRange(distance, minumumChaseRadius, maximumChaseRadius))
 				{
 					movingDirection = betweenVector;
+					inputComponent->SetDirection(movingDirection);
+				}
+				auto atackRange = gameObject->GetComponent<MaxrEngine::AtackComponent>()->GetRange();
+				if (InRange(distance, 0.f, atackRange))
+				{
+					inputComponent->SetAtack(true);
 				}
 			}
 		}
-		auto inputComponent = gameObject->GetComponent<MaxrEngine::AIInputComponent>();
-		inputComponent->SetDirection(movingDirection);
 	}
 
 	void AIChaseTargetComponent::Render()

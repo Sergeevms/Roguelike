@@ -13,6 +13,7 @@
 #include "KeyboardInputComponent.h"
 #include "Settings.h"
 #include "ActorComponent.h"
+#include "AtackComponent.h"
 
 namespace Roguelike
 {
@@ -29,7 +30,7 @@ namespace Roguelike
 		playerCamera->SetWindow(&MaxrEngine::RenderSystem::Instance()->GetMainWindow());
 		playerCamera->SetBaseResolution(settings->screenWidth, settings->screenHeight);
 
-		gameObject->AddComponent<MaxrEngine::KeyboardInputComponent>();
+		auto input = gameObject->AddComponent<MaxrEngine::KeyboardInputComponent>();
 
 		auto playerMovement = gameObject->AddComponent<MaxrEngine::MovementComponent>();
 		playerMovement->SetSpeed(settings->playerSpeed);
@@ -48,5 +49,8 @@ namespace Roguelike
 
 		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::PlayerGroup);
+
+		auto atackComponent = gameObject->AddComponent<MaxrEngine::AtackComponent>();
+		input->AddObserver(atackComponent);
 	}
 }
