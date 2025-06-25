@@ -13,7 +13,7 @@
 #include "KeyboardInputComponent.h"
 #include "Settings.h"
 #include "ActorComponent.h"
-#include "AtackComponent.h"
+#include "PlayerAtackComponent.h"
 
 namespace Roguelike
 {
@@ -40,17 +40,14 @@ namespace Roguelike
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
 
-		auto health = gameObject->AddComponent<MaxrEngine::HealthComponent>();
-		health->SetMaxHealth(settings->playerHealth);
+		auto health = gameObject->AddComponent<HealthComponent>(settings->playerHealth);
 
-		auto armor = gameObject->AddComponent<MaxrEngine::ArmorComponent>();
-		armor->SetDamageReduction(settings->armorDamageReduction);
-		armor->SetMaxArmorPoints(settings->playerHealth);
+		auto armor = gameObject->AddComponent<ArmorComponent>(settings->playerHealth, settings->armorDamageReduction);
 
-		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
+		auto actorComponent = gameObject->AddComponent<ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::PlayerGroup);
 
-		auto atackComponent = gameObject->AddComponent<MaxrEngine::AtackComponent>();
+		auto atackComponent = gameObject->AddComponent<PlayerAtackComponent>(settings->atackCooldown, settings->atackDamage, settings->atackRange);
 		input->AddObserver(atackComponent);
 	}
 }

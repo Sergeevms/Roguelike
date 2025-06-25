@@ -15,7 +15,7 @@
 #include "ActorComponent.h"
 #include "AIPerceptionComponent.h"
 #include "PerceptionComponentDebugDraw.h"
-#include "AtackComponent.h"
+#include "AIAtackComponent.h"
 
 namespace Roguelike
 {
@@ -51,22 +51,20 @@ namespace Roguelike
 		perceptionComponent->SetVisionDirection({ -1.f, 0.f });
 		input->AddObserver(perceptionComponent);
 
-		auto perceptionDebugDraw = gameObject->AddComponent<MaxrEngine::PerceptionComponentDebugDraw>();
+		auto perceptionDebugDraw = gameObject->AddComponent<PerceptionComponentDebugDraw>();
 
 		auto targetSelector = gameObject->AddComponent<AITargetSelector>();
 
 		perceptionComponent->AddObserver(targetSelector);
 		
-		auto health = gameObject->AddComponent<MaxrEngine::HealthComponent>();
-		health->SetMaxHealth(settings->enemyHealth);
+		auto health = gameObject->AddComponent<HealthComponent>(settings->enemyHealth);
 
-		auto armor = gameObject->AddComponent<MaxrEngine::ArmorComponent>();
+		auto armor = gameObject->AddComponent<ArmorComponent>();
 		armor->SetDamageReduction(settings->armorDamageReduction);
 		armor->SetMaxArmorPoints(settings->enemyHealth);
 
-		auto actorComponent = gameObject->AddComponent<MaxrEngine::ActorComponent>();
+		auto actorComponent = gameObject->AddComponent<ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
-		auto atackComponent = gameObject->AddComponent<MaxrEngine::AtackComponent>();
-		input->AddObserver(atackComponent);
+		auto atackComponent = gameObject->AddComponent<AIAtackComponent>(settings->atackCooldown, settings->atackDamage, settings->atackRange);
 	}
 }

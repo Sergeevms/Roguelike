@@ -3,9 +3,9 @@
 #include "ActorRegisterSystem.h"
 #include "GameObject.h"
 
-namespace MaxrEngine
+namespace Roguelike
 {
-	MaxrEngine::ActorComponent::ActorComponent(GameObject* gameObject, int groupID)
+	ActorComponent::ActorComponent(MaxrEngine::GameObject* gameObject, int groupID)
 		: Component(gameObject), groupID(groupID)
 	{
 		if (gameObject->GetComponent<ActorComponent>() != nullptr)

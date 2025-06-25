@@ -3,12 +3,12 @@
 #include "ActorRegisterSystem.h"
 #include "PerceptionSystem.h"
 
-namespace MaxrEngine
+namespace Roguelike
 {
-    PerceptionComponent::PerceptionComponent(GameObject* gameObject)
+    PerceptionComponent::PerceptionComponent(MaxrEngine::GameObject* gameObject)
         : Component(gameObject)
     {
-        transform = gameObject->GetComponent<TransformComponent>();
+        transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
         PerceptionSystem::Instance()->RegisterPerceptionComponent(this);
     }
 
@@ -55,7 +55,7 @@ namespace MaxrEngine
         return senseRadius;
     }
 
-    void PerceptionComponent::SetVisionDirection(const Vector2Df& newVisionDirection)
+    void PerceptionComponent::SetVisionDirection(const MaxrEngine::Vector2Df& newVisionDirection)
     {
         if (newVisionDirection.GetLength() > 0.f)
         {
@@ -67,12 +67,12 @@ namespace MaxrEngine
         }
     }
 
-    const Vector2Df& MaxrEngine::PerceptionComponent::GetVisionDirection() const
+    const MaxrEngine::Vector2Df& PerceptionComponent::GetVisionDirection() const
     {
         return visionDirection;
     }
 
-    const TransformComponent* PerceptionComponent::GetTransform() const
+    const MaxrEngine::TransformComponent* PerceptionComponent::GetTransform() const
     {
         return transform;
     }
@@ -83,7 +83,7 @@ namespace MaxrEngine
         UpdateDetectedActors(actors);
     }
 
-    void PerceptionComponent::UpdateDetectedActors(const std::vector<GameObject*>& actors)
+    void PerceptionComponent::UpdateDetectedActors(const std::vector<MaxrEngine::GameObject*>& actors)
     {
         detectedActors.clear();
         for (auto& actor : actors)
@@ -96,7 +96,7 @@ namespace MaxrEngine
         Emit();
     }
 
-    const std::vector<GameObject*>* PerceptionComponent::GetDetectedActors()
+    const std::vector<MaxrEngine::GameObject*>* PerceptionComponent::GetDetectedActors()
     {
         return &detectedActors;
     }

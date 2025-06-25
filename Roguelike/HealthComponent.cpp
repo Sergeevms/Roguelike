@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "HealthComponent.h"
+#include "GameObject.h"
 #include <cassert>
 
-namespace MaxrEngine
+namespace Roguelike
 {
-	HealthComponent::HealthComponent(GameObject* gameObject)
-		: Component(gameObject)
+	HealthComponent::HealthComponent(MaxrEngine::GameObject* gameObject, const float maxHealth)
+		: Component(gameObject), maxHealth(maxHealth), currentHealth(maxHealth)
 	{
 	}
 
@@ -17,7 +18,7 @@ namespace MaxrEngine
 	{
 	}
 
-	void MaxrEngine::HealthComponent::SetMaxHealth(const float newMaxHealth)
+	void HealthComponent::SetMaxHealth(const float newMaxHealth)
 	{
 		assert(newMaxHealth >= 0.f && "maxHealth supposed to be positive");
 		if (newMaxHealth < 0.f)
@@ -25,20 +26,24 @@ namespace MaxrEngine
 			LOG_WARN("maxHealth supposed to be positive")
 		}
 		maxHealth = newMaxHealth;
-		currentHealth = maxHealth;
 	}
 
-	float MaxrEngine::HealthComponent::GetMaxHealth() const
+	float HealthComponent::GetMaxHealth() const
 	{
 		return maxHealth;
 	}
 
-	int HealthComponent::GetCurrentHealth() const
+	void HealthComponent::SetCurrentHealth(const float newCurrentHealth)
+	{
+
+	}
+
+	float Roguelike::HealthComponent::GetCurrentHealth() const
 	{
 		return currentHealth;
 	}
 
-	float MaxrEngine::HealthComponent::DecreaseHealth(const float damageAmount)
+	float HealthComponent::DecreaseHealth(const float damageAmount)
 	{
 		std::ostringstream message;
 		message << this << " recieved " << damageAmount << " damage ";
@@ -54,14 +59,14 @@ namespace MaxrEngine
 		currentHealth -= damageAmount;
 		if (currentHealth < 0.f)
 		{
-			int overDamage = -currentHealth;
+			float overDamage = -currentHealth;
 			currentHealth = 0.f;
 			return overDamage;
 		}
 		return 0;
 	}
 
-	float MaxrEngine::HealthComponent::IncreaseHealth(const float healingAmount)
+	float HealthComponent::IncreaseHealth(const float healingAmount)
 	{
 		std::ostringstream message;
 		message << this << " recieved " << healingAmount << " healing ";
@@ -78,7 +83,7 @@ namespace MaxrEngine
 		currentHealth += healingAmount;
 		if (currentHealth > maxHealth)
 		{
-			int overHeal = currentHealth - maxHealth;
+			float overHeal = currentHealth - maxHealth;
 			currentHealth = maxHealth;
 			message << "Healing " << overHeal << " health points not applied due to going over maxHealth";
 			LOG_INFO(message.str());

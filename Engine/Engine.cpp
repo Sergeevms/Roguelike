@@ -51,6 +51,7 @@ namespace MaxrEngine
 
 			RenderSystem::Instance()->GetMainWindow().display();
 		}
+		GameWorld::Instance()->Clear();
 		LOG_INFO("Engine stopped");
 	}
 }

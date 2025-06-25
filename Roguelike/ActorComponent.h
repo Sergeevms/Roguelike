@@ -1,13 +1,13 @@
 #pragma once
 #include "Component.h"
 #include "EngineAPI.h"
-namespace MaxrEngine
+namespace Roguelike
 {
-	class ENGINE_API ActorComponent :
-		public Component
+	class ActorComponent :
+		public MaxrEngine::Component
 	{
 	public:
-		ActorComponent(GameObject* gameObject, int groupID = 0);
+		ActorComponent(MaxrEngine::GameObject* gameObject, int groupID = 0);
 		~ActorComponent();
 
 		virtual void Update(float deltaTime);

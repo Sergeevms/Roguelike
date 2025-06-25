@@ -35,8 +35,8 @@ int main()
 
 	auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();
 	developerLevel->Start();
-
 	MaxrEngine::Engine::Instance()->Run();
+	developerLevel->Stop();
 
 	return 0;
 }

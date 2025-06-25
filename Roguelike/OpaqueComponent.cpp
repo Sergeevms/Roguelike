@@ -4,9 +4,9 @@
 #include "ResourceSystem.h"
 #include "RenderSystem.h"
 
-namespace MaxrEngine
+namespace Roguelike
 {
-	OpaqueComponent::OpaqueComponent(GameObject* gameObject)
+	OpaqueComponent::OpaqueComponent(MaxrEngine::GameObject* gameObject)
 		: Component(gameObject)
 	{
 		PerceptionSystem::Instance()->RegisterOpaqueComponent(this);

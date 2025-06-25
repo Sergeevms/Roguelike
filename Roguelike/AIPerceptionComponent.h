@@ -4,7 +4,7 @@
 namespace Roguelike
 {
 	class AIPerceptionComponent :
-		public MaxrEngine::PerceptionComponent, public MaxrEngine::IObserver
+		public PerceptionComponent, public MaxrEngine::IObserver
 	{
 	public:
 		AIPerceptionComponent(MaxrEngine::GameObject* gameObject);

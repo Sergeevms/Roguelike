@@ -150,6 +150,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActorComponent.cpp" />
+    <ClCompile Include="ActorRegisterSystem.cpp" />
+    <ClCompile Include="ArmorComponent.cpp" />
+    <ClCompile Include="AtackComponent.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
+    <ClCompile Include="OpaqueComponent.cpp" />
+    <ClCompile Include="PerceptionComponent.cpp" />
+    <ClCompile Include="PerceptionComponentDebugDraw.cpp" />
+    <ClCompile Include="PerceptionSystem.cpp" />
+    <ClCompile Include="SpriteOpaqueComponent.cpp" />
+    <ClCompile Include="AIAtackComponent.cpp" />
     <ClCompile Include="AIChaseTargetComponent.cpp" />
     <ClCompile Include="AIBlackboard.cpp" />
     <ClCompile Include="AIPerceptionComponent.cpp" />
@@ -164,10 +175,22 @@
     <ClCompile Include="LabyrinthBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAtackComponent.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="ActorRegisterSystem.h" />
+    <ClInclude Include="ArmorComponent.h" />
+    <ClInclude Include="AtackComponent.h" />
+    <ClInclude Include="HealthComponent.h" />
+    <ClInclude Include="OpaqueComponent.h" />
+    <ClInclude Include="PerceptionComponent.h" />
+    <ClInclude Include="PerceptionComponentDebugDraw.h" />
+    <ClInclude Include="PerceptionSystem.h" />
+    <ClInclude Include="SpriteOpaqueComponent.h" />
+    <ClInclude Include="AIAtackComponent.h" />
     <ClInclude Include="AIChaseTargetComponent.h" />
     <ClInclude Include="AIBlackboard.h" />
     <ClInclude Include="AIPerceptionComponent.h" />
@@ -176,11 +199,13 @@
     <ClInclude Include="DeveloperLevel.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="GameObjectContainer.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="ISaveable.h" />
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="LabyrinthBuilder.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAtackComponent.h" />
     <ClInclude Include="Randomizer.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Utility.h" />

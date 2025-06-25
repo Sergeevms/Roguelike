@@ -1,22 +1,22 @@
 #include "pch.h"
 #include "ActorRegisterSystem.h"
 #include "GameObject.h"
-namespace MaxrEngine
+namespace Roguelike
 {
-	ActorRegisterSystem* MaxrEngine::ActorRegisterSystem::Instance()
+	ActorRegisterSystem* ActorRegisterSystem::Instance()
 	{
 		static ActorRegisterSystem instance;
 		return &instance;
 	}
 
-	const std::vector<GameObject*>& ActorRegisterSystem::GetActorsList()
+	const std::vector<MaxrEngine::GameObject*>& ActorRegisterSystem::GetActorsList()
 	{
 		return actors;
 	}
 
-	std::vector<GameObject*> ActorRegisterSystem::GetActorsInGroupList(const int groupID)
+	std::vector<MaxrEngine::GameObject*> ActorRegisterSystem::GetActorsInGroupList(const int groupID)
 	{
-		std::vector<GameObject*> actorsList;
+		std::vector<MaxrEngine::GameObject*> actorsList;
 		for (auto& actor : actors)
 		{
 			auto actorComponent = actor->GetComponent<ActorComponent>();
@@ -28,9 +28,9 @@ namespace MaxrEngine
 		return actorsList;
 	}
 
-	std::vector<GameObject*> ActorRegisterSystem::GetActorsNotInGroupList(const int groupID)
+	std::vector<MaxrEngine::GameObject*> ActorRegisterSystem::GetActorsNotInGroupList(const int groupID)
 	{
-		std::vector<GameObject*> actorsList;
+		std::vector<MaxrEngine::GameObject*> actorsList;
 		for (auto& actor : actors)
 		{
 			auto actorComponent = actor->GetComponent<ActorComponent>();
@@ -65,7 +65,7 @@ namespace MaxrEngine
 	{
 		auto actorObject = actor->GetGameObject();
 		actors.erase(std::remove_if(actors.begin(), actors.end(),
-			[actorObject](GameObject* obj) {return actorObject == obj; }),
+			[actorObject](MaxrEngine::GameObject* obj) {return actorObject == obj; }),
 			actors.end());
 	}
 }

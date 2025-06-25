@@ -116,11 +116,6 @@ namespace MaxrEngine
         }
     }
 
-    float PhysicsSystem::GetFixedDeltaTime() const
-    {
-        return fixedDeltaTime;
-    }
-
     void PhysicsSystem::Subscribe(ColliderComponent* collider)
     {
         std::ostringstream message;
@@ -136,5 +131,4 @@ namespace MaxrEngine
         LOG_INFO(message.str());
         colliders.erase(std::remove_if(colliders.begin(), colliders.end(), [collider](ColliderComponent* obj) {return collider == obj; }), colliders.end());
     }
-
 }

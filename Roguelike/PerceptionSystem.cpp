@@ -5,7 +5,7 @@
 #include "ActorRegisterSystem.h"
 #include <limits>
 
-namespace MaxrEngine
+namespace Roguelike
 {
 	PerceptionSystem* PerceptionSystem::Instance()
 	{
@@ -22,11 +22,11 @@ namespace MaxrEngine
 		}
 	}
 
-	bool PerceptionSystem::CanDetect(PerceptionComponent* perceptionComponent, GameObject* target) const
+	bool PerceptionSystem::CanDetect(PerceptionComponent* perceptionComponent, MaxrEngine::GameObject* target) const
 	{
 		auto& perceptionPosition = perceptionComponent->GetTransform()->GetWorldPosition();
-		auto& targetPosition = target->GetComponent<TransformComponent>()->GetWorldPosition();
-		Vector2Df betweenVector = targetPosition - perceptionPosition;
+		auto& targetPosition = target->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition();
+		MaxrEngine::Vector2Df betweenVector = targetPosition - perceptionPosition;
 		float distance = betweenVector.GetLength();
 		if (distance <= perceptionComponent->GetSenseRadius())
 		{
@@ -47,11 +47,11 @@ namespace MaxrEngine
 		}
 	}
 
-	bool MaxrEngine::PerceptionSystem::LineClear(const Vector2Df& startPoint, const Vector2Df& endPoint) const
+	bool PerceptionSystem::LineClear(const MaxrEngine::Vector2Df& startPoint, const MaxrEngine::Vector2Df& endPoint) const
 	{
 		auto direction = endPoint - startPoint;
 		auto directionLength = direction.GetLength();
-		direction = Normalized(direction);
+		direction = MaxrEngine::Normalized(direction);
 		float invDirX = 1.f / direction.x;
 		bool positiveX = invDirX >= 0.f;
 		float invDirY = 1.f / direction.y;

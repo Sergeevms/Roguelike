@@ -2,7 +2,6 @@
 #include "GameWorld.h"
 #include "Settings.h"
 #include "LabyrinthBuilder.h"
-#include <AtackComponent.h>
 
 namespace Roguelike
 {
@@ -24,8 +23,6 @@ namespace Roguelike
         
         auto enemyTransform = enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
         enemyTransform->SetWorldPosition({ 8.f * settings->playerSize, 2.f * settings->playerSize });
-
-        auto playerAtack = player->GetGameObject()->GetComponent<MaxrEngine::AtackComponent>();
     }
 
     void DeveloperLevel::Restart()

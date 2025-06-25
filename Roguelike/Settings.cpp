@@ -22,12 +22,12 @@ namespace Roguelike
 		enemyVisionAngle = 145.f;
 		enemySenseRadius = 150.f;
 		enemyChaseMaxRadius = enemyVisionRadius;
-		enemyChaseMinRadius = 20.f;
+		enemyChaseMinRadius = 40.f;
 
 		playerHealth = 200.f;
 		enemyHealth = 100.f;
 		armorDamageReduction = 0.75f;
-		atackRange = 75.f;
+		atackRange = 100.f;
 		atackCooldown = 2.f;
 		atackDamage = 30.f;
 	}

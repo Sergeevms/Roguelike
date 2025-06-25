@@ -3,12 +3,12 @@
 #include "RenderSystem.h"
 #include "SpriteRendererComponent.h"
 
-namespace MaxrEngine
+namespace Roguelike
 {
-	SpriteOpaqueComponent::SpriteOpaqueComponent(GameObject* gameObject)
+	SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject)
 		: OpaqueComponent(gameObject), sprite(nullptr)
 	{
-		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
+		auto spriteRenderer = gameObject->GetComponent<MaxrEngine::SpriteRendererComponent>();
 		if (spriteRenderer == nullptr)
 		{
 			LOG_ERROR("SpriteRendererComponent required to SpriteOpaqueComponent.");
@@ -42,6 +42,6 @@ namespace MaxrEngine
 		rectangle.setPosition(bounds.left, bounds.top);
 		rectangle.setOutlineColor(sf::Color::Cyan);
 		rectangle.setOutlineThickness(-2.f);
-		RenderSystem::Instance()->Render(rectangle);
+		MaxrEngine::RenderSystem::Instance()->Render(rectangle);
 	}
 }

@@ -49,19 +49,27 @@ namespace MaxrEngine
 
 	GameObject* GameWorld::CreateGameObject()
 	{
-		GameObject* newGameObject = new GameObject();
+		auto newGameObject = std::make_shared<GameObject>();
 		gameObjects.push_back(newGameObject);
-		return newGameObject;
+		return newGameObject.get();
 	}
 
 	GameObject* GameWorld::CreateGameObject(std::string name)
 	{
-		GameObject* newGameObject = new GameObject(name);
+		auto newGameObject = std::make_shared<GameObject>(name);
 		gameObjects.push_back(newGameObject);
-		return newGameObject;
+		return newGameObject.get();
 	}
 
 	void GameWorld::DestroyGameObject(GameObject* gameObject)
+	{
+		if (gameObject)
+		{
+			markedToDestroyGameObjects.push_back(gameObject->shared_from_this());
+		}
+	}
+
+	ENGINE_API void GameWorld::DestroyGameObject(std::shared_ptr<GameObject> gameObject)
 	{
 		markedToDestroyGameObjects.push_back(gameObject);
 	}
@@ -103,15 +111,14 @@ namespace MaxrEngine
 		}
 	}
 
-	void GameWorld::DestroyGameObjectImmediate(GameObject* gameObject)
+	void MaxrEngine::GameWorld::DestroyGameObjectImmediate(std::shared_ptr<GameObject> gameObject)
 	{
 		gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), 
-			[gameObject](GameObject* obj) {return obj == gameObject; }), gameObjects.end());
+			[gameObject](std::shared_ptr<GameObject> obj) {return obj == gameObject; }), gameObjects.end());
 		markedToDestroyGameObjects.erase(std::remove_if(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), 
-			[gameObject](GameObject* obj) {return obj == gameObject; }), markedToDestroyGameObjects.end());
+			[gameObject](std::shared_ptr<GameObject> obj) {return obj == gameObject; }), markedToDestroyGameObjects.end());
 		std::ostringstream message;
 		message << gameObject << " deleted";
 		LOG_INFO(message.str());
-		delete gameObject;
 	}
 }

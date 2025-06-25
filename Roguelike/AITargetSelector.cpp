@@ -5,6 +5,7 @@
 #include <map>
 #include "Settings.h"
 #include "PerceptionComponent.h"
+#include "AIAtackComponent.h"
 
 namespace Roguelike
 {
@@ -31,7 +32,7 @@ namespace Roguelike
 			auto& position = gameObject->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition();
 			for (auto& actor : *detectedActors)
 			{
-				if (actor->GetComponent<MaxrEngine::ActorComponent>()->GetGroupID() == ActorsGroups::PlayerGroup)
+				if (actor->GetComponent<ActorComponent>()->GetGroupID() == ActorsGroups::PlayerGroup)
 				{
 					auto between = actor->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() - position;
 					targets.emplace(std::pair<float, MaxrEngine::GameObject*>(between.GetLength(), actor));
@@ -44,6 +45,10 @@ namespace Roguelike
 			blackBoard->Set("isTargetVisible", true);
 			blackBoard->Set("lastTargetPosition", targets.begin()->second->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition());
 			blackBoard->Set("lastTarget", targets.begin()->second);
+			if (auto atackComponent = gameObject->GetComponent<AIAtackComponent>())
+			{
+				atackComponent->SetTarget(targets.begin()->second->weak_from_this());
+			}
 			Emit();			
 		}
 		else
@@ -54,7 +59,7 @@ namespace Roguelike
 
 	void AITargetSelector::Notify(std::shared_ptr<MaxrEngine::IObservable> observable)
 	{
-		if (std::dynamic_pointer_cast<MaxrEngine::PerceptionComponent>(observable))
+		if (std::dynamic_pointer_cast<PerceptionComponent>(observable))
 		{
 			UpdateTarget();
 		}

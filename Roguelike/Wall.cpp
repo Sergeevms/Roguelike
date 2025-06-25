@@ -24,6 +24,6 @@ namespace Roguelike
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
 
-		gameObject->AddComponent<MaxrEngine::SpriteOpaqueComponent>();
+		gameObject->AddComponent<SpriteOpaqueComponent>();
 	}
 }

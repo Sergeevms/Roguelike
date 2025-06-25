@@ -3,20 +3,21 @@
 #include "Vector.h"
 #include "GameObject.h"
 
-namespace MaxrEngine
+namespace Roguelike
+
 {
 	class OpaqueComponent;
 	class PerceptionComponent;
 
 	class PerceptionSystem
-		: public IFixedUpdateSytem
+		: public MaxrEngine::IFixedUpdateSytem
 	{
 	public:
 		static PerceptionSystem* Instance();
 
 		void Update() override;
-		bool CanDetect(PerceptionComponent* perceptionComponent, GameObject* target) const;
-		bool LineClear(const Vector2Df& startPoint, const Vector2Df& endPoint) const;
+		bool CanDetect(PerceptionComponent* perceptionComponent, MaxrEngine::GameObject* target) const;
+		bool LineClear(const MaxrEngine::Vector2Df& startPoint, const MaxrEngine::Vector2Df& endPoint) const;
 
 		void RegisterOpaqueComponent(OpaqueComponent* component);
 		void UnregisterOpaqueComponent(OpaqueComponent* component);

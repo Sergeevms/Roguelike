@@ -13,7 +13,7 @@ namespace MaxrEngine
 	class Component;
 	class TransformComponent;
 	
-	class GameObject
+	class GameObject : public std::enable_shared_from_this<GameObject>
 	{
 	public:
 		GameObject();
@@ -91,7 +91,7 @@ namespace MaxrEngine
 		};
 
 		template<typename T>
-		std::weak_ptr<T> GetComponentWeakPtr() const
+		std::shared_ptr<T> GetComponentSharedPtr() const
 		{
 			for (const auto& component : components)
 			{
@@ -103,7 +103,7 @@ namespace MaxrEngine
 			std::ostringstream message;
 			message << typeid(T).name() << " component not found";
 			LOG_INFO(message.str());
-			return std::weak_ptr<T>();
+			return std::shared_ptr<T>();
 		}
 
 		template<typename T>

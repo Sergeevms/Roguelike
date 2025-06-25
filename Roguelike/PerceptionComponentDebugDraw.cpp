@@ -4,12 +4,12 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
 
-namespace MaxrEngine
+namespace Roguelike
 {
-	MaxrEngine::PerceptionComponentDebugDraw::PerceptionComponentDebugDraw(GameObject* gameObject)
+	PerceptionComponentDebugDraw::PerceptionComponentDebugDraw(MaxrEngine::GameObject* gameObject)
 		: Component(gameObject)
 	{
-		perceptionComponent = gameObject->GetComponentWeakPtr<PerceptionComponent>();
+		perceptionComponent = gameObject->GetComponentSharedPtr<PerceptionComponent>();
 		if (perceptionComponent.expired())
 		{
 			LOG_WARN("PerceptionComponentDebugDraw needs PerceptionComponent");
@@ -27,36 +27,36 @@ namespace MaxrEngine
 	{
 		if (auto perception = perceptionComponent.lock())
 		{
-			auto& position = gameObject->GetComponent<TransformComponent>()->GetWorldPosition();
+			auto& position = gameObject->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition();
 			sf::CircleShape senseZone(perception->GetSenseRadius());			
 			senseZone.setFillColor(sf::Color::Transparent);
 			senseZone.setOutlineColor(sf::Color::Red);
 			senseZone.setOutlineThickness(-2.f);
-			senseZone.setPosition(Convert<sf::Vector2f, Vector2Df>(position));
+			senseZone.setPosition(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position));
 			auto rect = senseZone.getLocalBounds();
 			senseZone.setOrigin(rect.width / 2.f, rect.height / 2.f);
-			RenderSystem::Instance()->Render(senseZone);
+			MaxrEngine::RenderSystem::Instance()->Render(senseZone);
 			sf::VertexArray visionDirection(sf::PrimitiveType::LineStrip, 2);			
 			auto direction = Normalized(perception->GetVisionDirection()) * perception->GetVisionRadius();
-			visionDirection[0] = sf::Vertex(Convert<sf::Vector2f, Vector2Df>(position), sf::Color::Green);
-			visionDirection[1] = sf::Vertex(Convert<sf::Vector2f, Vector2Df>(position + direction), sf::Color::Green);
-			RenderSystem::Instance()->Render(visionDirection);
+			visionDirection[0] = sf::Vertex(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position), sf::Color::Green);
+			visionDirection[1] = sf::Vertex(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position + direction), sf::Color::Green);
+			MaxrEngine::RenderSystem::Instance()->Render(visionDirection);
 			auto perceptionAngle = perception->GetVisionAngle();
 			if (perceptionAngle < 360.f)
 			{
 				//Additional 3 vertexex for cone center (as start and end) and arc start
 				sf::VertexArray visionCone(sf::PrimitiveType::LineStrip);
-				visionCone.append(sf::Vertex(Convert<sf::Vector2f, Vector2Df>(position), sf::Color::Yellow));
+				visionCone.append(sf::Vertex(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position), sf::Color::Yellow));
 				Rotate(direction, -perceptionAngle / 2.f);
-				visionCone.append(sf::Vertex(Convert<sf::Vector2f, Vector2Df>(position + direction), sf::Color::Yellow));
+				visionCone.append(sf::Vertex(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position + direction), sf::Color::Yellow));
 				auto angleStep = perceptionAngle / arcLinesCount;
 				for (unsigned i = 0; i < arcLinesCount; ++i)
 				{
 					Rotate(direction, perceptionAngle / arcLinesCount);
-					visionCone.append(sf::Vertex(Convert<sf::Vector2f, Vector2Df>(position + direction), sf::Color::Yellow));
+					visionCone.append(sf::Vertex(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position + direction), sf::Color::Yellow));
 				}
-				visionCone.append(sf::Vertex(Convert<sf::Vector2f, Vector2Df>(position), sf::Color::Yellow));
-				RenderSystem::Instance()->Render(visionCone);
+				visionCone.append(sf::Vertex(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position), sf::Color::Yellow));
+				MaxrEngine::RenderSystem::Instance()->Render(visionCone);
 			}
 			else
 			{
@@ -64,8 +64,8 @@ namespace MaxrEngine
 				visionZone.setFillColor(sf::Color::Transparent);
 				visionZone.setOutlineColor(sf::Color::Yellow);
 				visionZone.setOutlineThickness(-2.f);
-				visionZone.setPosition(Convert<sf::Vector2f, Vector2Df>(position));
-				RenderSystem::Instance()->Render(visionZone);
+				visionZone.setPosition(Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position));
+				MaxrEngine::RenderSystem::Instance()->Render(visionZone);
 			}
 		}
 		else

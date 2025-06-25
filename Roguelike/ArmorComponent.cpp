@@ -2,10 +2,10 @@
 #include "ArmorComponent.h"
 #include <cassert>
 
-namespace MaxrEngine
+namespace Roguelike
 {
-	ArmorComponent::ArmorComponent(GameObject* gameObject)
-		: Component(gameObject)
+	ArmorComponent::ArmorComponent(MaxrEngine::GameObject* gameObject, const float maxArmorPoints, const float damageReduction)
+		: Component(gameObject), maxArmorPoints(maxArmorPoints), currentArmorPoints(maxArmorPoints), damageReduction(damageReduction)
 	{
 	}
 
@@ -17,7 +17,7 @@ namespace MaxrEngine
 	{
 	}
 
-	void MaxrEngine::ArmorComponent::SetMaxArmorPoints(const float newMaxArmorPoints)
+	void ArmorComponent::SetMaxArmorPoints(const float newMaxArmorPoints)
 	{
 		assert(newMaxArmorPoints >= 0 && "maxArmorPoints supposed to be positive");
 		if (newMaxArmorPoints < 0.f)
@@ -29,7 +29,7 @@ namespace MaxrEngine
 		maxArmorPoints = newMaxArmorPoints;
 	}
 
-	float MaxrEngine::ArmorComponent::GetMaxArmorPoints() const
+	float ArmorComponent::GetMaxArmorPoints() const
 	{
 		return maxArmorPoints;
 	}
@@ -46,12 +46,29 @@ namespace MaxrEngine
 		damageReduction = newDamageReduction;
 	}
 
-	float MaxrEngine::ArmorComponent::GetCurrentArmorPoints() const
+	float ArmorComponent::GetDamageReduction() const
+	{
+		return damageReduction;
+	}
+
+	void ArmorComponent::SetCurrentArmorPoinst(const float newCurrentArmorPoints)
+	{
+		assert(newCurrentArmorPoints >= 0 && "currentArmorPoints supposed to be positive");
+		if (newCurrentArmorPoints < 0.f)
+		{
+			LOG_WARN("currentArmorPoints supposed to be positive - setted to 0");
+			currentArmorPoints = 0.f;
+			return;
+		}
+		currentArmorPoints = newCurrentArmorPoints;
+	}
+
+	float ArmorComponent::GetCurrentArmorPoints() const
 	{
 		return currentArmorPoints;
 	}
 
-	float MaxrEngine::ArmorComponent::ApplyDamage(const float damageAmount)
+	float ArmorComponent::ApplyDamage(const float damageAmount)
 	{
 		std::ostringstream message;
 
@@ -69,7 +86,7 @@ namespace MaxrEngine
 		return damageAmount - absorbedDamage > 0.f ? damageAmount - absorbedDamage : 0.f;
 	}
 
-	float MaxrEngine::ArmorComponent::IncreaseArmorPoints(const float armorPointAmount)
+	float ArmorComponent::IncreaseArmorPoints(const float armorPointAmount)
 	{
 		std::ostringstream message;
 		message << this << " recieved " << armorPointAmount << " armorPoints ";
