@@ -22,7 +22,7 @@ namespace Roguelike
 			if (blackBoard->Get("isTargetVisible", isTargetVisible) && isTargetVisible)
 			{
 				auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
-				MaxrEngine::GameObject* target;
+				MaxrEngine::GameObject* target = nullptr;
 				if (blackBoard->Get("lastTarget", target))
 				{
 					auto betweenVector = target->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();

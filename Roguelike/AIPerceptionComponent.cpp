@@ -8,7 +8,14 @@ namespace Roguelike
 		: PerceptionComponent(gameObject)
 	{
 		auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-		blackBoard->Set("Detected Actors", &detectedActors);
+		if (blackBoard)
+		{
+			blackBoard->Set("Detected Actors", &detectedActors);
+		}
+		else
+		{
+			LOG_WARN("AIBlackboard required for  AIPerceptionComponent");
+		}
 	}
 
 	void AIPerceptionComponent::Notify(std::shared_ptr<IObservable> observable)
