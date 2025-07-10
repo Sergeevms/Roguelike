@@ -33,13 +33,4 @@ namespace MaxrEngine
 	{
 		return { horizontalAxis, verticalAxis  };
 	}
-
-	void AIInputComponent::SetAtack(const bool newAtack)
-	{
-		atack = newAtack;
-		if (atack)
-		{
-			Emit();
-		}
-	}
 }

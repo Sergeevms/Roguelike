@@ -41,9 +41,9 @@ namespace Roguelike
 		float playerHealth;
 		float enemyHealth;
 		float armorDamageReduction;
-		float atackRange;
-		float atackCooldown;
-		float atackDamage;
+		float attackRange;
+		float attackCooldown;
+		float attackDamage;
 
 		float healthBarDistance;
 		float armorBarDistance;

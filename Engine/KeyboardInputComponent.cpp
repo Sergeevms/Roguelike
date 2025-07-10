@@ -13,7 +13,7 @@ namespace MaxrEngine
 	{
 		verticalAxis = 0.f;
 		horizontalAxis = 0.f;
-		atack = false;
+		attack = false;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
@@ -37,8 +37,8 @@ namespace MaxrEngine
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			LOG_INFO("Atack input");
-			atack = true;
+			LOG_INFO("Attack input");
+			attack = true;
 			Emit();
 		}
 	}

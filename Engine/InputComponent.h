@@ -16,11 +16,11 @@ namespace MaxrEngine
 
 		ENGINE_API float GetHorizontalAxis() const;
 		ENGINE_API float GetVerticalAxis() const;
-		ENGINE_API bool getAtack() const;
+		ENGINE_API bool getAttack() const;
 	protected:
 		float horizontalAxis = 0.f;
 		float verticalAxis = 0.f;
-		bool atack = false;
+		bool attack = false;
 	};
 }
 

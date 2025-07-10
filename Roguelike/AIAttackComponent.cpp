@@ -5,13 +5,13 @@
 
 namespace Roguelike
 {
-	AIAtackComponent::AIAtackComponent(MaxrEngine::GameObject* gameObject, float cooldown, float damage, float range, std::weak_ptr<MaxrEngine::GameObject> target) 
-		: AtackComponent(gameObject, cooldown, damage, range, target)
+	AIAttackComponent::AIAttackComponent(MaxrEngine::GameObject* gameObject, float cooldown, float damage, float range, std::weak_ptr<MaxrEngine::GameObject> target) 
+		: AttackComponent(gameObject, cooldown, damage, range, target)
 	{
 	}
-	void AIAtackComponent::Update(float deltaTime)
+	void AIAttackComponent::Update(float deltaTime)
 	{
-		AtackComponent::Update(deltaTime);
+		AttackComponent::Update(deltaTime);
 		bool targetVisible = false;
 		auto blackBoard = gameObject->GetComponent<AIBlackboard>();
 		if (currentCooldown <= 0 && blackBoard->Get("isTargetVisible", targetVisible) && targetVisible)
@@ -23,7 +23,7 @@ namespace Roguelike
 					targetPtr->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition()).GetLength();
 				if (distance <= range)
 				{
-					Atack();
+					Attack();
 				}
 			}
 		}

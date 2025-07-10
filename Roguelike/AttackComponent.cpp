@@ -6,12 +6,12 @@
 #include "GameObject.h"
 namespace Roguelike
 {
-    AtackComponent::AtackComponent(MaxrEngine::GameObject* gameObject, float cooldown, float damage, float range, std::weak_ptr<MaxrEngine::GameObject> target)
+    AttackComponent::AttackComponent(MaxrEngine::GameObject* gameObject, float cooldown, float damage, float range, std::weak_ptr<MaxrEngine::GameObject> target)
         : Component(gameObject), cooldown(cooldown), damage(damage), range(range), currentCooldown(0.f), target(target)
     {
     }
 
-    void AtackComponent::Update(float deltaTime)
+    void AttackComponent::Update(float deltaTime)
     {
         if (currentCooldown > 0.f)
         {
@@ -19,21 +19,21 @@ namespace Roguelike
         }
     }
 
-    void AtackComponent::Render()
+    void AttackComponent::Render()
     {
     }
 
-    void AtackComponent::Atack()
+    void AttackComponent::Attack()
     {
         currentCooldown = cooldown;
-        auto atacker = gameObject;
+        auto attacker = gameObject;
         if (auto targetPtr = target.lock())
         {
             auto distance = (targetPtr->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() -
-                atacker->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition()).GetLength();
+                attacker->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition()).GetLength();
             if (distance > range)
             {
-                LOG_INFO("Target is out of atack range");
+                LOG_INFO("Target is out of attack range");
                 return;
             }
             auto damageLeft = damage;
@@ -59,7 +59,7 @@ namespace Roguelike
         }
     }
 
-    void AtackComponent::SetCooldown(const float newCoolDown)
+    void AttackComponent::SetCooldown(const float newCoolDown)
     {
         assert(newCoolDown >= 0.f && "cooldown should be positive");
         if (newCoolDown >= 0.f)
@@ -72,12 +72,12 @@ namespace Roguelike
         }
     }
 
-    float AtackComponent::GetCooldwon() const
+    float AttackComponent::GetCooldwon() const
     {
         return cooldown;
     }
 
-    void AtackComponent::SetDamage(const float newDamage)
+    void AttackComponent::SetDamage(const float newDamage)
     {
         assert(newDamage >= 0.f && "damage should be positive");
         if (newDamage >= 0.f)
@@ -90,12 +90,12 @@ namespace Roguelike
         }
     }
 
-    float AtackComponent::GetDamage() const
+    float AttackComponent::GetDamage() const
     {
         return damage;
     }
 
-    void AtackComponent::SetRange(const float newRange)
+    void AttackComponent::SetRange(const float newRange)
     {
         assert(newRange >= 0.f && "Range should be positive");
         if (newRange >= 0.f)
@@ -108,17 +108,17 @@ namespace Roguelike
         }
     }
 
-    float AtackComponent::GetRange() const
+    float AttackComponent::GetRange() const
     {
         return range;
     }
 
-    void AtackComponent::SetTarget(std::weak_ptr<MaxrEngine::GameObject> newTarget)
+    void AttackComponent::SetTarget(std::weak_ptr<MaxrEngine::GameObject> newTarget)
     {
         target = newTarget;
     }
 
-    std::shared_ptr<MaxrEngine::GameObject> AtackComponent::GetTarget() const
+    std::shared_ptr<MaxrEngine::GameObject> AttackComponent::GetTarget() const
     {
         if (!target.expired())
         {

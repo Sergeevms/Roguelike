@@ -16,8 +16,8 @@ namespace MaxrEngine
 	{
 		return verticalAxis;
 	}
-	bool InputComponent::getAtack() const
+	bool InputComponent::getAttack() const
 	{
-		return atack;
+		return attack;
 	}
 }

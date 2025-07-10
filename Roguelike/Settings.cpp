@@ -27,9 +27,9 @@ namespace Roguelike
 		playerHealth = 200.f;
 		enemyHealth = 100.f;
 		armorDamageReduction = 0.75f;
-		atackRange = 100.f;
-		atackCooldown = 2.f;
-		atackDamage = 30.f; 
+		attackRange = 100.f;
+		attackCooldown = 2.f;
+		attackDamage = 30.f; 
 		
 		healthBarDistance = 4.f;
 		barHeight = 5.f;

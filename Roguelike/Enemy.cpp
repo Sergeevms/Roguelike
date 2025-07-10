@@ -74,6 +74,6 @@ namespace Roguelike
 
 		auto actorComponent = gameObject->AddComponent<ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
-		auto atackComponent = gameObject->AddComponent<AIAtackComponent>(settings->atackCooldown, settings->atackDamage, settings->atackRange);
+		auto attackComponent = gameObject->AddComponent<AIAttackComponent>(settings->attackCooldown, settings->attackDamage, settings->attackRange);
 	}
 }

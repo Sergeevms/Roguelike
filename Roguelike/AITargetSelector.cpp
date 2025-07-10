@@ -45,9 +45,9 @@ namespace Roguelike
 			blackBoard->Set("isTargetVisible", true);
 			blackBoard->Set("lastTargetPosition", targets.begin()->second->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition());
 			blackBoard->Set("lastTarget", targets.begin()->second);
-			if (auto atackComponent = gameObject->GetComponent<AIAtackComponent>())
+			if (auto attackComponent = gameObject->GetComponent<AIAttackComponent>())
 			{
-				atackComponent->SetTarget(targets.begin()->second->weak_from_this());
+				attackComponent->SetTarget(targets.begin()->second->weak_from_this());
 			}
 			Emit();			
 		}
