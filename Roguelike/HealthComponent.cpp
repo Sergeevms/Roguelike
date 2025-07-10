@@ -2,6 +2,7 @@
 #include "HealthComponent.h"
 #include "GameObject.h"
 #include <cassert>
+#include "Utility.h"
 
 namespace Roguelike
 {
@@ -26,6 +27,7 @@ namespace Roguelike
 			LOG_WARN("maxHealth supposed to be positive")
 		}
 		maxHealth = newMaxHealth;
+		Emit();
 	}
 
 	float HealthComponent::GetMaxHealth() const
@@ -35,7 +37,11 @@ namespace Roguelike
 
 	void HealthComponent::SetCurrentHealth(const float newCurrentHealth)
 	{
-
+		if (InRange(newCurrentHealth, 0.f, maxHealth))
+		{
+			currentHealth = newCurrentHealth;
+			Emit();
+		}		
 	}
 
 	float Roguelike::HealthComponent::GetCurrentHealth() const
@@ -54,6 +60,7 @@ namespace Roguelike
 			message.clear();
 			message << "Trying to damage " << this << " which has 0.f HP will have no effect";
 			LOG_WARN(message.str());
+			return damageAmount;
 		}
 
 		currentHealth -= damageAmount;
@@ -61,8 +68,10 @@ namespace Roguelike
 		{
 			float overDamage = -currentHealth;
 			currentHealth = 0.f;
+			Emit();
 			return overDamage;
 		}
+		Emit();
 		return 0;
 	}
 
@@ -78,6 +87,7 @@ namespace Roguelike
 			message << "Trying to heal " << this << " which has maximum HP will have no effect";
 			LOG_WARN(message.str());
 			message.clear();
+			return healingAmount;
 		}
 
 		currentHealth += healingAmount;
@@ -88,8 +98,10 @@ namespace Roguelike
 			message << "Healing " << overHeal << " health points not applied due to going over maxHealth";
 			LOG_INFO(message.str());
 			message.clear();
+			Emit();
 			return overHeal;
 		}
+		Emit();
 		return 0.f;
 	}
 

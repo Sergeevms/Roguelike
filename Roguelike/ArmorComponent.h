@@ -1,9 +1,10 @@
 #pragma once
 #include "Component.h"
+#include "IObserver.h"
 namespace Roguelike
 {
 	class ArmorComponent :
-		public MaxrEngine::Component
+		public MaxrEngine::Component, public MaxrEngine::IObservable
 	{
 	public:
 		ArmorComponent(MaxrEngine::GameObject* gameObject, const float maxArmorPoints = 0.f, const float damageReduction = 1.f);
@@ -19,7 +20,7 @@ namespace Roguelike
 		void SetDamageReduction(const float newDamageReduction);
 		float GetDamageReduction() const;
 		
-		void SetCurrentArmorPoinst(const float newCurrentArmorPoints);
+		void SetCurrentArmorPoints(const float newCurrentArmorPoints);
 		float GetCurrentArmorPoints() const;
 		//Return damage gone throw armor 
 		virtual float ApplyDamage(const float damageAmount);

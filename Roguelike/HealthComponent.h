@@ -1,9 +1,10 @@
 #pragma once
 #include "Component.h"
+#include "IObserver.h"
 namespace Roguelike
 {
 	class HealthComponent :
-		public MaxrEngine::Component
+		public MaxrEngine::Component, public MaxrEngine::IObservable
 	{
 	public:
 		HealthComponent(MaxrEngine::GameObject* gameObject, const float maxHealth = 0.f);

@@ -14,24 +14,31 @@ namespace Roguelike
 	void AIChaseTargetComponent::Update(float deltaTime)
 	{
 		auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-		bool isTargetVisible = false;
-		MaxrEngine::Vector2Df movingDirection;
-		auto inputComponent = gameObject->GetComponent<MaxrEngine::AIInputComponent>();
-		if (blackBoard->Get("isTargetVisible", isTargetVisible) && isTargetVisible)
+		if (blackBoard)
 		{
-			auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
-			MaxrEngine::GameObject* target;
-			if (blackBoard->Get("lastTarget", target))
+			bool isTargetVisible = false;
+			MaxrEngine::Vector2Df movingDirection;
+			auto inputComponent = gameObject->GetComponent<MaxrEngine::AIInputComponent>();
+			if (blackBoard->Get("isTargetVisible", isTargetVisible) && isTargetVisible)
 			{
-				auto betweenVector = target->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
-				auto distance = betweenVector.GetLength();
-				if (InRange(distance, minumumChaseRadius, maximumChaseRadius))
+				auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
+				MaxrEngine::GameObject* target;
+				if (blackBoard->Get("lastTarget", target))
 				{
-					movingDirection = betweenVector;
+					auto betweenVector = target->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
+					auto distance = betweenVector.GetLength();
+					if (InRange(distance, minumumChaseRadius, maximumChaseRadius))
+					{
+						movingDirection = betweenVector;
+					}
 				}
 			}
+			inputComponent->SetDirection(movingDirection);
 		}
-		inputComponent->SetDirection(movingDirection);
+		else
+		{
+			LOG_ERROR("AIBlackboard requried for AIChaseComponent");
+		}
 	}
 
 	void AIChaseTargetComponent::Render()

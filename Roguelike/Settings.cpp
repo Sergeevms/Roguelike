@@ -29,7 +29,12 @@ namespace Roguelike
 		armorDamageReduction = 0.75f;
 		atackRange = 100.f;
 		atackCooldown = 2.f;
-		atackDamage = 30.f;
+		atackDamage = 30.f; 
+		
+		healthBarDistance = 4.f;
+		barHeight = 5.f;
+		barBorder = 1.f;
+		armorBarDistance = 2 * healthBarDistance + barHeight;
 	}
 
 	MaxrEngine::Vector2Df Settings::ScreenCenter()

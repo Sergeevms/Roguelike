@@ -39,6 +39,7 @@ namespace MaxrEngine
 
 			if (!RenderSystem::Instance()->GetMainWindow().isOpen())
 			{
+				GameWorld::Instance()->Clear();
 				break;
 			}
 
@@ -51,7 +52,6 @@ namespace MaxrEngine
 
 			RenderSystem::Instance()->GetMainWindow().display();
 		}
-		GameWorld::Instance()->Clear();
 		LOG_INFO("Engine stopped");
 	}
 }

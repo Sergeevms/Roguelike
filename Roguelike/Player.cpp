@@ -14,6 +14,8 @@
 #include "Settings.h"
 #include "ActorComponent.h"
 #include "PlayerAtackComponent.h"
+#include "HealthBarComponent.h"
+#include "ArmorBarComponent.h"
 
 namespace Roguelike
 {
@@ -41,8 +43,14 @@ namespace Roguelike
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
 
 		auto health = gameObject->AddComponent<HealthComponent>(settings->playerHealth);
+		auto healthBar = gameObject->AddComponent<HealthBarComponent>(MaxrEngine::Vector2Df(0.f, settings->playerSize * 0.5f + settings->healthBarDistance),
+			MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize), settings->barHeight), settings->barBorder);
+		healthBar->SetHealthComponent(health);
 
 		auto armor = gameObject->AddComponent<ArmorComponent>(settings->playerHealth, settings->armorDamageReduction);
+		auto armorBar = gameObject->AddComponent<ArmorBarComponent>(MaxrEngine::Vector2Df(0.f, settings->playerSize * 0.5f + settings->armorBarDistance),
+			MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize), settings->barHeight), settings->barBorder);
+		armorBar->SetArmorComponent(armor);;
 
 		auto actorComponent = gameObject->AddComponent<ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::PlayerGroup);

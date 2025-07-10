@@ -27,6 +27,7 @@ namespace Roguelike
 			return;
 		}
 		maxArmorPoints = newMaxArmorPoints;
+		Emit();
 	}
 
 	float ArmorComponent::GetMaxArmorPoints() const
@@ -51,16 +52,18 @@ namespace Roguelike
 		return damageReduction;
 	}
 
-	void ArmorComponent::SetCurrentArmorPoinst(const float newCurrentArmorPoints)
+	void ArmorComponent::SetCurrentArmorPoints(const float newCurrentArmorPoints)
 	{
 		assert(newCurrentArmorPoints >= 0 && "currentArmorPoints supposed to be positive");
 		if (newCurrentArmorPoints < 0.f)
 		{
 			LOG_WARN("currentArmorPoints supposed to be positive - setted to 0");
 			currentArmorPoints = 0.f;
+			Emit();
 			return;
 		}
 		currentArmorPoints = newCurrentArmorPoints;
+		Emit();
 	}
 
 	float ArmorComponent::GetCurrentArmorPoints() const
@@ -83,6 +86,7 @@ namespace Roguelike
 		message << this << " recieved " << damageAmount << " damage - " << absorbedDamage << " absorbed";
 		LOG_INFO(message.str());
 		currentArmorPoints -= absorbedDamage;
+		Emit();
 		return damageAmount - absorbedDamage > 0.f ? damageAmount - absorbedDamage : 0.f;
 	}
 
@@ -108,8 +112,10 @@ namespace Roguelike
 			message << "Restoring " << overArmorRestore << " not applied due to going over maxArmorPoints";
 			LOG_INFO(message.str());
 			message.clear();
+			Emit();
 			return overArmorRestore;
 		}
+		Emit();
 		return 0.f;
 	}
 	bool ArmorComponent::IsNotBroken() const

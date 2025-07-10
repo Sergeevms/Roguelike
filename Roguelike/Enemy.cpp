@@ -16,6 +16,8 @@
 #include "AIPerceptionComponent.h"
 #include "PerceptionComponentDebugDraw.h"
 #include "AIAtackComponent.h"
+#include "HealthBarComponent.h"
+#include "ArmorBarComponent.h"
 
 namespace Roguelike
 {
@@ -58,10 +60,17 @@ namespace Roguelike
 		perceptionComponent->AddObserver(targetSelector);
 		
 		auto health = gameObject->AddComponent<HealthComponent>(settings->enemyHealth);
+		auto healthBar = gameObject->AddComponent<HealthBarComponent>(MaxrEngine::Vector2Df(0.f, settings->playerSize * 0.5f + settings->healthBarDistance),
+			MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize), settings->barHeight), settings->barBorder);
+		healthBar->SetHealthComponent(health);
 
 		auto armor = gameObject->AddComponent<ArmorComponent>();
-		armor->SetDamageReduction(settings->armorDamageReduction);
+		armor->SetDamageReduction(settings->armorDamageReduction * 0.75f);
 		armor->SetMaxArmorPoints(settings->enemyHealth);
+		armor->SetCurrentArmorPoints(settings->enemyHealth);
+		auto armorBar = gameObject->AddComponent<ArmorBarComponent>(MaxrEngine::Vector2Df(0.f, settings->playerSize * 0.5f + settings->armorBarDistance),
+			MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize), settings->barHeight), settings->barBorder);
+		armorBar->SetArmorComponent(armor);
 
 		auto actorComponent = gameObject->AddComponent<ActorComponent>();
 		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);

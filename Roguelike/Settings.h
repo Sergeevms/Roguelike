@@ -44,6 +44,11 @@ namespace Roguelike
 		float atackRange;
 		float atackCooldown;
 		float atackDamage;
+
+		float healthBarDistance;
+		float armorBarDistance;
+		float barHeight;
+		float barBorder;
 		
 	private:
 		Settings();
