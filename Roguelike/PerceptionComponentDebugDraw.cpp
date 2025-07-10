@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "PerceptionComponentDebugDraw.h"
 #include "RenderSystem.h"
 #include "GameObject.h"

@@ -1,4 +1,4 @@
-#include "AIAtackComponent.h"
+#include "AIAttackComponent.h"
 #include "GameObject.h"
 #include "AIBlackboard.h"
 

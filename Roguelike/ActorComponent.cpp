@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "ActorComponent.h"
 #include "ActorRegisterSystem.h"
 #include "GameObject.h"

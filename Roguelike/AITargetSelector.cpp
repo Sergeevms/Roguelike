@@ -5,7 +5,7 @@
 #include <map>
 #include "Settings.h"
 #include "PerceptionComponent.h"
-#include "AIAtackComponent.h"
+#include "AIAttackComponent.h"
 
 namespace Roguelike
 {

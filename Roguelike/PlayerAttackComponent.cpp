@@ -1,4 +1,4 @@
-#include "PlayerAtackComponent.h"
+#include "PlayerAttackComponent.h"
 #include "ActorRegisterSystem.h"
 #include "InputComponent.h"
 #include "Settings.h"

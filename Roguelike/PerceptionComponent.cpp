@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "PerceptionComponent.h"
 #include "ActorRegisterSystem.h"
 #include "PerceptionSystem.h"

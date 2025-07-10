@@ -1,5 +1,4 @@
-#include "pch.h"
-#include "AtackComponent.h"
+#include "AttackComponent.h"
 #include <cassert>
 #include "InputComponent.h"
 #include "ArmorComponent.h"

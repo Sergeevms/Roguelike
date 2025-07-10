@@ -1,5 +1,5 @@
 #pragma once
-#include "AtackComponent.h"
+#include "AttackComponent.h"
 namespace Roguelike
 {
 	class AIAtackComponent :

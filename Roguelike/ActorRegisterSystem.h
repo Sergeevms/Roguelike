@@ -1,5 +1,6 @@
 #pragma once
 #include "ActorComponent.h"
+#include <vector>
 namespace Roguelike
 {
 	class ActorRegisterSystem

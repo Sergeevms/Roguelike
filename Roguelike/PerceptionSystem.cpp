@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "PerceptionSystem.h"
 #include "OpaqueComponent.h"
 #include "PerceptionComponent.h"

@@ -69,7 +69,7 @@
     <ClCompile Include="AITargetSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AtackComponent.cpp">
+    <ClCompile Include="AttackComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArmorComponent.cpp">
@@ -78,10 +78,10 @@
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAtackComponent.cpp">
+    <ClCompile Include="PlayerAttackComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AIAtackComponent.cpp">
+    <ClCompile Include="AIAttackComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ActorComponent.cpp">
@@ -170,7 +170,7 @@
     <ClInclude Include="GameObjectContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AtackComponent.h">
+    <ClInclude Include="AttackComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ArmorComponent.h">
@@ -179,10 +179,10 @@
     <ClInclude Include="HealthComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerAtackComponent.h">
+    <ClInclude Include="PlayerAttackComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AIAtackComponent.h">
+    <ClInclude Include="AIAttackComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActorComponent.h">

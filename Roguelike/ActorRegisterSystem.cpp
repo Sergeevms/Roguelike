@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "ActorRegisterSystem.h"
 #include "GameObject.h"
 namespace Roguelike

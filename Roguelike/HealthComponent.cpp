@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "HealthComponent.h"
 #include "GameObject.h"
 #include <cassert>

@@ -15,7 +15,7 @@
 #include "ActorComponent.h"
 #include "AIPerceptionComponent.h"
 #include "PerceptionComponentDebugDraw.h"
-#include "AIAtackComponent.h"
+#include "AIAttackComponent.h"
 #include "HealthBarComponent.h"
 #include "ArmorBarComponent.h"
 

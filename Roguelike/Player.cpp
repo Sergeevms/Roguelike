@@ -13,7 +13,7 @@
 #include "KeyboardInputComponent.h"
 #include "Settings.h"
 #include "ActorComponent.h"
-#include "PlayerAtackComponent.h"
+#include "PlayerAttackComponent.h"
 #include "HealthBarComponent.h"
 #include "ArmorBarComponent.h"
 

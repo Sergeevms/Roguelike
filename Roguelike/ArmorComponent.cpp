@@ -1,6 +1,6 @@
-#include "pch.h"
 #include "ArmorComponent.h"
 #include <cassert>
+#include "Logger.h"
 
 namespace Roguelike
 {

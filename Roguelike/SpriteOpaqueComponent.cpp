@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "SpriteOpaqueComponent.h"
 #include "RenderSystem.h"
 #include "SpriteRendererComponent.h"
