@@ -1,49 +1,44 @@
 #include "Settings.h"
 
-namespace Roguelike
-{
-	Settings::Settings()
-	{
-		resourcesPath = "Resources\\";
-		soundPath = resourcesPath + "Sounds\\";
-		fontPath = resourcesPath + "Fonts\\";
-		texturePath = resourcesPath + "Textures\\";
-		textureMapsPath = resourcesPath + "TextureMaps\\";
+namespace Roguelike {
+Settings::Settings() {
+    resourcesPath = "Resources\\";
+    soundPath = resourcesPath + "Sounds\\";
+    fontPath = resourcesPath + "Fonts\\";
+    texturePath = resourcesPath + "Textures\\";
+    textureMapsPath = resourcesPath + "TextureMaps\\";
 
-		screenWidth = 1280;
-		screenHeight = 720;
-		gameName = L"Roguelike";
-		playerSize = 32;
-		playerSpeed = 400.f;
-		mapTileSize = 36;
+    screenWidth = 1280;
+    screenHeight = 720;
+    gameName = L"Roguelike";
+    playerSize = 32;
+    playerSpeed = 400.f;
+    mapTileSize = 36;
 
-		enemySpeed = playerSpeed / 2.f;
-		enemyVisionRadius = 300.f;
-		enemyVisionAngle = 145.f;
-		enemySenseRadius = 150.f;
-		enemyChaseMaxRadius = enemyVisionRadius;
-		enemyChaseMinRadius = 40.f;
+    enemySpeed = playerSpeed / 2.f;
+    enemyVisionRadius = 300.f;
+    enemyVisionAngle = 145.f;
+    enemySenseRadius = 150.f;
+    enemyChaseMaxRadius = enemyVisionRadius;
+    enemyChaseMinRadius = 40.f;
 
-		playerHealth = 200.f;
-		enemyHealth = 100.f;
-		armorDamageReduction = 0.75f;
-		attackRange = 100.f;
-		attackCooldown = 2.f;
-		attackDamage = 30.f; 
-		
-		healthBarDistance = 4.f;
-		barHeight = 5.f;
-		barBorder = 1.f;
-		armorBarDistance = 2 * healthBarDistance + barHeight;
-	}
+    playerHealth = 200.f;
+    enemyHealth = 100.f;
+    armorDamageReduction = 0.75f;
+    attackRange = 100.f;
+    attackCooldown = 2.f;
+    attackDamage = 30.f;
 
-	MaxrEngine::Vector2Df Settings::ScreenCenter()
-	{
-		return ScreenSize() * 0.5f;
-	}
-
-	MaxrEngine::Vector2Df Settings::ScreenSize()
-	{
-		return 	MaxrEngine::Vector2Df({static_cast<float>(screenWidth), static_cast<float>(screenHeight)});
-	}
+    healthBarDistance = 4.f;
+    barHeight = 5.f;
+    barBorder = 1.f;
+    armorBarDistance = 2 * healthBarDistance + barHeight;
 }
+
+MaxrEngine::Vector2Df Settings::ScreenCenter() { return ScreenSize() * 0.5f; }
+
+MaxrEngine::Vector2Df Settings::ScreenSize() {
+    return MaxrEngine::Vector2Df(
+        {static_cast<float>(screenWidth), static_cast<float>(screenHeight)});
+}
+}  // namespace Roguelike

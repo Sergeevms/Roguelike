@@ -1,65 +1,59 @@
 #pragma once
-#include "Vector.h"
 #include <string>
 
-namespace Roguelike
-{
-	class Settings
-	{
-	public:
-		static Settings* Instance()
-		{
-			static Settings world;
-			return &world;
-		};
-		MaxrEngine::Vector2Df ScreenCenter();
-		MaxrEngine::Vector2Df ScreenSize();
+#include "Vector.h"
 
-		//General settings
+namespace Roguelike {
+class Settings {
+   public:
+    static Settings* Instance() {
+        static Settings world;
+        return &world;
+    };
+    MaxrEngine::Vector2Df ScreenCenter();
+    MaxrEngine::Vector2Df ScreenSize();
 
-		int screenWidth;
-		int screenHeight;
-		std::wstring gameName;
+    // General settings
 
-		//Paths to files
-		std::string resourcesPath;
-		std::string soundPath;
-		std::string fontPath;
-		std::string texturePath;
-		std::string textureMapsPath;
+    int screenWidth;
+    int screenHeight;
+    std::wstring gameName;
 
-		int playerSize;
-		float playerSpeed;
-		float enemySpeed;		
-		float enemyVisionRadius;
-		float enemyVisionAngle;
-		float enemySenseRadius;
-		float enemyChaseMaxRadius;
-		float enemyChaseMinRadius;
-		int mapTileSize;
+    // Paths to files
+    std::string resourcesPath;
+    std::string soundPath;
+    std::string fontPath;
+    std::string texturePath;
+    std::string textureMapsPath;
 
-		float playerHealth;
-		float enemyHealth;
-		float armorDamageReduction;
-		float attackRange;
-		float attackCooldown;
-		float attackDamage;
+    int playerSize;
+    float playerSpeed;
+    float enemySpeed;
+    float enemyVisionRadius;
+    float enemyVisionAngle;
+    float enemySenseRadius;
+    float enemyChaseMaxRadius;
+    float enemyChaseMinRadius;
+    int mapTileSize;
 
-		float healthBarDistance;
-		float armorBarDistance;
-		float barHeight;
-		float barBorder;
-		
-	private:
-		Settings();
-		~Settings() = default;
-		Settings(const Settings&) = delete;
-		Settings operator= (const Settings&) = delete;
-	};
+    float playerHealth;
+    float enemyHealth;
+    float armorDamageReduction;
+    float attackRange;
+    float attackCooldown;
+    float attackDamage;
 
-	enum ActorsGroups
-	{
-		PlayerGroup,
-		EnemyGroup
-	};
+    float healthBarDistance;
+    float armorBarDistance;
+    float barHeight;
+    float barBorder;
+
+   private:
+    Settings();
+    ~Settings() = default;
+    Settings(const Settings&) = delete;
+    Settings operator=(const Settings&) = delete;
 };
+
+enum ActorsGroups { PlayerGroup, EnemyGroup };
+};  // namespace Roguelike

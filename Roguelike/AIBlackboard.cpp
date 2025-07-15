@@ -1,5 +1,3 @@
 #include "AIBlackboard.h"
 
-namespace Roguelike
-{
-}
+namespace Roguelike {}
