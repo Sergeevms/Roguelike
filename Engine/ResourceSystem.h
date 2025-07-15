@@ -20,7 +20,7 @@ namespace MaxrEngine
 
 		ENGINE_API void LoadTextureMap(const std::string& name, std::string sourcePath, sf::Vector2u elementPixelSize,
 			int totalElements, bool isSmooth = true);
-		ENGINE_API const sf::Texture* GetTextureMapElementShared(const std::string& name, int elementIndex) const;
+		ENGINE_API const sf::Texture * GetTextureMapElementShared(const std::string& name, size_t elementIndex) const;
 		ENGINE_API sf::Texture* GetTextureMapElementCopy(const std::string& name, int elementIndex) const;
 		ENGINE_API int GetTextureMapElementsCount(const std::string& name) const;
 		ENGINE_API void DeleteSharedTextureMap(const std::string& name);
@@ -29,6 +29,11 @@ namespace MaxrEngine
 		ENGINE_API const sf::SoundBuffer* GetSoundShared(const std::string& name) const;
 		ENGINE_API sf::SoundBuffer* GetSoundCopy(const std::string& name) const;
 		ENGINE_API void DeleteSound(const std::string& name);
+
+		ENGINE_API void LoadFont(const std::string& name, std::string sourcePath);
+		ENGINE_API const sf::Font* GetFontShared(const std::string& name) const;
+		ENGINE_API sf::Font* GetFontCopy(const std::string& name) const;
+		ENGINE_API void DeleteFont(const std::string& name);
 
 		ENGINE_API void LoadMusic(const std::string& name, std::string sourcePath);
 		ENGINE_API sf::Music* GetMusicShared(const std::string& name) const;
@@ -41,6 +46,7 @@ namespace MaxrEngine
 		std::map<std::string, std::vector<sf::Texture*>> textureMaps;
 		std::map<std::string, sf::SoundBuffer*> soundBuffers;
 		std::map<std::string, sf::Music*> musics;
+		std::map<std::string, sf::Font*> fonts;
 
 		ResourceSystem() {};
 		~ResourceSystem() {};
@@ -52,6 +58,7 @@ namespace MaxrEngine
 		void DeleteAllTextureMaps();
 		void DeleteAllSounds();
 		void DeleteAllMusics();
+		void DeleteAllFonts();
 	};
 }
 

@@ -30,16 +30,36 @@ namespace Roguelike
 
 		int playerSize;
 		float playerSpeed;
-		float enemySpeed;
-		float enemyDetectionRadius;
+		float enemySpeed;		
+		float enemyVisionRadius;
+		float enemyVisionAngle;
+		float enemySenseRadius;
 		float enemyChaseMaxRadius;
 		float enemyChaseMinRadius;
 		int mapTileSize;
+
+		float playerHealth;
+		float enemyHealth;
+		float armorDamageReduction;
+		float attackRange;
+		float attackCooldown;
+		float attackDamage;
+
+		float healthBarDistance;
+		float armorBarDistance;
+		float barHeight;
+		float barBorder;
 		
 	private:
 		Settings();
 		~Settings() = default;
 		Settings(const Settings&) = delete;
 		Settings operator= (const Settings&) = delete;
+	};
+
+	enum ActorsGroups
+	{
+		PlayerGroup,
+		EnemyGroup
 	};
 };

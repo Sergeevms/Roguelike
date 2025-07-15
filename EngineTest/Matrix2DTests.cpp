@@ -5,7 +5,7 @@ constexpr float EPS = 1e-7f;
 TEST(MatrixTest, DefaultConstructor)
 {
 	MaxrEngine::Matrix2D matrix;
-	auto m = matrix.GetMatrix();
+	auto& m = matrix.GetMatrix();
 	EXPECT_EQ(m[0][0], 1.f);
 	EXPECT_EQ(m[0][1], 0.f);
 	EXPECT_EQ(m[0][2], 0.f);
@@ -23,7 +23,7 @@ TEST(MatrixTest, ValuesConstructor)
 		1.f, 2.f, 3.f,
 		4.f, 5.f, 6.f,
 		7.f, 8.f, 9.f);
-	auto m = matrix.GetMatrix();
+	auto& m = matrix.GetMatrix();
 	EXPECT_EQ(m[0][0], 1.f);
 	EXPECT_EQ(m[0][1], 2.f);
 	EXPECT_EQ(m[0][2], 3.f);
@@ -46,7 +46,7 @@ TEST(MatrixTest, MultiplyOperator)
 		47.f, 46.f, -45.f,
 		44.f, -43.f, 42.f);
 	auto matrix = matrix1 * matrix2;
-	auto m = matrix.GetMatrix();
+	auto& m = matrix.GetMatrix();
 	EXPECT_EQ(m[0][0], 176.f);
 	EXPECT_EQ(m[0][1], 12.f);
 	EXPECT_EQ(m[0][2], 84.f);
@@ -62,7 +62,7 @@ TEST(MatrixTest, TransformConstructor)
 {
 	MaxrEngine::Vector2Df zeroVector;
 	MaxrEngine::Matrix2D matrix = MaxrEngine::Matrix2D(zeroVector, 0.f, zeroVector);
-	auto nullTransform = matrix.GetMatrix();
+	auto& nullTransform = matrix.GetMatrix();
 	EXPECT_EQ(nullTransform[0][0], 0.f);
 	EXPECT_EQ(nullTransform[0][1], 0.f);
 	EXPECT_EQ(nullTransform[0][2], 0.f);
@@ -74,7 +74,7 @@ TEST(MatrixTest, TransformConstructor)
 	EXPECT_EQ(nullTransform[2][2], 1.f);
 
 	matrix = MaxrEngine::Matrix2D({ 1, 3 }, 0.f, zeroVector);
-	auto positionTransform = matrix.GetMatrix();
+	auto& positionTransform = matrix.GetMatrix();
 	EXPECT_EQ(positionTransform[0][0], 0.f);
 	EXPECT_EQ(positionTransform[0][1], 0.f);
 	EXPECT_EQ(positionTransform[0][2], 1.f);
@@ -88,7 +88,7 @@ TEST(MatrixTest, TransformConstructor)
 	MaxrEngine::Vector2Df oneVector = MaxrEngine::Vector2Df(1.f, 1.f);
 
 	matrix = MaxrEngine::Matrix2D(zeroVector, 90.f, oneVector);
-	auto angleTransform = matrix.GetMatrix();
+	auto& angleTransform = matrix.GetMatrix();
 	EXPECT_NEAR(angleTransform[0][0], 0.f, EPS);
 	EXPECT_NEAR(angleTransform[0][1], 1.f, EPS);
 	EXPECT_NEAR(angleTransform[0][2], 0.f, EPS);
@@ -100,7 +100,7 @@ TEST(MatrixTest, TransformConstructor)
 	EXPECT_NEAR(angleTransform[2][2], 1.f, EPS);
 
 	matrix = MaxrEngine::Matrix2D(zeroVector, 0.f, {2.f, 3.f});
-	auto scaleTransform = matrix.GetMatrix();
+	auto& scaleTransform = matrix.GetMatrix();
 	EXPECT_EQ(scaleTransform[0][0], 2.f);
 	EXPECT_EQ(scaleTransform[0][1], 0.f);
 	EXPECT_EQ(scaleTransform[0][2], 0.f);
@@ -115,8 +115,8 @@ TEST(MatrixTest, TransformConstructor)
 TEST(MatrixTest, Inversed)
 {
 	MaxrEngine::Matrix2D identytiMatrix;
-	auto identyti = identytiMatrix.GetMatrix();
-	auto reverseIdentyti = identytiMatrix.GetInversed().GetMatrix();
+	auto& identyti = identytiMatrix.GetMatrix();
+	auto& reverseIdentyti = identytiMatrix.GetInversed().GetMatrix();
 	for (int i = 0; i < 2; ++i)
 	{
 		for (int j = 0; j < 2; ++j)
@@ -131,7 +131,7 @@ TEST(MatrixTest, Inversed)
 		2.f, 19.f, -23.f
 	);
 
-	auto multiplyResult = (someMatrix * someMatrix.GetInversed()).GetMatrix();
+	auto& multiplyResult = (someMatrix * someMatrix.GetInversed()).GetMatrix();
 
 	for (int i = 0; i < 2; ++i)
 	{

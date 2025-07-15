@@ -17,10 +17,24 @@ namespace Roguelike
 		playerSpeed = 400.f;
 		mapTileSize = 36;
 
-		enemySpeed = 350.f;
-		enemyDetectionRadius = 250.f;
-		enemyChaseMaxRadius = 250.f;
-		enemyChaseMinRadius = 20.f;
+		enemySpeed = playerSpeed / 2.f;
+		enemyVisionRadius = 300.f;
+		enemyVisionAngle = 145.f;
+		enemySenseRadius = 150.f;
+		enemyChaseMaxRadius = enemyVisionRadius;
+		enemyChaseMinRadius = 40.f;
+
+		playerHealth = 200.f;
+		enemyHealth = 100.f;
+		armorDamageReduction = 0.75f;
+		attackRange = 100.f;
+		attackCooldown = 2.f;
+		attackDamage = 30.f; 
+		
+		healthBarDistance = 4.f;
+		barHeight = 5.f;
+		barBorder = 1.f;
+		armorBarDistance = 2 * healthBarDistance + barHeight;
 	}
 
 	MaxrEngine::Vector2Df Settings::ScreenCenter()

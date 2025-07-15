@@ -8,8 +8,16 @@
 #include "MovementComponent.h"
 #include "SpriteRendererComponent.h"
 #include "AIBlackboard.h"
-#include "AITargetSearchComponent.h"
+#include "AITargetSelector.h"
 #include "AIChaseTargetComponent.h"
+#include "HealthComponent.h"
+#include "ArmorComponent.h"
+#include "ActorComponent.h"
+#include "AIPerceptionComponent.h"
+#include "PerceptionComponentDebugDraw.h"
+#include "AIAttackComponent.h"
+#include "HealthBarComponent.h"
+#include "ArmorBarComponent.h"
 
 namespace Roguelike
 {
@@ -22,22 +30,50 @@ namespace Roguelike
 		enemyRender->SetTexture(*MaxrEngine::ResourceSystem::Instance()->GetTextureShared("Ball"));
 		enemyRender->SetPixelSize(settings->playerSize, settings->playerSize);
 
-		gameObject->AddComponent<MaxrEngine::AIInputComponent>();
+		auto input = gameObject->AddComponent<MaxrEngine::AIInputComponent>();
 
 		auto enemyMovement = gameObject->AddComponent<MaxrEngine::MovementComponent>();
-		enemyMovement->SetSpeed(settings->playerSpeed * 0.5f);
+		enemyMovement->SetSpeed(settings->enemySpeed);
 		
 		auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
 		body->SetKinematic(false);
 
 		gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+
 		auto enemyChase = gameObject->AddComponent<AIChaseTargetComponent>();
 		enemyChase->SetMinimumChaseRadius(settings->enemyChaseMinRadius);
 		enemyChase->SetMaximumChaseRadius(settings->enemyChaseMaxRadius);
 
 		gameObject->AddComponent<AIBlackboard>();
 
-		auto enemyTarget = gameObject->AddComponent<AITargetSearchComponent>();
-		enemyTarget->SetDetectionRange(settings->enemyDetectionRadius);		
+		auto perceptionComponent = gameObject->AddComponent<AIPerceptionComponent>();
+		perceptionComponent->SetSenseRadius(settings->enemySenseRadius);
+		perceptionComponent->SetVisionRadius(settings->enemyVisionRadius);
+		perceptionComponent->SetVisionAngle(settings->enemyVisionAngle);
+		perceptionComponent->SetVisionDirection({ -1.f, 0.f });
+		input->AddObserver(perceptionComponent);
+
+		auto perceptionDebugDraw = gameObject->AddComponent<PerceptionComponentDebugDraw>();
+
+		auto targetSelector = gameObject->AddComponent<AITargetSelector>();
+
+		perceptionComponent->AddObserver(targetSelector);
+		
+		auto health = gameObject->AddComponent<HealthComponent>(settings->enemyHealth);
+		auto healthBar = gameObject->AddComponent<HealthBarComponent>(MaxrEngine::Vector2Df(0.f, settings->playerSize * 0.5f + settings->healthBarDistance),
+			MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize), settings->barHeight), settings->barBorder);
+		healthBar->SetHealthComponent(health);
+
+		auto armor = gameObject->AddComponent<ArmorComponent>();
+		armor->SetDamageReduction(settings->armorDamageReduction * 0.75f);
+		armor->SetMaxArmorPoints(settings->enemyHealth);
+		armor->SetCurrentArmorPoints(settings->enemyHealth);
+		auto armorBar = gameObject->AddComponent<ArmorBarComponent>(MaxrEngine::Vector2Df(0.f, settings->playerSize * 0.5f + settings->armorBarDistance),
+			MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize), settings->barHeight), settings->barBorder);
+		armorBar->SetArmorComponent(armor);
+
+		auto actorComponent = gameObject->AddComponent<ActorComponent>();
+		actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
+		auto attackComponent = gameObject->AddComponent<AIAttackComponent>(settings->attackCooldown, settings->attackDamage, settings->attackRange);
 	}
 }

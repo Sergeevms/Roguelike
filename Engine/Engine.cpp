@@ -20,6 +20,7 @@ namespace MaxrEngine
 
 	void Engine::Run()
 	{
+		LOG_INFO("Engine runned");
 		sf::Clock gameClock;
 		sf::Event event;
 
@@ -38,6 +39,7 @@ namespace MaxrEngine
 
 			if (!RenderSystem::Instance()->GetMainWindow().isOpen())
 			{
+				GameWorld::Instance()->Clear();
 				break;
 			}
 
@@ -50,5 +52,6 @@ namespace MaxrEngine
 
 			RenderSystem::Instance()->GetMainWindow().display();
 		}
+		LOG_INFO("Engine stopped");
 	}
 }
