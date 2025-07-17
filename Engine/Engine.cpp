@@ -2,7 +2,7 @@
 
 #include "Engine.h"
 
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
 #include "GameWorld.h"
 #include "RenderSystem.h"

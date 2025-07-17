@@ -4,6 +4,8 @@
 
 #include <numbers>
 
+#include "GameObject.h"
+
 namespace MaxrEngine {
 constexpr float PI = std::numbers::pi_v<float>;
 
@@ -53,11 +55,11 @@ void TransformComponent::SetLocalPosition(float positionX, float positionY) {
 
 void TransformComponent::RotateBy(const float offset) {
     localRotation += offset;
-    while (localRotation >= 360.f) {
-        localRotation -= 360.f;
+    while (localRotation >= 360.0F) {
+        localRotation -= 360.0F;
     }
-    while (localRotation < 0.f) {
-        localRotation += 360.f;
+    while (localRotation < 0.0F) {
+        localRotation += 360.0F;
     }
     isUpdated = false;
 }
@@ -78,11 +80,11 @@ void TransformComponent::SetWorldRotation(float angle) {
 
 void TransformComponent::SetLocalRotation(float angle) {
     localRotation = angle;
-    while (localRotation >= 360.f) {
-        localRotation -= 360.f;
+    while (localRotation >= 360.0F) {
+        localRotation -= 360.0F;
     }
-    while (localRotation < 0.f) {
-        localRotation += 360.f;
+    while (localRotation < 0.0F) {
+        localRotation += 360.0F;
     }
     isUpdated = false;
 }

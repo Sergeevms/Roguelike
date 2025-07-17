@@ -1,0 +1,1 @@
+Checks: google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes

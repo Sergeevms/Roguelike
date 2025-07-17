@@ -1,8 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>
 #include <sstream>
+
+#include "SFML/Graphics.hpp"
 
 #include "Component.h"
 #include "EngineAPI.h"
@@ -10,9 +11,6 @@
 #include "TransformComponent.h"
 
 namespace MaxrEngine {
-class Component;
-class TransformComponent;
-
 class GameObject : public std::enable_shared_from_this<GameObject> {
    public:
     GameObject();

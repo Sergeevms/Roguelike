@@ -1,7 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <functional>
 #include <vector>
+
+#include "SFML/Graphics.hpp"
 
 #include "Collision.h"
 #include "Component.h"
@@ -11,10 +12,12 @@
 namespace MaxrEngine {
 class ColliderComponent : public Component {
    public:
+    friend class PhysicsSystem;
+
     ENGINE_API ColliderComponent(GameObject* gameObject);
 
-    virtual void Update(float deltaTime) = 0;
-    virtual void Render() = 0;
+    void Update(float deltaTime) override = 0;
+    void Render() override = 0;
 
     ENGINE_API void SetTrigger(bool newIsTrigger);
 
@@ -32,8 +35,6 @@ class ColliderComponent : public Component {
         std::function<void(Trigger)> onTriggerExit);
     ENGINE_API void UnsubscribeTriggerExit(
         std::function<void(Trigger)> onTriggerExit);
-
-    friend class PhysicsSystem;
 
    protected:
     sf::FloatRect bounds;

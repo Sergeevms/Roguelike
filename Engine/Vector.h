@@ -99,13 +99,13 @@ U Convert(const V& v) {
 template <typename T>
     requires std::floating_point<T>
 T DegreeToRadian(const T angle) {
-    return angle * std::numbers::pi_v<T> / 180.f;
+    return angle * std::numbers::pi_v<T> / 180.0F;
 }
 
 template <typename T>
     requires std::floating_point<T>
 T RadianToDegree(const T angle) {
-    return angle * std::numbers::inv_pi_v<T> * 180.f;
+    return angle * std::numbers::inv_pi_v<T> * 180.0F;
 }
 
 // Returns angle in degree
@@ -127,10 +127,10 @@ template <typename T>
     requires std::floating_point<T>
 Vector2D<T> Normalized(const Vector2D<T>& vector) {
     float length = vector.GetLength();
-    if (length > 0.f) {
+    if (length > 0.0F) {
         return vector * (1.f / vector.GetLength());
     } else {
-        return {0.f, 0.f};
+        return {0.0F, 0.0F};
     }
 }
 

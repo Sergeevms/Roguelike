@@ -2,6 +2,7 @@
 
 #include "SpriteRendererComponent.h"
 
+#include "GameObject.h"
 #include "RenderSystem.h"
 
 namespace MaxrEngine {

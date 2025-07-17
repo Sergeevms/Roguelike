@@ -11,13 +11,13 @@ constexpr float PI = std::numbers::pi_v<float>;
 
 Matrix2D::Matrix2D() {
     m[0][0] = 1.f;
-    m[0][1] = 0.f;
-    m[0][2] = 0.f;
-    m[1][0] = 0.f;
+    m[0][1] = 0.0F;
+    m[0][2] = 0.0F;
+    m[1][0] = 0.0F;
     m[1][1] = 1.f;
-    m[1][2] = 0.f;
-    m[2][0] = 0.f;
-    m[2][1] = 0.f;
+    m[1][2] = 0.0F;
+    m[2][0] = 0.0F;
+    m[2][1] = 0.0F;
     m[2][2] = 1.f;
 }
 
@@ -38,15 +38,15 @@ Matrix2D::Matrix2D(Vector2Df position, float angle, Vector2Df scale) {
     m[0][2] = position.x;
     m[1][2] = position.y;
 
-    float cosA = cos(angle * PI / 180.f);
-    float sinA = sin(angle * PI / 180.f);
+    float cosA = cos(angle * PI / 180.0F);
+    float sinA = sin(angle * PI / 180.0F);
     m[0][0] = cosA * scale.x;
     m[0][1] = sinA * scale.x;
     m[1][0] = -sinA * scale.y;
     m[1][1] = cosA * scale.y;
 
-    m[2][0] = 0.f;
-    m[2][1] = 0.f;
+    m[2][0] = 0.0F;
+    m[2][1] = 0.0F;
     m[2][2] = 1.f;
 }
 
@@ -75,7 +75,7 @@ Matrix2D Matrix2D::GetInversed() const {
 
     float inversedDeterminant = 1.f / determinant;
 
-    Matrix2D minor(0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f);
+    Matrix2D minor(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
     std::vector<std::vector<float>> submatrix(2, std::vector<float>(2));
     int submatrixRow = 0;

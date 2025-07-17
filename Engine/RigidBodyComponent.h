@@ -1,7 +1,8 @@
 #pragma once
-
 #include "Component.h"
+#include "GameObject.h"
 #include "TransformComponent.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 class RigidBodyComponent : public Component {
@@ -31,11 +32,11 @@ class RigidBodyComponent : public Component {
    private:
     TransformComponent* transform;
 
-    Vector2Df linearVelocity = {0.f, 0.f};
-    float angleVelocity = 0.f;
+    Vector2Df linearVelocity = {0.0F, 0.0F};
+    float angleVelocity = 0.0F;
 
-    float linearDamping = 0.f;
-    float angleDamping = 0.f;
+    float linearDamping = 0.0F;
+    float angleDamping = 0.0F;
 
     bool isKinematic = false;
 };

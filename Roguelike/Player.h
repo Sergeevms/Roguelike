@@ -5,7 +5,5 @@ namespace Roguelike {
 class Player : public GameObjectContainer {
    public:
     Player();
-
-   private:
 };
 }  // namespace Roguelike

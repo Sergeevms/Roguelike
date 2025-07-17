@@ -3,7 +3,9 @@
 #include "CameraComponent.h"
 
 #include <cassert>
-#include <iostream>
+
+#include "GameObject.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 CameraComponent::CameraComponent(GameObject* gameObject)
@@ -15,7 +17,7 @@ CameraComponent::CameraComponent(GameObject* gameObject)
 CameraComponent::~CameraComponent() { delete view; }
 
 void CameraComponent::Update(float deltaTime) {
-    auto position = transform->GetWorldPosition();
+    auto& position = transform->GetWorldPosition();
     auto rotation = transform->GetWorldRotation();
 
     view->setCenter(Convert<sf::Vector2f, Vector2Df>(position));
@@ -36,7 +38,7 @@ void CameraComponent::SetWindow(sf::RenderWindow* newWindow) {
 }
 
 void CameraComponent::ZoomBy(float newZoom) {
-    assert(newZoom > 0.f && "Not allowed zoom lesser or equal than zero.");
+    assert(newZoom > 0.0F && "Not allowed zoom lesser or equal than zero.");
     if (newZoom <= 0) {
         LOG_WARN("Not allowed zoom lesser or equal than zero.");
         return;
@@ -45,7 +47,7 @@ void CameraComponent::ZoomBy(float newZoom) {
 }
 
 void CameraComponent::SetBaseResolution(int width, int height) {
-    view->reset(sf::FloatRect(0.f, 0.f, static_cast<float>(width),
+    view->reset(sf::FloatRect(0.0F, 0.0F, static_cast<float>(width),
                               static_cast<float>(-height)));
 }
 }  // namespace MaxrEngine

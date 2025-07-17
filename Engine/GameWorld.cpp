@@ -57,8 +57,7 @@ void GameWorld::DestroyGameObject(GameObject* gameObject) {
     }
 }
 
-ENGINE_API void GameWorld::DestroyGameObject(
-    std::shared_ptr<GameObject> gameObject) {
+void GameWorld::DestroyGameObject(std::shared_ptr<GameObject> gameObject) {
     markedToDestroyGameObjects.push_back(gameObject);
 }
 
@@ -68,12 +67,11 @@ void GameWorld::Clear() {
     }
 }
 
-ENGINE_API void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
-    fixedUpdateSystems[system] = 0.f;
+void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
+    fixedUpdateSystems[system] = 0.0F;
 }
 
-ENGINE_API void GameWorld::UnRegisterFixedUpdateSytem(
-    IFixedUpdateSytem* system) {
+void GameWorld::UnRegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
     auto it = fixedUpdateSystems.find(system);
     if (it != fixedUpdateSystems.end()) {
         fixedUpdateSystems.erase(it);

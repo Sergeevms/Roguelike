@@ -1,17 +1,18 @@
 #pragma once
 #include "Component.h"
 #include "EngineAPI.h"
-#include "GameObject.h"
 #include "Matrix2D.h"
 #include "Vector.h"
 
 namespace MaxrEngine {
+class GameObject;
+
 class TransformComponent : public Component {
    public:
     ENGINE_API TransformComponent(GameObject* gameObject);
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
     ENGINE_API void MoveBy(const Vector2Df& offset);
     ENGINE_API void MoveBy(float offsetX, float offsetY);
@@ -52,12 +53,12 @@ class TransformComponent : public Component {
     mutable Matrix2D localTransform;
     mutable bool isUpdated = false;
 
-    mutable Vector2Df localPosition = {0.f, 0.f};
-    mutable float localRotation = 0.f;
+    mutable Vector2Df localPosition = {0.0F, 0.0F};
+    mutable float localRotation = 0.0F;
     mutable Vector2Df localScale = {1.f, 1.f};
 
-    mutable Vector2Df position = {0.f, 0.f};
-    mutable float rotation = 0.f;
+    mutable Vector2Df position = {0.0F, 0.0F};
+    mutable float rotation = 0.0F;
     mutable Vector2Df scale = {1.f, 1.f};
 
     void SetWorldInfoFrom(const Matrix2D& transform) const;

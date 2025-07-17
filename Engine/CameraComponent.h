@@ -1,4 +1,6 @@
 #pragma once
+#include "SFML/Graphics.hpp"
+
 #include "Component.h"
 #include "EngineAPI.h"
 #include "TransformComponent.h"

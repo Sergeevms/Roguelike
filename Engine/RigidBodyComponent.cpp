@@ -2,6 +2,8 @@
 
 #include "RigidBodyComponent.h"
 
+#include "GameObject.h"
+
 namespace MaxrEngine {
 RigidBodyComponent::RigidBodyComponent(GameObject* gameObject)
     : Component(gameObject) {
@@ -18,15 +20,15 @@ void RigidBodyComponent::Update(float deltaTime) {
     constexpr float minimalVelocity = 0.001f;
 
     if (fabs(linearVelocity.x) < minimalVelocity) {
-        linearVelocity.x = 0.f;
+        linearVelocity.x = 0.0F;
     }
 
     if (fabs(linearVelocity.y) < minimalVelocity) {
-        linearVelocity.y = 0.f;
+        linearVelocity.y = 0.0F;
     }
 
     if (fabs(angleVelocity) < minimalVelocity) {
-        angleVelocity = 0.f;
+        angleVelocity = 0.0F;
     }
 }
 

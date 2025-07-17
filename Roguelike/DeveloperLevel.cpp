@@ -1,12 +1,20 @@
 #include "DeveloperLevel.h"
 
+#include <memory>
+
+#include "BackgroundMusic.h"
+#include "Enemy.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
+#include "Player.h"
 #include "Settings.h"
+#include "TransformComponent.h"
 
 namespace Roguelike {
+// NOLINTBEGIN(readability-magic-numbers) : temporaly until level creation
+// rework
 void DeveloperLevel::Start() {
-    auto settings = Settings::Instance();
+    auto* settings = Settings::Instance();
     LabyrinthBuilder labyrinthBuilder;
     labyrinthBuilder.StartBuilding({30, 30});
     labyrinthBuilder.AddRect({10, 10}, {20, 20});
@@ -19,11 +27,12 @@ void DeveloperLevel::Start() {
     backgroundMusic = std::make_shared<BackgroundMusic>();
     enemy = std::make_shared<Enemy>();
 
-    auto enemyTransform =
+    auto* enemyTransform =
         enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
     enemyTransform->SetWorldPosition(
-        {8.f * settings->playerSize, 2.f * settings->playerSize});
+        {8.0F * settings->PlayerSizeF(), 2.0F * settings->PlayerSizeF()});
 }
+// NOLINTEND(readability-magic-numbers)
 
 void DeveloperLevel::Restart() {
     Stop();

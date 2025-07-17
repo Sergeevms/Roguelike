@@ -18,7 +18,7 @@ void MaxrEngine::AIInputComponent::SetDirection(Vector2Df newDirection) {
     }
     verticalAxis = newDirection.y;
     horizontalAxis = newDirection.x;
-    if (length > 0.f) {
+    if (length > 0.0F) {
         Emit();
     }
 }

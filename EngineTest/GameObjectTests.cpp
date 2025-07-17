@@ -6,7 +6,7 @@
 #include "MovementComponent.h"
 #include "RigidBodyComponent.h"
 
-constexpr float EPS = 5e-6f;
+constexpr float EPS = 5e-6F;
 TEST(GameObject, Constructor) {
     MaxrEngine::GameObject* gameObject =
         MaxrEngine::GameWorld::Instance()->CreateGameObject();

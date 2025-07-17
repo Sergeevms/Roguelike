@@ -1,9 +1,9 @@
-#ifndef ROGUELIKE_ACTORREGISTERSISTEM_H
-#define ROGUELIKE_ACTORREGISTERSISTEM_H
+#pragma once
 #include <vector>
 
 #include "ActorComponent.h"
-#include "Gameobject.h"
+#include "GameObject.h"
+
 namespace Roguelike {
 class ActorRegisterSystem {
    public:
@@ -24,4 +24,3 @@ class ActorRegisterSystem {
     ActorRegisterSystem& operator=(const ActorRegisterSystem&) = delete;
 };
 }  // namespace Roguelike
-#endif  // ROGUELIKE_ACTORREGISTERSISTEM_H

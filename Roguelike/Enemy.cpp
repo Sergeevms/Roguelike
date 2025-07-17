@@ -9,20 +9,22 @@
 #include "ActorComponent.h"
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
+#include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
 #include "HealthComponent.h"
 #include "MovementComponent.h"
 #include "PerceptionComponentDebugDraw.h"
-#include "RenderSystem.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "Settings.h"
 #include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
+#include "Utility.h"
+#include "Vector.h"
 
 namespace Roguelike {
 Enemy::Enemy() : GameObjectContainer("Enemy") {
-    auto settings = Settings::Instance();
+    auto* settings = Settings::Instance();
 
     auto enemyRender =
         gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
@@ -52,7 +54,8 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
     perceptionComponent->SetSenseRadius(settings->enemySenseRadius);
     perceptionComponent->SetVisionRadius(settings->enemyVisionRadius);
     perceptionComponent->SetVisionAngle(settings->enemyVisionAngle);
-    perceptionComponent->SetVisionDirection({-1.f, 0.f});
+    const MaxrEngine::Vector2Df leftDirection = {-1.0F, 0.0F};
+    perceptionComponent->SetVisionDirection(leftDirection);
     input->AddObserver(perceptionComponent);
 
     auto perceptionDebugDraw =
@@ -66,21 +69,21 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
         gameObject->AddComponent<HealthComponent>(settings->enemyHealth);
     auto healthBar = gameObject->AddComponent<HealthBarComponent>(
         MaxrEngine::Vector2Df(
-            0.f, settings->playerSize * 0.5f + settings->healthBarDistance),
-        MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize),
-                              settings->barHeight),
+            0.0F, Half(settings->PlayerSizeF()) + settings->healthBarDistance),
+        MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
         settings->barBorder);
     healthBar->SetHealthComponent(health);
 
     auto armor = gameObject->AddComponent<ArmorComponent>();
-    armor->SetDamageReduction(settings->armorDamageReduction * 0.75f);
+    const float enemyAramorDamageReduction =
+        settings->armorDamageReduction * 0.75F;
+    armor->SetDamageReduction(enemyAramorDamageReduction);
     armor->SetMaxArmorPoints(settings->enemyHealth);
     armor->SetCurrentArmorPoints(settings->enemyHealth);
     auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
         MaxrEngine::Vector2Df(
-            0.f, settings->playerSize * 0.5f + settings->armorBarDistance),
-        MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize),
-                              settings->barHeight),
+            0.0F, Half(settings->PlayerSizeF()) + settings->armorBarDistance),
+        MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
         settings->barBorder);
     armorBar->SetArmorComponent(armor);
 

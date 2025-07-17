@@ -1,19 +1,25 @@
 #pragma once
+#include <memory>
+
 #include "Component.h"
 #include "PerceptionComponent.h"
 
 namespace Roguelike {
 class PerceptionComponentDebugDraw : public MaxrEngine::Component {
    public:
-    PerceptionComponentDebugDraw(MaxrEngine::GameObject* gameObject);
+    static constexpr int defaultArcLineCount = 50;
+    explicit PerceptionComponentDebugDraw(
+        MaxrEngine::GameObject* gameObject,
+        const int arcLinesCount = defaultArcLineCount);
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
-    void setArcPointCount(unsigned newArcPointsCount);
+    void setArcPointCount(const int newArcPointsCount);
+    int getArcPointCount() const;
 
    protected:
     std::weak_ptr<PerceptionComponent> perceptionComponent;
-    unsigned arcLinesCount = 50;
+    int arcLinesCount;
 };
 }  // namespace Roguelike

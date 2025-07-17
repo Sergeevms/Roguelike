@@ -1,8 +1,17 @@
 #include "BarComponent.h"
 
+#include <cmath>
+
+#include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
+#include "SFML/System/Vector2.hpp"
+
+#include "Component.h"
 #include "GameObject.h"
 #include "Logger.h"
 #include "RenderSystem.h"
+#include "Utility.h"
+#include "Vector.h"
 
 namespace Roguelike {
 Roguelike::BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
@@ -19,18 +28,18 @@ Roguelike::BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
       currentAmount(maxAmount) {}
 
 void BarComponent::Render() {
-    if (maxAmount <= 0.f) {
+    if (maxAmount <= 0.0F) {
         LOG_WARN("Bars maxAmount should be positive");
         return;
     }
-    auto objectPosition =
+    const auto& objectPosition =
         gameObject->GetComponent<MaxrEngine::TransformComponent>()
             ->GetWorldPosition();
-    auto barTopLeft = objectPosition + centerOffset - barSize * 0.5f;
-    MaxrEngine::Vector2Df filledBarSize = {
+    auto barTopLeft = objectPosition + centerOffset - Half(barSize);
+    const MaxrEngine::Vector2Df filledBarSize = {
         barSize.x * currentAmount / maxAmount, barSize.y};
 
-    if (abs(borderSize) > 0.f) {
+    if (abs(borderSize) > 0.0F) {
         sf::RectangleShape borderShape(Convert<sf::Vector2f>(barSize));
         borderShape.setFillColor(sf::Color::Transparent);
         borderShape.setOutlineColor(barColor);
@@ -67,7 +76,7 @@ void BarComponent::SetBarColor(const sf::Color newBarColor) {
 float BarComponent::GetMaxAmount() const { return maxAmount; }
 
 void BarComponent::SetMaxAmount(const float newMaxAmount) {
-    if (newMaxAmount <= 0.f) {
+    if (newMaxAmount <= 0.0F) {
         LOG_WARN("Bars maxAmount should be positive");
         return;
     }

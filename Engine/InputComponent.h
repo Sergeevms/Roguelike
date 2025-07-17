@@ -16,8 +16,8 @@ class InputComponent : public Component, public IObservable {
     ENGINE_API bool getAttack() const;
 
    protected:
-    float horizontalAxis = 0.f;
-    float verticalAxis = 0.f;
+    float horizontalAxis = 0.0F;
+    float verticalAxis = 0.0F;
     bool attack = false;
 };
 }  // namespace MaxrEngine

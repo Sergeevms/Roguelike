@@ -1,10 +1,9 @@
 #pragma once
+#include <memory>
 #include <vector>
 
-#include "Floor.h"
 #include "Labyrinth.h"
 #include "Vector.h"
-#include "Wall.h"
 
 namespace Roguelike {
 enum class TileType;
@@ -35,8 +34,8 @@ class LabyrinthBuilder {
     std::vector<int> usableFloorTextureId;
     // Changes wall TileType according to its position
     void UpdateWallType();
-    bool IsWall(MaxrEngine::Vector2Di position);
-    MaxrEngine::Vector2Df GetCenterInTyles();
+    bool IsWall(MaxrEngine::Vector2Di position) const;
+    MaxrEngine::Vector2Df GetCenterInTyles() const;
     MaxrEngine::Vector2Df GetTylePosition(MaxrEngine::Vector2Di tilePosition);
 };
 }  // namespace Roguelike

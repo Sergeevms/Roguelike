@@ -7,10 +7,10 @@ void IDelayedAction::StartTimer(float delayDuration) {
 }
 
 void IDelayedAction::UpdateTimer(float deltaTime) {
-    if (currentTime > 0.f) {
+    if (currentTime > 0.0F) {
         currentTime -= deltaTime;
         UpdateAction(deltaTime);
-        if (currentTime <= 0.f) {
+        if (currentTime <= 0.0F) {
             FinalAction();
         }
     }

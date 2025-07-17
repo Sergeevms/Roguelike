@@ -1,5 +1,6 @@
 #include "BackgroundMusic.h"
 
+#include "GameObjectContainer.h"
 #include "MusicComponent.h"
 #include "ResourceSystem.h"
 

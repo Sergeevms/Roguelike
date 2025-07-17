@@ -1,8 +1,13 @@
 #include "ArmorComponent.h"
 
+#include <algorithm>
 #include <cassert>
+#include <sstream>
 
+#include "Component.h"
+#include "GameObject.h"
 #include "Logger.h"
+#include "Utility.h"
 
 namespace Roguelike {
 ArmorComponent::ArmorComponent(MaxrEngine::GameObject* gameObject,
@@ -19,9 +24,9 @@ void ArmorComponent::Render() {}
 
 void ArmorComponent::SetMaxArmorPoints(const float newMaxArmorPoints) {
     assert(newMaxArmorPoints >= 0 && "maxArmorPoints supposed to be positive");
-    if (newMaxArmorPoints < 0.f) {
+    if (newMaxArmorPoints < 0.0F) {
         LOG_WARN("maxArmorPoints supposed to be positive - setted to 0");
-        maxArmorPoints = 0.f;
+        maxArmorPoints = 0.0F;
         return;
     }
     maxArmorPoints = newMaxArmorPoints;
@@ -31,13 +36,13 @@ void ArmorComponent::SetMaxArmorPoints(const float newMaxArmorPoints) {
 float ArmorComponent::GetMaxArmorPoints() const { return maxArmorPoints; }
 
 void ArmorComponent::SetDamageReduction(const float newDamageReduction) {
-    assert((newDamageReduction >= 0.f && newDamageReduction <= 1.f) &&
-           "newDamageReduction supposed to be in range 0.f - 1.f");
-    if (newDamageReduction < 0.f || newDamageReduction > 1.f) {
+    assert((newDamageReduction >= 0.0F && newDamageReduction <= 1.0F) &&
+           "newDamageReduction supposed to be in range 0.0F - 1.f");
+    if (!InRange(newDamageReduction, 0.0F, 1.0F)) {
         LOG_WARN(
-            "newDamageReduction supposed to be in range 0.f - 1.f. Setted to "
-            "1.f");
-        damageReduction = 1.f;
+            "newDamageReduction supposed to be in range 0.0F - 1.0F. Setted to "
+            "1.0F");
+        damageReduction = 1.0F;
         return;
     }
     damageReduction = newDamageReduction;
@@ -48,9 +53,9 @@ float ArmorComponent::GetDamageReduction() const { return damageReduction; }
 void ArmorComponent::SetCurrentArmorPoints(const float newCurrentArmorPoints) {
     assert(newCurrentArmorPoints >= 0 &&
            "currentArmorPoints supposed to be positive");
-    if (newCurrentArmorPoints < 0.f) {
+    if (newCurrentArmorPoints < 0.0F) {
         LOG_WARN("currentArmorPoints supposed to be positive - setted to 0");
-        currentArmorPoints = 0.f;
+        currentArmorPoints = 0.0F;
         Emit();
         return;
     }
@@ -65,22 +70,22 @@ float ArmorComponent::GetCurrentArmorPoints() const {
 float ArmorComponent::ApplyDamage(const float damageAmount) {
     std::ostringstream message;
 
-    if (currentArmorPoints <= 0.f) {
+    if (currentArmorPoints <= 0.0F) {
         message << "Trying to damage " << this
-                << " which has 0.f armorPoints will have no effect";
+                << " which has 0.0F armorPoints will have no effect";
         LOG_WARN(message.str());
         message.clear();
     }
 
-    float absorbedDamage =
+    const float absorbedDamage =
         std::min(currentArmorPoints, (damageAmount * damageReduction));
     message << this << " recieved " << damageAmount << " damage - "
             << absorbedDamage << " absorbed";
     LOG_INFO(message.str());
     currentArmorPoints -= absorbedDamage;
     Emit();
-    return damageAmount - absorbedDamage > 0.f ? damageAmount - absorbedDamage
-                                               : 0.f;
+    return damageAmount - absorbedDamage > 0.0F ? damageAmount - absorbedDamage
+                                                : 0.0F;
 }
 
 float ArmorComponent::IncreaseArmorPoints(const float armorPointAmount) {
@@ -98,7 +103,7 @@ float ArmorComponent::IncreaseArmorPoints(const float armorPointAmount) {
 
     currentArmorPoints += armorPointAmount;
     if (currentArmorPoints > currentArmorPoints) {
-        float overArmorRestore = currentArmorPoints - maxArmorPoints;
+        const float overArmorRestore = currentArmorPoints - maxArmorPoints;
         currentArmorPoints = maxArmorPoints;
         message << "Restoring " << overArmorRestore
                 << " not applied due to going over maxArmorPoints";
@@ -108,7 +113,7 @@ float ArmorComponent::IncreaseArmorPoints(const float armorPointAmount) {
         return overArmorRestore;
     }
     Emit();
-    return 0.f;
+    return 0.0F;
 }
-bool ArmorComponent::IsNotBroken() const { return currentArmorPoints > 0.f; }
+bool ArmorComponent::IsNotBroken() const { return currentArmorPoints > 0.0F; }
 }  // namespace Roguelike

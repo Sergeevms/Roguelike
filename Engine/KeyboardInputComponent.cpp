@@ -2,15 +2,15 @@
 
 #include "KeyboardInputComponent.h"
 
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
 namespace MaxrEngine {
 KeyboardInputComponent::KeyboardInputComponent(GameObject* gameObject)
     : InputComponent(gameObject) {}
 
 void KeyboardInputComponent::Update(float deltaTime) {
-    verticalAxis = 0.f;
-    horizontalAxis = 0.f;
+    verticalAxis = 0.0F;
+    horizontalAxis = 0.0F;
     attack = false;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||

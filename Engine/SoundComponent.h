@@ -1,7 +1,8 @@
 #pragma once
+#include "SFML/Audio.hpp"
+
 #include "Component.h"
 #include "EngineAPI.h"
-#include "SFML/Audio.hpp"
 
 namespace MaxrEngine {
 class ENGINE_API SoundComponent : public Component {

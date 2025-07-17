@@ -1,7 +1,10 @@
 #pragma once
+#include <memory>
 #include <vector>
 
 #include "Floor.h"
+#include "GameObjectContainer.h"
+#include "Vector.h"
 #include "Wall.h"
 
 namespace Roguelike {

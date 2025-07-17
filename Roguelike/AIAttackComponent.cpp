@@ -1,6 +1,9 @@
 #include "AIAttackComponent.h"
 
+#include <memory>
+
 #include "AIBlackboard.h"
+#include "AttackComponent.h"
 #include "GameObject.h"
 
 namespace Roguelike {
@@ -8,11 +11,12 @@ AIAttackComponent::AIAttackComponent(
     MaxrEngine::GameObject* gameObject, float cooldown, float damage,
     float range, std::weak_ptr<MaxrEngine::GameObject> target)
     : AttackComponent(gameObject, cooldown, damage, range, target) {}
+
 void AIAttackComponent::Update(float deltaTime) {
     AttackComponent::Update(deltaTime);
     bool targetVisible = false;
-    auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-    if (currentCooldown <= 0 &&
+    auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
+    if (currentCooldown <= 0.0F &&
         blackBoard->Get("isTargetVisible", targetVisible) && targetVisible) {
         if (!target.expired()) {
             auto targetPtr = target.lock();

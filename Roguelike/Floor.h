@@ -1,6 +1,6 @@
 #pragma once
-#include "GameObject.h"
 #include "GameObjectContainer.h"
+#include "Vector.h"
 
 namespace Roguelike {
 class Floor : public GameObjectContainer {

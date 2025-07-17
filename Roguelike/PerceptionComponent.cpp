@@ -1,11 +1,21 @@
 #include "PerceptionComponent.h"
 
 #include "ActorRegisterSystem.h"
+#include "Component.h"
+#include "Logger.h"
 #include "PerceptionSystem.h"
+#include "TransformComponent.h"
+#include "Vector.h"
 
 namespace Roguelike {
-PerceptionComponent::PerceptionComponent(MaxrEngine::GameObject* gameObject)
-    : Component(gameObject) {
+PerceptionComponent::PerceptionComponent(MaxrEngine::GameObject* gameObject,
+                                         const Parameters& parameters)
+    : Component(gameObject),
+      visionAngle(parameters.visionAngle),
+      visionRadius(parameters.visionRadius),
+      senseRadius(parameters.senseRadius),
+      visionDirection(MaxrEngine::Vector2Df(parameters.visionDirectionX,
+                                            parameters.visionDirectionY)) {
     transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
     PerceptionSystem::Instance()->RegisterPerceptionComponent(this);
 }
@@ -38,7 +48,7 @@ float PerceptionComponent::GetSenseRadius() const { return senseRadius; }
 
 void PerceptionComponent::SetVisionDirection(
     const MaxrEngine::Vector2Df& newVisionDirection) {
-    if (newVisionDirection.GetLength() > 0.f) {
+    if (newVisionDirection.GetLength() > 0.0F) {
         visionDirection = Normalized(newVisionDirection);
     } else {
         LOG_WARN("vision direction must not be zero vector");
@@ -55,14 +65,14 @@ const MaxrEngine::TransformComponent* PerceptionComponent::GetTransform()
 }
 
 void PerceptionComponent::UpdateDetectedActors() {
-    auto& actors = ActorRegisterSystem::Instance()->GetActorsList();
+    const auto& actors = ActorRegisterSystem::Instance()->GetActorsList();
     UpdateDetectedActors(actors);
 }
 
 void PerceptionComponent::UpdateDetectedActors(
     const std::vector<MaxrEngine::GameObject*>& actors) {
     detectedActors.clear();
-    for (auto& actor : actors) {
+    for (const auto& actor : actors) {
         if (actor != gameObject &&
             PerceptionSystem::Instance()->CanDetect(this, actor)) {
             detectedActors.push_back(actor);

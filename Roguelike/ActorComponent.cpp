@@ -1,7 +1,9 @@
 #include "ActorComponent.h"
 
 #include "ActorRegisterSystem.h"
+#include "Component.h"
 #include "GameObject.h"
+#include "Logger.h"
 
 namespace Roguelike {
 ActorComponent::ActorComponent(MaxrEngine::GameObject* gameObject, int groupID)

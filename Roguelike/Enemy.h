@@ -6,5 +6,4 @@ class Enemy : public GameObjectContainer {
    public:
     Enemy();
 };
-
 }  // namespace Roguelike

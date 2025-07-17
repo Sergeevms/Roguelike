@@ -18,7 +18,7 @@ void PlayerAttackComponent::Notify(
     std::shared_ptr<MaxrEngine::IObservable> observable) {
     if (auto input =
             std::dynamic_pointer_cast<MaxrEngine::InputComponent>(observable)) {
-        if (currentCooldown <= 0.f) {
+        if (currentCooldown <= 0.0F) {
             currentCooldown = cooldown;
             auto position =
                 gameObject->GetComponent<MaxrEngine::TransformComponent>()

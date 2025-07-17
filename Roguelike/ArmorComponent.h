@@ -5,17 +5,17 @@ namespace Roguelike {
 class ArmorComponent : public MaxrEngine::Component,
                        public MaxrEngine::IObservable {
    public:
-    ArmorComponent(MaxrEngine::GameObject* gameObject,
-                   const float maxArmorPoints = 0.f,
-                   const float damageReduction = 1.f);
+    explicit ArmorComponent(MaxrEngine::GameObject* gameObject,
+                            const float maxArmorPoints = 0.0F,
+                            const float damageReduction = 1.0F);
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
     void SetMaxArmorPoints(const float newMaxArmorPoints);
     float GetMaxArmorPoints() const;
 
-    // Sets damage reduction in 0.f - 1.f range
+    // Sets damage reduction in 0.0F - 1.f range
     // 1.f for absorbing 100% at each damage applies, 0.1f for absorbing 10% of
     // damage applied and 90% moving throw armor
     void SetDamageReduction(const float newDamageReduction);

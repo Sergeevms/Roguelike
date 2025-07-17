@@ -1,7 +1,17 @@
 #include "LabyrinthBuilder.h"
 
+#include <algorithm>
+#include <cstdlib>
+#include <memory>
+#include <vector>
+
+#include "Floor.h"
+#include "Labyrinth.h"
 #include "Settings.h"
+#include "TransformComponent.h"
 #include "Utility.h"
+#include "Vector.h"
+#include "Wall.h"
 
 namespace Roguelike {
 enum class TileType { Empty, Floor, Wall, VerticalWall, HorizontalWall };
@@ -54,18 +64,17 @@ void LabyrinthBuilder::SetFloor(MaxrEngine::Vector2Di position) {
 }
 
 MaxrEngine::Vector2Di LabyrinthBuilder::GetTileSize() const {
-    if (tileType.size() > 0) {
-        return MaxrEngine::Vector2Di(static_cast<int>(tileType.size()),
-                                     static_cast<int>(tileType[0].size()));
-    } else {
+    if (tileType.empty()) {
         return MaxrEngine::Vector2Di(0, 0);
     }
+    return MaxrEngine::Vector2Di(static_cast<int>(tileType.size()),
+                                 static_cast<int>(tileType[0].size()));
 }
 
 std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
-    auto settings = Settings::Instance();
+    auto* settings = Settings::Instance();
     std::shared_ptr<Labyrinth> labyrinth = std::make_shared<Labyrinth>();
-    auto labyrinthTransform =
+    auto* labyrinthTransform =
         labyrinth->GetGameObject()
             ->GetComponent<MaxrEngine::TransformComponent>();
     UpdateWallType();
@@ -87,7 +96,7 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
                     labyrinthTransform->GetWorldPosition(), textureId,
                     MaxrEngine::Vector2Di(settings->mapTileSize,
                                           settings->mapTileSize));
-                auto wallTransform =
+                auto* wallTransform =
                     wall->GetGameObject()
                         ->GetComponent<MaxrEngine::TransformComponent>();
                 wallTransform->SetParent(labyrinthTransform);
@@ -102,7 +111,7 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
                         labyrinthTransform->GetWorldPosition(), textureId,
                         MaxrEngine::Vector2Di(settings->mapTileSize,
                                               settings->mapTileSize));
-                    auto floorTransform =
+                    auto* floorTransform =
                         floor->GetGameObject()
                             ->GetComponent<MaxrEngine::TransformComponent>();
                     floorTransform->SetParent(labyrinthTransform);
@@ -116,13 +125,13 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
 }
 
 void LabyrinthBuilder::UpdateWallType() {
-    MaxrEngine::Vector2Di toLeft(-1, 0);
-    MaxrEngine::Vector2Di toRight(1, 0);
-    MaxrEngine::Vector2Di toUp(0, -1);
-    MaxrEngine::Vector2Di toBottom(0, 1);
+    const MaxrEngine::Vector2Di toLeft(-1, 0);
+    const MaxrEngine::Vector2Di toRight(1, 0);
+    const MaxrEngine::Vector2Di toUp(0, -1);
+    const MaxrEngine::Vector2Di toBottom(0, 1);
     for (int i = 0; i < tileType.size(); ++i) {
         for (int j = 0; j < tileType[i].size(); ++j) {
-            MaxrEngine::Vector2Di currentPosition(i, j);
+            const MaxrEngine::Vector2Di currentPosition(i, j);
             if (IsWall(currentPosition)) {
                 if (IsWall(currentPosition + toUp) ||
                     IsWall(currentPosition + toBottom)) {
@@ -135,15 +144,9 @@ void LabyrinthBuilder::UpdateWallType() {
     }
 }
 
-bool LabyrinthBuilder::IsWall(MaxrEngine::Vector2Di position) {
+bool LabyrinthBuilder::IsWall(MaxrEngine::Vector2Di position) const {
     if (InRect(MaxrEngine::Vector2Di(), GetTileSize(), position)) {
         switch (tileType[position.x][position.y]) {
-            case TileType::Empty:
-                return false;
-                break;
-            case TileType::Floor:
-                return false;
-                break;
             case TileType::Wall:
                 return true;
                 break;
@@ -153,6 +156,12 @@ bool LabyrinthBuilder::IsWall(MaxrEngine::Vector2Di position) {
             case TileType::VerticalWall:
                 return true;
                 break;
+            case TileType::Empty:
+                return false;
+                break;
+            case TileType::Floor:
+                return false;
+                break;
             default:
                 return false;
                 break;
@@ -161,17 +170,17 @@ bool LabyrinthBuilder::IsWall(MaxrEngine::Vector2Di position) {
         return false;
     }
 }
-MaxrEngine::Vector2Df LabyrinthBuilder::GetCenterInTyles() {
-    MaxrEngine::Vector2Df oneVector(1.f, 1.f);
-    return (MaxrEngine::Convert<MaxrEngine::Vector2Df, MaxrEngine::Vector2Di>(
-                GetTileSize()) -
-            oneVector) *
-           0.5f;
+MaxrEngine::Vector2Df LabyrinthBuilder::GetCenterInTyles() const {
+    const MaxrEngine::Vector2Df oneVector(1.0F, 1.0F);
+    return Half(
+        (MaxrEngine::Convert<MaxrEngine::Vector2Df, MaxrEngine::Vector2Di>(
+             GetTileSize()) -
+         oneVector));
 }
 
 MaxrEngine::Vector2Df LabyrinthBuilder::GetTylePosition(
     MaxrEngine::Vector2Di tilePosition) {
-    auto settings = Settings::Instance();
+    auto* settings = Settings::Instance();
     auto position =
         MaxrEngine::Convert<MaxrEngine::Vector2Df, MaxrEngine::Vector2Di>(
             tilePosition) -

@@ -2,8 +2,12 @@
 
 #include "AIBlackboard.h"
 #include "AIInputComponent.h"
+#include "Component.h"
 #include "GameObject.h"
+#include "Logger.h"
+#include "TransformComponent.h"
 #include "Utility.h"
+#include "Vector.h"
 
 namespace Roguelike {
 AIChaseTargetComponent::AIChaseTargetComponent(
@@ -11,15 +15,15 @@ AIChaseTargetComponent::AIChaseTargetComponent(
     : Component(gameObject) {}
 
 void AIChaseTargetComponent::Update(float deltaTime) {
-    auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-    if (blackBoard) {
+    auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
+    if (blackBoard != nullptr) {
         bool isTargetVisible = false;
         MaxrEngine::Vector2Df movingDirection;
-        auto inputComponent =
+        auto* inputComponent =
             gameObject->GetComponent<MaxrEngine::AIInputComponent>();
         if (blackBoard->Get("isTargetVisible", isTargetVisible) &&
             isTargetVisible) {
-            auto transform =
+            auto* transform =
                 gameObject->GetComponent<MaxrEngine::TransformComponent>();
             MaxrEngine::GameObject* target = nullptr;
             if (blackBoard->Get("lastTarget", target)) {

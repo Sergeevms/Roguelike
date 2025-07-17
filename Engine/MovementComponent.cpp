@@ -2,6 +2,8 @@
 
 #include "MovementComponent.h"
 
+#include "GameObject.h"
+
 namespace MaxrEngine {
 MovementComponent::MovementComponent(GameObject* gameObject)
     : Component(gameObject) {

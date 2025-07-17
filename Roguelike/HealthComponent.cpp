@@ -1,8 +1,11 @@
 #include "HealthComponent.h"
 
 #include <cassert>
+#include <sstream>
 
+#include "Component.h"
 #include "GameObject.h"
+#include "Logger.h"
 #include "Utility.h"
 
 namespace Roguelike {
@@ -15,8 +18,8 @@ void HealthComponent::Update(float deltaTime) {}
 void HealthComponent::Render() {}
 
 void HealthComponent::SetMaxHealth(const float newMaxHealth) {
-    assert(newMaxHealth >= 0.f && "maxHealth supposed to be positive");
-    if (newMaxHealth < 0.f) {
+    assert(newMaxHealth >= 0.0F && "maxHealth supposed to be positive");
+    if (newMaxHealth < 0.0F) {
         LOG_WARN("maxHealth supposed to be positive")
     }
     maxHealth = newMaxHealth;
@@ -26,7 +29,7 @@ void HealthComponent::SetMaxHealth(const float newMaxHealth) {
 float HealthComponent::GetMaxHealth() const { return maxHealth; }
 
 void HealthComponent::SetCurrentHealth(const float newCurrentHealth) {
-    if (InRange(newCurrentHealth, 0.f, maxHealth)) {
+    if (InRange(newCurrentHealth, 0.0F, maxHealth)) {
         currentHealth = newCurrentHealth;
         Emit();
     }
@@ -41,18 +44,18 @@ float HealthComponent::DecreaseHealth(const float damageAmount) {
     message << this << " recieved " << damageAmount << " damage ";
     LOG_INFO(message.str());
 
-    if (currentHealth <= 0.f) {
+    if (currentHealth <= 0.0F) {
         message.clear();
         message << "Trying to damage " << this
-                << " which has 0.f HP will have no effect";
+                << " which has 0.0F HP will have no effect";
         LOG_WARN(message.str());
         return damageAmount;
     }
 
     currentHealth -= damageAmount;
-    if (currentHealth < 0.f) {
-        float overDamage = -currentHealth;
-        currentHealth = 0.f;
+    if (currentHealth < 0.0F) {
+        const float overDamage = -currentHealth;
+        currentHealth = 0.0F;
         Emit();
         return overDamage;
     }
@@ -76,7 +79,7 @@ float HealthComponent::IncreaseHealth(const float healingAmount) {
 
     currentHealth += healingAmount;
     if (currentHealth > maxHealth) {
-        float overHeal = currentHealth - maxHealth;
+        const float overHeal = currentHealth - maxHealth;
         currentHealth = maxHealth;
         message << "Healing " << overHeal
                 << " health points not applied due to going over maxHealth";
@@ -86,8 +89,8 @@ float HealthComponent::IncreaseHealth(const float healingAmount) {
         return overHeal;
     }
     Emit();
-    return 0.f;
+    return 0.0F;
 }
 
-bool HealthComponent::IsAlive() const { return currentHealth > 0.f; }
+bool HealthComponent::IsAlive() const { return currentHealth > 0.0F; }
 }  // namespace Roguelike

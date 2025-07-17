@@ -8,8 +8,8 @@ class MovementComponent : public Component {
    public:
     ENGINE_API MovementComponent(GameObject* gameObject);
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
     ENGINE_API void SetSpeed(float newSpeed);
     ENGINE_API float GetSpeed() const;
@@ -19,8 +19,8 @@ class MovementComponent : public Component {
     InputComponent* input;
     TransformComponent* transform;
 
-    float speed = 0.f;
-    Vector2Df previosPosition = {0.f, 0.f};
-    Vector2Df acceleration = {0.f, 0.f};
+    float speed = 0.0F;
+    Vector2Df previosPosition = {0.0F, 0.0F};
+    Vector2Df acceleration = {0.0F, 0.0F};
 };
 }  // namespace MaxrEngine

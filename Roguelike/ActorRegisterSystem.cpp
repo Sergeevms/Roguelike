@@ -1,6 +1,13 @@
 #include "ActorRegisterSystem.h"
 
+#include <algorithm>
+#include <sstream>
+#include <vector>
+
+#include "ActorComponent.h"
 #include "GameObject.h"
+#include "Logger.h"
+
 namespace Roguelike {
 ActorRegisterSystem* ActorRegisterSystem::Instance() {
     static ActorRegisterSystem instance;
@@ -16,7 +23,7 @@ std::vector<MaxrEngine::GameObject*> ActorRegisterSystem::GetActorsInGroupList(
     const int groupID) {
     std::vector<MaxrEngine::GameObject*> actorsList;
     for (auto& actor : actors) {
-        auto actorComponent = actor->GetComponent<ActorComponent>();
+        auto* actorComponent = actor->GetComponent<ActorComponent>();
         if (actorComponent->GetGroupID() == groupID) {
             actorsList.push_back(actor);
         }
@@ -28,7 +35,7 @@ std::vector<MaxrEngine::GameObject*>
 ActorRegisterSystem::GetActorsNotInGroupList(const int groupID) {
     std::vector<MaxrEngine::GameObject*> actorsList;
     for (auto& actor : actors) {
-        auto actorComponent = actor->GetComponent<ActorComponent>();
+        auto* actorComponent = actor->GetComponent<ActorComponent>();
         if (actorComponent->GetGroupID() != groupID) {
             actorsList.push_back(actor);
         }
@@ -37,9 +44,9 @@ ActorRegisterSystem::GetActorsNotInGroupList(const int groupID) {
 }
 
 void ActorRegisterSystem::Register(ActorComponent* actor) {
-    auto actorObject = actor->GetGameObject();
-    auto it = std::find(actors.begin(), actors.end(), actorObject);
-    if (it == actors.end()) {
+    auto* actorObject = actor->GetGameObject();
+    auto actorRegistered = std::find(actors.begin(), actors.end(), actorObject);
+    if (actorRegistered == actors.end()) {
         actors.emplace_back(actorObject);
         std::ostringstream message;
         message << "Registered actor " << actorObject;
@@ -52,7 +59,7 @@ void ActorRegisterSystem::Register(ActorComponent* actor) {
 }
 
 void ActorRegisterSystem::UnRegister(ActorComponent* actor) {
-    auto actorObject = actor->GetGameObject();
+    auto* actorObject = actor->GetGameObject();
     actors.erase(std::remove_if(actors.begin(), actors.end(),
                                 [actorObject](MaxrEngine::GameObject* obj) {
                                     return actorObject == obj;

@@ -63,24 +63,24 @@ void PhysicsSystem::Update() {
 
                     if (intersectionWidth > intersectionHeight) {
                         if (intersectionPosition.y > aPosition.y) {
-                            aTransform->MoveBy(0.f, -intersectionHeight);
+                            aTransform->MoveBy(0.0F, -intersectionHeight);
                             message << "Top collision " << colliders[i] << " "
                                     << colliders[j];
                             LOG_INFO(message.str());
                         } else {
-                            aTransform->MoveBy(0.f, intersectionHeight);
+                            aTransform->MoveBy(0.0F, intersectionHeight);
                             message << "Bottom collision " << colliders[i]
                                     << " " << colliders[j];
                             LOG_INFO(message.str());
                         }
                     } else {
                         if (intersectionPosition.x > aPosition.x) {
-                            aTransform->MoveBy(-intersectionWidth, 0.f);
+                            aTransform->MoveBy(-intersectionWidth, 0.0F);
                             message << "Rigth collision " << colliders[i] << " "
                                     << colliders[j];
                             LOG_INFO(message.str());
                         } else {
-                            aTransform->MoveBy(intersectionWidth, 0.f);
+                            aTransform->MoveBy(intersectionWidth, 0.0F);
                             message << "Left collision " << colliders[i] << " "
                                     << colliders[j];
                             LOG_INFO(message.str());

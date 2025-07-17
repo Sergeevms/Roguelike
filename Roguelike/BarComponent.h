@@ -1,20 +1,20 @@
 #pragma once
-#include <Component.h>
+#include "SFML/Graphics/Color.hpp"
 
-#include "SFML/Graphics.hpp"
+#include "Component.h"
 #include "Vector.h"
 
 namespace Roguelike {
 class BarComponent : public MaxrEngine::Component {
    public:
-    BarComponent(MaxrEngine::GameObject* gameObject,
-                 MaxrEngine::Vector2Df centerOffset = {0.f, 0.f},
-                 MaxrEngine::Vector2Df barSize = {1.f, 0.f},
-                 sf::Color barColor = sf::Color::White, float borderSize = 0.f,
-                 float maxAmount = 1.f);
+    explicit BarComponent(MaxrEngine::GameObject* gameObject,
+                          MaxrEngine::Vector2Df centerOffset = {0.0F, 0.0F},
+                          MaxrEngine::Vector2Df barSize = {1.0F, 0.0F},
+                          sf::Color barColor = sf::Color::White,
+                          float borderSize = 0.0F, float maxAmount = 1.0F);
 
-    virtual void Update(float deltaTime) = 0;
-    virtual void Render() override;
+    void Update(float deltaTime) override = 0;
+    void Render() override;
 
     MaxrEngine::Vector2Df GetCenterOffset() const;
     void SetCenterOffset(const MaxrEngine::Vector2Df& newCenterOffset);

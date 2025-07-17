@@ -1,16 +1,19 @@
 #pragma once
+#include <memory>
+
 #include "Component.h"
-#include "IObserver.h"
+
 namespace Roguelike {
 class AttackComponent : public MaxrEngine::Component {
    public:
-    AttackComponent(MaxrEngine::GameObject* gameObject, float cooldown = 0.f,
-                    float damage = 0.f, float range = 0.f,
-                    std::weak_ptr<MaxrEngine::GameObject> target =
-                        std::weak_ptr<MaxrEngine::GameObject>());
+    explicit AttackComponent(MaxrEngine::GameObject* gameObject,
+                             float cooldown = 0.0F, float damage = 0.0F,
+                             float range = 0.0F,
+                             std::weak_ptr<MaxrEngine::GameObject> target =
+                                 std::weak_ptr<MaxrEngine::GameObject>());
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
     virtual void Attack();
 

@@ -10,9 +10,9 @@
 namespace Roguelike {
 class DeveloperLevel : public MaxrEngine::Scene {
    public:
-    virtual void Start() override;
-    virtual void Restart() override;
-    virtual void Stop() override;
+    void Start() override;
+    void Restart() override;
+    void Stop() override;
 
    private:
     std::shared_ptr<Player> player;

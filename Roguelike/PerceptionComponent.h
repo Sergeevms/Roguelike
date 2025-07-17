@@ -1,17 +1,35 @@
 #pragma once
+#include <vector>
+
 #include "Component.h"
 #include "IObserver.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 namespace Roguelike {
+
 class PerceptionComponent : public MaxrEngine::Component,
                             public MaxrEngine::IObservable {
    public:
-    PerceptionComponent(MaxrEngine::GameObject* gameObject);
+    struct Parameters {
+        float visionAngle;
+        float visionRadius;
+        float visionDirectionX;
+        float visionDirectionY;
+        float senseRadius;
+    };
+    static constexpr Parameters defaultParameters = {.visionAngle = 120.0F,
+                                                     .visionRadius = 300.0F,
+                                                     .visionDirectionX = 1.0F,
+                                                     .visionDirectionY = 0.0F,
+                                                     .senseRadius = 100.0F};
+
+    explicit PerceptionComponent(
+        MaxrEngine::GameObject* gameObject,
+        const Parameters& parameters = defaultParameters);
     ~PerceptionComponent();
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
     void SetVisionAngle(const float newVisionAngle);
     float GetVisionAngle() const;
@@ -33,10 +51,10 @@ class PerceptionComponent : public MaxrEngine::Component,
     const std::vector<MaxrEngine::GameObject*>* GetDetectedActors();
 
    protected:
-    float visionAngle = 360.f;
-    float visionRadius = 300.f;
-    float senseRadius = 100.f;
-    MaxrEngine::Vector2Df visionDirection = {1.f, 0.f};
+    float visionAngle;
+    float visionRadius;
+    float senseRadius;
+    MaxrEngine::Vector2Df visionDirection;
     MaxrEngine::TransformComponent* transform;
     std::vector<MaxrEngine::GameObject*> detectedActors;
 };

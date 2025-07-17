@@ -10,8 +10,9 @@ class Settings {
         static Settings world;
         return &world;
     };
-    MaxrEngine::Vector2Df ScreenCenter();
-    MaxrEngine::Vector2Df ScreenSize();
+    MaxrEngine::Vector2Df ScreenCenter() const;
+    MaxrEngine::Vector2Df ScreenSize() const;
+    float PlayerSizeF() const;
 
     // General settings
 

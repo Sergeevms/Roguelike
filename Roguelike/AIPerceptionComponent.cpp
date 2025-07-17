@@ -1,13 +1,22 @@
 #include "AIPerceptionComponent.h"
 
+#include <memory>
+
 #include "AIBlackboard.h"
 #include "AIInputComponent.h"
+#include "GameObject.h"
+#include "IObserver.h"
+#include "Logger.h"
+#include "PerceptionComponent.h"
 
 namespace Roguelike {
-AIPerceptionComponent::AIPerceptionComponent(MaxrEngine::GameObject* gameObject)
-    : PerceptionComponent(gameObject) {
-    auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-    if (blackBoard) {
+
+AIPerceptionComponent::AIPerceptionComponent(
+    MaxrEngine::GameObject* gameObject,
+    const PerceptionComponent::Parameters& parameters)
+    : PerceptionComponent(gameObject, parameters) {
+    auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
+    if (blackBoard != nullptr) {
         blackBoard->Set("Detected Actors", &detectedActors);
     } else {
         LOG_WARN("AIBlackboard required for  AIPerceptionComponent");

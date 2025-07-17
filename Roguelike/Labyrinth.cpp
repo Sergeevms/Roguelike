@@ -1,6 +1,13 @@
 #include "Labyrinth.h"
 
-#include "GameWorld.h"
+#include <memory>
+#include <vector>
+
+#include "Floor.h"
+#include "GameObjectContainer.h"
+#include "TransformComponent.h"
+#include "Vector.h"
+#include "Wall.h"
 
 namespace Roguelike {
 Labyrinth::Labyrinth() : GameObjectContainer("Labyrinth") {}
@@ -15,7 +22,8 @@ const std::vector<std::shared_ptr<Floor>>& Labyrinth::GetFloors() const {
 }
 
 void Labyrinth::SetCenterPosition(const MaxrEngine::Vector2Df newPosition) {
-    auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
+    auto* transform =
+        gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(newPosition);
 }
 }  // namespace Roguelike

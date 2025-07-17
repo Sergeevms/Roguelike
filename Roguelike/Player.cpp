@@ -50,7 +50,7 @@ Player::Player() : GameObjectContainer("Player") {
         gameObject->AddComponent<HealthComponent>(settings->playerHealth);
     auto healthBar = gameObject->AddComponent<HealthBarComponent>(
         MaxrEngine::Vector2Df(
-            0.f, settings->playerSize * 0.5f + settings->healthBarDistance),
+            0.0F, settings->playerSize * 0.5f + settings->healthBarDistance),
         MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize),
                               settings->barHeight),
         settings->barBorder);
@@ -60,7 +60,7 @@ Player::Player() : GameObjectContainer("Player") {
         settings->playerHealth, settings->armorDamageReduction);
     auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
         MaxrEngine::Vector2Df(
-            0.f, settings->playerSize * 0.5f + settings->armorBarDistance),
+            0.0F, settings->playerSize * 0.5f + settings->armorBarDistance),
         MaxrEngine::Vector2Df(static_cast<float>(settings->playerSize),
                               settings->barHeight),
         settings->barBorder);

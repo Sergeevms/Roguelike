@@ -2,7 +2,7 @@
 #include "GameObjectContainer.h"
 
 namespace Roguelike {
-class BackgroundMusic : GameObjectContainer {
+class BackgroundMusic : public GameObjectContainer {
    public:
     BackgroundMusic();
 };

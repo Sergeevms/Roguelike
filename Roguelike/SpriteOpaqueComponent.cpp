@@ -1,12 +1,22 @@
 #include "SpriteOpaqueComponent.h"
 
+#include <memory>
+
+#include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
+
+#include "GameObject.h"
+#include "Logger.h"
+#include "OpaqueComponent.h"
+#include "PerceptionSystem.h"
 #include "RenderSystem.h"
 #include "SpriteRendererComponent.h"
 
 namespace Roguelike {
+constexpr float outlineThickness = -2.0F;
 SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject)
     : OpaqueComponent(gameObject), sprite(nullptr) {
-    auto spriteRenderer =
+    auto* spriteRenderer =
         gameObject->GetComponent<MaxrEngine::SpriteRendererComponent>();
     if (spriteRenderer == nullptr) {
         LOG_ERROR("SpriteRendererComponent required to SpriteOpaqueComponent.");
@@ -35,7 +45,7 @@ void SpriteOpaqueComponent::Render() {
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setPosition(bounds.left, bounds.top);
     rectangle.setOutlineColor(sf::Color::Cyan);
-    rectangle.setOutlineThickness(-2.f);
+    rectangle.setOutlineThickness(outlineThickness);
     MaxrEngine::RenderSystem::Instance()->Render(rectangle);
 }
 }  // namespace Roguelike

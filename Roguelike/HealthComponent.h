@@ -5,11 +5,11 @@ namespace Roguelike {
 class HealthComponent : public MaxrEngine::Component,
                         public MaxrEngine::IObservable {
    public:
-    HealthComponent(MaxrEngine::GameObject* gameObject,
-                    const float maxHealth = 0.f);
+    explicit HealthComponent(MaxrEngine::GameObject* gameObject,
+                             const float maxHealth = 0.0F);
 
-    virtual void Update(float deltaTime) override;
-    virtual void Render() override;
+    void Update(float deltaTime) override;
+    void Render() override;
 
     // Set maxHealth to newMaxHealth
     virtual void SetMaxHealth(const float newMaxHealth);

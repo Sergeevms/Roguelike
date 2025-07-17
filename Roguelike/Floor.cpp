@@ -1,18 +1,17 @@
 #include "Floor.h"
 
-#include "GameWorld.h"
+#include "GameObjectContainer.h"
 #include "ResourceSystem.h"
-#include "Settings.h"
 #include "SpriteRendererComponent.h"
 #include "TransformComponent.h"
+#include "Vector.h"
 
 namespace Roguelike {
 Floor::Floor(MaxrEngine::Vector2Df position, int textureIndex,
              MaxrEngine::Vector2Di size)
     : GameObjectContainer("Floor") {
-    auto settings = Settings::Instance();
-
-    auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
+    auto* transform =
+        gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(position);
 
     auto sprite =

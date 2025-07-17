@@ -49,12 +49,12 @@ bool PerceptionSystem::LineClear(const MaxrEngine::Vector2Df& startPoint,
     auto directionLength = direction.GetLength();
     direction = MaxrEngine::Normalized(direction);
     float invDirX = 1.f / direction.x;
-    bool positiveX = invDirX >= 0.f;
+    bool positiveX = invDirX >= 0.0F;
     float invDirY = 1.f / direction.y;
-    bool positiveY = invDirY >= 0.f;
+    bool positiveY = invDirY >= 0.0F;
 
     for (auto& opaque : opaqueComponents) {
-        float tMin = 0.f;
+        float tMin = 0.0F;
         float tMax = directionLength;
         float tMinX =
             ((positiveX ? opaque->bounds.left

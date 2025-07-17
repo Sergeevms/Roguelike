@@ -2,6 +2,7 @@
 
 #include "SpriteColliderComponent.h"
 
+#include "GameObject.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
 #include "SpriteRendererComponent.h"
