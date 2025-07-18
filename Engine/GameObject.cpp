@@ -26,7 +26,7 @@ GameObject::~GameObject() {
 }
 
 std::string GameObject::GetName() const { return name; }
-// NOLINTBEGIN(misc-no-recurtion) : recursive function
+// NOLINTBEGIN(misc-no-recursion) : recursive function
 void GameObject::Print(int depth) {
     std::cout << std::string(static_cast<int64_t>(depth) * 2, ' ') << GetName()
               << std::endl;
@@ -39,7 +39,7 @@ void GameObject::Print(int depth) {
         child->Print(depth + 1);
     }
 }
-// NOLINTEND(misc-no-recurtion)
+// NOLINTEND(misc-no-recursion)
 
 void GameObject::Update(float deltaTime) {
     for (auto& component : components) {

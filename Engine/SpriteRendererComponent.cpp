@@ -19,21 +19,17 @@ SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject)
     transform = gameObject->GetComponent<TransformComponent>();
 }
 
-SpriteRendererComponent::~SpriteRendererComponent() {
-    if (sprite != nullptr) {
-        delete sprite;
-    }
-}
+SpriteRendererComponent::~SpriteRendererComponent() { delete sprite; }
 
 void SpriteRendererComponent::Update(float deltaTime) {}
 
 void SpriteRendererComponent::Render() {
     if (sprite != nullptr) {
         sprite->setPosition(
-            Convert<sf::Vector2f, Vector2Df>(transform->GetWorldPosition()));
+            Convert<sf::Vector2f>(transform->GetWorldPosition()));
         sprite->setRotation(transform->GetWorldRotation());
-        sprite->setScale(Convert<sf::Vector2f, Vector2Df>(
-            scale * transform->GetWorldScale()));
+        sprite->setScale(
+            Convert<sf::Vector2f>(scale * transform->GetWorldScale()));
         RenderSystem::Instance()->Render(*sprite);
     }
 }
@@ -42,17 +38,17 @@ const sf::Sprite* SpriteRendererComponent::GetSprite() const { return sprite; }
 
 void SpriteRendererComponent::SetTexture(const sf::Texture& newTexture) {
     sprite->setTexture(newTexture);
-    auto textureSize = sprite->getTexture()->getSize();
-    const sf::Vector2f textureCenter = {0.5F * textureSize.x,
-                                        0.5F * textureSize.y};
+    auto textureSize = Convert<sf::Vector2f>(sprite->getTexture()->getSize());
+    constexpr float half = 0.5F;
+    const sf::Vector2f textureCenter = {half * textureSize.x,
+                                        half * textureSize.y};
     sprite->setOrigin(textureCenter);
 }
 
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight) {
-    auto originalSize = sprite->getTexture()->getSize();
-    scale = {
-        static_cast<float>(newWidth) / static_cast<float>(originalSize.x),
-        -static_cast<float>(newHeight) / static_cast<float>(originalSize.y)};
+    auto originalSize = Convert<sf::Vector2f>(sprite->getTexture()->getSize());
+    scale = {static_cast<float>(newWidth) / originalSize.x,
+             -static_cast<float>(newHeight) / originalSize.y};
 }
 
 void SpriteRendererComponent::FlipX(bool flip) {

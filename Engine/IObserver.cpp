@@ -3,6 +3,7 @@
 #include "IObserver.h"
 
 #include <algorithm>
+#include <memory>
 
 namespace MaxrEngine {
 void IObservable::AddObserver(std::weak_ptr<IObserver> observer) {

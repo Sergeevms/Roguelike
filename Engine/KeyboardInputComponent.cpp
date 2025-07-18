@@ -12,10 +12,8 @@
 namespace MaxrEngine {
 KeyboardInputComponent::KeyboardInputComponent(GameObject* gameObject)
     : InputComponent(gameObject) {}
-
-void KeyboardInputComponent::Update(
-    float deltaTime) {  // NOLINT(misc-unused-parameter) : inhereted method with
-                        // parameter
+// NOLINTBEGIN(misc-unused-parameters) : inhereted method with parameter
+void KeyboardInputComponent::Update(float deltaTime) {
     verticalAxis = 0.0F;
     horizontalAxis = 0.0F;
     attack = false;
@@ -46,4 +44,5 @@ void KeyboardInputComponent::Update(
         Emit();
     }
 }
+// NOLINTEND(misc-unused-parameters)
 }  // namespace MaxrEngine

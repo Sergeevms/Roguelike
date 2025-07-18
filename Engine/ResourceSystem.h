@@ -25,7 +25,7 @@ class ResourceSystem {
 
     ENGINE_API void LoadTextureMap(const std::string& name,
                                    std::string sourcePath,
-                                   sf::Vector2u elementPixelSize,
+                                   sf::Vector2i elementPixelSize,
                                    int totalElements, bool isSmooth = true);
     ENGINE_API const sf::Texture* GetTextureMapElementShared(
         const std::string& name, int elementIndex) const;

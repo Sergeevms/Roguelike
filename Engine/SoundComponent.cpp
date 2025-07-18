@@ -2,6 +2,12 @@
 
 #include "SoundComponent.h"
 
+#include "SFML/Audio/Sound.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
+
+#include "Component.h"
+#include "GameObject.h"
+
 namespace MaxrEngine {
 SoundComponent::SoundComponent(GameObject* gameObject) : Component(gameObject) {
     sound = new sf::Sound();

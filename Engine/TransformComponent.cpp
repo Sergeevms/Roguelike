@@ -188,10 +188,9 @@ void TransformComponent::SetParent(TransformComponent* newParent) {
 }
 
 TransformComponent* TransformComponent::GetParent() const { return parent; }
-
-Matrix2D MaxrEngine::TransformComponent::GetWorldTransform()
-    const {  // NOLINT(misc-no-recursion) : Recursive function requried to
-             // calculate world transform
+// NOLINTBEGIN(misc-no-recursion) : Recursive function requried to calculate
+// world transform
+Matrix2D MaxrEngine::TransformComponent::GetWorldTransform() const {
     UpdateLocalTransform();
 
     if (parent == nullptr) {
@@ -200,6 +199,7 @@ Matrix2D MaxrEngine::TransformComponent::GetWorldTransform()
 
     return parent->GetWorldTransform() * localTransform;
 }
+// NOLINTEND(misc-no-recursion)
 
 void TransformComponent::Print() const {
     std::cout << "Transform name : " << gameObject->GetName() << std::endl;

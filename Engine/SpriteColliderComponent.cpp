@@ -29,10 +29,11 @@ SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject)
 SpriteColliderComponent::~SpriteColliderComponent() {
     PhysicsSystem::Instance()->Unsubscribe(this);
 }
-
+// NOLINTBEGIN(misc-unused-parameters) : overrided virtual method
 void SpriteColliderComponent::Update(float deltaTime) {
     bounds = sprite->getGlobalBounds();
 }
+// NOLINTEND(misc-unused-parameters)
 
 void SpriteColliderComponent::Render() {
     constexpr float outlineThickness = 4.0F;

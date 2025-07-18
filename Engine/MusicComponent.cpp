@@ -2,6 +2,9 @@
 
 #include "MusicComponent.h"
 
+#include "Component.h"
+#include "GameObject.h"
+
 namespace MaxrEngine {
 MusicComponent::MusicComponent(GameObject* gameObject)
     : Component(gameObject) {}

@@ -2,6 +2,11 @@
 
 #include "RenderSystem.h"
 
+#include "SFML/Graphics/Drawable.hpp"
+#include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/System/String.hpp"
+#include "SFML/Window/VideoMode.hpp"
+
 namespace MaxrEngine {
 RenderSystem* RenderSystem::Instance() {
     static RenderSystem render;

@@ -59,7 +59,7 @@ void Logger::AddSink(std::shared_ptr<LogSink> sink) { sinks.push_back(sink); }
 
 void Logger::Log(LogLevel logLevel, const std::string& message) {
     if ((logLevel & loggingLevels) != LogLevel::NONE) {
-        std::lock_guard<std::mutex> lock(mutex);
+        const std::lock_guard<std::mutex> lock(mutex);
         for (auto& sink : sinks) {
             sink->Log(logLevel, message);
         }

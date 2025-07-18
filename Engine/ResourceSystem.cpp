@@ -3,6 +3,19 @@
 #include "ResourceSystem.h"
 
 #include <cassert>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "SFML/Audio/Music.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Rect.hpp"
+#include "SFML/Graphics/Texture.hpp"
+#include "SFML/System/Vector2.hpp"
+
+#include "Logger.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 ResourceSystem* ResourceSystem::Instance() {
@@ -35,22 +48,20 @@ const sf::Texture* ResourceSystem::GetTextureShared(
     auto texturePair = textures.find(name);
     if (texturePair != textures.end()) {
         return texturePair->second;
-    } else {
-        assert(true && "Texture not loaded");
-        LOG_WARN(name + " texture not loaded");
-        return nullptr;
     }
+    assert(true && "Texture not loaded");
+    LOG_WARN(name + " texture not loaded");
+    return nullptr;
 }
 
 sf::Texture* ResourceSystem::GetTectureCopy(const std::string& name) const {
     auto texturePair = textures.find(name);
     if (texturePair != textures.end()) {
         return new sf::Texture(*texturePair->second);
-    } else {
-        assert(true && "Texture not loaded");
-        LOG_WARN(name + " texture not loaded");
-        return nullptr;
     }
+    assert(true && "Texture not loaded");
+    LOG_WARN(name + " texture not loaded");
+    return nullptr;
 }
 
 void ResourceSystem::DeleteSharedTexture(const std::string& name) {
@@ -68,7 +79,7 @@ void ResourceSystem::DeleteSharedTexture(const std::string& name) {
 
 void ResourceSystem::LoadTextureMap(const std::string& name,
                                     std::string sourcePath,
-                                    sf::Vector2u elementPixelSize,
+                                    sf::Vector2i elementPixelSize,
                                     int totalElements, bool isSmooth) {
     if (textureMaps.contains(name)) {
         LOG_WARN(name + " texture map already loaded");
@@ -76,35 +87,42 @@ void ResourceSystem::LoadTextureMap(const std::string& name,
     }
 
     sf::Texture textureMap;
+    assert(textureMap.loadFromFile(sourcePath) && "Failed to load texture map");
     if (textureMap.loadFromFile(sourcePath)) {
         std::vector<sf::Texture*> textureMapElements;
 
-        auto textureSize = textureMap.getSize();
+        auto textureSize =
+            MaxrEngine::Convert<sf::Vector2i>(textureMap.getSize());
         int loadedElements = 0;
 
-        for (unsigned y = 0; y <= textureSize.y - elementPixelSize.y;
-             y += elementPixelSize.y) {
+        for (int topCoordinate = 0;
+             topCoordinate <= textureSize.y - elementPixelSize.y;
+             topCoordinate += elementPixelSize.y) {
             if (loadedElements == totalElements) {
                 break;
             }
 
-            for (unsigned x = 0; x <= textureSize.x - elementPixelSize.x;
-                 x += elementPixelSize.x) {
+            for (int leftCoordinate = 0;
+                 leftCoordinate <= textureSize.x - elementPixelSize.x;
+                 leftCoordinate += elementPixelSize.x) {
                 if (loadedElements == totalElements) {
                     break;
                 }
 
                 sf::Texture* newTextureMapElement = new sf::Texture();
+                assert(
+                    newTextureMapElement->loadFromFile(
+                        sourcePath,
+                        sf::IntRect(leftCoordinate, topCoordinate,
+                                    elementPixelSize.x, elementPixelSize.y)) &&
+                    "Failed to load texture map element");
                 if (newTextureMapElement->loadFromFile(
-                        sourcePath, sf::IntRect(x, y, elementPixelSize.x,
-                                                elementPixelSize.y))) {
+                        sourcePath,
+                        sf::IntRect(leftCoordinate, topCoordinate,
+                                    elementPixelSize.x, elementPixelSize.y))) {
                     newTextureMapElement->setSmooth(isSmooth);
                     textureMapElements.push_back(newTextureMapElement);
                 } else {
-                    assert(newTextureMapElement->loadFromFile(
-                               sourcePath, sf::IntRect(x, y, elementPixelSize.x,
-                                                       elementPixelSize.y)) &&
-                           "Failed to load texture map element");
                     LOG_WARN("Failed to load texture map element");
                     delete newTextureMapElement;
                 }
@@ -113,8 +131,6 @@ void ResourceSystem::LoadTextureMap(const std::string& name,
         }
         textureMaps.emplace(name, textureMapElements);
     } else {
-        assert(textureMap.loadFromFile(sourcePath) &&
-               "Failed to load texture map");
         LOG_WARN("Failed to load texture map " + name + " from " + sourcePath);
     }
 }
@@ -126,16 +142,14 @@ const sf::Texture* ResourceSystem::GetTextureMapElementShared(
         assert(false && "Texture map not loaded");
         LOG_WARN(name + " texture map not loaded");
         return nullptr;
-    } else {
-        assert(textureMap->second.size() > elementIndex &&
-               "Texture map have fewer elements");
-        if (elementIndex < textureMap->second.size()) {
-            return textureMap->second[elementIndex];
-        } else {
-            LOG_WARN(name + " texture map have fewer elements");
-            return nullptr;
-        }
     }
+    assert(textureMap->second.size() >= elementIndex &&
+           "Texture map have fewer elements");
+    if (elementIndex < textureMap->second.size()) {
+        return textureMap->second[elementIndex];
+    }
+    LOG_WARN(name + " texture map have fewer elements");
+    return nullptr;
 }
 
 sf::Texture* ResourceSystem::GetTextureMapElementCopy(const std::string& name,
@@ -145,16 +159,14 @@ sf::Texture* ResourceSystem::GetTextureMapElementCopy(const std::string& name,
         assert(false && "Texture map not loaded");
         LOG_WARN(name + " texture map not loaded");
         return nullptr;
-    } else {
-        assert(textureMap->second.size() > elementIndex &&
-               "Texture map have fewer elements");
-        if (elementIndex < textureMap->second.size()) {
-            return new sf::Texture(*(textureMap->second[elementIndex]));
-        } else {
-            LOG_WARN(name + " texture map have fewer elements");
-            return nullptr;
-        }
     }
+    assert(textureMap->second.size() > elementIndex &&
+           "Texture map have fewer elements");
+    if (elementIndex < textureMap->second.size()) {
+        return new sf::Texture(*(textureMap->second[elementIndex]));
+    }
+    LOG_WARN(name + " texture map have fewer elements");
+    return nullptr;
 }
 
 int ResourceSystem::GetTextureMapElementsCount(const std::string& name) const {
@@ -162,9 +174,8 @@ int ResourceSystem::GetTextureMapElementsCount(const std::string& name) const {
     if (textureMap == textureMaps.end()) {
         LOG_WARN(name + " texture map not founded")
         return -1;
-    } else {
-        return static_cast<int>(textureMap->second.size());
     }
+    return static_cast<int>(textureMap->second.size());
 }
 
 void ResourceSystem::DeleteSharedTextureMap(const std::string& name) {
@@ -173,12 +184,11 @@ void ResourceSystem::DeleteSharedTextureMap(const std::string& name) {
     if (textureMap == textureMaps.end()) {
         LOG_WARN(name + " texture map not founded");
         return;
-    } else {
-        for (auto& texture : textureMap->second) {
-            delete texture;
-        }
-        textureMaps.erase(textureMap);
     }
+    for (auto& texture : textureMap->second) {
+        delete texture;
+    }
+    textureMaps.erase(textureMap);
 }
 
 void ResourceSystem::LoadSound(const std::string& name,
@@ -205,10 +215,9 @@ const sf::SoundBuffer* ResourceSystem::GetSoundShared(
     assert(soundBufferPair != soundBuffers.end() && "Sound not loaded");
     if (soundBufferPair != soundBuffers.end()) {
         return soundBufferPair->second;
-    } else {
-        LOG_WARN(name + " sound not loaded");
-        return nullptr;
     }
+    LOG_WARN(name + " sound not loaded");
+    return nullptr;
 }
 
 sf::SoundBuffer* ResourceSystem::GetSoundCopy(const std::string& name) const {
@@ -218,10 +227,9 @@ sf::SoundBuffer* ResourceSystem::GetSoundCopy(const std::string& name) const {
         sf::SoundBuffer* newBuffer =
             new sf::SoundBuffer(*soundBufferPair->second);
         return newBuffer;
-    } else {
-        LOG_WARN(name + " sound not loaded");
-        return nullptr;
     }
+    LOG_WARN(name + " sound not loaded");
+    return nullptr;
 }
 
 void ResourceSystem::DeleteSound(const std::string& name) {
@@ -256,33 +264,30 @@ const sf::Font* ResourceSystem::GetFontShared(const std::string& name) const {
     assert(fontPair != fonts.end() && "Font not loaded");
     if (fontPair != fonts.end()) {
         return fontPair->second;
-    } else {
-        LOG_WARN(name + " font not loaded");
-        return nullptr;
     }
+    LOG_WARN(name + " font not loaded");
+    return nullptr;
 }
 
-ENGINE_API sf::Font* ResourceSystem::GetFontCopy(
-    const std::string& name) const {
+sf::Font* ResourceSystem::GetFontCopy(const std::string& name) const {
     auto fontPair = fonts.find(name);
     assert(fontPair != fonts.end() && "Font not loaded");
     if (fontPair != fonts.end()) {
         sf::Font* newFont = new sf::Font(*fontPair->second);
         return newFont;
-    } else {
-        LOG_WARN(name + " font not loaded");
-        return nullptr;
     }
+    LOG_WARN(name + " font not loaded");
+    return nullptr;
 }
 
-ENGINE_API void ResourceSystem::DeleteFont(const std::string& name) {
+void ResourceSystem::DeleteFont(const std::string& name) {
     auto fontPair = fonts.find(name);
-    assert(fontPair != fonts.end() && "Sound not loaded");
+    assert(fontPair != fonts.end() && "Font not loaded");
     if (fontPair != fonts.end()) {
         delete fontPair->second;
         fonts.erase(fontPair);
     } else {
-        LOG_WARN(name + " sound not loaded before delete attempt")
+        LOG_WARN(name + " font not loaded before delete attempt")
     }
 }
 
@@ -293,7 +298,7 @@ void ResourceSystem::LoadMusic(const std::string& name,
         return;
     }
 
-    auto music = new sf::Music();
+    auto* music = new sf::Music();
     assert(music->openFromFile(sourcePath) && "Music not loaded");
     if (music->openFromFile(sourcePath)) {
         musics.emplace(std::pair<std::string, sf::Music*>(name, music));
@@ -307,10 +312,9 @@ sf::Music* ResourceSystem::GetMusicShared(const std::string& name) const {
     assert(musicPair != musics.end() && "Music not loaded");
     if (musicPair != musics.end()) {
         return musicPair->second;
-    } else {
-        LOG_WARN(name + " music not loaded");
-        return nullptr;
     }
+    LOG_WARN(name + " music not loaded");
+    return nullptr;
 }
 
 void ResourceSystem::DeleteMusic(const std::string& name) {

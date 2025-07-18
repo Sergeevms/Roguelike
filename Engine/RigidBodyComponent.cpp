@@ -2,7 +2,11 @@
 
 #include "RigidBodyComponent.h"
 
+#include <cmath>
+
+#include "Component.h"
 #include "GameObject.h"
+#include "TransformComponent.h"
 
 namespace MaxrEngine {
 RigidBodyComponent::RigidBodyComponent(GameObject* gameObject)
@@ -14,10 +18,10 @@ void RigidBodyComponent::Update(float deltaTime) {
     transform->MoveBy(linearVelocity);
     transform->RotateBy(angleVelocity);
 
-    linearVelocity *= (1.f - linearDamping * deltaTime);
-    angleVelocity *= (1.f - angleDamping * deltaTime);
+    linearVelocity *= (1.0F - (linearDamping * deltaTime));
+    angleVelocity *= (1.0F - (angleDamping * deltaTime));
 
-    constexpr float minimalVelocity = 0.001f;
+    constexpr float minimalVelocity = 0.001F;
 
     if (fabs(linearVelocity.x) < minimalVelocity) {
         linearVelocity.x = 0.0F;
