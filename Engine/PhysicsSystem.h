@@ -2,8 +2,10 @@
 #include <map>
 #include <vector>
 
+#include "Collision.h"
 #include "EngineAPI.h"
 #include "IFixedUpdateSytem.h"
+#include "Trigger.h"
 
 namespace MaxrEngine {
 class ColliderComponent;
@@ -22,6 +24,9 @@ class PhysicsSystem : public IFixedUpdateSytem {
 
     PhysicsSystem(PhysicsSystem const&) = delete;
     PhysicsSystem& operator=(PhysicsSystem const&) = delete;
+
+    static void ProcessCollision(Collision* collision);
+    void ProcessTriggering(Trigger* trigger);
 
     std::vector<ColliderComponent*> colliders;
     std::map<ColliderComponent*, ColliderComponent*> triggersEnteredPair;

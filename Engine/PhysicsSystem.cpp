@@ -2,11 +2,20 @@
 
 #include "PhysicsSystem.h"
 
+#include <algorithm>
 #include <iostream>
+#include <sstream>
+
+#include "SFML/Graphics/Rect.hpp"
 
 #include "ColliderComponent.h"
+#include "Collision.h"
 #include "GameObject.h"
+#include "Logger.h"
 #include "RigidBodyComponent.h"
+#include "TransformComponent.h"
+#include "Trigger.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 PhysicsSystem* PhysicsSystem::Instance() {
@@ -16,7 +25,7 @@ PhysicsSystem* PhysicsSystem::Instance() {
 
 void PhysicsSystem::Update() {
     for (int i = 0; i < colliders.size(); ++i) {
-        auto body =
+        auto* body =
             colliders[i]->GetGameObject()->GetComponent<RigidBodyComponent>();
 
         if (body->GetKinematic()) {
@@ -27,93 +36,40 @@ void PhysicsSystem::Update() {
             if (i == j) {
                 continue;
             }
-
             sf::FloatRect intersection;
             if (colliders[i]->bounds.intersects(colliders[j]->bounds,
                                                 intersection)) {
-                std::ostringstream message;
                 if (colliders[i]->isTrigger != colliders[j]->isTrigger) {
-                    if (triggersEnteredPair.find(colliders[i]) ==
-                            triggersEnteredPair.end() &&
-                        triggersEnteredPair.find(colliders[j]) ==
-                            triggersEnteredPair.end()) {
-                        message << "Entered trigger " << colliders[i] << " "
-                                << colliders[j];
-                        LOG_INFO(message.str());
-                        auto trigger = new Trigger(colliders[i], colliders[j]);
-                        colliders[i]->OnTriggerEntered(*trigger);
-                        colliders[j]->OnTriggerEntered(*trigger);
-                        delete trigger;
-
-                        triggersEnteredPair.emplace(colliders[i], colliders[j]);
-                    }
+                    auto* trigger = new Trigger(colliders[i], colliders[j]);
+                    ProcessTriggering(trigger);
+                    delete trigger;
                 } else if (!colliders[i]->isTrigger) {
-                    float intersectionWidth = intersection.width;
-                    float intersectionHeight = intersection.height;
-                    Vector2Df intersectionPosition = {
-                        intersection.left - 0.5f * intersectionWidth,
-                        intersection.top - 0.5f * intersectionHeight};
-
-                    Vector2Df aPosition = {colliders[i]->bounds.left,
-                                           colliders[i]->bounds.top};
-
-                    auto aTransform = colliders[i]
-                                          ->GetGameObject()
-                                          ->GetComponent<TransformComponent>();
-
-                    if (intersectionWidth > intersectionHeight) {
-                        if (intersectionPosition.y > aPosition.y) {
-                            aTransform->MoveBy(0.0F, -intersectionHeight);
-                            message << "Top collision " << colliders[i] << " "
-                                    << colliders[j];
-                            LOG_INFO(message.str());
-                        } else {
-                            aTransform->MoveBy(0.0F, intersectionHeight);
-                            message << "Bottom collision " << colliders[i]
-                                    << " " << colliders[j];
-                            LOG_INFO(message.str());
-                        }
-                    } else {
-                        if (intersectionPosition.x > aPosition.x) {
-                            aTransform->MoveBy(-intersectionWidth, 0.0F);
-                            message << "Rigth collision " << colliders[i] << " "
-                                    << colliders[j];
-                            LOG_INFO(message.str());
-                        } else {
-                            aTransform->MoveBy(intersectionWidth, 0.0F);
-                            message << "Left collision " << colliders[i] << " "
-                                    << colliders[j];
-                            LOG_INFO(message.str());
-                        }
-                    }
-
-                    auto collision =
+                    auto* collision =
                         new Collision(colliders[i], colliders[j], intersection);
-                    colliders[i]->OnCollision(*collision);
-                    colliders[j]->OnCollision(*collision);
+                    ProcessCollision(collision);
                     delete collision;
                 }
             }
+        }
+    }
 
-            for (auto triggeredPair = triggersEnteredPair.cbegin(),
-                      nextTriggeredPair = triggeredPair;
-                 triggeredPair != triggersEnteredPair.cend();
-                 triggeredPair = nextTriggeredPair) {
-                ++nextTriggeredPair;
-                if (!triggeredPair->first->bounds.intersects(
-                        triggeredPair->second->bounds)) {
-                    std::ostringstream message;
-                    message << "Exited trigger " << triggeredPair->first << " "
-                            << triggeredPair->second;
-                    auto trigger = new Trigger(triggeredPair->first,
-                                               triggeredPair->second);
-                    triggeredPair->first->OnTriggerExit(*trigger);
-                    triggeredPair->second->OnTriggerExit(*trigger);
-                    delete trigger;
+    for (auto triggeredPair = triggersEnteredPair.cbegin(),
+              nextTriggeredPair = triggeredPair;
+         triggeredPair != triggersEnteredPair.cend();
+         triggeredPair = nextTriggeredPair) {
+        ++nextTriggeredPair;
+        if (!triggeredPair->first->bounds.intersects(
+                triggeredPair->second->bounds)) {
+            std::ostringstream message;
+            message << "Exited trigger " << triggeredPair->first << " "
+                    << triggeredPair->second;
+            auto* trigger =
+                new Trigger(triggeredPair->first, triggeredPair->second);
+            triggeredPair->first->OnTriggerExit(*trigger);
+            triggeredPair->second->OnTriggerExit(*trigger);
+            delete trigger;
 
-                    triggersEnteredPair.erase(triggeredPair);
-                }
-            }
+            triggersEnteredPair.erase(triggeredPair);
         }
     }
 }
@@ -134,5 +90,62 @@ void PhysicsSystem::Unsubscribe(ColliderComponent* collider) {
                                        return collider == obj;
                                    }),
                     colliders.end());
+}
+void PhysicsSystem::ProcessCollision(Collision* collision) {
+    constexpr float half = 0.5F;
+    const auto& intersection = collision->collisionRect;
+    const Vector2Df intersectionPosition = {
+        intersection.left - (half * intersection.width),
+        intersection.top - (half * intersection.height)};
+
+    const Vector2Df aPosition = {collision->first->bounds.left,
+                                 collision->first->bounds.top};
+
+    auto* aTransform =
+        collision->first->GetGameObject()->GetComponent<TransformComponent>();
+
+    std::ostringstream message;
+    if (intersection.width > intersection.height) {
+        if (intersectionPosition.y > aPosition.y) {
+            aTransform->MoveBy(0.0F, -intersection.height);
+            message << "Top collision " << collision->first << " "
+                    << collision->second;
+            LOG_INFO(message.str());
+        } else {
+            aTransform->MoveBy(0.0F, intersection.height);
+            message << "Bottom collision " << collision->first << " "
+                    << collision->second;
+            LOG_INFO(message.str());
+        }
+    } else {
+        if (intersectionPosition.x > aPosition.x) {
+            aTransform->MoveBy(-intersection.width, 0.0F);
+            message << "Rigth collision " << collision->first << " "
+                    << collision->second;
+            LOG_INFO(message.str());
+        } else {
+            aTransform->MoveBy(intersection.width, 0.0F);
+            message << "Left collision " << collision->first << " "
+                    << collision->second;
+            LOG_INFO(message.str());
+        }
+    }
+
+    collision->first->OnCollision(*collision);
+    collision->second->OnCollision(*collision);
+}
+void PhysicsSystem::ProcessTriggering(Trigger* trigger) {
+    if (triggersEnteredPair.find(trigger->first) == triggersEnteredPair.end() &&
+        triggersEnteredPair.find(trigger->second) ==
+            triggersEnteredPair.end()) {
+        std::ostringstream message;
+        message << "Entered trigger " << trigger->first << " "
+                << trigger->second;
+        LOG_INFO(message.str());
+        trigger->first->OnTriggerEntered(*trigger);
+        trigger->second->OnTriggerEntered(*trigger);
+
+        triggersEnteredPair.emplace(trigger->first, trigger->second);
+    }
 }
 }  // namespace MaxrEngine
