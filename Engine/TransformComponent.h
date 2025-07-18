@@ -9,7 +9,7 @@ class GameObject;
 
 class TransformComponent : public Component {
    public:
-    ENGINE_API TransformComponent(GameObject* gameObject);
+    explicit ENGINE_API TransformComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override;
     void Render() override;
@@ -35,38 +35,41 @@ class TransformComponent : public Component {
     ENGINE_API const Vector2Df& GetWorldPosition() const;
     ENGINE_API const Vector2Df& GetLocalPosition() const;
 
-    ENGINE_API const float GetWorldRotation() const;
-    ENGINE_API const float GetLocalRotation() const;
+    ENGINE_API float GetWorldRotation() const;
+    ENGINE_API float GetLocalRotation() const;
 
     ENGINE_API void SetParent(TransformComponent* newParent);
     ENGINE_API TransformComponent* GetParent() const;
 
-    ENGINE_API const Matrix2D GetWorldTransform() const;
+    ENGINE_API Matrix2D GetWorldTransform() const;
     ENGINE_API void Print() const;
 
     ENGINE_API const Vector2Df& GetWorldScale() const;
     ENGINE_API const Vector2Df& GetLocalScale() const;
 
    private:
+    static const Vector2Df defaultScale;
+    static const Vector2Df defaultPosition;
     TransformComponent* parent = nullptr;
 
     mutable Matrix2D localTransform;
     mutable bool isUpdated = false;
 
-    mutable Vector2Df localPosition = {0.0F, 0.0F};
+    mutable Vector2Df localPosition = defaultPosition;
     mutable float localRotation = 0.0F;
-    mutable Vector2Df localScale = {1.f, 1.f};
+    mutable Vector2Df localScale = defaultScale;
 
-    mutable Vector2Df position = {0.0F, 0.0F};
+    mutable Vector2Df position = defaultPosition;
     mutable float rotation = 0.0F;
-    mutable Vector2Df scale = {1.f, 1.f};
+    mutable Vector2Df scale = defaultScale;
 
     void SetWorldInfoFrom(const Matrix2D& transform) const;
     void SetLocalInfoFrom(const Matrix2D& transform) const;
     void UpdateLocalTransform() const;
-    void UpdateLocalTransform(const Vector2Df& position, float angle,
+    void UpdateLocalTransform(const Vector2Df& position, const float rotation,
                               const Vector2Df& scale) const;
-    Matrix2D CreateTransform(const Vector2Df& position, float angle,
-                             const Vector2Df& scale) const;
+    static Matrix2D CreateTransform(const Vector2Df& position,
+                                    const float rotation,
+                                    const Vector2Df& scale);
 };
 }  // namespace MaxrEngine

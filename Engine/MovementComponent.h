@@ -1,12 +1,14 @@
 #pragma once
 #include "Component.h"
+#include "EngineAPI.h"
 #include "InputComponent.h"
 #include "TransformComponent.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 class MovementComponent : public Component {
    public:
-    ENGINE_API MovementComponent(GameObject* gameObject);
+    explicit ENGINE_API MovementComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override;
     void Render() override;

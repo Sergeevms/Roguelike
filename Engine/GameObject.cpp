@@ -2,6 +2,13 @@
 
 #include "GameObject.h"
 
+#include <stdint.h>
+
+#include <algorithm>
+#include <iostream>
+
+#include "TransformComponent.h"
+
 namespace MaxrEngine {
 GameObject::GameObject() {
     name = "GameObject";
@@ -19,18 +26,20 @@ GameObject::~GameObject() {
 }
 
 std::string GameObject::GetName() const { return name; }
-
+// NOLINTBEGIN(misc-no-recurtion) : recursive function
 void GameObject::Print(int depth) {
-    std::cout << std::string(depth * 2, ' ') << GetName() << std::endl;
+    std::cout << std::string(static_cast<int64_t>(depth) * 2, ' ') << GetName()
+              << std::endl;
     for (auto& component : components) {
-        std::cout << std::string(depth * 2, ' ') << "::" << component
-                  << std::endl;
+        std::cout << std::string(static_cast<int64_t>(depth) * 2, ' ')
+                  << "::" << component << std::endl;
     }
 
     for (GameObject* child : children) {
         child->Print(depth + 1);
     }
 }
+// NOLINTEND(misc-no-recurtion)
 
 void GameObject::Update(float deltaTime) {
     for (auto& component : components) {

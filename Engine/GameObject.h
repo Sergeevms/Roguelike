@@ -1,9 +1,11 @@
 #pragma once
-#include <cassert>
+#include <algorithm>
 #include <iostream>
+#include <memory>
 #include <sstream>
-
-#include "SFML/Graphics.hpp"
+#include <string>
+#include <type_traits>
+#include <vector>
 
 #include "Component.h"
 #include "EngineAPI.h"
@@ -14,7 +16,7 @@ namespace MaxrEngine {
 class GameObject : public std::enable_shared_from_this<GameObject> {
    public:
     GameObject();
-    GameObject(const std::string& newName);
+    explicit GameObject(const std::string& newName);
 
     ~GameObject();
 
@@ -109,7 +111,7 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
     template <typename T>
     T* GetComponentInChildren() const {
         T* component = GetComponent<T>();
-        if (component || children.size() == 0) {
+        if (component || children.empty()) {
             return component;
         }
 
@@ -137,8 +139,8 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
     }
 
    private:
-    std::vector<std::shared_ptr<Component>> components = {};
+    std::vector<std::shared_ptr<Component>> components;
     std::string name;
-    std::vector<GameObject*> children = {};
+    std::vector<GameObject*> children;
 };
 }  // namespace MaxrEngine

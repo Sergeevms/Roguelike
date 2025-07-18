@@ -3,8 +3,6 @@
 #include <concepts>
 #include <numbers>
 
-#include "EngineAPI.h"
-
 namespace MaxrEngine {
 template <typename T>
 struct Vector2D {
@@ -128,10 +126,9 @@ template <typename T>
 Vector2D<T> Normalized(const Vector2D<T>& vector) {
     float length = vector.GetLength();
     if (length > 0.0F) {
-        return vector * (1.f / vector.GetLength());
-    } else {
-        return {0.0F, 0.0F};
+        return vector * (1.0F / vector.GetLength());
     }
+    return {0.0F, 0.0F};
 }
 
 template <typename T>

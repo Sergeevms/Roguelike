@@ -149,9 +149,6 @@
     <ClCompile Include="Matrix2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -183,9 +180,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AITypedBlackboardComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IFixedUpdateSytem.cpp">

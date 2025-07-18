@@ -4,23 +4,35 @@
 
 #include <cassert>
 
+#include "SFML/Graphics/View.hpp"
+#include "SFML/System/Vector2.hpp"
+
+#include "Component.h"
 #include "GameObject.h"
+#include "Logger.h"
+#include "TransformComponent.h"
 #include "Vector.h"
 
 namespace MaxrEngine {
+
 CameraComponent::CameraComponent(GameObject* gameObject)
     : Component(gameObject) {
-    view = new sf::View(sf::FloatRect(0, 0, 800, -600));
+    constexpr float defaultResolutionWidth = 800.0F;
+    constexpr float defaultResolutionHeight = -600.0F;
+    view = new sf::View(
+        sf::FloatRect(0, 0, defaultResolutionWidth, -defaultResolutionHeight));
     transform = gameObject->GetComponent<TransformComponent>();
 }
 
 CameraComponent::~CameraComponent() { delete view; }
 
-void CameraComponent::Update(float deltaTime) {
-    auto& position = transform->GetWorldPosition();
+void CameraComponent::Update(
+    float deltaTime) {  // NOLINT(misc-unused-parameters) : overrided virtual
+                        // function with parameter
+    const auto& position = transform->GetWorldPosition();
     auto rotation = transform->GetWorldRotation();
 
-    view->setCenter(Convert<sf::Vector2f, Vector2Df>(position));
+    view->setCenter(Convert<sf::Vector2f>(position));
     view->setRotation(rotation);
 
     window->setView(*view);
@@ -28,7 +40,7 @@ void CameraComponent::Update(float deltaTime) {
 
 void CameraComponent::Render() {
     assert(window != nullptr && "NULL window render");
-    if (!window) {
+    if (window == nullptr) {
         LOG_ERROR("NULL window render.");
     }
 }

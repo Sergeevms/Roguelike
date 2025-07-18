@@ -72,19 +72,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
-    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+    <ClangTidyChecks>
+    </ClangTidyChecks>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
-    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+    <ClangTidyChecks>
+    </ClangTidyChecks>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
-    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+    <ClangTidyChecks>
+    </ClangTidyChecks>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Engine\$(Platform)\$(Configuration)\</OutDir>
-    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+    <ClangTidyChecks>
+    </ClangTidyChecks>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -233,11 +241,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IObserver.cpp" />
-    <ClCompile Include="AITypedBlackboardComponent.cpp" />
     <ClCompile Include="AIInputComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
-    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Engine.cpp" />

@@ -2,14 +2,20 @@
 
 #include "Engine.h"
 
-#include "SFML/Graphics.hpp"
+#include <cstdlib>
+#include <ctime>
+
+#include "SFML/System/Clock.hpp"
+#include "SFML/System/Time.hpp"
+#include "SFML/Window/Event.hpp"
 
 #include "GameWorld.h"
+#include "Logger.h"
 #include "RenderSystem.h"
 
 namespace MaxrEngine {
 Engine::Engine() {
-    unsigned int seed = static_cast<unsigned int>(time(nullptr));
+    const unsigned int seed = static_cast<unsigned int>(time(nullptr));
     srand(seed);
 }
 
@@ -18,14 +24,14 @@ Engine* Engine::Instance() {
     return &instance;
 }
 
-void Engine::Run() {
+void Engine::Run() {  // NOLINT
     LOG_INFO("Engine runned");
     sf::Clock gameClock;
     sf::Event event;
 
     while (RenderSystem::Instance()->GetMainWindow().isOpen()) {
-        sf::Time dt = gameClock.restart();
-        float deltaTime = dt.asSeconds();
+        const sf::Time timeElapsed = gameClock.restart();
+        const float deltaTime = timeElapsed.asSeconds();
 
         while (RenderSystem::Instance()->GetMainWindow().pollEvent(event)) {
             if (event.type == sf::Event::Closed) {

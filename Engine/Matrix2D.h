@@ -19,6 +19,7 @@ class ENGINE_API Matrix2D {
     void Print() const;
 
    private:
+    float GetMinor(const int row, const int column) const;
     std::array<std::array<float, 3>, 3> m;
 };
 }  // namespace MaxrEngine

@@ -1,5 +1,6 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/Graphics/View.hpp"
 
 #include "Component.h"
 #include "EngineAPI.h"
@@ -8,7 +9,7 @@
 namespace MaxrEngine {
 class ENGINE_API CameraComponent : public Component {
    public:
-    CameraComponent(GameObject* gameObject);
+    explicit CameraComponent(GameObject* gameObject);
     ~CameraComponent();
 
     virtual void Update(float deltaTime) override;

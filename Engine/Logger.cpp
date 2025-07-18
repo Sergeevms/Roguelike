@@ -2,6 +2,12 @@
 
 #include "Logger.h"
 
+#include <exception>
+#include <iostream>
+#include <memory>
+#include <mutex>
+#include <string>
+
 namespace MaxrEngine {
 void LogSink::SetLoggedLevels(LogLevel newLoggingLevels) {
     loggingLevels = newLoggingLevels;
@@ -21,7 +27,7 @@ std::string LogSink::LogLevelToString(LogLevel logLevel) {
 }
 
 void ConsoleSink::Log(LogLevel logLevel, const std::string& message) {
-    if (logLevel & loggingLevels) {
+    if ((logLevel & loggingLevels) != LogLevel::NONE) {
         std::cout << LogLevelToString(logLevel) << message << std::endl;
     }
 }
@@ -32,12 +38,17 @@ FileSink::FileSink(const std::string& fileName) {
 
 FileSink::~FileSink() {
     if (logFile.is_open()) {
-        logFile.close();
+        try {
+            logFile.close();
+        } catch (const std::exception& exception) {
+            std::cerr << "File closing failed: " << exception.what()
+                      << std::endl;
+        }
     }
 }
 
 void FileSink::Log(LogLevel logLevel, const std::string& message) {
-    if (logLevel & loggingLevels) {
+    if ((logLevel & loggingLevels) != LogLevel::NONE) {
         if (logFile.is_open()) {
             logFile << LogLevelToString(logLevel) << message << std::endl;
         }
@@ -47,7 +58,7 @@ void FileSink::Log(LogLevel logLevel, const std::string& message) {
 void Logger::AddSink(std::shared_ptr<LogSink> sink) { sinks.push_back(sink); }
 
 void Logger::Log(LogLevel logLevel, const std::string& message) {
-    if (logLevel & loggingLevels) {
+    if ((logLevel & loggingLevels) != LogLevel::NONE) {
         std::lock_guard<std::mutex> lock(mutex);
         for (auto& sink : sinks) {
             sink->Log(logLevel, message);
@@ -65,24 +76,24 @@ void Logger::Error(const std::string& message) {
     Log(LogLevel::ERROR, message);
 }
 
-void ENGINE_API Logger::SetLoggedLevels(LogLevel newLoggingLevels) {
+void Logger::SetLoggedLevels(LogLevel newLoggingLevels) {
     loggingLevels = newLoggingLevels;
 }
 
 std::shared_ptr<Logger> LoggerRegister::GetLogger(const std::string& name) {
-    auto it = loggers.find(name);
-    if (it != loggers.end()) {
-        return it->second;
+    auto foundIt = loggers.find(name);
+    if (foundIt != loggers.end()) {
+        return foundIt->second;
     }
     return defaultLogger;
 }
 
 void LoggerRegister::SetDefaultLogger(std::shared_ptr<Logger> logger) {
-    std::lock_guard<std::mutex> lock(mutex);
+    const std::lock_guard<std::mutex> lock(mutex);
     defaultLogger = logger;
     bool registered = false;
-    for (const auto& it : loggers) {
-        if (logger == it.second) {
+    for (const auto& loggerIt : loggers) {
+        if (logger == loggerIt.second) {
             registered = true;
             break;
         }
@@ -94,15 +105,15 @@ void LoggerRegister::SetDefaultLogger(std::shared_ptr<Logger> logger) {
 
 void LoggerRegister::RegisterLogger(const std::string& name,
                                     std::shared_ptr<Logger> logger) {
-    std::lock_guard<std::mutex> lock(mutex);
+    const std::lock_guard<std::mutex> lock(mutex);
     loggers[name] = logger;
 }
 
 void LoggerRegister::UnregisterLogger(const std::string& name) {
-    std::lock_guard<std::mutex> lock(mutex);
-    auto it = loggers.find(name);
-    if (it != loggers.end()) {
-        loggers.erase(it);
+    const std::lock_guard<std::mutex> lock(mutex);
+    auto foundIt = loggers.find(name);
+    if (foundIt != loggers.end()) {
+        loggers.erase(foundIt);
     }
 }
 }  // namespace MaxrEngine

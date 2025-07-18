@@ -1,9 +1,13 @@
 #pragma once
 #include <map>
 #include <string>
+#include <vector>
 
-#include "SFML/Audio.hpp"
-#include "SFML/Graphics.hpp"
+#include "SFML/Audio/Music.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Texture.hpp"
+#include "SFML/System/Vector2.hpp"
 
 #include "EngineAPI.h"
 
@@ -24,7 +28,7 @@ class ResourceSystem {
                                    sf::Vector2u elementPixelSize,
                                    int totalElements, bool isSmooth = true);
     ENGINE_API const sf::Texture* GetTextureMapElementShared(
-        const std::string& name, size_t elementIndex) const;
+        const std::string& name, int elementIndex) const;
     ENGINE_API sf::Texture* GetTextureMapElementCopy(const std::string& name,
                                                      int elementIndex) const;
     ENGINE_API int GetTextureMapElementsCount(const std::string& name) const;

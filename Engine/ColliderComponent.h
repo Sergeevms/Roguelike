@@ -2,11 +2,11 @@
 #include <functional>
 #include <vector>
 
-#include "SFML/Graphics.hpp"
+#include "SFML/Graphics/Rect.hpp"
 
 #include "Collision.h"
 #include "Component.h"
-#include "PhysicsSystem.h"
+#include "EngineAPI.h"
 #include "Trigger.h"
 
 namespace MaxrEngine {
@@ -14,7 +14,7 @@ class ColliderComponent : public Component {
    public:
     friend class PhysicsSystem;
 
-    ENGINE_API ColliderComponent(GameObject* gameObject);
+    explicit ENGINE_API ColliderComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override = 0;
     void Render() override = 0;

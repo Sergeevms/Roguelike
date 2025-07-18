@@ -1,8 +1,8 @@
 #pragma once
 #include <fstream>
-#include <iostream>
+#include <memory>
 #include <mutex>
-#include <sstream>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -10,6 +10,7 @@
 
 namespace MaxrEngine {
 enum LogLevel {
+    NONE = 0,
     INFO = 1,
     WARNING = 2,
     ERROR = 4,
@@ -23,7 +24,7 @@ class LogSink {
     virtual ~LogSink() = default;
 
    protected:
-    std::string LogLevelToString(LogLevel logLevel);
+    static std::string LogLevelToString(LogLevel logLevel);
     LogLevel loggingLevels = LogLevel::ALL;
 };
 
@@ -35,7 +36,7 @@ class ConsoleSink : public LogSink {
 
 class FileSink : public LogSink {
    public:
-    ENGINE_API FileSink(const std::string& fileName);
+    explicit ENGINE_API FileSink(const std::string& fileName);
     ENGINE_API ~FileSink();
     ENGINE_API virtual void Log(LogLevel logLevel,
                                 const std::string& message) override;

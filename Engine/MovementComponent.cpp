@@ -2,7 +2,12 @@
 
 #include "MovementComponent.h"
 
+#include "Component.h"
 #include "GameObject.h"
+#include "InputComponent.h"
+#include "Logger.h"
+#include "TransformComponent.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 MovementComponent::MovementComponent(GameObject* gameObject)
@@ -17,7 +22,7 @@ MovementComponent::MovementComponent(GameObject* gameObject)
 }
 
 void MovementComponent::Update(float deltaTime) {
-    Vector2Df direction =
+    const Vector2Df direction =
         Vector2Df{input->GetHorizontalAxis(), input->GetVerticalAxis()};
 
     transform->MoveBy(speed * deltaTime * direction);
@@ -33,7 +38,7 @@ void MovementComponent::SetSpeed(float newSpeed) { speed = newSpeed; }
 float MovementComponent::GetSpeed() const { return speed; }
 
 float MovementComponent::GetAccelerationSquared() const {
-    Vector2Df squaredAcceleration = acceleration * acceleration;
+    const Vector2Df squaredAcceleration = acceleration * acceleration;
     return squaredAcceleration.x + squaredAcceleration.y;
 }
 }  // namespace MaxrEngine

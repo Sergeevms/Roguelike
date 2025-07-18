@@ -5,7 +5,7 @@ class GameObject;
 
 class ENGINE_API Component {
    public:
-    Component(GameObject* gameObject);
+    explicit Component(GameObject* gameObject);
     virtual ~Component();
 
     virtual void Update(float deltaTime) = 0;

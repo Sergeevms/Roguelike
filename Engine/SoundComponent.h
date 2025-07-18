@@ -1,5 +1,6 @@
 #pragma once
-#include "SFML/Audio.hpp"
+#include "SFML/Audio/Sound.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
 
 #include "Component.h"
 #include "EngineAPI.h"
@@ -7,7 +8,7 @@
 namespace MaxrEngine {
 class ENGINE_API SoundComponent : public Component {
    public:
-    SoundComponent(GameObject* gameObject);
+    explicit SoundComponent(GameObject* gameObject);
     ~SoundComponent();
 
     void Update(float deltaTime) override;

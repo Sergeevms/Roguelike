@@ -2,12 +2,22 @@
 
 #include "TransformComponent.h"
 
+#include <cmath>
+#include <iostream>
 #include <numbers>
 
+#include "Component.h"
 #include "GameObject.h"
+#include "Matrix2D.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
-constexpr float PI = std::numbers::pi_v<float>;
+constexpr float fullRotation = 360.0F;
+constexpr float oneDegreeInRadians =
+    fullRotation * 0.5F * std::numbers::inv_pi_v<float>;
+
+const Vector2Df TransformComponent::defaultPosition = {0.0F, 0.0F};
+const Vector2Df TransformComponent::defaultScale = {1.0F, 1.0F};
 
 TransformComponent::TransformComponent(GameObject* gameObject)
     : Component(gameObject) {}
@@ -29,7 +39,7 @@ void TransformComponent::SetWorldPosition(const Vector2Df& position) {
     if (parent == nullptr) {
         localPosition = position;
     } else {
-        Matrix2D newWorldTransform =
+        const Matrix2D newWorldTransform =
             CreateTransform(position, GetWorldRotation(), GetWorldScale());
         localTransform =
             parent->GetWorldTransform().GetInversed() * newWorldTransform;
@@ -55,11 +65,11 @@ void TransformComponent::SetLocalPosition(float positionX, float positionY) {
 
 void TransformComponent::RotateBy(const float offset) {
     localRotation += offset;
-    while (localRotation >= 360.0F) {
-        localRotation -= 360.0F;
+    while (localRotation >= fullRotation) {
+        localRotation -= fullRotation;
     }
     while (localRotation < 0.0F) {
-        localRotation += 360.0F;
+        localRotation += fullRotation;
     }
     isUpdated = false;
 }
@@ -68,7 +78,7 @@ void TransformComponent::SetWorldRotation(float angle) {
     if (parent == nullptr) {
         localRotation = angle;
     } else {
-        Matrix2D newWorldTransform =
+        const Matrix2D newWorldTransform =
             CreateTransform(GetWorldPosition(), angle, GetWorldScale());
         localTransform =
             parent->GetWorldTransform().GetInversed() * newWorldTransform;
@@ -80,11 +90,11 @@ void TransformComponent::SetWorldRotation(float angle) {
 
 void TransformComponent::SetLocalRotation(float angle) {
     localRotation = angle;
-    while (localRotation >= 360.0F) {
-        localRotation -= 360.0F;
+    while (localRotation >= fullRotation) {
+        localRotation -= fullRotation;
     }
     while (localRotation < 0.0F) {
-        localRotation += 360.0F;
+        localRotation += fullRotation;
     }
     isUpdated = false;
 }
@@ -102,7 +112,7 @@ void TransformComponent::SetWorldScale(const Vector2Df& newScale) {
     if (parent == nullptr) {
         localScale = newScale;
     } else {
-        Matrix2D newWorldTransform =
+        const Matrix2D newWorldTransform =
             CreateTransform(GetWorldPosition(), GetWorldRotation(), newScale);
         localTransform =
             parent->GetWorldTransform().GetInversed() * newWorldTransform;
@@ -141,7 +151,7 @@ const Vector2Df& TransformComponent::GetLocalPosition() const {
     return localPosition;
 }
 
-const float TransformComponent::GetWorldRotation() const {
+float TransformComponent::GetWorldRotation() const {
     UpdateLocalTransform();
     if (parent == nullptr) {
         return GetLocalRotation();
@@ -151,7 +161,7 @@ const float TransformComponent::GetWorldRotation() const {
     return rotation;
 }
 
-const float TransformComponent::GetLocalRotation() const {
+float TransformComponent::GetLocalRotation() const {
     UpdateLocalTransform();
     return localRotation;
 }
@@ -179,7 +189,9 @@ void TransformComponent::SetParent(TransformComponent* newParent) {
 
 TransformComponent* TransformComponent::GetParent() const { return parent; }
 
-const Matrix2D TransformComponent::GetWorldTransform() const {
+Matrix2D MaxrEngine::TransformComponent::GetWorldTransform()
+    const {  // NOLINT(misc-no-recursion) : Recursive function requried to
+             // calculate world transform
     UpdateLocalTransform();
 
     if (parent == nullptr) {
@@ -225,33 +237,33 @@ const Vector2Df& TransformComponent::GetLocalScale() const {
 }
 
 void TransformComponent::SetWorldInfoFrom(const Matrix2D& transform) const {
-    auto& transformMatrix = transform.GetMatrix();
+    const auto& transformMatrix = transform.GetMatrix();
 
     position.x = transformMatrix[0][2];
     position.y = transformMatrix[1][2];
 
-    scale.x = std::sqrt(transformMatrix[0][0] * transformMatrix[0][0] +
-                        transformMatrix[1][0] * transformMatrix[1][0]);
-    scale.y = std::sqrt(transformMatrix[0][1] * transformMatrix[0][1] +
-                        transformMatrix[1][1] * transformMatrix[1][1]);
+    scale.x = std::sqrt((transformMatrix[0][0] * transformMatrix[0][0]) +
+                        (transformMatrix[1][0] * transformMatrix[1][0]));
+    scale.y = std::sqrt((transformMatrix[0][1] * transformMatrix[0][1]) +
+                        (transformMatrix[1][1] * transformMatrix[1][1]));
 
-    rotation =
-        std::atan2(transformMatrix[0][1], transformMatrix[0][0]) * 180 / PI;
+    rotation = std::atan2(transformMatrix[0][1], transformMatrix[0][0]) *
+               oneDegreeInRadians;
 }
 
 void TransformComponent::SetLocalInfoFrom(const Matrix2D& transform) const {
-    auto& transformMatrix = transform.GetMatrix();
+    const auto& transformMatrix = transform.GetMatrix();
 
     localPosition.x = transformMatrix[0][2];
     localPosition.y = transformMatrix[1][2];
 
-    localScale.x = std::sqrt(transformMatrix[0][0] * transformMatrix[0][0] +
-                             transformMatrix[1][0] * transformMatrix[1][0]);
-    localScale.y = std::sqrt(transformMatrix[0][1] * transformMatrix[0][1] +
-                             transformMatrix[1][1] * transformMatrix[1][1]);
+    localScale.x = std::sqrt((transformMatrix[0][0] * transformMatrix[0][0]) +
+                             (transformMatrix[1][0] * transformMatrix[1][0]));
+    localScale.y = std::sqrt((transformMatrix[0][1] * transformMatrix[0][1]) +
+                             (transformMatrix[1][1] * transformMatrix[1][1]));
 
-    localRotation =
-        std::atan2(transformMatrix[0][1], transformMatrix[0][0]) * 180 / PI;
+    localRotation = std::atan2(transformMatrix[0][1], transformMatrix[0][0]) *
+                    oneDegreeInRadians;
 }
 
 void TransformComponent::UpdateLocalTransform() const {
@@ -263,7 +275,7 @@ void TransformComponent::UpdateLocalTransform() const {
 }
 
 void TransformComponent::UpdateLocalTransform(const Vector2Df& position,
-                                              float rotation,
+                                              const float rotation,
                                               const Vector2Df& scale) const {
     if (!isUpdated) {
         localTransform = CreateTransform(position, rotation, scale);
@@ -272,8 +284,8 @@ void TransformComponent::UpdateLocalTransform(const Vector2Df& position,
 }
 
 Matrix2D TransformComponent::CreateTransform(const Vector2Df& position,
-                                             float rotation,
-                                             const Vector2Df& scale) const {
+                                             const float rotation,
+                                             const Vector2Df& scale) {
     return Matrix2D(position, rotation, scale);
 }
 }  // namespace MaxrEngine

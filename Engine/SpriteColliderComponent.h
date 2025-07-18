@@ -1,11 +1,14 @@
 #pragma once
+#include "SFML/Graphics/Sprite.hpp"
+
 #include "ColliderComponent.h"
 #include "EngineAPI.h"
+#include "GameObject.h"
 
 namespace MaxrEngine {
 class SpriteColliderComponent : public ColliderComponent {
    public:
-    ENGINE_API SpriteColliderComponent(GameObject* gameObject);
+    explicit ENGINE_API SpriteColliderComponent(GameObject* gameObject);
     ~SpriteColliderComponent();
 
     void Update(float deltaTime) override;

@@ -2,6 +2,14 @@
 
 #include "ColliderComponent.h"
 
+#include <algorithm>
+#include <functional>
+
+#include "Collision.h"
+#include "Component.h"
+#include "GameObject.h"
+#include "Trigger.h"
+
 namespace MaxrEngine {
 ColliderComponent::ColliderComponent(GameObject* gameObject)
     : Component(gameObject) {}

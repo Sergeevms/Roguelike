@@ -1,12 +1,12 @@
 #pragma once
-#include "SFML/Audio.hpp"
+#include "SFML/Audio/Music.hpp"
 
 #include "Component.h"
 #include "EngineAPI.h"
 namespace MaxrEngine {
 class ENGINE_API MusicComponent : public Component {
    public:
-    MusicComponent(GameObject* gameObject);
+    explicit MusicComponent(GameObject* gameObject);
     ~MusicComponent();
 
     void Update(float deltaTime) override;

@@ -1,5 +1,5 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "SFML/Graphics/Rect.hpp"
 namespace MaxrEngine {
 class ColliderComponent;
 struct Collision {

@@ -7,7 +7,7 @@
 namespace MaxrEngine {
 class RigidBodyComponent : public Component {
    public:
-    ENGINE_API RigidBodyComponent(GameObject* gameObject);
+    explicit ENGINE_API RigidBodyComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override;
     void Render() override;

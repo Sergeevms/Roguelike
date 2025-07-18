@@ -119,8 +119,8 @@ void ResourceSystem::LoadTextureMap(const std::string& name,
     }
 }
 
-const sf::Texture* MaxrEngine::ResourceSystem::GetTextureMapElementShared(
-    const std::string& name, size_t elementIndex) const {
+const sf::Texture* ResourceSystem::GetTextureMapElementShared(
+    const std::string& name, int elementIndex) const {
     auto textureMap = textureMaps.find(name);
     if (textureMap == textureMaps.end()) {
         assert(false && "Texture map not loaded");

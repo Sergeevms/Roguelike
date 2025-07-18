@@ -2,8 +2,13 @@
 
 #include "SpriteRendererComponent.h"
 
+#include "SFML/Graphics/Sprite.hpp"
+
+#include "Component.h"
 #include "GameObject.h"
 #include "RenderSystem.h"
+#include "TransformComponent.h"
+#include "Vector.h"
 
 namespace MaxrEngine {
 SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject)
@@ -15,7 +20,7 @@ SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject)
 }
 
 SpriteRendererComponent::~SpriteRendererComponent() {
-    if (sprite) {
+    if (sprite != nullptr) {
         delete sprite;
     }
 }
@@ -23,7 +28,7 @@ SpriteRendererComponent::~SpriteRendererComponent() {
 void SpriteRendererComponent::Update(float deltaTime) {}
 
 void SpriteRendererComponent::Render() {
-    if (sprite) {
+    if (sprite != nullptr) {
         sprite->setPosition(
             Convert<sf::Vector2f, Vector2Df>(transform->GetWorldPosition()));
         sprite->setRotation(transform->GetWorldRotation());
@@ -38,7 +43,9 @@ const sf::Sprite* SpriteRendererComponent::GetSprite() const { return sprite; }
 void SpriteRendererComponent::SetTexture(const sf::Texture& newTexture) {
     sprite->setTexture(newTexture);
     auto textureSize = sprite->getTexture()->getSize();
-    sprite->setOrigin({0.5f * textureSize.x, 0.5f * textureSize.y});
+    const sf::Vector2f textureCenter = {0.5F * textureSize.x,
+                                        0.5F * textureSize.y};
+    sprite->setOrigin(textureCenter);
 }
 
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight) {

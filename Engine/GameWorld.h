@@ -1,5 +1,8 @@
 #pragma once
+#include <memory>
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "EngineAPI.h"
 #include "GameObject.h"
@@ -35,8 +38,8 @@ class GameWorld {
 
     std::unordered_map<IFixedUpdateSytem*, float> fixedUpdateSystems;
 
-    std::vector<std::shared_ptr<GameObject>> gameObjects = {};
-    std::vector<std::shared_ptr<GameObject>> markedToDestroyGameObjects = {};
+    std::vector<std::shared_ptr<GameObject>> gameObjects;
+    std::vector<std::shared_ptr<GameObject>> markedToDestroyGameObjects;
 
     void DestroyGameObjectImmediate(std::shared_ptr<GameObject> gameObject);
 };

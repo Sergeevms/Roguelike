@@ -1,5 +1,6 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/Texture.hpp"
 
 #include "Component.h"
 #include "EngineAPI.h"
@@ -9,7 +10,7 @@
 namespace MaxrEngine {
 class SpriteRendererComponent : public Component {
    public:
-    ENGINE_API SpriteRendererComponent(GameObject* gameObject);
+    explicit ENGINE_API SpriteRendererComponent(GameObject* gameObject);
     ENGINE_API ~SpriteRendererComponent();
 
     void Update(float deltaTime) override;

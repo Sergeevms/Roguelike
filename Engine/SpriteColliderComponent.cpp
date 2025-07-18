@@ -2,7 +2,11 @@
 
 #include "SpriteColliderComponent.h"
 
+#include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
+
 #include "GameObject.h"
+#include "Logger.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
 #include "SpriteRendererComponent.h"
@@ -10,7 +14,7 @@
 namespace MaxrEngine {
 SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject)
     : ColliderComponent(gameObject), sprite(nullptr) {
-    auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
+    auto* spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
     if (spriteRenderer == nullptr) {
         LOG_ERROR(
             "SpriteRendererComponent required to SpriteColliderComponent.");
@@ -23,9 +27,6 @@ SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject)
 }
 
 SpriteColliderComponent::~SpriteColliderComponent() {
-    if (&bounds != nullptr) {
-        std::destroy_at(&bounds);
-    }
     PhysicsSystem::Instance()->Unsubscribe(this);
 }
 
@@ -34,11 +35,12 @@ void SpriteColliderComponent::Update(float deltaTime) {
 }
 
 void SpriteColliderComponent::Render() {
+    constexpr float outlineThickness = 4.0F;
     sf::RectangleShape rectangle(sf::Vector2f(bounds.width, bounds.height));
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setPosition(bounds.left, bounds.top);
     rectangle.setOutlineColor(sf::Color::White);
-    rectangle.setOutlineThickness(4.f);
+    rectangle.setOutlineThickness(outlineThickness);
 
     RenderSystem::Instance()->Render(rectangle);
 }

@@ -2,7 +2,13 @@
 
 #include "GameWorld.h"
 
-#include "PhysicsSystem.h"
+#include <algorithm>
+#include <memory>
+#include <sstream>
+#include <string>
+
+#include "GameObject.h"
+#include "Logger.h"
 
 namespace MaxrEngine {
 GameWorld* GameWorld::Instance() {
@@ -52,7 +58,7 @@ GameObject* GameWorld::CreateGameObject(std::string name) {
 }
 
 void GameWorld::DestroyGameObject(GameObject* gameObject) {
-    if (gameObject) {
+    if (gameObject != nullptr) {
         markedToDestroyGameObjects.push_back(gameObject->shared_from_this());
     }
 }
@@ -72,14 +78,14 @@ void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
 }
 
 void GameWorld::UnRegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
-    auto it = fixedUpdateSystems.find(system);
-    if (it != fixedUpdateSystems.end()) {
-        fixedUpdateSystems.erase(it);
+    auto foundIt = fixedUpdateSystems.find(system);
+    if (foundIt != fixedUpdateSystems.end()) {
+        fixedUpdateSystems.erase(foundIt);
     }
 }
 
 void GameWorld::Print() const {
-    for (auto& obj : gameObjects) {
+    for (const auto& obj : gameObjects) {
         if (obj == nullptr) {
             continue;
         }

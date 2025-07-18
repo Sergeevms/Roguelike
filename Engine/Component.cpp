@@ -4,7 +4,11 @@
 #include "Component.h"
 
 #include <cassert>
+#include <exception>
 #include <iostream>
+#include <sstream>
+
+#include "Logger.h"
 
 namespace MaxrEngine {
 Component::Component(GameObject* gameObject) : gameObject(gameObject) {
@@ -15,10 +19,14 @@ Component::Component(GameObject* gameObject) : gameObject(gameObject) {
 }
 
 Component::~Component() {
-    std::ostringstream message;
-    message << "Deleted component: " << typeid(this).name() << " " << this
-            << std::endl;
-    LOG_INFO(message.str());
+    try {
+        std::ostringstream message;
+        message << "Deleted component: " << typeid(this).name() << " " << this
+                << std::endl;
+        LOG_INFO(message.str());
+    } catch (const std::exception& exception) {
+        std::cerr << "Logging failed: " << exception.what() << std::endl;
+    }
 }
 
 GameObject* Component::GetGameObject() { return gameObject; }
