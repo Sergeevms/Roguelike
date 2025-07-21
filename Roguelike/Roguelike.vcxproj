@@ -191,7 +191,6 @@
     <ClCompile Include="SpriteOpaqueComponent.cpp" />
     <ClCompile Include="AIAttackComponent.cpp" />
     <ClCompile Include="AIChaseTargetComponent.cpp" />
-    <ClCompile Include="AIBlackboard.cpp" />
     <ClCompile Include="AIPerceptionComponent.cpp" />
     <ClCompile Include="AITargetSelector.cpp" />
     <ClCompile Include="BackgroundMusic.cpp" />

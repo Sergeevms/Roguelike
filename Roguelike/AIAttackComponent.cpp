@@ -8,9 +8,10 @@
 
 namespace Roguelike {
 AIAttackComponent::AIAttackComponent(
-    MaxrEngine::GameObject* gameObject, float cooldown, float damage,
-    float range, std::weak_ptr<MaxrEngine::GameObject> target)
-    : AttackComponent(gameObject, cooldown, damage, range, target) {}
+    MaxrEngine::GameObject* gameObject,
+    const AtackComponentParameters& atackParameters,
+    std::weak_ptr<MaxrEngine::GameObject> target)
+    : AttackComponent(gameObject, atackParameters, target) {}
 
 void AIAttackComponent::Update(float deltaTime) {
     AttackComponent::Update(deltaTime);

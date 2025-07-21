@@ -19,7 +19,9 @@ AIPerceptionComponent::AIPerceptionComponent(
     if (blackBoard != nullptr) {
         blackBoard->Set("Detected Actors", &detectedActors);
     } else {
-        LOG_WARN("AIBlackboard required for  AIPerceptionComponent");
+        LOG_ERROR("AIBlackboard required for AIPerceptionComponent");
+        gameObject->RemoveComponent(this);
+        return;
     }
 }
 

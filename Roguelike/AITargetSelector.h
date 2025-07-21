@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "Component.h"
+#include "GameObject.h"
 #include "IObserver.h"
 namespace Roguelike {
 class AITargetSelector : public MaxrEngine::Component,

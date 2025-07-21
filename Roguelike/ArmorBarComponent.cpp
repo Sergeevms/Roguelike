@@ -12,10 +12,8 @@
 
 namespace Roguelike {
 ArmorBarComponent::ArmorBarComponent(MaxrEngine::GameObject* gameObject,
-                                     MaxrEngine::Vector2Df centerOffset,
-                                     MaxrEngine::Vector2Df barSize,
-                                     float borderSize, sf::Color barColor)
-    : BarComponent(gameObject, centerOffset, barSize, barColor, borderSize) {}
+                                     const BarComponentParameters& parameters)
+    : BarComponent(gameObject, parameters) {}
 void ArmorBarComponent::Update(float deltTime) {}
 void ArmorBarComponent::Render() {
     if (!armorComponent.expired()) {

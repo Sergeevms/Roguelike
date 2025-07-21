@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include "SFML/Graphics/Color.hpp"
+
 #include "AIAttackComponent.h"
 #include "AIBlackboard.h"
 #include "AIChaseTargetComponent.h"
@@ -9,6 +11,8 @@
 #include "ActorComponent.h"
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
+#include "AttackComponent.h"
+#include "BarComponent.h"
 #include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
 #include "HealthComponent.h"
@@ -67,11 +71,15 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
 
     auto health =
         gameObject->AddComponent<HealthComponent>(settings->enemyHealth);
-    auto healthBar = gameObject->AddComponent<HealthBarComponent>(
-        MaxrEngine::Vector2Df(
-            0.0F, Half(settings->PlayerSizeF()) + settings->healthBarDistance),
-        MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
-        settings->barBorder);
+    const BarComponent::BarComponentParameters healthBarParameters{
+        .centerOffset = {0.0F, Half(settings->PlayerSizeF()) +
+                                   settings->healthBarDistance},
+        .barSize =
+            MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
+        .barColor = sf::Color::Red,
+        .borderSize = settings->barBorder};
+    auto healthBar =
+        gameObject->AddComponent<HealthBarComponent>(healthBarParameters);
     healthBar->SetHealthComponent(health);
 
     auto armor = gameObject->AddComponent<ArmorComponent>();
@@ -80,17 +88,24 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
     armor->SetDamageReduction(enemyAramorDamageReduction);
     armor->SetMaxArmorPoints(settings->enemyHealth);
     armor->SetCurrentArmorPoints(settings->enemyHealth);
-    auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
-        MaxrEngine::Vector2Df(
-            0.0F, Half(settings->PlayerSizeF()) + settings->armorBarDistance),
-        MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
-        settings->barBorder);
+    const BarComponent::BarComponentParameters armorBarParameters{
+        .centerOffset = {0.0F, Half(settings->PlayerSizeF()) +
+                                   settings->armorBarDistance},
+        .barSize =
+            MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
+        .barColor = sf::Color::Yellow,
+        .borderSize = settings->barBorder};
+    auto armorBar =
+        gameObject->AddComponent<ArmorBarComponent>(armorBarParameters);
     armorBar->SetArmorComponent(armor);
 
     auto actorComponent = gameObject->AddComponent<ActorComponent>();
     actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
-    auto attackComponent = gameObject->AddComponent<AIAttackComponent>(
-        settings->attackCooldown, settings->attackDamage,
-        settings->attackRange);
+    const AttackComponent::AtackComponentParameters atackParamteres{
+        .cooldown = settings->attackCooldown,
+        .damage = settings->attackDamage,
+        .range = settings->attackRange};
+    auto attackComponent =
+        gameObject->AddComponent<AIAttackComponent>(atackParamteres);
 }
 }  // namespace Roguelike

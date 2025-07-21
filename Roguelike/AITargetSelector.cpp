@@ -33,6 +33,7 @@ void AITargetSelector::UpdateTarget() {
                 gameObject->GetComponent<MaxrEngine::TransformComponent>()
                     ->GetWorldPosition();
             for (auto& actor : *detectedActors) {
+                // TODO : create a list of ActorGroups that should be targets
                 if (actor->GetComponent<ActorComponent>()->GetGroupID() ==
                     ActorsGroups::PlayerGroup) {
                     auto between =

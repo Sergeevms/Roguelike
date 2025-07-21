@@ -60,9 +60,6 @@
     <ClCompile Include="AIChaseTargetComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AIBlackboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AIPerceptionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

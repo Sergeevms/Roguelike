@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "GameObject.h"
+
 namespace Roguelike {
 class ActorComponent : public MaxrEngine::Component {
    public:

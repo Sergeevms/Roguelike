@@ -15,12 +15,9 @@ class ArmorBarComponent
       public MaxrEngine::IObserver,
       public std::enable_shared_from_this<ArmorBarComponent> {
    public:
-    explicit ArmorBarComponent(MaxrEngine::GameObject* gameObject,
-                               MaxrEngine::Vector2Df centerOffset = {0.0F,
-                                                                     0.0F},
-                               MaxrEngine::Vector2Df barSize = {1.0F, 1.0F},
-                               float borderSize = -1.0F,
-                               sf::Color barColor = sf::Color::Yellow);
+    explicit ArmorBarComponent(
+        MaxrEngine::GameObject* gameObject,
+        const BarComponentParameters& parameters = defaultBarParameters);
 
     void Update(float deltTime) override;
     void Render() override;

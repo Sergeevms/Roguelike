@@ -14,18 +14,21 @@
 #include "Vector.h"
 
 namespace Roguelike {
-Roguelike::BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
-                                      MaxrEngine::Vector2Df centerOffset,
-                                      MaxrEngine::Vector2Df barSize,
-                                      sf::Color barColor, float borderSize,
-                                      float maxAmount)
+const BarComponent::BarComponentParameters BarComponent::defaultBarParameters{
+    .centerOffset = {0.0F, 0.0F},
+    .barSize = {1.0F, 0.0F},
+    .barColor = sf::Color::White,
+    .maxAmount = 1.0F,
+    .borderSize = 0.0F};
+BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
+                           const BarComponentParameters& parameters)
     : Component(gameObject),
-      centerOffset(centerOffset),
-      barSize(barSize),
-      barColor(barColor),
-      borderSize(borderSize),
-      maxAmount(maxAmount),
-      currentAmount(maxAmount) {}
+      centerOffset(parameters.centerOffset),
+      barSize(parameters.barSize),
+      barColor(parameters.barColor),
+      maxAmount(parameters.maxAmount),
+      currentAmount(parameters.maxAmount),
+      borderSize(parameters.borderSize) {}
 
 void BarComponent::Render() {
     if (maxAmount <= 0.0F) {

@@ -1,18 +1,23 @@
 #include "PlayerAttackComponent.h"
 
 #include <map>
+#include <memory>
+#include <utility>
 
 #include "ActorRegisterSystem.h"
+#include "AttackComponent.h"
 #include "GameObject.h"
+#include "IObserver.h"
 #include "InputComponent.h"
 #include "Logger.h"
 #include "Settings.h"
 
 namespace Roguelike {
 PlayerAttackComponent::PlayerAttackComponent(
-    MaxrEngine::GameObject* gameObject, float cooldown, float damage,
-    float range, std::weak_ptr<MaxrEngine::GameObject> target)
-    : AttackComponent(gameObject, cooldown, damage, range, target) {}
+    MaxrEngine::GameObject* gameObject,
+    const AtackComponentParameters& atackParameters,
+    std::weak_ptr<MaxrEngine::GameObject> target)
+    : AttackComponent(gameObject, atackParameters, target) {}
 
 void PlayerAttackComponent::Notify(
     std::shared_ptr<MaxrEngine::IObservable> observable) {

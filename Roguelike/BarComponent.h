@@ -2,16 +2,22 @@
 #include "SFML/Graphics/Color.hpp"
 
 #include "Component.h"
+#include "GameObject.h"
 #include "Vector.h"
 
 namespace Roguelike {
 class BarComponent : public MaxrEngine::Component {
    public:
-    explicit BarComponent(MaxrEngine::GameObject* gameObject,
-                          MaxrEngine::Vector2Df centerOffset = {0.0F, 0.0F},
-                          MaxrEngine::Vector2Df barSize = {1.0F, 0.0F},
-                          sf::Color barColor = sf::Color::White,
-                          float borderSize = 0.0F, float maxAmount = 1.0F);
+    struct BarComponentParameters {
+        MaxrEngine::Vector2Df centerOffset;
+        MaxrEngine::Vector2Df barSize;
+        sf::Color barColor;
+        float maxAmount;
+        float borderSize;
+    };
+    explicit BarComponent(
+        MaxrEngine::GameObject* gameObject,
+        const BarComponentParameters& parameters = defaultBarParameters);
 
     void Update(float deltaTime) override = 0;
     void Render() override;
@@ -35,6 +41,7 @@ class BarComponent : public MaxrEngine::Component {
     void SetBorderSize(const float newBorderSize);
 
    protected:
+    const static BarComponentParameters defaultBarParameters;
     MaxrEngine::Vector2Df centerOffset;
     MaxrEngine::Vector2Df barSize;
     sf::Color barColor;

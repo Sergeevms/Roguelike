@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-#include <iostream>
+#include <memory>
 
 namespace Roguelike {
 class ISave {

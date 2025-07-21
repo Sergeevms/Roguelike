@@ -13,8 +13,9 @@ namespace Roguelike {
 AIChaseTargetComponent::AIChaseTargetComponent(
     MaxrEngine::GameObject* gameObject)
     : Component(gameObject) {}
-
+// NOLINTBEGIN(misc-unused-parameters) : overrided virtual method
 void AIChaseTargetComponent::Update(float deltaTime) {
+    // NOLINTEND(misc-unused-parameters) : overrided method
     auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
     if (blackBoard != nullptr) {
         bool isTargetVisible = false;

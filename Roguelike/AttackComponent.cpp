@@ -10,15 +10,20 @@
 #include "Logger.h"
 
 namespace Roguelike {
-AttackComponent::AttackComponent(MaxrEngine::GameObject* gameObject,
-                                 float cooldown, float damage, float range,
-                                 std::weak_ptr<MaxrEngine::GameObject> target)
+const AttackComponent::AtackComponentParameters
+    AttackComponent::defaultParameters = {
+        .cooldown = 0.0F, .damage = 0.0F, .range = 0.0F};
+
+AttackComponent::AttackComponent(
+    MaxrEngine::GameObject* gameObject,
+    const AtackComponentParameters& atackParameters,
+    std::weak_ptr<MaxrEngine::GameObject> target)
     : Component(gameObject),
-      currentCooldown(0.0F),
       target(target),
-      cooldown(cooldown),
-      damage(damage),
-      range(range) {}
+      currentCooldown(0.0F),
+      cooldown(atackParameters.cooldown),
+      damage(atackParameters.damage),
+      range(atackParameters.range) {}
 
 void AttackComponent::Update(float deltaTime) {
     if (currentCooldown > 0.0F) {
