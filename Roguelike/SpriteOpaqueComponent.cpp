@@ -1,7 +1,5 @@
 #include "SpriteOpaqueComponent.h"
 
-#include <memory>
-
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 
@@ -29,16 +27,13 @@ SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject)
 }
 
 SpriteOpaqueComponent::~SpriteOpaqueComponent() {
-    if (&bounds != nullptr) {
-        std::destroy_at(&bounds);
-    }
     PerceptionSystem::Instance()->UnregisterOpaqueComponent(this);
 }
-
+// NOLINTBEGIN(misc-unused-parameters) : overrided method with parameter
 void SpriteOpaqueComponent::Update(float deltaTime) {
     bounds = sprite->getGlobalBounds();
 }
-
+// NOLINTEND(misc-unused-parameters)
 void SpriteOpaqueComponent::Render() {
     OpaqueComponent::Render();
     sf::RectangleShape rectangle(sf::Vector2f(bounds.width, bounds.height));

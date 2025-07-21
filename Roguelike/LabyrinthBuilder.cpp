@@ -104,7 +104,7 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
                 labyrinth->walls.emplace_back(wall);
             } else {
                 if (tileType[i][j] == TileType::Floor) {
-                    int textureId =
+                    const int textureId =
                         usableFloorTextureId[rand() %
                                              usableFloorTextureId.size()];
                     auto floor = std::make_shared<Floor>(

@@ -10,13 +10,16 @@
 #include "Utility.h"
 
 namespace Roguelike {
-ArmorComponent::ArmorComponent(MaxrEngine::GameObject* gameObject,
-                               const float maxArmorPoints,
-                               const float damageReduction)
+const ArmorComponent::ArmorComponentParameters
+    ArmorComponent::defaultParameters = {.maxArmorPoints = 0.0F,
+                                         .damageReduction = 1.0F};
+ArmorComponent::ArmorComponent(
+    MaxrEngine::GameObject* gameObject,
+    const ArmorComponent::ArmorComponentParameters& parameters)
     : Component(gameObject),
-      maxArmorPoints(maxArmorPoints),
-      currentArmorPoints(maxArmorPoints),
-      damageReduction(damageReduction) {}
+      maxArmorPoints(parameters.maxArmorPoints),
+      currentArmorPoints(parameters.maxArmorPoints),
+      damageReduction(parameters.damageReduction) {}
 
 void ArmorComponent::Update(float deltaTime) {}
 

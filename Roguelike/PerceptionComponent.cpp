@@ -1,5 +1,7 @@
 #include "PerceptionComponent.h"
 
+#include <vector>
+
 #include "ActorRegisterSystem.h"
 #include "Component.h"
 #include "Logger.h"

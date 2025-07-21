@@ -1,8 +1,8 @@
 #include "OpaqueComponent.h"
 
+#include "Component.h"
+#include "GameObject.h"
 #include "PerceptionSystem.h"
-#include "RenderSystem.h"
-#include "ResourceSystem.h"
 
 namespace Roguelike {
 OpaqueComponent::OpaqueComponent(MaxrEngine::GameObject* gameObject)

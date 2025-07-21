@@ -1,5 +1,8 @@
 #include "GameObjectContainer.h"
 
+#include <string>
+
+#include "GameObject.h"
 #include "GameWorld.h"
 
 namespace Roguelike {

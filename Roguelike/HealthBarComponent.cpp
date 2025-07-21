@@ -2,13 +2,10 @@
 
 #include <memory>
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "BarComponent.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
 #include "IObserver.h"
-#include "Vector.h"
 
 namespace Roguelike {
 HealthBarComponent::HealthBarComponent(MaxrEngine::GameObject* gameObject,

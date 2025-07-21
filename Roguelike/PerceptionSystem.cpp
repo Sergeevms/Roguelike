@@ -1,10 +1,13 @@
 #include "PerceptionSystem.h"
 
-#include <limits>
+#include <algorithm>
 
 #include "ActorRegisterSystem.h"
+#include "GameObject.h"
 #include "OpaqueComponent.h"
 #include "PerceptionComponent.h"
+#include "Utility.h"
+#include "Vector.h"
 
 namespace Roguelike {
 PerceptionSystem* PerceptionSystem::Instance() {
@@ -13,7 +16,7 @@ PerceptionSystem* PerceptionSystem::Instance() {
 }
 
 void PerceptionSystem::Update() {
-    auto& actors = ActorRegisterSystem::Instance()->GetActorsList();
+    const auto& actors = ActorRegisterSystem::Instance()->GetActorsList();
     for (auto& component : perceptionComponents) {
         component->UpdateDetectedActors(actors);
     }
@@ -21,26 +24,26 @@ void PerceptionSystem::Update() {
 
 bool PerceptionSystem::CanDetect(PerceptionComponent* perceptionComponent,
                                  MaxrEngine::GameObject* target) const {
-    auto& perceptionPosition =
+    const auto& perceptionPosition =
         perceptionComponent->GetTransform()->GetWorldPosition();
-    auto& targetPosition =
+    const auto& targetPosition =
         target->GetComponent<MaxrEngine::TransformComponent>()
             ->GetWorldPosition();
-    MaxrEngine::Vector2Df betweenVector = targetPosition - perceptionPosition;
-    float distance = betweenVector.GetLength();
+    const MaxrEngine::Vector2Df betweenVector =
+        targetPosition - perceptionPosition;
+    const float distance = betweenVector.GetLength();
     if (distance <= perceptionComponent->GetSenseRadius()) {
         return true;
     }
     if (distance > perceptionComponent->GetVisionRadius()) {
         return false;
-    } else {
-        float angle = AngleDegree(perceptionComponent->GetVisionDirection(),
-                                  betweenVector);
-        if (angle > perceptionComponent->GetVisionAngle() / 2.f) {
-            return false;
-        }
-        return LineClear(perceptionPosition, targetPosition);
     }
+    const float angle =
+        AngleDegree(perceptionComponent->GetVisionDirection(), betweenVector);
+    if (angle > Half(perceptionComponent->GetVisionAngle())) {
+        return false;
+    }
+    return LineClear(perceptionPosition, targetPosition);
 }
 
 bool PerceptionSystem::LineClear(const MaxrEngine::Vector2Df& startPoint,
@@ -48,37 +51,39 @@ bool PerceptionSystem::LineClear(const MaxrEngine::Vector2Df& startPoint,
     auto direction = endPoint - startPoint;
     auto directionLength = direction.GetLength();
     direction = MaxrEngine::Normalized(direction);
-    float invDirX = 1.f / direction.x;
-    bool positiveX = invDirX >= 0.0F;
-    float invDirY = 1.f / direction.y;
-    bool positiveY = invDirY >= 0.0F;
+    const float invDirX = 1.0F / direction.x;
+    const bool positiveX = invDirX >= 0.0F;
+    const float invDirY = 1.0F / direction.y;
+    const bool positiveY = invDirY >= 0.0F;
 
-    for (auto& opaque : opaqueComponents) {
+    for (const auto& opaque : opaqueComponents) {
         float tMin = 0.0F;
         float tMax = directionLength;
-        float tMinX =
+        const float tMinX =
             ((positiveX ? opaque->bounds.left
                         : opaque->bounds.left + opaque->bounds.width) -
              startPoint.x) *
             invDirX;
-        float tMaxX = ((positiveX ? opaque->bounds.left + opaque->bounds.width
-                                  : opaque->bounds.left) -
-                       startPoint.x) *
-                      invDirX;
+        const float tMaxX =
+            ((positiveX ? opaque->bounds.left + opaque->bounds.width
+                        : opaque->bounds.left) -
+             startPoint.x) *
+            invDirX;
         if (tMin > tMaxX || tMax < tMinX) {
             continue;
         }
         tMin = std::max(tMin, tMinX);
         tMax = std::min(tMax, tMaxX);
-        float tMinY =
+        const float tMinY =
             ((positiveY ? opaque->bounds.top
                         : opaque->bounds.top + opaque->bounds.height) -
              startPoint.y) *
             invDirY;
-        float tMaxY = ((positiveY ? opaque->bounds.top + opaque->bounds.height
-                                  : opaque->bounds.top) -
-                       startPoint.y) *
-                      invDirY;
+        const float tMaxY =
+            ((positiveY ? opaque->bounds.top + opaque->bounds.height
+                        : opaque->bounds.top) -
+             startPoint.y) *
+            invDirY;
         if (tMin > tMaxY || tMax < tMinY) {
             continue;
         }
@@ -92,9 +97,11 @@ void PerceptionSystem::RegisterOpaqueComponent(OpaqueComponent* component) {
 }
 
 void PerceptionSystem::UnregisterOpaqueComponent(OpaqueComponent* component) {
-    opaqueComponents.erase(std::remove_if(
-        opaqueComponents.begin(), opaqueComponents.end(),
-        [component](OpaqueComponent* comp) { return component == comp; }));
+    opaqueComponents.erase(
+        std::remove_if(
+            opaqueComponents.begin(), opaqueComponents.end(),
+            [component](OpaqueComponent* comp) { return component == comp; }),
+        opaqueComponents.end());
 }
 
 void PerceptionSystem::RegisterPerceptionComponent(
@@ -104,9 +111,12 @@ void PerceptionSystem::RegisterPerceptionComponent(
 
 void PerceptionSystem::UnregisterPerceptionComponent(
     PerceptionComponent* component) {
-    perceptionComponents.erase(std::remove_if(
-        perceptionComponents.begin(), perceptionComponents.end(),
-        [component](PerceptionComponent* comp) { return component == comp; }));
+    perceptionComponents.erase(
+        std::remove_if(perceptionComponents.begin(), perceptionComponents.end(),
+                       [component](PerceptionComponent* comp) {
+                           return component == comp;
+                       }),
+        perceptionComponents.end());
 }
 
 void PerceptionSystem::ClearOpaqueObjects() { opaqueComponents.clear(); }

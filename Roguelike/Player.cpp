@@ -64,8 +64,10 @@ Player::Player() : GameObjectContainer("Player") {
         gameObject->AddComponent<HealthBarComponent>(healthBarParameters);
     healthBar->SetHealthComponent(health);
 
-    auto armor = gameObject->AddComponent<ArmorComponent>(
-        settings->playerHealth, settings->armorDamageReduction);
+    const ArmorComponent::ArmorComponentParameters armorParameters = {
+        .maxArmorPoints = settings->playerHealth,
+        .damageReduction = settings->armorDamageReduction};
+    auto armor = gameObject->AddComponent<ArmorComponent>(armorParameters);
     const BarComponent::BarComponentParameters armorBarParameters{
         .centerOffset = {0.0F, Half(settings->PlayerSizeF()) +
                                    settings->armorBarDistance},

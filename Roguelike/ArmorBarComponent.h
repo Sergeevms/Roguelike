@@ -1,13 +1,10 @@
 #pragma once
 #include <memory>
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "ArmorComponent.h"
 #include "BarComponent.h"
 #include "GameObject.h"
 #include "IObserver.h"
-#include "Vector.h"
 
 namespace Roguelike {
 class ArmorBarComponent

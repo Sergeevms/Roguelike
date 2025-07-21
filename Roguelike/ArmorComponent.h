@@ -5,9 +5,14 @@ namespace Roguelike {
 class ArmorComponent : public MaxrEngine::Component,
                        public MaxrEngine::IObservable {
    public:
+    struct ArmorComponentParameters {
+        float maxArmorPoints;
+        float damageReduction;
+    };
+    static const ArmorComponentParameters defaultParameters;
     explicit ArmorComponent(MaxrEngine::GameObject* gameObject,
-                            const float maxArmorPoints = 0.0F,
-                            const float damageReduction = 1.0F);
+                            const ArmorComponent::ArmorComponentParameters&
+                                parameters = defaultParameters);
 
     void Update(float deltaTime) override;
     void Render() override;
