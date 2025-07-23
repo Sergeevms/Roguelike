@@ -14,7 +14,7 @@ class ArmorBarComponent
    public:
     explicit ArmorBarComponent(
         MaxrEngine::GameObject* gameObject,
-        const BarComponentParameters& parameters = defaultBarParameters);
+        const Parameters& parameters = defaultBarParameters);
 
     void Update(float deltTime) override;
     void Render() override;

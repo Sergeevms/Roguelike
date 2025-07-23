@@ -13,7 +13,8 @@ namespace Roguelike {
 Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex,
            const MaxrEngine::Vector2Di size)
     : GameObjectContainer("Wall") {
-    auto* transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
+    auto* transform =
+        gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(position);
 
     auto spriteRenderer =

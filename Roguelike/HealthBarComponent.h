@@ -17,7 +17,7 @@ class HealthBarComponent
    public:
     explicit HealthBarComponent(
         MaxrEngine::GameObject* gameObject,
-        const BarComponentParameters& parameters = defaultBarParameters);
+        const Parameters& parameters = defaultBarParameters);
 
     void Update(float deltTime) override;
     void Render() override;

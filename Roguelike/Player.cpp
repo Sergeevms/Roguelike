@@ -20,7 +20,6 @@
 #include "Settings.h"
 #include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
-#include "Utility.h"
 
 namespace Roguelike {
 Player::Player() : GameObjectContainer("Player") {
@@ -52,31 +51,16 @@ Player::Player() : GameObjectContainer("Player") {
 
     auto health =
         gameObject->AddComponent<HealthComponent>(settings->playerHealth);
-    const BarComponent::BarComponentParameters healthBarParameters{
-        .centerOffset = {0.0F, Half(settings->PlayerSizeF()) +
-                                   settings->healthBarDistance},
-        .barSize =
-            MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
-        .barColor = sf::Color::Red,
-        .maxAmount = 1.0F,
-        .borderSize = settings->barBorder};
-    auto healthBar =
-        gameObject->AddComponent<HealthBarComponent>(healthBarParameters);
+    auto healthBar = gameObject->AddComponent<HealthBarComponent>(
+        settings->healthBarParameters);
     healthBar->SetHealthComponent(health);
 
     const ArmorComponent::ArmorComponentParameters armorParameters = {
         .maxArmorPoints = settings->playerHealth,
         .damageReduction = settings->armorDamageReduction};
     auto armor = gameObject->AddComponent<ArmorComponent>(armorParameters);
-    const BarComponent::BarComponentParameters armorBarParameters{
-        .centerOffset = {0.0F, Half(settings->PlayerSizeF()) +
-                                   settings->armorBarDistance},
-        .barSize =
-            MaxrEngine::Vector2Df(settings->PlayerSizeF(), settings->barHeight),
-        .barColor = sf::Color::Yellow,
-        .borderSize = settings->barBorder};
-    auto armorBar =
-        gameObject->AddComponent<ArmorBarComponent>(armorBarParameters);
+    auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
+        settings->armorBarParameters);
     armorBar->SetArmorComponent(armor);
     ;
 

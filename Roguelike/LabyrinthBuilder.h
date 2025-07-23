@@ -10,6 +10,11 @@ enum class TileType;
 
 class LabyrinthBuilder {
    public:
+    struct LabyrinthParameters {
+        int randSeed = -1;
+        int width;
+        int heigth;
+    };
     LabyrinthBuilder();
     // Resets current labyrinth and set new size
     void StartBuilding(MaxrEngine::Vector2Di newTileSize);
