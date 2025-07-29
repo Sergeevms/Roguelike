@@ -111,6 +111,9 @@
     <ClCompile Include="ArmorBarComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LabyrinthExit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -210,6 +213,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ArmorBarComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LabyrinthExit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LabyrinthElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

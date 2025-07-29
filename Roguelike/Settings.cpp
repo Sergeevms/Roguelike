@@ -17,7 +17,7 @@ const SettingsStruct Settings::defaultsSettings{
     .texturePath = "Resources\\Textures\\",
     .textureMapsPath = "Resources\\TextureMaps\\",
 
-    .playerSize = 32,
+    .playerSize = 70,
     .playerSpeed = 400.0F,
 
     .enemySpeed = 200.0F,
@@ -30,7 +30,7 @@ const SettingsStruct Settings::defaultsSettings{
     .enemyChaseMaxRadius = 300.0F,
     .enemyChaseMinRadius = 40.0F,
 
-    .mapTileSize = 36,
+    .mapTileSize = 90,
 
     .playerHealth = 200.0F,
     .enemyHealth = 100.0F,
@@ -47,7 +47,12 @@ const SettingsStruct Settings::defaultsSettings{
     .armorBarParameters = {.centerOffset = {0.0F, 41.0F},
                            .barSize = {32.0F, 5.0F},
                            .barColor = sf::Color(255, 255, 0),
-                           .borderSize = -1.0F}};
+                           .borderSize = -1.0F},
+
+    .labyrinthParameters = {.width = 11,
+                            .heigth = 11,
+                            .isAdjustingSizeAndStart = true,
+                            .randSeed = -1}};
 
 MaxrEngine::Vector2Df Settings::ScreenCenter() const {
     return Half(ScreenSize());

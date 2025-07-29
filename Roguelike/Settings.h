@@ -2,6 +2,7 @@
 #include <string>
 
 #include "BarComponent.h"
+#include "LabyrinthBuilder.h"
 #include "PerceptionComponent.h"
 #include "Vector.h"
 
@@ -38,6 +39,8 @@ struct SettingsStruct {
 
     BarComponent::Parameters healthBarParameters;
     BarComponent::Parameters armorBarParameters;
+
+    LabyrinthBuilder::BuildingParameters labyrinthParameters;
 };
 
 /** Singleton class storing current game settings

@@ -11,28 +11,31 @@
 #include "TransformComponent.h"
 
 namespace Roguelike {
-// NOLINTBEGIN(readability-magic-numbers) : temporaly until level creation
-// rework
 void DeveloperLevel::Start() {
     auto* settings = Settings::Instance();
     LabyrinthBuilder labyrinthBuilder;
-    labyrinthBuilder.StartBuilding({30, 30});
-    labyrinthBuilder.AddRect({10, 10}, {20, 20});
-    labyrinthBuilder.AddRect({0, 0}, {20, 20});
-    for (int i = 0; i < 10; ++i) {
-        labyrinthBuilder.SetWall({20, 10 + i});
-    }
+    labyrinthBuilder.Generate(settings->labyrinthParameters);
     labyrinth = labyrinthBuilder.ConstructLabyrinth();
+    auto startCell = labyrinth->GetStartCell();
+    auto labyrinthElements = labyrinth->GetElements();
+    auto* startCellTransform =
+        labyrinthElements[startCell.x][startCell.y]
+            ->GetGameObject()
+            ->GetComponent<MaxrEngine::TransformComponent>();
     player = std::make_shared<Player>();
+    auto* playerTransform =
+        player->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
     backgroundMusic = std::make_shared<BackgroundMusic>();
-    enemy = std::make_shared<Enemy>();
+    playerTransform->SetWorldPosition(startCellTransform->GetWorldPosition());
+    /* enemy = std::make_shared<Enemy>();
 
     auto* enemyTransform =
         enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
-    enemyTransform->SetWorldPosition(
-        {8.0F * settings->PlayerSizeF(), 2.0F * settings->PlayerSizeF()});
+    auto exitCell = labyrinth->GetExit();
+    auto* exitTransform = exitCell->GetGameObject()
+                              ->GetComponent<MaxrEngine::TransformComponent>();
+    enemyTransform->SetWorldPosition(exitTransform->GetWorldPosition());*/
 }
-// NOLINTEND(readability-magic-numbers)
 
 void DeveloperLevel::Restart() {
     Stop();

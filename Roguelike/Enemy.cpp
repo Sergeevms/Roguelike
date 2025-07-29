@@ -1,7 +1,5 @@
 #include "Enemy.h"
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "AIAttackComponent.h"
 #include "AIBlackboard.h"
 #include "AIChaseTargetComponent.h"
@@ -23,7 +21,6 @@
 #include "Settings.h"
 #include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
-#include "Utility.h"
 #include "Vector.h"
 
 namespace Roguelike {

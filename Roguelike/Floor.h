@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObjectContainer.h"
+#include "LabyrinthElement.h"
 #include "Vector.h"
 
 namespace Roguelike {
-class Floor : public GameObjectContainer {
+class Floor : public LabyrinthElement {
    public:
     Floor(MaxrEngine::Vector2Df position, int textureIndex,
           MaxrEngine::Vector2Di size);

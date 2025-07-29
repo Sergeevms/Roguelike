@@ -1,6 +1,6 @@
 #include "Wall.h"
 
-#include "GameObjectContainer.h"
+#include "LabyrinthElement.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "SpriteColliderComponent.h"
@@ -12,7 +12,7 @@
 namespace Roguelike {
 Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex,
            const MaxrEngine::Vector2Di size)
-    : GameObjectContainer("Wall") {
+    : LabyrinthElement("Wall") {
     auto* transform =
         gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(position);

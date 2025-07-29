@@ -1,7 +1,5 @@
 #include "Player.h"
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "ActorComponent.h"
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
