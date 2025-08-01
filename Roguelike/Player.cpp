@@ -65,12 +65,11 @@ Player::Player() : GameObjectContainer("Player") {
     auto actorComponent = gameObject->AddComponent<ActorComponent>();
     actorComponent->SetGroupID(ActorsGroups::PlayerGroup);
 
-    const AttackComponent::AtackComponentParameters atackParamteres{
-        .cooldown = settings->attackCooldown,
-        .damage = settings->attackDamage,
-        .range = settings->attackRange};
-    auto attackComponent =
-        gameObject->AddComponent<PlayerAttackComponent>(atackParamteres);
+    auto attackComponent = gameObject->AddComponent<PlayerAttackComponent>(
+        settings->playerAtackParameters);
     input->AddObserver(attackComponent);
+
+    auto blockComponent = gameObject->AddComponent<BlockComponent>(
+        settings->playerBlockParameters);
 }
 }  // namespace Roguelike

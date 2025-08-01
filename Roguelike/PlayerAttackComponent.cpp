@@ -14,8 +14,7 @@
 
 namespace Roguelike {
 PlayerAttackComponent::PlayerAttackComponent(
-    MaxrEngine::GameObject* gameObject,
-    const AtackComponentParameters& atackParameters,
+    MaxrEngine::GameObject* gameObject, const Parameters& atackParameters,
     std::weak_ptr<MaxrEngine::GameObject> target)
     : AttackComponent(gameObject, atackParameters, target) {}
 
@@ -46,7 +45,7 @@ void PlayerAttackComponent::Notify(
                 LOG_INFO("Closest target out of range");
             } else {
                 target = newTarget->second->weak_from_this();
-                Attack();
+                StartAttack();
             }
         } else {
             LOG_INFO("Attack is on cooldown");

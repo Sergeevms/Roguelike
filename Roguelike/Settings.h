@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 
+#include "AttackComponent.h"
 #include "BarComponent.h"
+#include "BlockComponent.h"
 #include "LabyrinthBuilder.h"
 #include "PerceptionComponent.h"
 #include "Vector.h"
@@ -33,14 +35,16 @@ struct SettingsStruct {
     float playerHealth;
     float enemyHealth;
     float armorDamageReduction;
-    float attackRange;
-    float attackCooldown;
-    float attackDamage;
+
+    AttackComponent::Parameters playerAtackParameters;
+    AttackComponent::Parameters enemyAtackParameters;
 
     BarComponent::Parameters healthBarParameters;
     BarComponent::Parameters armorBarParameters;
 
-    LabyrinthBuilder::BuildingParameters labyrinthParameters;
+    LabyrinthBuilder::Parameters labyrinthParameters;
+
+    BlockComponent::Parameters playerBlockParameters;
 };
 
 /** Singleton class storing current game settings

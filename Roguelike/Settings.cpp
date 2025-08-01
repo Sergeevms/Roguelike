@@ -28,16 +28,22 @@ const SettingsStruct Settings::defaultsSettings{
                                   .visionDirectionY = 0.0F,
                                   .senseRadius = 150.0F},
     .enemyChaseMaxRadius = 300.0F,
-    .enemyChaseMinRadius = 40.0F,
+    .enemyChaseMinRadius = 75.0F,
 
     .mapTileSize = 90,
 
     .playerHealth = 200.0F,
     .enemyHealth = 100.0F,
     .armorDamageReduction = 0.75F,
-    .attackRange = 100.0F,
-    .attackCooldown = 2.0F,
-    .attackDamage = 30.0F,
+
+    .playerAtackParameters = {.startupTime = 0.2F,
+                              .cooldown = 2.0F,
+                              .damage = 30.0F,
+                              .range = 110.0F},
+    .enemyAtackParameters = {.startupTime = 0.2F,
+                             .cooldown = 2.0F,
+                             .damage = 25.0F,
+                             .range = 100.0F},
 
     .healthBarParameters = {.centerOffset = {0.0F, 35.0F},
                             .barSize = {32.0F, 5.0F},
@@ -52,7 +58,12 @@ const SettingsStruct Settings::defaultsSettings{
     .labyrinthParameters = {.width = 11,
                             .heigth = 11,
                             .isAdjustingSizeAndStart = true,
-                            .randSeed = -1}};
+                            .randSeed = -1},
+    .playerBlockParameters = {.damageReduction = 1.0F,
+                              .speedCoefficient = 0.1F,
+                              .centerOffset = {-35.0F, 30.0F},
+                              .iconRadius = 6.0F,
+                              .iconColor = sf::Color(0, 255, 0)}};
 
 MaxrEngine::Vector2Df Settings::ScreenCenter() const {
     return Half(ScreenSize());
