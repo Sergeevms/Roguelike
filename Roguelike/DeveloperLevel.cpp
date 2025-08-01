@@ -27,14 +27,14 @@ void DeveloperLevel::Start() {
         player->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
     backgroundMusic = std::make_shared<BackgroundMusic>();
     playerTransform->SetWorldPosition(startCellTransform->GetWorldPosition());
-    /* enemy = std::make_shared<Enemy>();
+    enemy = std::make_shared<Enemy>();
 
     auto* enemyTransform =
         enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
     auto exitCell = labyrinth->GetExit();
     auto* exitTransform = exitCell->GetGameObject()
                               ->GetComponent<MaxrEngine::TransformComponent>();
-    enemyTransform->SetWorldPosition(exitTransform->GetWorldPosition());*/
+    enemyTransform->SetWorldPosition(exitTransform->GetWorldPosition());
 }
 
 void DeveloperLevel::Restart() {

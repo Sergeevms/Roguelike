@@ -15,4 +15,5 @@ float InputComponent::GetHorizontalAxis() const { return horizontalAxis; }
 
 float InputComponent::GetVerticalAxis() const { return verticalAxis; }
 bool InputComponent::getAttack() const { return attack; }
+bool InputComponent::getBlock() const { return block; }
 }  // namespace MaxrEngine
