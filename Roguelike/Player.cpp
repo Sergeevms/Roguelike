@@ -5,6 +5,7 @@
 #include "ArmorComponent.h"
 #include "AttackComponent.h"
 #include "BarComponent.h"
+#include "BlockComponent.h"
 #include "CameraComponent.h"
 #include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
@@ -53,7 +54,7 @@ Player::Player() : GameObjectContainer("Player") {
         settings->healthBarParameters);
     healthBar->SetHealthComponent(health);
 
-    const ArmorComponent::ArmorComponentParameters armorParameters = {
+    const ArmorComponent::Parameters armorParameters = {
         .maxArmorPoints = settings->playerHealth,
         .damageReduction = settings->armorDamageReduction};
     auto armor = gameObject->AddComponent<ArmorComponent>(armorParameters);

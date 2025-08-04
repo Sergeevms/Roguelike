@@ -35,7 +35,7 @@ class AttackComponent : public MaxrEngine::Component {
     /** Starting attack - initiate Cooldown */
     virtual void StartAttack();
     /** Process dealing damage to target*/
-    virtual void ProcessAtack();
+    virtual void ProcessAttack();
     /** Sets startupTime*/
     void SetStartupTime(const float newStartupTime);
     /** Get current startupTime*/

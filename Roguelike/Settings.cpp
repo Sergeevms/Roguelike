@@ -61,7 +61,7 @@ const SettingsStruct Settings::defaultsSettings{
                             .randSeed = -1},
     .playerBlockParameters = {.damageReduction = 1.0F,
                               .speedCoefficient = 0.1F,
-                              .centerOffset = {-35.0F, 30.0F},
+                              .iconCenterOffset = {-35.0F, 30.0F},
                               .iconRadius = 6.0F,
                               .iconColor = sf::Color(0, 255, 0)}};
 

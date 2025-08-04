@@ -15,7 +15,7 @@ class BlockComponent : public MaxrEngine::Component {
         /** Coefficient in 0.0F - 1.0F range applied to movement */
         float speedCoefficient;
         /** Local blocking icon position*/
-        MaxrEngine::Vector2Df centerOffset;
+        MaxrEngine::Vector2Df iconCenterOffset;
         /** Icon radius*/
         float iconRadius;
         /** Icon color*/
@@ -45,7 +45,7 @@ class BlockComponent : public MaxrEngine::Component {
     /** Is currently blocking*/
     bool isBlocking = false;
     /** Local blocking icon position*/
-    MaxrEngine::Vector2Df centerOffset;
+    MaxrEngine::Vector2Df iconCenterOffset;
     /** Icon radius*/
     float iconRadius;
     /** Icon color*/

@@ -33,8 +33,8 @@ void AttackComponent::Update(float deltaTime) {
     }
     // Interupt attack if is blocking
     if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
-        if (blockComponent->GetIsBlocking()) {
-            LOG_INFO("Attack interupted by block");
+        if (blockComponent->GetIsBlocking() && timeTillAttack > 0.0F) {
+            LOG_INFO("Attack interupted by blocking");
             timeTillAttack = 0.0F;
         }
     }
@@ -43,7 +43,7 @@ void AttackComponent::Update(float deltaTime) {
         timeTillAttack -= deltaTime;
         if (timeTillAttack <= 0.0F) {
             // Atack if startup timer ended
-            ProcessAtack();
+            ProcessAttack();
         }
     }
 }
@@ -62,14 +62,7 @@ void AttackComponent::StartAttack() {
     timeTillAttack = startupTime;
 }
 
-void AttackComponent::ProcessAtack() {
-    // Check if is blocking now - no atack will proceed if yes
-    if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
-        if (blockComponent->GetIsBlocking()) {
-            LOG_INFO("Atack interrupted by blocking");
-            return;
-        }
-    }
+void AttackComponent::ProcessAttack() {
     auto* attacker = gameObject;
     // Check that target still exist
     if (auto targetPtr = target.lock()) {
@@ -85,20 +78,26 @@ void AttackComponent::ProcessAtack() {
             return;
         }
         auto damageLeft = damage;
-        // Apply damage to Block component if it exists
+        // Apply damage to BlockComponent if it exists
         if (auto* block = targetPtr->GetComponent<BlockComponent>()) {
             damageLeft = block->ApplyDamage(damageLeft);
+            if (damageLeft <= 0.0F) {
+                return;
+            }
         }
+        // Apply damage to ArmorComponent if it exists
         if (auto* armor = targetPtr->GetComponent<ArmorComponent>()) {
             damageLeft = armor->ApplyDamage(damageLeft);
             if (!armor->IsNotBroken()) {
                 targetPtr->RemoveComponent(armor);
             }
-        }
-        if (damageLeft > 0.0F) {
-            if (auto* health = targetPtr->GetComponent<HealthComponent>()) {
-                health->DecreaseHealth(damageLeft);
+            if (damageLeft <= 0.0F) {
+                return;
             }
+        }
+        // Apply damage to HealthComponent if it exists
+        if (auto* health = targetPtr->GetComponent<HealthComponent>()) {
+            health->DecreaseHealth(damageLeft);
         }
     } else {
         LOG_WARN("Target not selected or expired");

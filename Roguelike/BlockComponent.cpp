@@ -16,7 +16,7 @@ namespace Roguelike {
 const BlockComponent::Parameters BlockComponent::defaultParameters = {
     .damageReduction = 1.0F,
     .speedCoefficient = 0.9F,
-    .centerOffset = {0.0F, 0.0F},
+    .iconCenterOffset = {0.0F, 0.0F},
     .iconRadius = 4.0F,
     .iconColor = sf::Color::Green};
 
@@ -25,7 +25,7 @@ BlockComponent::BlockComponent(MaxrEngine::GameObject* gameObject,
     : Component(gameObject),
       damageReduction(parameters.damageReduction),
       speedCoefficient(parameters.speedCoefficient),
-      centerOffset(parameters.centerOffset),
+      iconCenterOffset(parameters.iconCenterOffset),
       iconRadius(parameters.iconRadius),
       iconColor(parameters.iconColor) {};
 // NOLINTBEGIN(misc-unused-parameters) : inhereted method with parameter
@@ -63,7 +63,7 @@ void BlockComponent::Render() {
         icon.setFillColor(iconColor);
         auto* transform =
             gameObject->GetComponent<MaxrEngine::TransformComponent>();
-        auto position = transform->GetWorldPosition() + centerOffset;
+        auto position = transform->GetWorldPosition() + iconCenterOffset;
         icon.setPosition(Convert<sf::Vector2f>(position));
         MaxrEngine::RenderSystem::Instance()->Render(icon);
     }
