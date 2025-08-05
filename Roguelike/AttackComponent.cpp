@@ -31,15 +31,15 @@ void AttackComponent::Update(float deltaTime) {
     if (currentCooldown > 0.0F) {
         currentCooldown -= deltaTime;
     }
-    // Interupt attack if is blocking
-    if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
-        if (blockComponent->GetIsBlocking() && timeTillAttack > 0.0F) {
-            LOG_INFO("Attack interupted by blocking");
-            timeTillAttack = 0.0F;
-        }
-    }
     // Update startup timer if started
     if (timeTillAttack > 0.0F) {
+        // Interupt attack if is blocking
+        if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
+            if (blockComponent->GetIsBlocking()) {
+                LOG_INFO("Attack interupted by blocking");
+                timeTillAttack = 0.0F;
+            }
+        }
         timeTillAttack -= deltaTime;
         if (timeTillAttack <= 0.0F) {
             // Atack if startup timer ended

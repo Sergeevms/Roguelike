@@ -6,6 +6,8 @@
 #include "BlockComponent.h"
 #include "LabyrinthBuilder.h"
 #include "PerceptionComponent.h"
+#include "ResourceSystem.h"
+#include "SpriteAnimationComponent.h"
 #include "Vector.h"
 
 namespace Roguelike {
@@ -24,6 +26,9 @@ struct SettingsStruct {
     std::string texturePath;
     std::string textureMapsPath;
 
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
+    MaxrEngine::Animation playerIdleAnimation;
+    MaxrEngine::Animation playerWalkingAnimation;
     int playerSize;
     float playerSpeed;
     float enemySpeed;

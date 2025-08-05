@@ -17,6 +17,19 @@ const SettingsStruct Settings::defaultsSettings{
     .texturePath = "Resources\\Textures\\",
     .textureMapsPath = "Resources\\TextureMaps\\",
 
+    .playerTextureMap = {.name = "PlayerTextures",
+                         .sourcePath = "Resources\\TextureMaps\\Player.png",
+                         .elementPixelSize = {100, 80},
+                         .totalElements = 16,
+                         .isSmooth = true},
+    .playerIdleAnimation = {.textureMapName = "PlayerTextures",
+                            .frameIDs = {0, 1, 2, 3},
+                            .time = 2.0F,
+                            .isRightDirected = false},
+    .playerWalkingAnimation = {.textureMapName = "PlayerTextures",
+                               .frameIDs = {4, 5, 6, 7, 8, 9},
+                               .time = 3.0F,
+                               .isRightDirected = false},
     .playerSize = 70,
     .playerSpeed = 400.0F,
 
@@ -30,7 +43,7 @@ const SettingsStruct Settings::defaultsSettings{
     .enemyChaseMaxRadius = 300.0F,
     .enemyChaseMinRadius = 75.0F,
 
-    .mapTileSize = 90,
+    .mapTileSize = 150,
 
     .playerHealth = 200.0F,
     .enemyHealth = 100.0F,
