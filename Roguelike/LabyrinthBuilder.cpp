@@ -390,17 +390,8 @@ void LabyrinthBuilder::FindAndEmplaceExit() {
     // Try to get most distanced deadEnd
     auto cellNearExit = deadEndsNearEdge.crbegin();
     if (cellNearExit != deadEndsNearEdge.crend()) {
-        // if such deadEnd founded, calculating exitCell on edge of Labyrinth
+        // if such deadEnd founded, set exitCell near the edge of Labyrinth
         auto exitCell = cellNearExit->second;
-        if (exitCell.x == 1) {
-            exitCell.x = 0;
-        } else if (exitCell.x == labyrinthTileWidth - 2) {
-            exitCell.x = labyrinthTileWidth - 1;
-        } else if (exitCell.y == 1) {
-            exitCell.y = 0;
-        } else if (exitCell.y == labyrinthTileHeight - 2) {
-            exitCell.y = labyrinthTileHeight - 1;
-        }
         tileGrid[exitCell.x][exitCell.y] = TileType::Exit;
     } else {
         RandomlyEmplaceExit();
@@ -417,27 +408,28 @@ void LabyrinthBuilder::RandomlyEmplaceExit() {
         // Chosing random edge where to place exitCell
         enum Edge { Up, Right, Down, Left };
         const Edge randomEdge = static_cast<Edge>(std::rand() % 4);
+        // If random cell is Floor, change it to Exit
         switch (randomEdge) {
             case Up:
                 if (tileGrid[xCoordinate][1] == TileType::Floor) {
-                    exitCell = {xCoordinate, 0};
+                    exitCell = {xCoordinate, 1};
                 }
                 break;
             case Down:
                 if (tileGrid[xCoordinate][labyrinthTileHeight - 2] ==
                     TileType::Floor) {
-                    exitCell = {xCoordinate, labyrinthTileHeight - 1};
+                    exitCell = {xCoordinate, labyrinthTileHeight - 2};
                 }
                 break;
             case Left:
                 if (tileGrid[1][yCoordinate] == TileType::Floor) {
-                    exitCell = {0, yCoordinate};
+                    exitCell = {1, yCoordinate};
                 }
                 break;
             case Right:
                 if (tileGrid[labyrinthTileWidth - 2][yCoordinate] ==
                     TileType::Floor) {
-                    exitCell = {labyrinthTileWidth - 1, yCoordinate};
+                    exitCell = {labyrinthTileWidth - 2, yCoordinate};
                 }
                 break;
         }
