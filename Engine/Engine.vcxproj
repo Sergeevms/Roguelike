@@ -233,6 +233,7 @@
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SoundComponent.h" />
+    <ClInclude Include="SpriteAnimationComponent.h" />
     <ClInclude Include="SpriteColliderComponent.h" />
     <ClInclude Include="SpriteRendererComponent.h" />
     <ClInclude Include="TransformComponent.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="ResourceSystem.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
+    <ClCompile Include="SpriteAnimationComponent.cpp" />
     <ClCompile Include="SpriteColliderComponent.cpp" />
     <ClCompile Include="SpriteRendererComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />

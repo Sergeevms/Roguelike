@@ -14,10 +14,12 @@ class InputComponent : public Component, public IObservable {
     ENGINE_API float GetHorizontalAxis() const;
     ENGINE_API float GetVerticalAxis() const;
     ENGINE_API bool getAttack() const;
+    ENGINE_API bool getBlock() const;
 
    protected:
     float horizontalAxis = 0.0F;
     float verticalAxis = 0.0F;
     bool attack = false;
+    bool block = false;
 };
 }  // namespace MaxrEngine

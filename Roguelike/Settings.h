@@ -1,9 +1,13 @@
 #pragma once
 #include <string>
 
+#include "AttackComponent.h"
 #include "BarComponent.h"
+#include "BlockComponent.h"
 #include "LabyrinthBuilder.h"
 #include "PerceptionComponent.h"
+#include "ResourceSystem.h"
+#include "SpriteAnimationComponent.h"
 #include "Vector.h"
 
 namespace Roguelike {
@@ -22,6 +26,9 @@ struct SettingsStruct {
     std::string texturePath;
     std::string textureMapsPath;
 
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
+    MaxrEngine::Animation playerIdleAnimation;
+    MaxrEngine::Animation playerWalkingAnimation;
     int playerSize;
     float playerSpeed;
     float enemySpeed;
@@ -33,14 +40,16 @@ struct SettingsStruct {
     float playerHealth;
     float enemyHealth;
     float armorDamageReduction;
-    float attackRange;
-    float attackCooldown;
-    float attackDamage;
+
+    AttackComponent::Parameters playerAtackParameters;
+    AttackComponent::Parameters enemyAtackParameters;
 
     BarComponent::Parameters healthBarParameters;
     BarComponent::Parameters armorBarParameters;
 
-    LabyrinthBuilder::BuildingParameters labyrinthParameters;
+    LabyrinthBuilder::Parameters labyrinthParameters;
+
+    BlockComponent::Parameters playerBlockParameters;
 };
 
 /** Singleton class storing current game settings

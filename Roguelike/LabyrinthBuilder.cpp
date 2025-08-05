@@ -31,7 +31,7 @@ LabyrinthBuilder::LabyrinthBuilder() {
     exitCell = {-1, -1};
 }
 
-void LabyrinthBuilder::Generate(const BuildingParameters& parameters) {
+void LabyrinthBuilder::Generate(const Parameters& parameters) {
     // Set random seed
     if (parameters.randSeed == -1) {
         std::srand(static_cast<unsigned int>(std::time(nullptr)));

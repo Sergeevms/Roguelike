@@ -10,7 +10,7 @@ class PlayerAttackComponent : public AttackComponent,
    public:
     explicit PlayerAttackComponent(
         MaxrEngine::GameObject* gameObject,
-        const AtackComponentParameters& atackParameters = defaultParameters,
+        const Parameters& atackParameters = defaultParameters,
         std::weak_ptr<MaxrEngine::GameObject> target =
             std::weak_ptr<MaxrEngine::GameObject>());
     virtual void Notify(

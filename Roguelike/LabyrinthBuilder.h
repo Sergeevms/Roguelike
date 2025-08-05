@@ -19,7 +19,7 @@ class LabyrinthBuilder {
     /** Struct describing parameters for labirinth random
      * generation used in Generate
      */
-    struct BuildingParameters {
+    struct Parameters {
         int width;  /**< labyrinth width*/
         int heigth; /**< labyrinth heigth*/
         /** will be size and startPosition adjusted in Generate*/
@@ -56,7 +56,7 @@ class LabyrinthBuilder {
 
     /** Generate new labyrinth grid consisting TileType using DFS algorithm
      *Can be modified after generation using AddRect, SetWall, SetFloor*/
-    void Generate(const BuildingParameters& parameters);
+    void Generate(const Parameters& parameters);
 
     /** Resets current labyrinthGrid and create according newTileSize filled
      * with fillTileType tiles*/

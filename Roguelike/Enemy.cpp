@@ -81,11 +81,7 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
 
     auto actorComponent = gameObject->AddComponent<ActorComponent>();
     actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
-    const AttackComponent::AtackComponentParameters atackParamteres{
-        .cooldown = settings->attackCooldown,
-        .damage = settings->attackDamage,
-        .range = settings->attackRange};
-    auto attackComponent =
-        gameObject->AddComponent<AIAttackComponent>(atackParamteres);
+    auto attackComponent = gameObject->AddComponent<AIAttackComponent>(
+        settings->enemyAtackParameters);
 }
 }  // namespace Roguelike

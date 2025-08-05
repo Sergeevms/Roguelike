@@ -33,8 +33,7 @@ int main() {
         settings->gameName);
 
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
-        "PlayerTextures", settings->textureMapsPath + "Player.png", {48, 63}, 9,
-        false);
+        settings->playerTextureMap);
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         "WallTextures", settings->textureMapsPath + "Wall.png", {16, 16}, 48,
         false);
