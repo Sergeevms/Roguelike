@@ -6,7 +6,7 @@
 #include "Enemy.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
-#include "Player.h"
+#include "PlayerActor.h"
 #include "Settings.h"
 #include "TransformComponent.h"
 
@@ -15,19 +15,16 @@ void DeveloperLevel::Start() {
     auto* settings = Settings::Instance();
     LabyrinthBuilder labyrinthBuilder;
     labyrinthBuilder.Generate(settings->labyrinthParameters);
-    labyrinth = labyrinthBuilder.ConstructLabyrinth();
+    auto labyrinth = labyrinthBuilder.ConstructLabyrinth();
     auto startCell = labyrinth->GetStartCell();
     auto labyrinthElements = labyrinth->GetElements();
     auto* startCellTransform =
         labyrinthElements[startCell.x][startCell.y]
             ->GetGameObject()
             ->GetComponent<MaxrEngine::TransformComponent>();
-    player = std::make_shared<Player>();
-    auto* playerTransform =
-        player->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
-    backgroundMusic = std::make_shared<BackgroundMusic>();
-    playerTransform->SetWorldPosition(startCellTransform->GetWorldPosition());
-    enemy = std::make_shared<Enemy>();
+    auto playerActor = std::make_shared<PlayerActor>(
+        settings->playerParameters, startCellTransform->GetWorldPosition());
+    auto enemy = std::make_shared<Enemy>();
 
     auto* enemyTransform =
         enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
@@ -35,6 +32,8 @@ void DeveloperLevel::Start() {
     auto* exitTransform = exitCell->GetGameObject()
                               ->GetComponent<MaxrEngine::TransformComponent>();
     enemyTransform->SetWorldPosition(exitTransform->GetWorldPosition());
+
+    auto backgroundMusic = std::make_shared<BackgroundMusic>();
 }
 
 void DeveloperLevel::Restart() {

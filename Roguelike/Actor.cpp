@@ -29,20 +29,17 @@ Actor::Actor(const Parameters& parameters,
         gameObject->AddComponent<HealthComponent>(parameters.maxHealthAmount);
     auto healthBar = gameObject->AddComponent<HealthBarComponent>(
         parameters.healthBarParameters);
-    healthComponent->AddObserver(healthBar);
-    // Add movement, Collider and Rigid body components
-    gameObject->AddComponent<MaxrEngine::MovementComponent>(
-        parameters.movementSpeed);
-    gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
-    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+    healthBar->SetHealthComponent(healthComponent);
     // Add sprite component, animation component
     const auto& defaultAnimation =
         parameters.animations.at(parameters.defaultAnimationName);
     const auto* texture =
         MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
             defaultAnimation.textureMapName, 0);
-    gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>(
-        *texture, parameters.spriteSize);
+    auto render =
+        gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
+    render->SetTexture(*texture);
+    render->SetPixelSize(parameters.spriteSize);
     auto animationComponent =
         gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
     for (const auto& animationPair : parameters.animations) {
@@ -50,6 +47,11 @@ Actor::Actor(const Parameters& parameters,
             animationPair.first, animationPair.second,
             animationPair.first == parameters.defaultAnimationName);
     }
+    // Add movement, Collider and Rigid body components
+    gameObject->AddComponent<MaxrEngine::MovementComponent>(
+        parameters.movementSpeed);
+    gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
+    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
     if (parameters.haveBlock) {
         gameObject->AddComponent<BlockComponent>(parameters.blockParameters);
     }
@@ -58,6 +60,7 @@ Actor::Actor(const Parameters& parameters,
             parameters.armorParameters);
         auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
             parameters.armorBarParameters);
+        armorBar->SetArmorComponent(armorComponent);
     }
 }
 }  // namespace Roguelike

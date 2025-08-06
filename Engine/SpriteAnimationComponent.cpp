@@ -47,7 +47,7 @@ void SpriteAnimationComponent::AddAnimation(const std::string& animationName,
                                             const Animation& animation,
                                             bool isDefault) {
     animations[animationName] = animation;
-    if (isDefault || defaultAnimationName == "") {
+    if (isDefault || defaultAnimationName.empty()) {
         defaultAnimationName = animationName;
     }
 }

@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 #include "ArmorComponent.h"
+#include "AttackComponent.h"
 #include "BarComponent.h"
 #include "BlockComponent.h"
 #include "GameObjectContainer.h"
@@ -17,9 +18,7 @@ namespace Roguelike {
  * RigidBodyComponent, SpriteRendererComponent, SpriteAnimationComponent,
  * SpriteColliderComponent, optional BlockComponent, ArmorComponent &
  * ArmorBarComponent. Parameters for components above are passed through
- * Actor::Parameters struct. Specialized components like KeyboardInputComponent,
- * AIInputComponent can be added through overriding AddSpecificComponents which
- * is called at the end of constructor.
+ * Actor::Parameters struct.
  */
 class Actor : public GameObjectContainer {
    public:
@@ -39,10 +38,10 @@ class Actor : public GameObjectContainer {
         bool haveArmor;
         ArmorComponent::Parameters armorParameters;
         BarComponent::Parameters armorBarParameters;
+        AttackComponent::Parameters attackComponentParameters;
         std::string actorName = "Actor";
     };
     explicit Actor(const Parameters& parameters,
                    const MaxrEngine::Vector2Df& position = {0.0F, 0.0F});
-    virtual void AddSpecificComponents() = 0;
 };
 }  // namespace Roguelike

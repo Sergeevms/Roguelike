@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+#include "Actor.h"
 #include "AttackComponent.h"
 #include "BarComponent.h"
 #include "BlockComponent.h"
@@ -27,6 +28,8 @@ struct SettingsStruct {
     std::string textureMapsPath;
 
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
+
+    Actor::Parameters playerParameters;
     MaxrEngine::Animation playerIdleAnimation;
     MaxrEngine::Animation playerWalkingAnimation;
     int playerSize;

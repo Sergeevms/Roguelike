@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics/Color.hpp"
 
+#include "DefaultActorsSettings.h"
 #include "Utility.h"
 #include "Vector.h"
 
@@ -22,6 +23,7 @@ const SettingsStruct Settings::defaultsSettings{
                          .elementPixelSize = {100, 80},
                          .totalElements = 16,
                          .isSmooth = true},
+    .playerParameters = DefaultSettings::defaultPlayerParameters,
     .playerIdleAnimation = {.textureMapName = "PlayerTextures",
                             .frameIDs = {0, 1, 2, 3},
                             .time = 2.0F,

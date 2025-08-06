@@ -191,6 +191,7 @@
     <ClCompile Include="PerceptionComponent.cpp" />
     <ClCompile Include="PerceptionComponentDebugDraw.cpp" />
     <ClCompile Include="PerceptionSystem.cpp" />
+    <ClCompile Include="PlayerActor.cpp" />
     <ClCompile Include="SpriteOpaqueComponent.cpp" />
     <ClCompile Include="AIAttackComponent.cpp" />
     <ClCompile Include="AIChaseTargetComponent.cpp" />
@@ -205,7 +206,6 @@
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="LabyrinthBuilder.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAttackComponent.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -219,6 +219,7 @@
     <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="BarComponent.h" />
     <ClInclude Include="BlockComponent.h" />
+    <ClInclude Include="DefaultActorsSettings.h" />
     <ClInclude Include="HealthBarComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LabyrinthElement.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="PerceptionComponent.h" />
     <ClInclude Include="PerceptionComponentDebugDraw.h" />
     <ClInclude Include="PerceptionSystem.h" />
+    <ClInclude Include="PlayerActor.h" />
     <ClInclude Include="SpriteOpaqueComponent.h" />
     <ClInclude Include="AIAttackComponent.h" />
     <ClInclude Include="AIChaseTargetComponent.h" />
@@ -242,7 +244,6 @@
     <ClInclude Include="ISaveable.h" />
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="LabyrinthBuilder.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAttackComponent.h" />
     <ClInclude Include="Randomizer.h" />
     <ClInclude Include="Settings.h" />
