@@ -19,6 +19,18 @@ SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject)
     transform = gameObject->GetComponent<TransformComponent>();
 }
 
+SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject,
+                                                 const sf::Texture& texture,
+                                                 const Vector2Di& pixelSize)
+    : Component(gameObject) {
+    sprite = new sf::Sprite();
+    scale = {1, -1};
+    sprite->setScale({1, -1});
+    transform = gameObject->GetComponent<TransformComponent>();
+    SetTexture(texture);
+    SetPixelSize(pixelSize);
+}
+
 SpriteRendererComponent::~SpriteRendererComponent() { delete sprite; }
 
 void SpriteRendererComponent::Update(float deltaTime) {}
@@ -43,6 +55,10 @@ void SpriteRendererComponent::SetTexture(const sf::Texture& newTexture) {
     const sf::Vector2f textureCenter = {half * textureSize.x,
                                         half * textureSize.y};
     sprite->setOrigin(textureCenter);
+}
+
+ENGINE_API void SpriteRendererComponent::SetPixelSize(const Vector2Di& size) {
+    SetPixelSize(size.x, size.y);
 }
 
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight) {

@@ -176,6 +176,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="ActorRegisterSystem.cpp" />
     <ClCompile Include="ArmorBarComponent.cpp" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorRegisterSystem.h" />
     <ClInclude Include="ArmorBarComponent.h" />

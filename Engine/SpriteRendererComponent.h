@@ -11,6 +11,9 @@ namespace MaxrEngine {
 class SpriteRendererComponent : public Component {
    public:
     explicit ENGINE_API SpriteRendererComponent(GameObject* gameObject);
+    explicit ENGINE_API SpriteRendererComponent(GameObject* gameObject,
+                                                const sf::Texture& texture,
+                                                const Vector2Di& pixelSize);
     ENGINE_API ~SpriteRendererComponent();
 
     void Update(float deltaTime) override;
@@ -18,6 +21,7 @@ class SpriteRendererComponent : public Component {
 
     ENGINE_API const sf::Sprite* GetSprite() const;
     ENGINE_API void SetTexture(const sf::Texture& newTexture);
+    ENGINE_API void SetPixelSize(const Vector2Di& size);
     ENGINE_API void SetPixelSize(int newWidth, int newHeight);
 
     ENGINE_API void FlipX(bool flip);
