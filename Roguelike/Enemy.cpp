@@ -31,7 +31,8 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
     auto enemyRender =
         gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
     enemyRender->SetTexture(
-        *MaxrEngine::ResourceSystem::Instance()->GetTextureShared("Ball"));
+        *MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
+            settings->enemyTextureMap.name, 0));
     enemyRender->SetPixelSize(settings->playerSize, settings->playerSize);
 
     auto input = gameObject->AddComponent<MaxrEngine::AIInputComponent>();
@@ -84,6 +85,15 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
     actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
     auto attackComponent = gameObject->AddComponent<AIAttackComponent>(
         settings->enemyAtackParameters);
-    gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
+    auto animationComponent =
+        gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
+    animationComponent->AddAnimation("Idle", settings->enemyIdleAnimation,
+                                     false);
+    animationComponent->AddAnimation("Walk", settings->enemyWalkingAnimation,
+                                     false);
+    animationComponent->AddAnimation(
+        "Attack windup", settings->enemyAttackWindupAnimation, false);
+    animationComponent->AddAnimation("Attack", settings->enemyAttackAnimation,
+                                     false);
 }
 }  // namespace Roguelike
