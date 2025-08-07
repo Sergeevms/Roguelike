@@ -235,6 +235,7 @@
     <ClInclude Include="SoundComponent.h" />
     <ClInclude Include="SpriteAnimationComponent.h" />
     <ClInclude Include="SpriteColliderComponent.h" />
+    <ClInclude Include="SpriteDirectionComponent.h" />
     <ClInclude Include="SpriteRendererComponent.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Trigger.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="SoundComponent.cpp" />
     <ClCompile Include="SpriteAnimationComponent.cpp" />
     <ClCompile Include="SpriteColliderComponent.cpp" />
+    <ClCompile Include="SpriteDirectionComponent.cpp" />
     <ClCompile Include="SpriteRendererComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

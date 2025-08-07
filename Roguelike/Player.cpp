@@ -17,7 +17,9 @@
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "Settings.h"
+#include "SpriteAnimationComponent.h"
 #include "SpriteColliderComponent.h"
+#include "SpriteDirectionComponent.h"
 #include "SpriteRendererComponent.h"
 
 namespace Roguelike {
@@ -28,7 +30,8 @@ Player::Player() : GameObjectContainer("Player") {
         gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
     playerRender->SetTexture(
         *MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
-            "PlayerTextures", 0));
+            "PlayerTextures", 0),
+        false);
     playerRender->SetPixelSize(settings->playerSize, settings->playerSize);
 
     auto playerCamera = gameObject->AddComponent<MaxrEngine::CameraComponent>();
@@ -72,5 +75,18 @@ Player::Player() : GameObjectContainer("Player") {
 
     auto blockComponent = gameObject->AddComponent<BlockComponent>(
         settings->playerBlockParameters);
+
+    auto spriteDirection =
+        gameObject->AddComponent<MaxrEngine::SpriteDirectionComponent>();
+    auto animationComponent =
+        gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
+    animationComponent->AddAnimation("Idle", settings->playerIdleAnimation,
+                                     false);
+    animationComponent->AddAnimation("Walk", settings->playerWalkingAnimation,
+                                     false);
+    animationComponent->AddAnimation(
+        "Attack windup", settings->playerAttackWindupAnimation, false);
+    animationComponent->AddAnimation("Attack", settings->playerAttackAnimation,
+                                     false);
 }
 }  // namespace Roguelike

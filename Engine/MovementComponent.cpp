@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "InputComponent.h"
 #include "Logger.h"
+#include "SpriteAnimationComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
@@ -29,8 +30,15 @@ void MovementComponent::Update(float deltaTime) {
 
     acceleration = transform->GetWorldPosition() - previosPosition;
     previosPosition = transform->GetWorldPosition();
+    if (auto* animationComponent =
+            gameObject->GetComponent<SpriteAnimationComponent>()) {
+        if (direction.GetLength() > 0.0F) {
+            animationComponent->StartAnimation("Walk");
+        } else {
+            animationComponent->StartAnimation("Idle");
+        }
+    }
 }
-
 void MovementComponent::Render() {}
 
 void MovementComponent::SetSpeed(float newSpeed) { speed = newSpeed; }

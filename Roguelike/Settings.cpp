@@ -6,7 +6,9 @@
 #include "Vector.h"
 
 namespace Roguelike {
+constexpr float attackWindup = 0.5F;
 const SettingsStruct Settings::defaultsSettings{
+
     .screenWidth = 1280,
     .screenHeight = 720,
     .gameName = L"Roguelike",
@@ -24,12 +26,37 @@ const SettingsStruct Settings::defaultsSettings{
                          .isSmooth = true},
     .playerIdleAnimation = {.textureMapName = "PlayerTextures",
                             .frameIDs = {0, 1, 2, 3},
-                            .time = 2.0F,
-                            .isRightDirected = false},
+                            .time = 0.8F,
+                            .isRightDirected = false,
+                            .priority = 0,
+                            .isLoop = true},
     .playerWalkingAnimation = {.textureMapName = "PlayerTextures",
                                .frameIDs = {4, 5, 6, 7, 8, 9},
-                               .time = 3.0F,
-                               .isRightDirected = false},
+                               .time = 1.0F,
+                               .isRightDirected = false,
+                               .priority = 0,
+                               .isLoop = true},
+    .playerAttackWindupAnimation = {.textureMapName = "PlayerTextures",
+                                    .frameIDs = {10, 11},
+                                    .time = attackWindup,
+                                    .isRightDirected = false,
+                                    .priority = 2},
+    .playerAttackAnimation = {.textureMapName = "PlayerTextures",
+                              .frameIDs = {12, 13, 14},
+                              .time = 2.0F * attackWindup,
+                              .isRightDirected = false,
+                              .priority = 2},
+
+    .playerDeathAnimation = {.textureMapName = "PlayerTextures",
+                             .frameIDs = {14, 15},
+                             .time = 1.0F,
+                             .isRightDirected = false,
+                             .priority = 1},
+    .playerDeadAnimation = {.textureMapName = "PlayerTextures",
+                            .frameIDs = {15},
+                            .time = 3600.0F,
+                            .isRightDirected = false,
+                            .priority = 100},
     .playerSize = 70,
     .playerSpeed = 400.0F,
 
@@ -49,7 +76,7 @@ const SettingsStruct Settings::defaultsSettings{
     .enemyHealth = 100.0F,
     .armorDamageReduction = 0.75F,
 
-    .playerAtackParameters = {.startupTime = 0.2F,
+    .playerAtackParameters = {.startupTime = attackWindup,
                               .cooldown = 2.0F,
                               .damage = 30.0F,
                               .range = 110.0F},

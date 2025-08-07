@@ -25,21 +25,15 @@ void SpriteAnimationComponent::Update(float deltaTime) {
         timer = 0.0F;
         currentFrame++;
         if (currentFrame >= framesTextures.size()) {
-            if (currentAnimationName == nextAnimationName) {
-                // If next animation is same, just reset timers
+            if (isLoop) {
                 ResetAnimation();
             } else {
-                currentAnimationName = nextAnimationName;
+                currentAnimationName = defaultAnimationName;
                 StartCurrentAnimation();
             }
-            nextAnimationName = defaultAnimationName;
         }
         // Update texture in renderer
-        auto renderer = rendererComponent.lock();
-        if (renderer != nullptr && currentFrame < framesTextures.size() &&
-            framesTextures[currentFrame] != nullptr) {
-            renderer->SetTexture(*framesTextures[currentFrame]);
-        }
+        UpdateRendereTrexture();
     }
 }
 void SpriteAnimationComponent::Render() {}
@@ -47,7 +41,7 @@ void SpriteAnimationComponent::AddAnimation(const std::string& animationName,
                                             const Animation& animation,
                                             bool isDefault) {
     animations[animationName] = animation;
-    if (isDefault || defaultAnimationName == "") {
+    if (isDefault || defaultAnimationName.empty()) {
         defaultAnimationName = animationName;
     }
 }
@@ -58,15 +52,20 @@ void SpriteAnimationComponent::RemoveAnimation(
         animations.erase(animationIterator);
     }
 }
-void SpriteAnimationComponent::StartAnimation(
-    const std::string& animationName) {
-    currentAnimationName = animationName;
-    nextAnimationName = defaultAnimationName;
-    StartCurrentAnimation();
-}
-void SpriteAnimationComponent::SetNextAnimation(
-    const std::string& animationName) {
-    nextAnimationName = animationName;
+void MaxrEngine::SpriteAnimationComponent::StartAnimation(
+    const std::string& animationName, const bool ignorePriority) {
+    auto newAnimationFind = animations.find(animationName);
+    if (newAnimationFind != animations.end()) {
+        if (animationName != currentAnimationName) {
+            auto currentAnimationFind = animations.find(currentAnimationName);
+            if (ignorePriority || currentAnimationFind == animations.end() ||
+                currentAnimationFind->second.priority <=
+                    newAnimationFind->second.priority) {
+                currentAnimationName = animationName;
+                StartCurrentAnimation();
+            }
+        }
+    }
 }
 void SpriteAnimationComponent::StartCurrentAnimation() {
     // Check if have animation named in currentAnimationName
@@ -81,9 +80,11 @@ void SpriteAnimationComponent::StartCurrentAnimation() {
                 ResourceSystem::Instance()->GetTextureMapElementShared(
                     animation.textureMapName, frameID));
         }
+        isRigthDirected = animation.isRightDirected;
         // Update time per frame
         timePerFrame =
             animation.time / static_cast<float>(animation.frameIDs.size());
+        isLoop = animation.isLoop;
         // Reset currentFrame and timer
         ResetAnimation();
     }
@@ -91,5 +92,13 @@ void SpriteAnimationComponent::StartCurrentAnimation() {
 void SpriteAnimationComponent::ResetAnimation() {
     timer = 0.0F;
     currentFrame = 0;
+    UpdateRendereTrexture();
+}
+void SpriteAnimationComponent::UpdateRendereTrexture() const {
+    auto renderer = rendererComponent.lock();
+    if (renderer != nullptr && currentFrame < framesTextures.size() &&
+        framesTextures[currentFrame] != nullptr) {
+        renderer->SetTexture(*framesTextures[currentFrame], isRigthDirected);
+    }
 }
 }  // namespace MaxrEngine

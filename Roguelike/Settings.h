@@ -29,6 +29,10 @@ struct SettingsStruct {
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
     MaxrEngine::Animation playerIdleAnimation;
     MaxrEngine::Animation playerWalkingAnimation;
+    MaxrEngine::Animation playerAttackWindupAnimation;
+    MaxrEngine::Animation playerAttackAnimation;
+    MaxrEngine::Animation playerDeathAnimation;
+    MaxrEngine::Animation playerDeadAnimation;
     int playerSize;
     float playerSpeed;
     float enemySpeed;

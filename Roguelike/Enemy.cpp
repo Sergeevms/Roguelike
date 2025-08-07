@@ -19,6 +19,7 @@
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "Settings.h"
+#include "SpriteAnimationComponent.h"
 #include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
 #include "Vector.h"
@@ -83,5 +84,6 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
     actorComponent->SetGroupID(ActorsGroups::EnemyGroup);
     auto attackComponent = gameObject->AddComponent<AIAttackComponent>(
         settings->enemyAtackParameters);
+    gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
 }
 }  // namespace Roguelike
