@@ -3,19 +3,18 @@ name: Build Roguelike solution
 on:
   push:
     branches: [main, HM15]
-  pull_requests:
+  pull_request:
     branches: [main, HM15]
 
 env:
   SOLUTION_FILE_PATH: .
-  BUILD_CONFIGURATIONS: [Debug, Release]
 
 jobs:
   exapmle_matrix:
     runs-on: windows-latest
     strategy:
       matrix:
-        BUILD_CONFIGURATION: ${{env.BUILD_CONFIGURATIONS}}
+        BUILD_CONFIGURATION: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v4
