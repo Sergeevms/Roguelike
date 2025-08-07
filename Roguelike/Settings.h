@@ -1,21 +1,21 @@
 #pragma once
 #include <string>
 
+#include "Actor.h"
+#include "AttackComponent.h"
+#include "BarComponent.h"
+#include "BlockComponent.h"
+#include "LabyrinthBuilder.h"
+#include "PerceptionComponent.h"
+#include "ResourceSystem.h"
+#include "SpriteAnimationComponent.h"
 #include "Vector.h"
 
 namespace Roguelike {
-class Settings {
-   public:
-    static Settings* Instance() {
-        static Settings world;
-        return &world;
-    };
-    MaxrEngine::Vector2Df ScreenCenter() const;
-    MaxrEngine::Vector2Df ScreenSize() const;
-    float PlayerSizeF() const;
-
-    // General settings
-
+/** Struct storing game settings
+ */
+struct SettingsStruct {
+    // Window & camera parameters
     int screenWidth;
     int screenHeight;
     std::wstring gameName;
@@ -27,12 +27,15 @@ class Settings {
     std::string texturePath;
     std::string textureMapsPath;
 
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
+
+    Actor::Parameters playerParameters;
+    MaxrEngine::Animation playerIdleAnimation;
+    MaxrEngine::Animation playerWalkingAnimation;
     int playerSize;
     float playerSpeed;
     float enemySpeed;
-    float enemyVisionRadius;
-    float enemyVisionAngle;
-    float enemySenseRadius;
+    PerceptionComponent::Parameters enemyPerceptionParameters;
     float enemyChaseMaxRadius;
     float enemyChaseMinRadius;
     int mapTileSize;
@@ -40,21 +43,41 @@ class Settings {
     float playerHealth;
     float enemyHealth;
     float armorDamageReduction;
-    float attackRange;
-    float attackCooldown;
-    float attackDamage;
 
-    float healthBarDistance;
-    float armorBarDistance;
-    float barHeight;
-    float barBorder;
+    AttackComponent::Parameters playerAtackParameters;
+    AttackComponent::Parameters enemyAtackParameters;
+
+    BarComponent::Parameters healthBarParameters;
+    BarComponent::Parameters armorBarParameters;
+
+    LabyrinthBuilder::Parameters labyrinthParameters;
+
+    BlockComponent::Parameters playerBlockParameters;
+};
+
+/** Singleton class storing current game settings
+ *   TODO(MaxrRusich) : serialization
+ */
+class Settings : public SettingsStruct {
+   public:
+    static Settings* Instance() {
+        static Settings world;
+        return &world;
+    };
+    MaxrEngine::Vector2Df ScreenCenter() const;
+    MaxrEngine::Vector2Df ScreenSize() const;
+    float PlayerSizeF() const;
 
    private:
-    Settings();
+    static const SettingsStruct defaultsSettings;
+    Settings()
+        : SettingsStruct(defaultsSettings) {
+
+          };
     ~Settings() = default;
     Settings(const Settings&) = delete;
     Settings operator=(const Settings&) = delete;
 };
-
+/** Enum to define Actors group*/
 enum ActorsGroups { PlayerGroup, EnemyGroup };
 };  // namespace Roguelike

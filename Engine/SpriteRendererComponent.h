@@ -18,6 +18,7 @@ class SpriteRendererComponent : public Component {
 
     ENGINE_API const sf::Sprite* GetSprite() const;
     ENGINE_API void SetTexture(const sf::Texture& newTexture);
+    ENGINE_API void SetPixelSize(const Vector2Di& size);
     ENGINE_API void SetPixelSize(int newWidth, int newHeight);
 
     ENGINE_API void FlipX(bool flip);

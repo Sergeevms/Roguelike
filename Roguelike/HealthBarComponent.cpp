@@ -9,7 +9,7 @@
 
 namespace Roguelike {
 HealthBarComponent::HealthBarComponent(MaxrEngine::GameObject* gameObject,
-                                       const BarComponentParameters& parameters)
+                                       const Parameters& parameters)
     : BarComponent(gameObject, parameters) {}
 
 void HealthBarComponent::Update(float deltTime) {}

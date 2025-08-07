@@ -8,8 +8,7 @@
 
 namespace Roguelike {
 AIAttackComponent::AIAttackComponent(
-    MaxrEngine::GameObject* gameObject,
-    const AtackComponentParameters& atackParameters,
+    MaxrEngine::GameObject* gameObject, const Parameters& atackParameters,
     std::weak_ptr<MaxrEngine::GameObject> target)
     : AttackComponent(gameObject, atackParameters, target) {}
 
@@ -28,7 +27,7 @@ void AIAttackComponent::Update(float deltaTime) {
                      ->GetWorldPosition())
                     .GetLength();
             if (distance <= range) {
-                Attack();
+                StartAttack();
             }
         }
     }

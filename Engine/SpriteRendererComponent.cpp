@@ -45,6 +45,10 @@ void SpriteRendererComponent::SetTexture(const sf::Texture& newTexture) {
     sprite->setOrigin(textureCenter);
 }
 
+ENGINE_API void SpriteRendererComponent::SetPixelSize(const Vector2Di& size) {
+    SetPixelSize(size.x, size.y);
+}
+
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight) {
     auto originalSize = Convert<sf::Vector2f>(sprite->getTexture()->getSize());
     scale = {static_cast<float>(newWidth) / originalSize.x,

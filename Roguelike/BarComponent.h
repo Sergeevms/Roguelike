@@ -8,16 +8,15 @@
 namespace Roguelike {
 class BarComponent : public MaxrEngine::Component {
    public:
-    struct BarComponentParameters {
+    struct Parameters {
         MaxrEngine::Vector2Df centerOffset;
         MaxrEngine::Vector2Df barSize;
         sf::Color barColor;
-        float maxAmount;
         float borderSize;
+        float maxAmount = 0.0F;
     };
-    explicit BarComponent(
-        MaxrEngine::GameObject* gameObject,
-        const BarComponentParameters& parameters = defaultBarParameters);
+    explicit BarComponent(MaxrEngine::GameObject* gameObject,
+                          const Parameters& parameters = defaultBarParameters);
 
     void Update(float deltaTime) override = 0;
     void Render() override;
@@ -41,7 +40,7 @@ class BarComponent : public MaxrEngine::Component {
     void SetBorderSize(const float newBorderSize);
 
    protected:
-    const static BarComponentParameters defaultBarParameters;
+    const static Parameters defaultBarParameters;
     MaxrEngine::Vector2Df centerOffset;
     MaxrEngine::Vector2Df barSize;
     sf::Color barColor;

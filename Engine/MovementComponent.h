@@ -9,6 +9,7 @@ namespace MaxrEngine {
 class MovementComponent : public Component {
    public:
     explicit ENGINE_API MovementComponent(GameObject* gameObject);
+    ENGINE_API MovementComponent(GameObject* gameObject, const float speed);
 
     void Update(float deltaTime) override;
     void Render() override;
@@ -18,7 +19,6 @@ class MovementComponent : public Component {
     ENGINE_API float GetAccelerationSquared() const;
 
    private:
-    InputComponent* input;
     TransformComponent* transform;
 
     float speed = 0.0F;

@@ -14,8 +14,7 @@
 
 namespace Roguelike {
 PlayerAttackComponent::PlayerAttackComponent(
-    MaxrEngine::GameObject* gameObject,
-    const AtackComponentParameters& atackParameters,
+    MaxrEngine::GameObject* gameObject, const Parameters& atackParameters,
     std::weak_ptr<MaxrEngine::GameObject> target)
     : AttackComponent(gameObject, atackParameters, target) {}
 
@@ -23,7 +22,7 @@ void PlayerAttackComponent::Notify(
     std::shared_ptr<MaxrEngine::IObservable> observable) {
     if (auto input =
             std::dynamic_pointer_cast<MaxrEngine::InputComponent>(observable)) {
-        if (currentCooldown <= 0.0F) {
+        if (currentCooldown <= 0.0F && input->getAttack()) {
             currentCooldown = cooldown;
             auto position =
                 gameObject->GetComponent<MaxrEngine::TransformComponent>()
@@ -42,12 +41,12 @@ void PlayerAttackComponent::Notify(
                     possibleTarget));
             }
             auto newTarget = targets.begin();
-            if (newTarget->first > range) {
-                LOG_INFO("Closest target out of range");
-            } else {
+            if (newTarget != targets.end()) {
                 target = newTarget->second->weak_from_this();
-                Attack();
+            } else {
+                target = std::weak_ptr<MaxrEngine::GameObject>();
             }
+            StartAttack();
         } else {
             LOG_INFO("Attack is on cooldown");
         }

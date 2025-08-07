@@ -14,6 +14,13 @@
 namespace MaxrEngine {
 class ResourceSystem {
    public:
+    struct TextureMapLoadingParameters {
+        std::string name;
+        std::string sourcePath;
+        sf::Vector2i elementPixelSize;
+        int totalElements;
+        bool isSmooth = true;
+    };
     ENGINE_API static ResourceSystem* Instance();
 
     ENGINE_API void LoadTexture(const std::string& name, std::string sourcePath,
@@ -27,6 +34,8 @@ class ResourceSystem {
                                    std::string sourcePath,
                                    sf::Vector2i elementPixelSize,
                                    int totalElements, bool isSmooth = true);
+    ENGINE_API void LoadTextureMap(
+        const TextureMapLoadingParameters& parameters);
     ENGINE_API const sf::Texture* GetTextureMapElementShared(
         const std::string& name, int elementIndex) const;
     ENGINE_API sf::Texture* GetTextureMapElementCopy(const std::string& name,

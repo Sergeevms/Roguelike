@@ -14,14 +14,15 @@
 #include "Vector.h"
 
 namespace Roguelike {
-const BarComponent::BarComponentParameters BarComponent::defaultBarParameters{
+const BarComponent::Parameters BarComponent::defaultBarParameters{
     .centerOffset = {0.0F, 0.0F},
     .barSize = {1.0F, 0.0F},
     .barColor = sf::Color::White,
-    .maxAmount = 1.0F,
-    .borderSize = 0.0F};
+    .borderSize = 0.0F,
+    .maxAmount = 1.0F};
+
 BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
-                           const BarComponentParameters& parameters)
+                           const Parameters& parameters)
     : Component(gameObject),
       centerOffset(parameters.centerOffset),
       barSize(parameters.barSize),

@@ -9,7 +9,7 @@
 
 namespace Roguelike {
 ArmorBarComponent::ArmorBarComponent(MaxrEngine::GameObject* gameObject,
-                                     const BarComponentParameters& parameters)
+                                     const Parameters& parameters)
     : BarComponent(gameObject, parameters) {}
 void ArmorBarComponent::Update(float deltTime) {}
 void ArmorBarComponent::Render() {

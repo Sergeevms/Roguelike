@@ -1,0 +1,31 @@
+name: Build Roguelike solution
+
+on:
+  push:
+    branches: [main, HM15]
+  pull_request:
+    branches: [main, HM15]
+
+env:
+  SOLUTION_FILE_PATH: .
+
+jobs:
+  exapmle_matrix:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        BUILD_CONFIGURATION: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+      - name: Build
+        working-directory: ${{env.GIRHUB_WORKSPACE}}
+        run: msbuild Roguelike.sln /p:Configuration=${{matrix.BUILD_CONFIGURATION}} /p:Platform=x64

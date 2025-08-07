@@ -6,7 +6,7 @@
 #include "TransformComponent.h"
 #include "Vector.h"
 namespace Roguelike {
-
+// Base component working with PerceptionSystem
 class PerceptionComponent : public MaxrEngine::Component,
                             public MaxrEngine::IObservable {
    public:

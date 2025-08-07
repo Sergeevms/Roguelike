@@ -28,7 +28,7 @@ void PhysicsSystem::Update() {
         auto* body =
             colliders[i]->GetGameObject()->GetComponent<RigidBodyComponent>();
 
-        if (body->GetKinematic()) {
+        if (body != nullptr && body->GetKinematic()) {
             continue;
         }
 

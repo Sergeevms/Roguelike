@@ -1,6 +1,6 @@
 #ifdef CREATE_CONSOLE_FOR_ENGINE_PRINT_OUTPUT
 #define NOMINMAX
-#include <Windows.h>
+#include <Windows.h>  //NOLINT(misc-include-cleaner) : system specific header
 #include <stdio.h>
 #endif  // CREATE_CONSOLE_FOR_ENGINE_PRINT_OUTPUT
 
@@ -19,7 +19,7 @@ int main() {
     MaxrEngine::LoggerRegister::GetInstance().RegisterLogger("Global",
                                                              globalLogger);
 #ifdef CREATE_CONSOLE_FOR_ENGINE_PRINT_OUTPUT
-    AllocConsole();
+    AllocConsole();  // NOLINT(misc-include-cleaner)
     FILE* console;
     freopen_s(&console, "CONOUT$", "w", stdout);
     globalLogger->AddSink(std::make_shared<MaxrEngine::ConsoleSink>());
@@ -33,8 +33,7 @@ int main() {
         settings->gameName);
 
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
-        "PlayerTextures", settings->textureMapsPath + "Player.png", {48, 63}, 9,
-        false);
+        settings->playerTextureMap);
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         "WallTextures", settings->textureMapsPath + "Wall.png", {16, 16}, 48,
         false);

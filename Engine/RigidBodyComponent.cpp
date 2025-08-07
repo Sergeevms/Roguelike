@@ -9,8 +9,9 @@
 #include "TransformComponent.h"
 
 namespace MaxrEngine {
-RigidBodyComponent::RigidBodyComponent(GameObject* gameObject)
-    : Component(gameObject) {
+RigidBodyComponent::RigidBodyComponent(GameObject* gameObject,
+                                       const bool isKinematic)
+    : Component(gameObject), isKinematic(isKinematic) {
     transform = gameObject->GetComponent<TransformComponent>();
 }
 

@@ -18,6 +18,7 @@ bool InRange(T value, T minValue, T maxValue) {
 
 template <typename T>
 T Half(const T& value) {
-    return 0.5F * value;
+    constexpr float half = 0.5F;
+    return half * value;
 }
 }  // namespace Roguelike

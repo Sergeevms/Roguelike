@@ -8,7 +8,7 @@ class AIAttackComponent : public AttackComponent {
    public:
     explicit AIAttackComponent(
         MaxrEngine::GameObject* gameObject,
-        const AtackComponentParameters& atackParameters = defaultParameters,
+        const Parameters& atackParameters = defaultParameters,
         std::weak_ptr<MaxrEngine::GameObject> target =
             std::weak_ptr<MaxrEngine::GameObject>());
     void Update(float deltaTime) override;

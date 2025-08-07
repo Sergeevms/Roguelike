@@ -1,6 +1,6 @@
 #include "Floor.h"
 
-#include "GameObjectContainer.h"
+#include "LabyrinthElement.h"
 #include "ResourceSystem.h"
 #include "SpriteRendererComponent.h"
 #include "TransformComponent.h"
@@ -9,7 +9,7 @@
 namespace Roguelike {
 Floor::Floor(MaxrEngine::Vector2Df position, int textureIndex,
              MaxrEngine::Vector2Di size)
-    : GameObjectContainer("Floor") {
+    : LabyrinthElement("Floor") {
     auto* transform =
         gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(position);

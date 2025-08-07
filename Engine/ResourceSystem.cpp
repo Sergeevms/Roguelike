@@ -135,6 +135,13 @@ void ResourceSystem::LoadTextureMap(const std::string& name,
     }
 }
 
+void ResourceSystem::LoadTextureMap(
+    const TextureMapLoadingParameters& parameters) {
+    LoadTextureMap(parameters.name, parameters.sourcePath,
+                   parameters.elementPixelSize, parameters.totalElements,
+                   parameters.isSmooth);
+}
+
 const sf::Texture* ResourceSystem::GetTextureMapElementShared(
     const std::string& name, int elementIndex) const {
     auto textureMap = textureMaps.find(name);
