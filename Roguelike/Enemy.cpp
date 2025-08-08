@@ -21,6 +21,7 @@
 #include "Settings.h"
 #include "SpriteAnimationComponent.h"
 #include "SpriteColliderComponent.h"
+#include "SpriteDirectionComponent.h"
 #include "SpriteRendererComponent.h"
 #include "Vector.h"
 
@@ -95,5 +96,6 @@ Enemy::Enemy() : GameObjectContainer("Enemy") {
         "Attack windup", settings->enemyAttackWindupAnimation, false);
     animationComponent->AddAnimation("Attack", settings->enemyAttackAnimation,
                                      false);
+    gameObject->AddComponent<MaxrEngine::SpriteDirectionComponent>();
 }
 }  // namespace Roguelike
