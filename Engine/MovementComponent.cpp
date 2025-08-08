@@ -5,7 +5,6 @@
 #include "Component.h"
 #include "GameObject.h"
 #include "InputComponent.h"
-#include "Logger.h"
 #include "SpriteAnimationComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
@@ -13,29 +12,30 @@
 namespace MaxrEngine {
 MovementComponent::MovementComponent(GameObject* gameObject)
     : Component(gameObject) {
-    input = gameObject->GetComponent<InputComponent>();
     transform = gameObject->GetComponent<TransformComponent>();
+}
 
-    if (input == nullptr) {
-        LOG_ERROR("Need InputComponent for movement.");
-        gameObject->RemoveComponent(this);
-    }
+MovementComponent::MovementComponent(GameObject* gameObject, const float speed)
+    : Component(gameObject) {
+    transform = gameObject->GetComponent<TransformComponent>();
+    MovementComponent::speed = speed;
 }
 
 void MovementComponent::Update(float deltaTime) {
-    const Vector2Df direction =
-        Vector2Df{input->GetHorizontalAxis(), input->GetVerticalAxis()};
+    if (auto* input = gameObject->GetComponent<InputComponent>()) {
+        const Vector2Df direction =
+            Vector2Df{input->GetHorizontalAxis(), input->GetVerticalAxis()};
 
-    transform->MoveBy(speed * deltaTime * direction);
-
-    acceleration = transform->GetWorldPosition() - previosPosition;
-    previosPosition = transform->GetWorldPosition();
-    if (auto* animationComponent =
-            gameObject->GetComponent<SpriteAnimationComponent>()) {
-        if (direction.GetLength() > 0.0F) {
-            animationComponent->StartAnimation("Walk");
-        } else {
-            animationComponent->StartAnimation("Idle");
+        transform->MoveBy(speed * deltaTime * direction);
+        acceleration = transform->GetWorldPosition() - previosPosition;
+        previosPosition = transform->GetWorldPosition();
+        if (auto* animationComponent =
+                gameObject->GetComponent<SpriteAnimationComponent>()) {
+            if (direction.GetLength() > 0.0F) {
+                animationComponent->StartAnimation("Walk");
+            } else {
+                animationComponent->StartAnimation("Idle");
+            }
         }
     }
 }

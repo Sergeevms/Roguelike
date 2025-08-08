@@ -47,6 +47,10 @@ void MaxrEngine::SpriteRendererComponent::SetTexture(
     isTextureRightDirected = newIsTextureRightDirected;
 }
 
+void SpriteRendererComponent::SetPixelSize(const Vector2Di& size) {
+    SetPixelSize(size.x, size.y);
+}
+
 void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight) {
     auto originalSize = Convert<sf::Vector2f>(sprite->getTexture()->getSize());
     scale = {static_cast<float>(newWidth) / originalSize.x,

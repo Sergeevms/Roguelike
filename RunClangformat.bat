@@ -1,6 +1,6 @@
 @echo off
 ::Batch file to run clangformat on project
-::Requries installed C++ Clang tools in Visual studio 2022 to work
+::Requries installed C++ Clang tools in Visual studio community 2022 to work
 
 ::Step 1 : set projects folders and file types
 set PROJECT_FOLDERS=Roguelike Engine EngineTest

@@ -30,9 +30,6 @@
     <ClCompile Include="IDelayedAction.cpp">
       <Filter>Source Files\Interfaces and abstract classes</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DeveloperLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -117,6 +114,12 @@
     <ClCompile Include="BlockComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -130,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="ISaveable.h">
       <Filter>Header Files\Interfaces and abstract classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DeveloperLevel.h">
       <Filter>Header Files</Filter>
@@ -225,6 +225,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BlockComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultActorsSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

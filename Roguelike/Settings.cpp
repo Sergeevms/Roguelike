@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics/Color.hpp"
 
+#include "DefaultActorsSettings.h"
 #include "Utility.h"
 #include "Vector.h"
 
@@ -24,39 +25,7 @@ const SettingsStruct Settings::defaultsSettings{
                          .elementPixelSize = {100, 80},
                          .totalElements = 16,
                          .isSmooth = true},
-    .playerIdleAnimation = {.textureMapName = "PlayerTextures",
-                            .frameIDs = {0, 1, 2, 3},
-                            .time = 0.8F,
-                            .isRightDirected = false,
-                            .priority = 0,
-                            .isLoop = true},
-    .playerWalkingAnimation = {.textureMapName = "PlayerTextures",
-                               .frameIDs = {4, 5, 6, 7, 8, 9},
-                               .time = 1.0F,
-                               .isRightDirected = false,
-                               .priority = 0,
-                               .isLoop = true},
-    .playerAttackWindupAnimation = {.textureMapName = "PlayerTextures",
-                                    .frameIDs = {10, 11},
-                                    .time = attackWindup,
-                                    .isRightDirected = false,
-                                    .priority = 2},
-    .playerAttackAnimation = {.textureMapName = "PlayerTextures",
-                              .frameIDs = {12, 13, 14},
-                              .time = 2.0F * attackWindup,
-                              .isRightDirected = false,
-                              .priority = 2},
-
-    .playerDeathAnimation = {.textureMapName = "PlayerTextures",
-                             .frameIDs = {14, 15},
-                             .time = 1.0F,
-                             .isRightDirected = false,
-                             .priority = 1},
-    .playerDeadAnimation = {.textureMapName = "PlayerTextures",
-                            .frameIDs = {15},
-                            .time = 3600.0F,
-                            .isRightDirected = false,
-                            .priority = 100},
+    .playerParameters = DefaultSettings::defaultPlayerParameters,
     .enemyTextureMap = {.name = "EnemyTextures",
                         .sourcePath = "Resources\\TextureMaps\\Enemy.png",
                         .elementPixelSize = {96, 96},
@@ -95,7 +64,7 @@ const SettingsStruct Settings::defaultsSettings{
                         .totalElements = 49,
                         .isSmooth = false},
     .playerSize = 70,
-    .playerSpeed = 400.0F,
+    //.playerSpeed = 400.0F,
 
     .enemySpeed = 200.0F,
 
@@ -109,7 +78,7 @@ const SettingsStruct Settings::defaultsSettings{
 
     .mapTileSize = 150,
 
-    .playerHealth = 200.0F,
+    //.playerHealth = 200.0F,
     .enemyHealth = 100.0F,
     .armorDamageReduction = 0.75F,
 
