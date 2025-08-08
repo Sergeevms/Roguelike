@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "HealthComponent.h"
 #include "Logger.h"
+#include "SpriteAnimationComponent.h"
 
 namespace Roguelike {
 const AttackComponent::Parameters AttackComponent::defaultParameters = {
@@ -34,16 +35,25 @@ void AttackComponent::Update(float deltaTime) {
     // Update startup timer if started
     if (timeTillAttack > 0.0F) {
         // Interupt attack if is blocking
+        bool interupted = false;
         if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
             if (blockComponent->GetIsBlocking()) {
                 LOG_INFO("Attack interupted by blocking");
+                if (auto* spriteAnimation =
+                        gameObject->GetComponent<
+                            MaxrEngine::SpriteAnimationComponent>()) {
+                    spriteAnimation->StartAnimation("Idle", true);
+                }
                 timeTillAttack = 0.0F;
+                interupted = true;
             }
         }
-        timeTillAttack -= deltaTime;
-        if (timeTillAttack <= 0.0F) {
-            // Atack if startup timer ended
-            ProcessAttack();
+        if (!interupted) {
+            timeTillAttack -= deltaTime;
+            if (timeTillAttack <= 0.0F) {
+                // Atack if startup timer ended
+                ProcessAttack();
+            }
         }
     }
 }
@@ -58,11 +68,19 @@ void AttackComponent::StartAttack() {
             return;
         }
     }
+    if (auto* spriteAnimation =
+            gameObject->GetComponent<MaxrEngine::SpriteAnimationComponent>()) {
+        spriteAnimation->StartAnimation("Attack windup");
+    }
     currentCooldown = cooldown;
     timeTillAttack = startupTime;
 }
 
 void AttackComponent::ProcessAttack() {
+    if (auto* spriteAnimation =
+            gameObject->GetComponent<MaxrEngine::SpriteAnimationComponent>()) {
+        spriteAnimation->StartAnimation("Attack");
+    }
     auto* attacker = gameObject;
     // Check that target still exist
     if (auto targetPtr = target.lock()) {

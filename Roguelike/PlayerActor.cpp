@@ -13,7 +13,8 @@ PlayerActor::PlayerActor(const Actor::Parameters& parameters,
     : Actor(parameters, position) {
     auto inputComponent =
         gameObject->AddComponent<MaxrEngine::KeyboardInputComponent>();
-    auto attackComponent = gameObject->AddComponent<PlayerAttackComponent>();
+    auto attackComponent = gameObject->AddComponent<PlayerAttackComponent>(
+        parameters.attackComponentParameters);
     inputComponent->AddObserver(attackComponent);
 
     auto playerCamera = gameObject->AddComponent<MaxrEngine::CameraComponent>();

@@ -35,14 +35,12 @@ int main() {
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         settings->playerTextureMap);
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
-        "WallTextures", settings->textureMapsPath + "Wall.png", {16, 16}, 48,
-        false);
+        settings->enemyTextureMap);
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
-        "FloorTextures", settings->textureMapsPath + "Floor.png", {16, 16}, 49,
-        false);
+        settings->wallTextureMap);
+    MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
+        settings->floorTextureMap);
 
-    MaxrEngine::ResourceSystem::Instance()->LoadTexture(
-        "Ball", settings->texturePath + "Ball.png", false);
     MaxrEngine::ResourceSystem::Instance()->LoadMusic(
         "background",
         settings->soundPath + "Clinthammer__Background_Music.wav");

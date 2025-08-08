@@ -30,17 +30,25 @@ struct SettingsStruct {
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
 
     Actor::Parameters playerParameters;
-    MaxrEngine::Animation playerIdleAnimation;
-    MaxrEngine::Animation playerWalkingAnimation;
+
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters enemyTextureMap;
+    MaxrEngine::Animation enemyIdleAnimation;
+    MaxrEngine::Animation enemyWalkingAnimation;
+    MaxrEngine::Animation enemyAttackWindupAnimation;
+    MaxrEngine::Animation enemyAttackAnimation;
+
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters wallTextureMap;
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters floorTextureMap;
+
     int playerSize;
-    float playerSpeed;
+    // float playerSpeed;
     float enemySpeed;
     PerceptionComponent::Parameters enemyPerceptionParameters;
     float enemyChaseMaxRadius;
     float enemyChaseMinRadius;
     int mapTileSize;
 
-    float playerHealth;
+    // float playerHealth;
     float enemyHealth;
     float armorDamageReduction;
 

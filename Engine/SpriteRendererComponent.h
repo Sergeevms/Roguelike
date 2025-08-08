@@ -17,9 +17,11 @@ class SpriteRendererComponent : public Component {
     void Render() override;
 
     ENGINE_API const sf::Sprite* GetSprite() const;
-    ENGINE_API void SetTexture(const sf::Texture& newTexture);
+    ENGINE_API void SetTexture(const sf::Texture& newTexture,
+                               const bool newIsTextureRightDirected = true);
     ENGINE_API void SetPixelSize(const Vector2Di& size);
     ENGINE_API void SetPixelSize(int newWidth, int newHeight);
+    ENGINE_API bool IsTextureRightDirected() const;
 
     ENGINE_API void FlipX(bool flip);
     ENGINE_API void FlipY(bool flip);
@@ -31,5 +33,7 @@ class SpriteRendererComponent : public Component {
 
     bool isFlipX = false;
     bool isFlipY = false;
+    /** Is setted texture directed to rigth*/
+    bool isTextureRightDirected = true;
 };
 }  // namespace MaxrEngine

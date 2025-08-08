@@ -36,16 +36,18 @@ void SpriteRendererComponent::Render() {
 
 const sf::Sprite* SpriteRendererComponent::GetSprite() const { return sprite; }
 
-void SpriteRendererComponent::SetTexture(const sf::Texture& newTexture) {
+void MaxrEngine::SpriteRendererComponent::SetTexture(
+    const sf::Texture& newTexture, const bool newIsTextureRightDirected) {
     sprite->setTexture(newTexture);
     auto textureSize = Convert<sf::Vector2f>(sprite->getTexture()->getSize());
     constexpr float half = 0.5F;
     const sf::Vector2f textureCenter = {half * textureSize.x,
                                         half * textureSize.y};
     sprite->setOrigin(textureCenter);
+    isTextureRightDirected = newIsTextureRightDirected;
 }
 
-ENGINE_API void SpriteRendererComponent::SetPixelSize(const Vector2Di& size) {
+void SpriteRendererComponent::SetPixelSize(const Vector2Di& size) {
     SetPixelSize(size.x, size.y);
 }
 
@@ -53,6 +55,10 @@ void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight) {
     auto originalSize = Convert<sf::Vector2f>(sprite->getTexture()->getSize());
     scale = {static_cast<float>(newWidth) / originalSize.x,
              -static_cast<float>(newHeight) / originalSize.y};
+}
+
+bool SpriteRendererComponent::IsTextureRightDirected() const {
+    return isTextureRightDirected;
 }
 
 void SpriteRendererComponent::FlipX(bool flip) {
