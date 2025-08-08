@@ -79,9 +79,9 @@ const Actor::Parameters defaultPlayerParameters = {
                            .borderSize = defaultBarBorderSize},
     .attackComponentParameters = {.startupTime = attackWindup,
                                   .cooldown = 3.0F,
-                                  .damage = 30.0F,
+                                  .damage = 50.0F,
                                   .range = 110.0F},
-    .actorName = "player"};
+    .actorName = "Player"};
 const AIActor::Parameters AIActorParameters =
     {
         // Set base Actor::Parameters fields

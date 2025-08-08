@@ -21,8 +21,15 @@ AIActor::AIActor(const Parameters& parameters,
     auto perception = gameObject->AddComponent<AIPerceptionComponent>(
         parameters.perceptionParameters);
     input->AddObserver(perception);
-    auto perceptionDebugDraw =
-        gameObject->AddComponent<PerceptionComponentDebugDraw>();
+    auto animationFind = parameters.baseActorParameters.animations.find(
+        parameters.baseActorParameters.defaultAnimationName);
+    if (animationFind != parameters.baseActorParameters.animations.end()) {
+        perception->SetVisionDirection(
+            animationFind->second.isRightDirected
+                ? MaxrEngine::Vector2Df(1.0F, 0.0F)
+                : MaxrEngine::Vector2Df(-1.0F, 0.0F));
+    }
+    gameObject->AddComponent<PerceptionComponentDebugDraw>();
     auto targetSelector = gameObject->AddComponent<AITargetSelector>();
     perception->AddObserver(targetSelector);
     gameObject->AddComponent<AIAttackComponent>(

@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "HealthComponent.h"
 
 namespace Roguelike {
 /** Base Attack component
@@ -65,6 +66,7 @@ class AttackComponent : public MaxrEngine::Component {
     /** Default parameters used in constructor if Parameters not specified*/
     static const Parameters defaultParameters;
     std::weak_ptr<MaxrEngine::GameObject> target;
+    std::weak_ptr<HealthComponent> healtComponentPtr;
     /** Time between initiating attack and dealing damage*/
     float startupTime;
     /** Time left before damage dealing*/
