@@ -10,9 +10,11 @@
 #include "Vector.h"
 
 namespace Roguelike {
-AIChaseTargetComponent::AIChaseTargetComponent(
-    MaxrEngine::GameObject* gameObject)
-    : Component(gameObject) {}
+Roguelike::AIChaseTargetComponent::AIChaseTargetComponent(
+    MaxrEngine::GameObject* gameObject, const Parameters& parameters)
+    : Component(gameObject),
+      minumumChaseRadius(parameters.minumumChaseRadius),
+      maximumChaseRadius(parameters.maximumChaseRadius) {}
 // NOLINTBEGIN(misc-unused-parameters) : overrided virtual method
 void AIChaseTargetComponent::Update(float deltaTime) {
     // NOLINTEND(misc-unused-parameters) : overrided method

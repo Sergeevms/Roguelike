@@ -5,7 +5,13 @@
 namespace Roguelike {
 class AIChaseTargetComponent : public MaxrEngine::Component {
    public:
-    explicit AIChaseTargetComponent(MaxrEngine::GameObject* gameObject);
+    struct Parameters {
+        float minumumChaseRadius = 0.0F;
+        float maximumChaseRadius = 0.0F;
+    };
+    explicit AIChaseTargetComponent(MaxrEngine::GameObject* gameObject,
+                                    const Parameters& parameters = {0.0F,
+                                                                    0.0F});
 
     void Update(float deltaTime) override;
     void Render() override;

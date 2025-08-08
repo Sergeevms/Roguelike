@@ -179,6 +179,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="ActorRegisterSystem.cpp" />
+    <ClCompile Include="AIActor.cpp" />
     <ClCompile Include="ArmorBarComponent.cpp" />
     <ClCompile Include="ArmorComponent.cpp" />
     <ClCompile Include="AttackComponent.cpp" />
@@ -199,7 +200,6 @@
     <ClCompile Include="AITargetSelector.cpp" />
     <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObjectContainer.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
@@ -214,6 +214,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorRegisterSystem.h" />
+    <ClInclude Include="AIActor.h" />
     <ClInclude Include="ArmorBarComponent.h" />
     <ClInclude Include="ArmorComponent.h" />
     <ClInclude Include="AttackComponent.h" />
@@ -237,7 +238,6 @@
     <ClInclude Include="AITargetSelector.h" />
     <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="DeveloperLevel.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObjectContainer.h" />
     <ClInclude Include="IDelayedAction.h" />

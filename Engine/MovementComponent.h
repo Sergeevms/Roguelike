@@ -1,7 +1,6 @@
 #pragma once
 #include "Component.h"
 #include "EngineAPI.h"
-#include "InputComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 

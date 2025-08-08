@@ -2,8 +2,8 @@
 
 #include <memory>
 
+#include "AIActor.h"
 #include "BackgroundMusic.h"
-#include "Enemy.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
 #include "PlayerActor.h"
@@ -24,14 +24,12 @@ void DeveloperLevel::Start() {
             ->GetComponent<MaxrEngine::TransformComponent>();
     auto playerActor = std::make_shared<PlayerActor>(
         settings->playerParameters, startCellTransform->GetWorldPosition());
-    auto enemy = std::make_shared<Enemy>();
 
-    auto* enemyTransform =
-        enemy->GetGameObject()->GetComponent<MaxrEngine::TransformComponent>();
-    auto exitCell = labyrinth->GetExit();
+    auto& exitCell = labyrinth->GetExit();
     auto* exitTransform = exitCell->GetGameObject()
                               ->GetComponent<MaxrEngine::TransformComponent>();
-    enemyTransform->SetWorldPosition(exitTransform->GetWorldPosition());
+    auto enemyActor = std::make_shared<AIActor>(
+        settings->aiParameters, exitTransform->GetWorldPosition());
 
     auto backgroundMusic = std::make_shared<BackgroundMusic>();
 }

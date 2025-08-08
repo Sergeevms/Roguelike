@@ -6,6 +6,7 @@
 #include "PlayerAttackComponent.h"
 #include "RenderSystem.h"
 #include "Settings.h"
+#include "Vector.h"
 
 namespace Roguelike {
 PlayerActor::PlayerActor(const Actor::Parameters& parameters,
