@@ -25,7 +25,9 @@ AttackComponent::AttackComponent(MaxrEngine::GameObject* gameObject,
       currentCooldown(0.0F),
       cooldown(atackParameters.cooldown),
       damage(atackParameters.damage),
-      range(atackParameters.range) {}
+      range(atackParameters.range) {
+    healtComponentPtr = gameObject->GetComponentSharedPtr<HealthComponent>();
+}
 
 void AttackComponent::Update(float deltaTime) {
     // Update coldown timer if started
@@ -61,64 +63,72 @@ void AttackComponent::Update(float deltaTime) {
 void AttackComponent::Render() {}
 
 void AttackComponent::StartAttack() {
-    // Check that not bloking now
-    if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
-        if (blockComponent->GetIsBlocking()) {
-            LOG_INFO("Can't start attack while bloking");
-            return;
+    // Check that alive and not bloking now
+    auto healthComponent = healtComponentPtr.lock();
+    if (healthComponent && healthComponent->IsAlive()) {
+        if (auto* blockComponent = gameObject->GetComponent<BlockComponent>()) {
+            if (blockComponent->GetIsBlocking()) {
+                LOG_INFO("Can't start attack while bloking");
+                return;
+            }
         }
+        if (auto* spriteAnimation =
+                gameObject
+                    ->GetComponent<MaxrEngine::SpriteAnimationComponent>()) {
+            spriteAnimation->StartAnimation("Attack windup");
+        }
+        currentCooldown = cooldown;
+        timeTillAttack = startupTime;
     }
-    if (auto* spriteAnimation =
-            gameObject->GetComponent<MaxrEngine::SpriteAnimationComponent>()) {
-        spriteAnimation->StartAnimation("Attack windup");
-    }
-    currentCooldown = cooldown;
-    timeTillAttack = startupTime;
 }
 
 void AttackComponent::ProcessAttack() {
-    if (auto* spriteAnimation =
-            gameObject->GetComponent<MaxrEngine::SpriteAnimationComponent>()) {
-        spriteAnimation->StartAnimation("Attack");
-    }
-    auto* attacker = gameObject;
-    // Check that target still exist
-    if (auto targetPtr = target.lock()) {
-        // Check that target is in atack range
-        auto distance =
-            (targetPtr->GetComponent<MaxrEngine::TransformComponent>()
-                 ->GetWorldPosition() -
-             attacker->GetComponent<MaxrEngine::TransformComponent>()
-                 ->GetWorldPosition())
-                .GetLength();
-        if (distance > range) {
-            LOG_INFO("Target is out of attack range");
-            return;
+    auto healthComponent = healtComponentPtr.lock();
+    if (healthComponent && healthComponent->IsAlive()) {
+        if (auto* spriteAnimation =
+                gameObject
+                    ->GetComponent<MaxrEngine::SpriteAnimationComponent>()) {
+            spriteAnimation->StartAnimation("Attack");
         }
-        auto damageLeft = damage;
-        // Apply damage to BlockComponent if it exists
-        if (auto* block = targetPtr->GetComponent<BlockComponent>()) {
-            damageLeft = block->ApplyDamage(damageLeft);
-            if (damageLeft <= 0.0F) {
+        auto* attacker = gameObject;
+        // Check that target still exist
+        if (auto targetPtr = target.lock()) {
+            // Check that target is in atack range
+            auto distance =
+                (targetPtr->GetComponent<MaxrEngine::TransformComponent>()
+                     ->GetWorldPosition() -
+                 attacker->GetComponent<MaxrEngine::TransformComponent>()
+                     ->GetWorldPosition())
+                    .GetLength();
+            if (distance > range) {
+                LOG_INFO("Target is out of attack range");
                 return;
             }
-        }
-        // Apply damage to ArmorComponent if it exists
-        if (auto* armor = targetPtr->GetComponent<ArmorComponent>()) {
-            damageLeft = armor->ApplyDamage(damageLeft);
-            if (!armor->IsNotBroken()) {
-                targetPtr->RemoveComponent(armor);
+            auto damageLeft = damage;
+            // Apply damage to BlockComponent if it exists
+            if (auto* block = targetPtr->GetComponent<BlockComponent>()) {
+                damageLeft = block->ApplyDamage(damageLeft);
+                if (damageLeft <= 0.0F) {
+                    return;
+                }
             }
-            if (damageLeft <= 0.0F) {
-                return;
+            // Apply damage to ArmorComponent if it exists
+            if (auto* armor = targetPtr->GetComponent<ArmorComponent>()) {
+                damageLeft = armor->ApplyDamage(damageLeft);
+                if (!armor->IsNotBroken()) {
+                    targetPtr->RemoveComponent(armor);
+                }
+                if (damageLeft <= 0.0F) {
+                    return;
+                }
             }
+            // Apply damage to HealthComponent if it exists
+            if (auto* health = targetPtr->GetComponent<HealthComponent>()) {
+                health->DecreaseHealth(damageLeft);
+            }
+        } else {
+            LOG_WARN("Target not selected or expired");
         }
-        // Apply damage to HealthComponent if it exists
-        if (auto* health = targetPtr->GetComponent<HealthComponent>()) {
-            health->DecreaseHealth(damageLeft);
-        }
-    } else {
-        LOG_WARN("Target not selected or expired");
     }
 }
 

@@ -1,18 +1,18 @@
 #include "Actor.h"
 
 #include "ActorComponent.h"
+#include "ActorMovementComponent.h"
+#include "ActorSpriteDirectionComponent.h"
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
 #include "BlockComponent.h"
 #include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
 #include "HealthComponent.h"
-#include "MovementComponent.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "SpriteAnimationComponent.h"
 #include "SpriteColliderComponent.h"
-#include "SpriteDirectionComponent.h"
 #include "SpriteRendererComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
@@ -48,10 +48,9 @@ Actor::Actor(const Parameters& parameters,
             animationPair.first, animationPair.second,
             animationPair.first == parameters.defaultAnimationName);
     }
-    gameObject->AddComponent<MaxrEngine::SpriteDirectionComponent>();
+    gameObject->AddComponent<ActorSpriteDirectionComponent>();
     // Add movement, Collider and Rigid body components
-    gameObject->AddComponent<MaxrEngine::MovementComponent>(
-        parameters.movementSpeed);
+    gameObject->AddComponent<ActorMovementComponent>(parameters.movementSpeed);
     gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
     gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
     if (parameters.haveBlock) {

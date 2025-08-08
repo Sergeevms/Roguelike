@@ -1,7 +1,6 @@
 #pragma once
 #include "Component.h"
 #include "EngineAPI.h"
-#include "InputComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
@@ -11,8 +10,8 @@ class MovementComponent : public Component {
     explicit ENGINE_API MovementComponent(GameObject* gameObject);
     ENGINE_API MovementComponent(GameObject* gameObject, const float speed);
 
-    void Update(float deltaTime) override;
-    void Render() override;
+    ENGINE_API void Update(float deltaTime) override;
+    ENGINE_API void Render() override;
 
     ENGINE_API void SetSpeed(float newSpeed);
     ENGINE_API float GetSpeed() const;

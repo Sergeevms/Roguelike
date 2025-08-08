@@ -10,7 +10,7 @@ env:
   SOLUTION_FILE_PATH: .
 
 jobs:
-  exapmle_matrix:
+  build:
     runs-on: windows-latest
     strategy:
       matrix:

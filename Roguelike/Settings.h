@@ -1,14 +1,10 @@
 #pragma once
 #include <string>
 
+#include "AIActor.h"
 #include "Actor.h"
-#include "AttackComponent.h"
-#include "BarComponent.h"
-#include "BlockComponent.h"
 #include "LabyrinthBuilder.h"
-#include "PerceptionComponent.h"
 #include "ResourceSystem.h"
-#include "SpriteAnimationComponent.h"
 #include "Vector.h"
 
 namespace Roguelike {
@@ -28,39 +24,16 @@ struct SettingsStruct {
     std::string textureMapsPath;
 
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
-
-    Actor::Parameters playerParameters;
-
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters enemyTextureMap;
-    MaxrEngine::Animation enemyIdleAnimation;
-    MaxrEngine::Animation enemyWalkingAnimation;
-    MaxrEngine::Animation enemyAttackWindupAnimation;
-    MaxrEngine::Animation enemyAttackAnimation;
-
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters wallTextureMap;
     MaxrEngine::ResourceSystem::TextureMapLoadingParameters floorTextureMap;
 
-    int playerSize;
-    // float playerSpeed;
-    float enemySpeed;
-    PerceptionComponent::Parameters enemyPerceptionParameters;
-    float enemyChaseMaxRadius;
-    float enemyChaseMinRadius;
+    Actor::Parameters playerParameters;
+    AIActor::Parameters aiParameters;
+
     int mapTileSize;
 
-    // float playerHealth;
-    float enemyHealth;
-    float armorDamageReduction;
-
-    AttackComponent::Parameters playerAtackParameters;
-    AttackComponent::Parameters enemyAtackParameters;
-
-    BarComponent::Parameters healthBarParameters;
-    BarComponent::Parameters armorBarParameters;
-
     LabyrinthBuilder::Parameters labyrinthParameters;
-
-    BlockComponent::Parameters playerBlockParameters;
 };
 
 /** Singleton class storing current game settings
@@ -74,14 +47,10 @@ class Settings : public SettingsStruct {
     };
     MaxrEngine::Vector2Df ScreenCenter() const;
     MaxrEngine::Vector2Df ScreenSize() const;
-    float PlayerSizeF() const;
 
    private:
     static const SettingsStruct defaultsSettings;
-    Settings()
-        : SettingsStruct(defaultsSettings) {
-
-          };
+    Settings() : SettingsStruct(defaultsSettings) {};
     ~Settings() = default;
     Settings(const Settings&) = delete;
     Settings operator=(const Settings&) = delete;
