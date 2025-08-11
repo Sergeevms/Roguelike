@@ -6,7 +6,7 @@
 
 #include "EngineAPI.h"
 #include "GameObject.h"
-#include "IFixedUpdateSytem.h"
+#include "IFixedUpdateSystem.h"
 
 namespace MaxrEngine {
 class GameWorld {
@@ -24,8 +24,8 @@ class GameWorld {
     ENGINE_API void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
     ENGINE_API void Clear();
 
-    ENGINE_API void RegisterFixedUpdateSytem(IFixedUpdateSytem* system);
-    ENGINE_API void UnRegisterFixedUpdateSytem(IFixedUpdateSytem* system);
+    ENGINE_API void RegisterFixedUpdateSytem(IFixedUpdateSystem* system);
+    ENGINE_API void UnRegisterFixedUpdateSytem(IFixedUpdateSystem* system);
 
     ENGINE_API void Print() const;
 
@@ -36,7 +36,7 @@ class GameWorld {
     GameWorld(GameWorld const&) = delete;
     GameWorld& operator=(GameWorld const&) = delete;
 
-    std::unordered_map<IFixedUpdateSytem*, float> fixedUpdateSystems;
+    std::unordered_map<IFixedUpdateSystem*, float> fixedUpdateSystems;
 
     std::vector<std::shared_ptr<GameObject>> gameObjects;
     std::vector<std::shared_ptr<GameObject>> markedToDestroyGameObjects;

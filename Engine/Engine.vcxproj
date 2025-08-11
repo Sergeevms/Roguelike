@@ -219,7 +219,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWorld.h" />
-    <ClInclude Include="IFixedUpdateSytem.h" />
+    <ClInclude Include="IFixedUpdateSystem.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="KeyboardInputComponent.h" />
     <ClInclude Include="Logger.h" />
@@ -251,7 +251,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWorld.cpp" />
-    <ClCompile Include="IFixedUpdateSytem.cpp" />
+    <ClCompile Include="IFixedUpdateSystem.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="KeyboardInputComponent.cpp" />
     <ClCompile Include="Logger.cpp" />
