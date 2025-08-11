@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "GameObject.h"
-#include "IFixedUpdateSytem.h"
+#include "IFixedUpdateSystem.h"
 #include "Vector.h"
 
 namespace Roguelike
@@ -11,7 +11,7 @@ namespace Roguelike
 class OpaqueComponent;
 class PerceptionComponent;
 
-class PerceptionSystem : public MaxrEngine::IFixedUpdateSytem {
+class PerceptionSystem : public MaxrEngine::IFixedUpdateSystem {
    public:
     static PerceptionSystem* Instance();
 

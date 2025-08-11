@@ -73,11 +73,11 @@ void GameWorld::Clear() {
     }
 }
 
-void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
+void GameWorld::RegisterFixedUpdateSytem(IFixedUpdateSystem* system) {
     fixedUpdateSystems[system] = 0.0F;
 }
 
-void GameWorld::UnRegisterFixedUpdateSytem(IFixedUpdateSytem* system) {
+void GameWorld::UnRegisterFixedUpdateSytem(IFixedUpdateSystem* system) {
     auto foundIt = fixedUpdateSystems.find(system);
     if (foundIt != fixedUpdateSystems.end()) {
         fixedUpdateSystems.erase(foundIt);

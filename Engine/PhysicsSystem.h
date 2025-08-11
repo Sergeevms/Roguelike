@@ -4,12 +4,12 @@
 
 #include "Collision.h"
 #include "EngineAPI.h"
-#include "IFixedUpdateSytem.h"
+#include "IFixedUpdateSystem.h"
 #include "Trigger.h"
 
 namespace MaxrEngine {
 class ColliderComponent;
-class PhysicsSystem : public IFixedUpdateSytem {
+class PhysicsSystem : public IFixedUpdateSystem {
    public:
     ENGINE_API static PhysicsSystem* Instance();
 
