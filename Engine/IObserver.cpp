@@ -6,7 +6,7 @@
 #include <memory>
 
 namespace MaxrEngine {
-void IObservable::AddObserver(std::weak_ptr<IObserver> observer) {
+void IObservable::AddObserver(const std::weak_ptr<IObserver> observer) {
     observers.push_back(observer);
 }
 

@@ -47,7 +47,8 @@ const SettingsStruct Settings::defaultsSettings{
     .labyrinthParameters = {.width = 11,
                             .heigth = 11,
                             .isAdjustingSizeAndStart = true,
-                            .randSeed = -1}};
+                            .randSeed = -1},
+    .timeToRemoveAfterDeath = 4.0F};
 
 MaxrEngine::Vector2Df Settings::ScreenCenter() const {
     return Half(ScreenSize());

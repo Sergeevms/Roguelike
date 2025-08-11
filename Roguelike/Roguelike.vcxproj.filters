@@ -126,6 +126,9 @@
     <ClCompile Include="ActorSpriteDirectionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AIActorSpawnManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -246,6 +249,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActorSpriteDirectionComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AIActorSpawnManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,6 +34,7 @@ struct SettingsStruct {
     int mapTileSize;
 
     LabyrinthBuilder::Parameters labyrinthParameters;
+    float timeToRemoveAfterDeath;
 };
 
 /** Singleton class storing current game settings

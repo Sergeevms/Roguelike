@@ -68,4 +68,11 @@ const std::vector<MaxrEngine::Vector2Di>& Labyrinth::GetGenerationDeadEnds()
 const std::vector<std::vector<bool>>& Labyrinth::GetIsTileWalkable() const {
     return isTileWalkable;
 }
+const MaxrEngine::Vector2Df Labyrinth::GetCellCoordinates(
+    const MaxrEngine::Vector2Di& cell) {
+    auto* transform = elements[cell.x][cell.y]
+                          ->GetGameObject()
+                          ->GetComponent<MaxrEngine::TransformComponent>();
+    return transform->GetWorldPosition();
+}
 }  // namespace Roguelike

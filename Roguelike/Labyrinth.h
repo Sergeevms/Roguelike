@@ -35,6 +35,11 @@ class Labyrinth : public GameObjectContainer {
     const std::vector<MaxrEngine::Vector2Di>& GetGenerationDeadEnds() const;
     /** Get tile grid marking is tile walkable or not*/
     const std::vector<std::vector<bool>>& GetIsTileWalkable() const;
+    /**
+     * Returns world coordinates of cell
+     */
+    const MaxrEngine::Vector2Df GetCellCoordinates(
+        const MaxrEngine::Vector2Di& cell);
 
    private:
     /** Default constructor*/

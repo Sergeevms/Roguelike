@@ -1,4 +1,5 @@
 #pragma once
+#include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 
@@ -22,6 +23,7 @@ class SpriteRendererComponent : public Component {
     ENGINE_API void SetPixelSize(const Vector2Di& size);
     ENGINE_API void SetPixelSize(int newWidth, int newHeight);
     ENGINE_API bool IsTextureRightDirected() const;
+    ENGINE_API void SetColor(const sf::Color newColor);
 
     ENGINE_API void FlipX(bool flip);
     ENGINE_API void FlipY(bool flip);
