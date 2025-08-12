@@ -182,7 +182,7 @@
     <ClCompile Include="ActorRegisterSystem.cpp" />
     <ClCompile Include="ActorSpriteDirectionComponent.cpp" />
     <ClCompile Include="AIActor.cpp" />
-    <ClCompile Include="AIActorSpawnManager.cpp" />
+    <ClCompile Include="AIActorManagerSystem.cpp" />
     <ClCompile Include="ArmorBarComponent.cpp" />
     <ClCompile Include="ArmorComponent.cpp" />
     <ClCompile Include="AttackComponent.cpp" />
@@ -220,7 +220,7 @@
     <ClInclude Include="ActorRegisterSystem.h" />
     <ClInclude Include="ActorSpriteDirectionComponent.h" />
     <ClInclude Include="AIActor.h" />
-    <ClInclude Include="AIActorSpawnManager.h" />
+    <ClInclude Include="AIActorManagerSystem.h" />
     <ClInclude Include="ArmorBarComponent.h" />
     <ClInclude Include="ArmorComponent.h" />
     <ClInclude Include="AttackComponent.h" />

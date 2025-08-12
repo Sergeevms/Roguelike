@@ -126,7 +126,7 @@
     <ClCompile Include="ActorSpriteDirectionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AIActorSpawnManager.cpp">
+    <ClCompile Include="AIActorManagerSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,7 +251,7 @@
     <ClInclude Include="ActorSpriteDirectionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AIActorSpawnManager.h">
+    <ClInclude Include="AIActorManagerSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

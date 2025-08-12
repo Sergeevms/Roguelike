@@ -17,7 +17,7 @@ namespace Roguelike {
  */
 class AIActor : public Actor {
    public:
-    friend class AIActorSpawnManager;
+    friend class AIActorManagerSystem;
     struct Parameters {
         Actor::Parameters baseActorParameters;
         AIChaseTargetComponent::Parameters chaseTargetParameters = {0.0F, 0.0F};

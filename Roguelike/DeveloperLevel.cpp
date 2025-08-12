@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "AIActor.h"
-#include "AIActorSpawnManager.h"
+#include "AIActorManagerSystem.h"
 #include "BackgroundMusic.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
@@ -33,6 +33,8 @@ void DeveloperLevel::Start() {
     auto& exitCell = labyrinth->GetExit();
     auto* exitTransform = exitCell->GetGameObject()
                               ->GetComponent<MaxrEngine::TransformComponent>();
+    std::vector<MaxrEngine::Vector2Df> oneSpawn = {
+        exitTransform->GetWorldPosition()};
     std::vector<MaxrEngine::Vector2Df> generationDeadEnds;
     for (auto deadEnd : labyrinth->GetGenerationDeadEnds()) {
         generationDeadEnds.push_back(labyrinth->GetCellCoordinates(deadEnd));
@@ -46,10 +48,9 @@ void DeveloperLevel::Start() {
                              ->GetComponent<MaxrEngine::MovementComponent>();
         movement->SetSpeed(movement->GetSpeed() * 3);
     };
-    auto spawner = std::make_shared<AIActorSpawnManager>();
+    auto spawner = AIActorManagerSystem::Instance();
 
-    spawner->SpawnRandomly(settings->aiParameters, generationDeadEnds, 3,
-                           makeEnemyFastAndRed);
+    spawner->SpawnRandomly(settings->aiParameters, oneSpawn, 6);
 
     auto backgroundMusic = std::make_shared<BackgroundMusic>();
 }
