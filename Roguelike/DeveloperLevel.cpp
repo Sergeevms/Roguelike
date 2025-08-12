@@ -3,54 +3,36 @@
 #include <memory>
 #include <vector>
 
-#include "AIActor.h"
 #include "AIActorManagerSystem.h"
 #include "BackgroundMusic.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
-#include "MovementComponent.h"
 #include "PlayerActor.h"
 #include "Settings.h"
-#include "SpriteRendererComponent.h"
-#include "TransformComponent.h"
 #include "Vector.h"
 
 namespace Roguelike {
+constexpr int enemyCount = 4;
 void DeveloperLevel::Start() {
     auto* settings = Settings::Instance();
+    // Construct labyrinth
     LabyrinthBuilder labyrinthBuilder;
     labyrinthBuilder.Generate(settings->labyrinthParameters);
     auto labyrinth = labyrinthBuilder.ConstructLabyrinth();
-    auto startCell = labyrinth->GetStartCell();
-    auto labyrinthElements = labyrinth->GetElements();
-    auto* startCellTransform =
-        labyrinthElements[startCell.x][startCell.y]
-            ->GetGameObject()
-            ->GetComponent<MaxrEngine::TransformComponent>();
+    // Get start cell and create player at it
+    auto& startCell = labyrinth->GetStartCell();
     auto playerActor = std::make_shared<PlayerActor>(
-        settings->playerParameters, startCellTransform->GetWorldPosition());
-
-    auto& exitCell = labyrinth->GetExit();
-    auto* exitTransform = exitCell->GetGameObject()
-                              ->GetComponent<MaxrEngine::TransformComponent>();
-    std::vector<MaxrEngine::Vector2Df> oneSpawn = {
-        exitTransform->GetWorldPosition()};
+        settings->playerParameters, labyrinth->GetCellCoordinates(startCell));
+    // Get dead ends from labyrinth generation
     std::vector<MaxrEngine::Vector2Df> generationDeadEnds;
-    for (auto deadEnd : labyrinth->GetGenerationDeadEnds()) {
+    for (const auto& deadEnd : labyrinth->GetGenerationDeadEnds()) {
         generationDeadEnds.push_back(labyrinth->GetCellCoordinates(deadEnd));
     }
-    auto makeEnemyFastAndRed = [](std::shared_ptr<AIActor> actor) {
-        auto* sprite =
-            actor->GetGameObject()
-                ->GetComponent<MaxrEngine::SpriteRendererComponent>();
-        sprite->SetColor(sf::Color::Red);
-        auto* movement = actor->GetGameObject()
-                             ->GetComponent<MaxrEngine::MovementComponent>();
-        movement->SetSpeed(movement->GetSpeed() * 3);
-    };
+    // Spawn enemies at dead ends
     auto spawner = AIActorManagerSystem::Instance();
-
-    spawner->SpawnRandomly(settings->aiParameters, oneSpawn, 6);
+    spawner->Reset(labyrinth->GetLabyrinthCoodinatesRect());
+    spawner->SpawnRandomly(settings->aiParameters, generationDeadEnds,
+                           enemyCount);
 
     auto backgroundMusic = std::make_shared<BackgroundMusic>();
 }

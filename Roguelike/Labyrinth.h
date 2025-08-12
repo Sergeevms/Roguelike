@@ -6,6 +6,7 @@
 #include "GameObjectContainer.h"
 #include "LabyrinthElement.h"
 #include "LabyrinthExit.h"
+#include "Rect.h"
 #include "Vector.h"
 #include "Wall.h"
 
@@ -40,12 +41,18 @@ class Labyrinth : public GameObjectContainer {
      */
     const MaxrEngine::Vector2Df GetCellCoordinates(
         const MaxrEngine::Vector2Di& cell);
+    /**
+     * @brief Method to get information about labyrinth borders
+     * @returns rectangle in which labyrinths elements are, TopLeft is top left
+     * wall coordinate, bottomRigth is bottom rigth wall coordinate
+     */
+    const MaxrEngine::FloatRect GetLabyrinthCoodinatesRect();
 
    private:
-    /** Default constructor*/
-    Labyrinth();
     /** Constructor*/
     explicit Labyrinth(const MaxrEngine::Vector2Di& size);
+    /** Labyrinth ssize in cells*/
+    MaxrEngine::Vector2Di size;
     /** Stores elements of Labyrinth (Wall, Floor, LabyrinthExit)*/
     std::vector<std::vector<std::shared_ptr<LabyrinthElement>>> elements;
     /** Stores cell marked as Labyrinth exit*/

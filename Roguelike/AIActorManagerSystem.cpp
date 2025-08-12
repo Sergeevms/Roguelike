@@ -12,6 +12,8 @@
 #include "HealthComponent.h"
 #include "IObserver.h"
 #include "Settings.h"
+#include "TransformComponent.h"
+#include "Utility.h"
 #include "Vector.h"
 
 namespace Roguelike {
@@ -28,7 +30,24 @@ std::shared_ptr<AIActorManagerSystem> AIActorManagerSystem::Instance() {
     return instance;
 }
 void AIActorManagerSystem::Update() {
-    for (auto actorPair : aIActors) {
+    for (auto actorIterator = aIActors.begin();
+         actorIterator != aIActors.end();) {
+        // Check that AIActor not destroyed yet
+        if (actorIterator->first.expired()) {
+            // Remove from map if is destroyed
+            actorIterator = aIActors.erase(actorIterator);
+        } else {
+            // Check AIActor position
+            auto actor = actorIterator->first.lock();
+            auto* transform =
+                actor->GetComponent<MaxrEngine::TransformComponent>();
+            if (!InRect(gameArea.topLeft, gameArea.GetSize(),
+                        transform->GetWorldPosition())) {
+                // Move actor to spawn point if is out of gameAreaS
+                transform->SetWorldPosition(actorIterator->second);
+            }
+            ++actorIterator;
+        }
     }
 }
 void AIActorManagerSystem::Spawn(
@@ -105,36 +124,56 @@ std::shared_ptr<AIActor> AIActorManagerSystem::SpawnActorAt(
 }
 void AIActorManagerSystem::Notify(
     std::shared_ptr<MaxrEngine::IObservable> observable) {
+    // Identify observable as AIActor HealthComponent
     auto healthComponent =
         std::dynamic_pointer_cast<HealthComponent>(observable);
-    if (!healthComponent->IsAlive()) {
-        auto delayedDestroyer =
-            healthComponent->GetGameObject()
-                ->AddComponent<DelayedDeadAIActorDestroyer>();
-        delayedDestroyer->StartTimer(
-            Settings::Instance()->timeToRemoveAfterDeath);
+    if (healthComponent) {
+        if (healthComponent && !healthComponent->IsAlive()) {
+            // If AIActor is dead, add DelayedDeadAIActorDestroyerComponent to
+            // destroy AIActor
+            auto delayedDestroyer =
+                healthComponent->GetGameObject()
+                    ->AddComponent<DelayedDeadAIActorDestroyerComponent>();
+            delayedDestroyer->StartTimer(
+                Settings::Instance()->timeToRemoveAfterDeath);
+            delayedDestroyer->AddObserver(Instance());
+        }
+        return;
+    }
+    // Identify observable as AIActor DelayedDeadAIActorDestroyerComponent,
+    // reduce count of actors if is
+    auto destroyer = std::dynamic_pointer_cast<
+        AIActorManagerSystem::DelayedDeadAIActorDestroyerComponent>(observable);
+    if (destroyer) {
+        --aIActorsCount;
     }
 }
-AIActorManagerSystem::DelayedDeadAIActorDestroyer::DelayedDeadAIActorDestroyer(
-    MaxrEngine::GameObject* gameObject)
+void AIActorManagerSystem::Reset(const MaxrEngine::FloatRect& newGameArea) {
+    aIActors.clear();
+    gameArea = newGameArea;
+}
+AIActorManagerSystem::DelayedDeadAIActorDestroyerComponent::
+    DelayedDeadAIActorDestroyerComponent(MaxrEngine::GameObject* gameObject)
     : Component(gameObject) {}
-void AIActorManagerSystem::DelayedDeadAIActorDestroyer::Update(
+void AIActorManagerSystem::DelayedDeadAIActorDestroyerComponent::Update(
     float deltaTime) {
     UpdateTimer(deltaTime);
 }
-void AIActorManagerSystem::DelayedDeadAIActorDestroyer::FinalAction() {
+void AIActorManagerSystem::DelayedDeadAIActorDestroyerComponent::FinalAction() {
     if (auto* healthComponent = gameObject->GetComponent<HealthComponent>()) {
         if (healthComponent->IsAlive()) {
             // Remove component if AIActor became Alive
             gameObject->RemoveComponent(this);
         } else {
+            // Notify AIACtorManagerSystem about destroying AIActor
+            Emit();
             // Remove gameObject from GameWorld
             MaxrEngine::GameWorld::Instance()->DestroyGameObject(gameObject);
         }
     }
 }
 // NOLINTBEGIN(misc-unused-parameters) : overrided method with parameter
-void AIActorManagerSystem::DelayedDeadAIActorDestroyer::UpdateAction(
+void AIActorManagerSystem::DelayedDeadAIActorDestroyerComponent::UpdateAction(
     float deltaTime) {
     if (auto* healthComponent = gameObject->GetComponent<HealthComponent>()) {
         if (healthComponent->IsAlive()) {

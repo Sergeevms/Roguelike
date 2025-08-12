@@ -21,10 +21,11 @@ constexpr float AIActorManagerSystemUpdateTime = 4.0F;
 /**
  * @brief System that controlls AIActor spawn, death, position in labyrinth.
  * @details Provides functions to create AIActor instances with various spawn
- * patterns. Controls count of AIActor spawned and alive. Removes AIActor from
- * GameWorld that are not alive for a Settings::timeToRemoveAfterDeath. Checks
- * that spawned AIActor doesn't move from labyrinth area, returns them to spawn
- * point if is.
+ * patterns. Spawn point provided clamped to setted gameArea. Controls count of
+ * AIActor spawned and alive. Removes AIActor from GameWorld that are not alive
+ * for a Settings::timeToRemoveAfterDeath. Checks that spawned AIActor doesn't
+ * move from gameArea, returns them to spawn point if is.
+ * @warning Need to set gameArea by Reset before spawning AIActors
  * @see Settings
  */
 class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
@@ -34,14 +35,16 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
      * @brief Component that destroys GameObject if it isn't Alive for
      * Settings::timeToRemoveAfterDeath
      */
-    class DelayedDeadAIActorDestroyer : public MaxrEngine::Component,
-                                        public IDelayedAction {
+    class DelayedDeadAIActorDestroyerComponent
+        : public MaxrEngine::Component,
+          public IDelayedAction,
+          public MaxrEngine::IObservable {
        public:
-        explicit DelayedDeadAIActorDestroyer(
+        explicit DelayedDeadAIActorDestroyerComponent(
             MaxrEngine::GameObject* gameObject);
         /**
          * @brief Updates timer throw UpdateTimer(float)
-         * @param deltaTime
+         * @param deltaTime - time passes since last Update
          */
         void Update(float deltaTime) override;
         void Render() override {};
@@ -53,7 +56,7 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
         void FinalAction() override;
         /**
          * @brief Check if object is still dead. If not, removes self
-         * @param deltaTime
+         * @param deltaTime - time passes since last Update
          */
         void UpdateAction(float deltaTime) override;
     };
@@ -61,7 +64,8 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
      * @brief Get instance of AIActorManagerSystem*/
     static std::shared_ptr<AIActorManagerSystem> Instance();
     /**
-     * @brief Check on spawned AIIActors for their positions and Alive status*/
+     * @brief Check on spawned AIIActors for their positions. If Actor position
+     * is out of gameArea, returns Actor to spawn point.*/
     void Update() override;
     /**
      * @brief Spawn AIActors sequentially using positions from spawnPositions.
@@ -71,7 +75,7 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
      * spawned at this point.
      * @param actorParameters - Constructor parameters for AIActor.
      * @param spawnPositions - Valid spawn positions (cycled if count >
-     * positions.size())
+     * positions.size()). Clamped to fit gameArea when spawn.
      * @param count - Number of AIActors to spawn
      * @param postSpawnUpdate - Optional callback applied to each spawned actor
      */
@@ -87,7 +91,8 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
      * on offset based on size of AIActor and number of AIActors alredy spawned
      * at this point.
      * @param actorParameters - Constructor parameters for AIActor
-     * @param spawnPositions - Valid spawn positions
+     * @param spawnPositions - Valid spawn positions. Clamped to fit gameArea
+     * when spawn.
      * @param count - Number of AIActors to spawn
      * @param randSeed - Seed for RNG (-1 = time-based seed)
      * @param postSpawnUpdate - Optional callback applied to each spawned actor
@@ -101,9 +106,9 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
     /**
      * @brief Spawn a single AIActor at specified position
      * @param actorParameters - Constructor parameters for AIActor
-     * @param position - Spawn position
+     * @param position - Spawn position.  Clamped to fit gameArea when spawn.
      * @param postSpawnUpdate - Optional callback applied after construction
-     * @return returns created AIActor
+     * @return - Returns created AIActor
      */
     std::shared_ptr<AIActor> SpawnActorAt(
         const AIActor::Parameters& actorParameters,
@@ -113,16 +118,17 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
     /**
      * @brief Get notification from AIActor HealthComponent, starts destruction
      * if dead.
-     * @param observable - pointer to previously spawned AIActor
+     * @param observable - Pointer to previously spawned AIActor.
      * HealthComponent.
      */
     void Notify(std::shared_ptr<MaxrEngine::IObservable> observable) override;
+    /**
+     * @brief Clear information about spawned actors, set gameArea.
+     * @param newGameArea - Area where actors can be.
+     */
+    void Reset(const MaxrEngine::FloatRect& newGameArea);
 
    private:
-    /**
-     * @brief playing area rect defining it is not setted.*/
-    // static const MaxrEngine::FloatRect lanyrinthRect = {-1, -1, -1, -1};
-
     AIActorManagerSystem() {
         fixedUpdateTime = AIActorManagerSystemUpdateTime;
     };
@@ -131,14 +137,13 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
     AIActorManagerSystem(AIActorManagerSystem const&) = delete;
     AIActorManagerSystem& operator=(AIActorManagerSystem const&) = delete;
     /**
-     * @brief container to store spawned AIActors and their spawn points
+     * @brief Container to store spawned AIActors and their spawn points.
      */
     std::map<std::weak_ptr<MaxrEngine::GameObject>, MaxrEngine::Vector2Df,
              std::owner_less<std::weak_ptr<MaxrEngine::GameObject>>>
         aIActors;
     /**
-     * @brief Rectanle stores ared where AIactors should be. Doesn't perform
-     * Update check is setted with {
+     * @brief Rectangle area where AIActors should be.
      */
     MaxrEngine::FloatRect gameArea = {-1, -1, -1, -1};
 

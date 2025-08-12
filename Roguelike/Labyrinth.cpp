@@ -7,15 +7,20 @@
 #include "GameObjectContainer.h"
 #include "LabyrinthElement.h"
 #include "LabyrinthExit.h"
+#include "Rect.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 #include "Wall.h"
 
 namespace Roguelike {
-Labyrinth::Labyrinth() : GameObjectContainer("Labyrinth") {}
+const MaxrEngine::FloatRect Labyrinth::GetLabyrinthCoodinatesRect() {
+    return MaxrEngine::FloatRect(GetCellCoordinates({0, 0}),
+                                 GetCellCoordinates({size.x - 1, size.y - 1}));
+}
 
 Labyrinth::Labyrinth(const MaxrEngine::Vector2Di& size)
     : GameObjectContainer("Labyrinth") {
+    Labyrinth::size = size;
     isTileWalkable.resize(size.x, std::vector<bool>(size.y, false));
     elements.resize(size.x, std::vector<std::shared_ptr<LabyrinthElement>>(
                                 size.y, nullptr));
