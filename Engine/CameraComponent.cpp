@@ -10,6 +10,7 @@
 #include "Component.h"
 #include "GameObject.h"
 #include "Logger.h"
+#include "RenderSystem.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
@@ -35,7 +36,7 @@ void CameraComponent::Update(
     view->setCenter(Convert<sf::Vector2f>(position));
     view->setRotation(rotation);
 
-    window->setView(*view);
+    RenderSystem::Instance()->SetView(*view);
 }
 
 void CameraComponent::Render() {

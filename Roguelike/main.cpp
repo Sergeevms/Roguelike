@@ -31,6 +31,7 @@ int main() {
     MaxrEngine::RenderSystem::Instance()->CrateMainWindow(
         sf::VideoMode(settings->screenWidth, settings->screenHeight),
         settings->gameName);
+    MaxrEngine::RenderSystem::Instance()->SetUpLayers(3);
 
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         settings->playerTextureMap);
