@@ -11,7 +11,6 @@ class RigidBodyComponent : public Component {
                                            const bool isKinematic = false);
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     ENGINE_API void SetLinearVelocity(Vector2Df newLinearVelocity);
     ENGINE_API void AddLinearVelocity(Vector2Df linearOffset);

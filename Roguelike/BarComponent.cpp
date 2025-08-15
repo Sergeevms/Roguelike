@@ -49,12 +49,12 @@ void BarComponent::Render() {
         borderShape.setOutlineColor(barColor);
         borderShape.setOutlineThickness(borderSize);
         borderShape.setPosition(Convert<sf::Vector2f>(barTopLeft));
-        MaxrEngine::RenderSystem::Instance()->Render(borderShape);
+        MaxrEngine::RenderSystem::Instance()->Render(borderShape, layer);
     }
     sf::RectangleShape barShape(Convert<sf::Vector2f>(filledBarSize));
     barShape.setFillColor(barColor);
     barShape.setPosition(Convert<sf::Vector2f>(barTopLeft));
-    MaxrEngine::RenderSystem::Instance()->Render(barShape);
+    MaxrEngine::RenderSystem::Instance()->Render(barShape, layer);
 }
 
 MaxrEngine::Vector2Df BarComponent::GetCenterOffset() const {

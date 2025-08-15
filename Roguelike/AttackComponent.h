@@ -32,7 +32,6 @@ class AttackComponent : public MaxrEngine::Component {
             std::weak_ptr<MaxrEngine::GameObject>());
     /** Updates currentCooldown time, checks if startupTime ended*/
     void Update(float deltaTime) override;
-    void Render() override;
     /** Starting attack - initiate Cooldown */
     virtual void StartAttack();
     /** Process dealing damage to target*/

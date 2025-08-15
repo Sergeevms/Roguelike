@@ -37,8 +37,6 @@ void RigidBodyComponent::Update(float deltaTime) {
     }
 }
 
-void RigidBodyComponent::Render() {}
-
 void RigidBodyComponent::SetLinearVelocity(Vector2Df newLinearVelocity) {
     linearVelocity = newLinearVelocity;
 }

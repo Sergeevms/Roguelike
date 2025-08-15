@@ -8,6 +8,7 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Logger.h"
 #include "PerceptionComponent.h"
 #include "RenderSystem.h"
@@ -18,8 +19,9 @@ namespace Roguelike {
 constexpr float fullCircleAngle = 360.0F;
 
 PerceptionComponentDebugDraw::PerceptionComponentDebugDraw(
-    MaxrEngine::GameObject* gameObject, const int arcLinesCount)
-    : Component(gameObject), arcLinesCount(arcLinesCount) {
+    MaxrEngine::GameObject* gameObject, const int layer,
+    const int arcLinesCount)
+    : Component(gameObject), IRenderable(layer), arcLinesCount(arcLinesCount) {
     perceptionComponent =
         gameObject->GetComponentSharedPtr<PerceptionComponent>();
     if (perceptionComponent.expired()) {
@@ -45,7 +47,7 @@ void PerceptionComponentDebugDraw::Render() {
             Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position));
         auto rect = senseZone.getLocalBounds();
         senseZone.setOrigin(Half(rect.width), Half(rect.height));
-        MaxrEngine::RenderSystem::Instance()->Render(senseZone);
+        MaxrEngine::RenderSystem::Instance()->Render(senseZone, layer);
         sf::VertexArray visionDirection(sf::PrimitiveType::LineStrip, 2);
         auto direction = Normalized(perception->GetVisionDirection()) *
                          perception->GetVisionRadius();
@@ -55,7 +57,7 @@ void PerceptionComponentDebugDraw::Render() {
         visionDirection[1] = sf::Vertex(
             Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position + direction),
             sf::Color::Green);
-        MaxrEngine::RenderSystem::Instance()->Render(visionDirection);
+        MaxrEngine::RenderSystem::Instance()->Render(visionDirection, layer);
         auto perceptionAngle = perception->GetVisionAngle();
         if (perceptionAngle < fullCircleAngle) {
             // Additional 3 vertexex for cone center (as start and end) and arc
@@ -81,7 +83,7 @@ void PerceptionComponentDebugDraw::Render() {
             visionCone.append(sf::Vertex(
                 Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position),
                 sf::Color::Yellow));
-            MaxrEngine::RenderSystem::Instance()->Render(visionCone);
+            MaxrEngine::RenderSystem::Instance()->Render(visionCone, layer);
         } else {
             sf::CircleShape visionZone(perception->GetVisionRadius());
             visionZone.setFillColor(sf::Color::Transparent);
@@ -89,7 +91,7 @@ void PerceptionComponentDebugDraw::Render() {
             visionZone.setOutlineThickness(outlineThickness);
             visionZone.setPosition(
                 Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position));
-            MaxrEngine::RenderSystem::Instance()->Render(visionZone);
+            MaxrEngine::RenderSystem::Instance()->Render(visionZone, layer);
         }
     } else {
         LOG_WARN("PerceptionComponentDebugDraw needs PerceptionComponent");

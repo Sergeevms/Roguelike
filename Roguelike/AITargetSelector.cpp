@@ -20,8 +20,6 @@ AITargetSelector::AITargetSelector(MaxrEngine::GameObject* gameObject)
 
 void AITargetSelector::Update(float deltaTime) {}
 
-void AITargetSelector::Render() {}
-
 void AITargetSelector::UpdateTarget() {
     auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
     if (blackBoard != nullptr) {

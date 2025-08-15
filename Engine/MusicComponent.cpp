@@ -13,8 +13,6 @@ MusicComponent::~MusicComponent() { music->stop(); }
 
 void MusicComponent::Update(float deltaTime) {}
 
-void MusicComponent::Render() {}
-
 void MusicComponent::SetMusic(sf::Music* newMusic) { music = newMusic; }
 
 void MusicComponent::SetLoop(bool newLoop) { music->setLoop(newLoop); }

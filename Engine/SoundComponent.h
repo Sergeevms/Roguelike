@@ -12,7 +12,6 @@ class ENGINE_API SoundComponent : public Component {
     ~SoundComponent();
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     void SetSound(const sf::SoundBuffer& newSound);
     void SetLoop(bool newLoop);

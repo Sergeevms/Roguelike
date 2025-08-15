@@ -2,10 +2,10 @@
 #include <memory>
 #include <vector>
 
+#include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/RenderTexture.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/View.hpp"
 #include "SFML/System/String.hpp"
 #include "SFML/Window/VideoMode.hpp"

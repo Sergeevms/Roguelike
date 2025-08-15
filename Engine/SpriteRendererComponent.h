@@ -5,11 +5,12 @@
 
 #include "Component.h"
 #include "EngineAPI.h"
+#include "IRenderable.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
 namespace MaxrEngine {
-class SpriteRendererComponent : public Component {
+class SpriteRendererComponent : public Component, public IRenderable {
    public:
     explicit ENGINE_API SpriteRendererComponent(GameObject* gameObject);
     ENGINE_API ~SpriteRendererComponent();

@@ -46,8 +46,6 @@ void AIChaseTargetComponent::Update(float deltaTime) {
     }
 }
 
-void AIChaseTargetComponent::Render() {}
-
 void AIChaseTargetComponent::SetMaximumChaseRadius(float newMaximumRadius) {
     maximumChaseRadius = newMaximumRadius;
 }

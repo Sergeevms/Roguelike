@@ -30,7 +30,7 @@ void SpriteRendererComponent::Render() {
         sprite->setRotation(transform->GetWorldRotation());
         sprite->setScale(
             Convert<sf::Vector2f>(scale * transform->GetWorldScale()));
-        RenderSystem::Instance()->Render(*sprite);
+        RenderSystem::Instance()->Render(*sprite, layer);
     }
 }
 

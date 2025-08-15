@@ -13,7 +13,6 @@ class SpriteDirectionComponent : public Component {
    public:
     explicit ENGINE_API SpriteDirectionComponent(GameObject* gameObject);
     void ENGINE_API Update(float deltaTime) override;
-    void ENGINE_API Render() override;
 
    private:
     std::weak_ptr<SpriteRendererComponent> rendererPointer;

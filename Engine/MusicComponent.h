@@ -10,7 +10,6 @@ class ENGINE_API MusicComponent : public Component {
     ~MusicComponent();
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     void SetMusic(sf::Music* newMusic);
     void SetLoop(bool newLoop);

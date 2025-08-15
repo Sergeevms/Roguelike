@@ -13,7 +13,6 @@ class ENGINE_API CameraComponent : public Component {
     ~CameraComponent();
 
     virtual void Update(float deltaTime) override;
-    virtual void Render() override;
 
     void SetWindow(sf::RenderWindow* newWindow);
     void ZoomBy(float newZoom);

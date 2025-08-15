@@ -12,7 +12,6 @@ class TransformComponent : public Component {
     explicit ENGINE_API TransformComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     ENGINE_API void MoveBy(const Vector2Df& offset);
     ENGINE_API void MoveBy(float offsetX, float offsetY);

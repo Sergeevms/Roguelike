@@ -42,8 +42,6 @@ class SpriteAnimationComponent : public Component {
     ENGINE_API explicit SpriteAnimationComponent(GameObject* gameObject);
     /** Updates timers, frame, currentAnimationName if needed*/
     ENGINE_API void Update(float deltaTime) override;
-    /** Inherited method, nothing to render*/
-    void Render() override;
     /** Overrides stored in component animation by name animationName. Updates
      * defaultAnimationName if isDefault is true or defaultAnimation not setted
      * yet

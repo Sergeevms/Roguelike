@@ -12,8 +12,9 @@
 
 namespace Roguelike {
 constexpr float outlineThickness = -2.0F;
-SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject)
-    : OpaqueComponent(gameObject), sprite(nullptr) {
+SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject,
+                                             const int layer)
+    : OpaqueComponent(gameObject), IRenderable(layer), sprite(nullptr) {
     auto* spriteRenderer =
         gameObject->GetComponent<MaxrEngine::SpriteRendererComponent>();
     if (spriteRenderer == nullptr) {
@@ -35,7 +36,6 @@ void SpriteOpaqueComponent::Update(float deltaTime) {
 }
 // NOLINTEND(misc-unused-parameters)
 void SpriteOpaqueComponent::Render() {
-    OpaqueComponent::Render();
     sf::RectangleShape rectangle(sf::Vector2f(bounds.width, bounds.height));
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setPosition(bounds.left, bounds.top);

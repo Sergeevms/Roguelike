@@ -2,15 +2,16 @@
 
 #include "RenderSystem.h"
 
+#include <algorithm>
 #include <cassert>
 #include <memory>
 
+#include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/RenderTexture.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/View.hpp"
-#include "SFML/Graphics/Color.hpp"
 #include "SFML/System/String.hpp"
 #include "SFML/Window/VideoMode.hpp"
 
@@ -61,7 +62,8 @@ void RenderSystem::Clear(const sf::Color& clearColor) {
     }
 }
 void RenderSystem::Render(const sf::Drawable& drawable, const int layer) {
-    layers[layer]->draw(drawable);
+    const int clampedLayer = std::clamp(layer, 0, layerCount - 1);
+    layers[clampedLayer]->draw(drawable);
 }
 void RenderSystem::Display() {
     for (auto& layer : layers) {

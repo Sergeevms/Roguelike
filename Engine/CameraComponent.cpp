@@ -39,13 +39,6 @@ void CameraComponent::Update(
     RenderSystem::Instance()->SetView(*view);
 }
 
-void CameraComponent::Render() {
-    assert(window != nullptr && "NULL window render");
-    if (window == nullptr) {
-        LOG_ERROR("NULL window render.");
-    }
-}
-
 void CameraComponent::SetWindow(sf::RenderWindow* newWindow) {
     window = newWindow;
 }

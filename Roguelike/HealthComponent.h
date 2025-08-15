@@ -9,7 +9,6 @@ class HealthComponent : public MaxrEngine::Component,
                              const float maxHealth = 0.0F);
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     // Set maxHealth to newMaxHealth
     virtual void SetMaxHealth(const float newMaxHealth);

@@ -11,7 +11,6 @@ class MovementComponent : public Component {
     ENGINE_API MovementComponent(GameObject* gameObject, const float speed);
 
     ENGINE_API void Update(float deltaTime) override;
-    ENGINE_API void Render() override;
 
     ENGINE_API void SetSpeed(float newSpeed);
     ENGINE_API float GetSpeed() const;

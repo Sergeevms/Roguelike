@@ -60,8 +60,6 @@ void AttackComponent::Update(float deltaTime) {
     }
 }
 
-void AttackComponent::Render() {}
-
 void AttackComponent::StartAttack() {
     // Check that alive and not bloking now
     auto healthComponent = healtComponentPtr.lock();

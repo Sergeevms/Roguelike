@@ -17,7 +17,6 @@ class ColliderComponent : public Component {
     explicit ENGINE_API ColliderComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override = 0;
-    void Render() override = 0;
 
     ENGINE_API void SetTrigger(bool newIsTrigger);
 

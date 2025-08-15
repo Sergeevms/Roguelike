@@ -4,11 +4,13 @@
 #include "ColliderComponent.h"
 #include "EngineAPI.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 
 namespace MaxrEngine {
-class SpriteColliderComponent : public ColliderComponent {
+class SpriteColliderComponent : public ColliderComponent, public IRenderable {
    public:
-    explicit ENGINE_API SpriteColliderComponent(GameObject* gameObject);
+    explicit ENGINE_API SpriteColliderComponent(GameObject* gameObject,
+                                                int renderLayer = 0);
     ~SpriteColliderComponent();
 
     void Update(float deltaTime) override;
