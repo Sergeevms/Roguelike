@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstdint>
 #include <memory>
 
 #include "SFML/Graphics/Color.hpp"
@@ -66,11 +67,31 @@ void RenderSystem::Render(const sf::Drawable& drawable, const int layer) {
     layers[clampedLayer]->draw(drawable);
 }
 void RenderSystem::Display() {
-    for (auto& layer : layers) {
-        layer->display();
-        const sf::Sprite sprite(layer->getTexture());
-        window->draw(sprite);
+    for (int i = 0; i < layerCount; ++i) {
+        if (activeLayers.GetLayerValue(i)) {
+            layers[i]->display();
+            const sf::Sprite sprite(layers[i]->getTexture());
+            window->draw(sprite);
+        }
     }
     window->display();
+}
+void RenderSystem::SetActiveLayers(const LayerBitmask newActiveLayerBitmask) {
+    activeLayers = newActiveLayerBitmask;
+}
+RenderSystem::LayerBitmask RenderSystem::GetActiveLayers() const {
+    return activeLayers;
+}
+bool RenderSystem::LayerBitmask::GetLayerValue(const int layerNumber) const {
+    return static_cast<bool>((static_cast<std::uint64_t>(1) << layerNumber) &
+                             value);
+}
+void RenderSystem::LayerBitmask::SetLayerValue(const int layerNumber,
+                                               const bool value) {
+    if (value) {
+        LayerBitmask::value |= static_cast<std::uint64_t>(1) << layerNumber;
+    } else {
+        LayerBitmask::value &= ~(static_cast<std::uint64_t>(1) << layerNumber);
+    }
 }
 }  // namespace MaxrEngine

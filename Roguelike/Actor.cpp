@@ -30,6 +30,7 @@ Actor::Actor(const Parameters& parameters,
         gameObject->AddComponent<HealthComponent>(parameters.maxHealthAmount);
     auto healthBar = gameObject->AddComponent<HealthBarComponent>(
         parameters.healthBarParameters);
+    healthBar->SetLayer(2);
     healthBar->SetHealthComponent(healthComponent);
     // Add sprite component, animation component
     const auto& defaultAnimation =
@@ -39,6 +40,7 @@ Actor::Actor(const Parameters& parameters,
             defaultAnimation.textureMapName, 0);
     auto render =
         gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
+    render->SetLayer(1);
     render->SetTexture(*texture);
     render->SetPixelSize(parameters.spriteSize);
     auto animationComponent =
@@ -61,6 +63,7 @@ Actor::Actor(const Parameters& parameters,
             parameters.armorParameters);
         auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
             parameters.armorBarParameters);
+        armorBar->SetLayer(2);
         armorBar->SetArmorComponent(armorComponent);
     }
 }

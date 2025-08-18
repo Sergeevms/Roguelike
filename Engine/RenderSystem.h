@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <memory>
 #include <vector>
 
@@ -13,8 +14,14 @@
 #include "EngineAPI.h"
 
 namespace MaxrEngine {
+constexpr std::uint64_t filledMask = 0xFFFFFFFFFFFFFFFF;
 class RenderSystem {
    public:
+    struct LayerBitmask {
+        std::uint64_t value = filledMask;
+        bool GetLayerValue(const int layerNumber) const;
+        void SetLayerValue(const int layerNumber, const bool value);
+    };
     ENGINE_API static RenderSystem* Instance();
 
     ENGINE_API void SetMainWindow(sf::RenderWindow* newWindow);
@@ -34,10 +41,14 @@ class RenderSystem {
     void Clear(const sf::Color& clearColor = sf::Color(0, 0, 0, 0));
     void Display();
 
+    ENGINE_API void SetActiveLayers(const LayerBitmask newActiveLayerBitmask);
+    ENGINE_API LayerBitmask GetActiveLayers() const;
+
    private:
     sf::RenderWindow* window = nullptr;
 
     int layerCount = 0;
+    LayerBitmask activeLayers;
     std::vector<std::unique_ptr<sf::RenderTexture>> layers;
 
     RenderSystem() {};
