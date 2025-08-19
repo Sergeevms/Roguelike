@@ -228,6 +228,7 @@
     <ClInclude Include="MusicComponent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsSystem.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="ResourceSystem.h" />
     <ClInclude Include="RigidBodyComponent.h" />

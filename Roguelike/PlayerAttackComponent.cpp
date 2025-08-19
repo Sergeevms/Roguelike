@@ -24,21 +24,29 @@ void PlayerAttackComponent::Notify(
             std::dynamic_pointer_cast<MaxrEngine::InputComponent>(observable)) {
         if (currentCooldown <= 0.0F && input->getAttack()) {
             currentCooldown = cooldown;
-            auto position =
+            const auto position =
                 gameObject->GetComponent<MaxrEngine::TransformComponent>()
                     ->GetWorldPosition();
+
             auto targetsVector =
                 ActorRegisterSystem::Instance()->GetActorsNotInGroupList(
                     ActorsGroups::PlayerGroup);
+
             std::map<float, MaxrEngine::GameObject*> targets;
+
             for (auto& possibleTarget : targetsVector) {
-                targets.emplace(std::pair<float, MaxrEngine::GameObject*>(
-                    (possibleTarget
-                         ->GetComponent<MaxrEngine::TransformComponent>()
-                         ->GetWorldPosition() -
-                     position)
-                        .GetLength(),
-                    possibleTarget));
+                if (possibleTarget->GetComponent<HealthComponent>()
+                        ->IsAlive()) {
+                    const auto targetPosition =
+                        possibleTarget
+                            ->GetComponent<MaxrEngine::TransformComponent>()
+                            ->GetWorldPosition();
+
+                    const auto distance =
+                        (targetPosition - position).GetLength();
+                    targets.emplace(std::pair<float, MaxrEngine::GameObject*>(
+                        distance, possibleTarget));
+                }
             }
             auto newTarget = targets.begin();
             if (newTarget != targets.end()) {

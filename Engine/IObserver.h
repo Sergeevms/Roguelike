@@ -14,7 +14,8 @@ class IObserver {
 
 class IObservable : public std::enable_shared_from_this<IObservable> {
    public:
-    ENGINE_API virtual void AddObserver(std::weak_ptr<IObserver> observer);
+    ENGINE_API virtual void AddObserver(
+        const std::weak_ptr<IObserver> observer);
 
    protected:
     ENGINE_API virtual void Emit();

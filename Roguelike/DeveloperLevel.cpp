@@ -1,35 +1,42 @@
 #include "DeveloperLevel.h"
 
 #include <memory>
+#include <vector>
 
-#include "AIActor.h"
+#include "AIActorManagerSystem.h"
 #include "BackgroundMusic.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
 #include "PlayerActor.h"
 #include "Settings.h"
-#include "TransformComponent.h"
+#include "Vector.h"
 
 namespace Roguelike {
+constexpr int enemyCount = 4;
 void DeveloperLevel::Start() {
     auto* settings = Settings::Instance();
+
+    // Construct labyrinth
     LabyrinthBuilder labyrinthBuilder;
     labyrinthBuilder.Generate(settings->labyrinthParameters);
     auto labyrinth = labyrinthBuilder.ConstructLabyrinth();
-    auto startCell = labyrinth->GetStartCell();
-    auto labyrinthElements = labyrinth->GetElements();
-    auto* startCellTransform =
-        labyrinthElements[startCell.x][startCell.y]
-            ->GetGameObject()
-            ->GetComponent<MaxrEngine::TransformComponent>();
-    auto playerActor = std::make_shared<PlayerActor>(
-        settings->playerParameters, startCellTransform->GetWorldPosition());
 
-    auto& exitCell = labyrinth->GetExit();
-    auto* exitTransform = exitCell->GetGameObject()
-                              ->GetComponent<MaxrEngine::TransformComponent>();
-    auto enemyActor = std::make_shared<AIActor>(
-        settings->aiParameters, exitTransform->GetWorldPosition());
+    // Get start cell and create player at it
+    auto& startCell = labyrinth->GetStartCell();
+    auto playerActor = std::make_shared<PlayerActor>(
+        settings->playerParameters, labyrinth->GetCellCoordinates(startCell));
+
+    // Get dead ends from labyrinth generation
+    std::vector<MaxrEngine::Vector2Df> generationDeadEnds;
+    for (const auto& deadEnd : labyrinth->GetGenerationDeadEnds()) {
+        generationDeadEnds.push_back(labyrinth->GetCellCoordinates(deadEnd));
+    }
+
+    // Spawn enemies at dead ends
+    auto spawner = AIActorManagerSystem::Instance();
+    spawner->Reset(labyrinth->GetLabyrinthCoodinatesRect());
+    spawner->SpawnRandomly(settings->aiParameters, generationDeadEnds,
+                           enemyCount);
 
     auto backgroundMusic = std::make_shared<BackgroundMusic>();
 }
