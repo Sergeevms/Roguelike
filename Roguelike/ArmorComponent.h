@@ -1,9 +1,24 @@
 #pragma once
+#include <memory>
+
 #include "Component.h"
 #include "IObserver.h"
+#include "ISaveable.h"
+
 namespace Roguelike {
+/**
+ * @brief Class for saving ArmorComponent state.
+ * @see ArmorComponent
+ */
+class ArmorSave {
+    friend class ArmorComponent;
+    float maxArmorPoints;
+    float currentArmorPoints;
+    float damageReduction;
+};
 class ArmorComponent : public MaxrEngine::Component,
-                       public MaxrEngine::IObservable {
+                       public MaxrEngine::IObservable,
+                       public ISaveable<ArmorComponent, ArmorSave> {
    public:
     struct Parameters {
         float maxArmorPoints;
@@ -39,5 +54,10 @@ class ArmorComponent : public MaxrEngine::Component,
     float maxArmorPoints;
     float currentArmorPoints;
     float damageReduction;
+
+   private:
+    friend class ISaveable<ArmorComponent, ArmorSave>;
+    void SaveImpl(std::shared_ptr<ArmorSave> save) const;
+    void LoadImpl(std::shared_ptr<const ArmorSave> save);
 };
 }  // namespace Roguelike

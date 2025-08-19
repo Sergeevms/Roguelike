@@ -1,10 +1,12 @@
 #include "HealthComponent.h"
 
 #include <cassert>
+#include <memory>
 #include <sstream>
 
 #include "Component.h"
 #include "GameObject.h"
+#include "ISaveable.h"
 #include "Logger.h"
 #include "Utility.h"
 
@@ -93,4 +95,12 @@ float HealthComponent::IncreaseHealth(const float healingAmount) {
 }
 
 bool HealthComponent::IsAlive() const { return currentHealth > 0.0F; }
+void HealthComponent::SaveImpl(std::shared_ptr<HealthSave> save) const {
+    save->maxHealth = maxHealth;
+    save->currentHealth = currentHealth;
+}
+void HealthComponent::LoadImpl(std::shared_ptr<const HealthSave> save) {
+    maxHealth = save->maxHealth;
+    currentHealth = save->currentHealth;
+}
 }  // namespace Roguelike
