@@ -188,9 +188,11 @@
     <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="BarComponent.cpp" />
     <ClCompile Include="BlockComponent.cpp" />
+    <ClCompile Include="GameLevel.cpp" />
     <ClCompile Include="HealthBarComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LabyrinthExit.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="OpaqueComponent.cpp" />
     <ClCompile Include="PerceptionComponent.cpp" />
     <ClCompile Include="PerceptionComponentDebugDraw.cpp" />
@@ -227,10 +229,12 @@
     <ClInclude Include="BarComponent.h" />
     <ClInclude Include="BlockComponent.h" />
     <ClInclude Include="DefaultActorsSettings.h" />
+    <ClInclude Include="GameLevel.h" />
     <ClInclude Include="HealthBarComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LabyrinthElement.h" />
     <ClInclude Include="LabyrinthExit.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="OpaqueComponent.h" />
     <ClInclude Include="PerceptionComponent.h" />
     <ClInclude Include="PerceptionComponentDebugDraw.h" />

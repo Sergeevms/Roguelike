@@ -3,6 +3,7 @@
 
 #include "AIActor.h"
 #include "Actor.h"
+#include "GameLevel.h"
 #include "LabyrinthBuilder.h"
 #include "ResourceSystem.h"
 #include "Vector.h"
@@ -33,6 +34,7 @@ struct SettingsStruct {
 
     int mapTileSize;
 
+    GameLevel::Parameters firstLevelParameters;
     LabyrinthBuilder::Parameters labyrinthParameters;
     float timeToRemoveAfterDeath;
 };

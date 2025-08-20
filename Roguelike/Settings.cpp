@@ -1,7 +1,5 @@
 #include "Settings.h"
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "DefaultActorsSettings.h"
 #include "Utility.h"
 #include "Vector.h"
@@ -44,6 +42,12 @@ const SettingsStruct Settings::defaultsSettings{
     .aiParameters = DefaultSettings::AIActorParameters,
 
     .mapTileSize = 150,
+    .firstLevelParameters = {.builderParameters = {.width = 11,
+                                                   .heigth = 11,
+                                                   .isAdjustingSizeAndStart =
+                                                       true,
+                                                   .randSeed = -1},
+                             .enemyCount = 3},
     .labyrinthParameters = {.width = 11,
                             .heigth = 11,
                             .isAdjustingSizeAndStart = true,
