@@ -1,29 +1,27 @@
 #pragma once
 #include "Component.h"
-#include "InputComponent.h"
+#include "EngineAPI.h"
 #include "TransformComponent.h"
+#include "Vector.h"
 
-namespace MaxrEngine
-{
-	class MovementComponent :
-		public Component
-	{
-	public:
-		ENGINE_API MovementComponent(GameObject* gameObject);
+namespace MaxrEngine {
+class MovementComponent : public Component {
+   public:
+    explicit ENGINE_API MovementComponent(GameObject* gameObject);
+    ENGINE_API MovementComponent(GameObject* gameObject, const float speed);
 
-		virtual void Update(float deltaTime) override;
-		virtual void Render() override;
+    ENGINE_API void Update(float deltaTime) override;
+    ENGINE_API void Render() override;
 
-		ENGINE_API void SetSpeed(float newSpeed);
-		ENGINE_API float GetSpeed() const;
-		ENGINE_API float GetAccelerationSquared() const;
-	private:
-		InputComponent* input;
-		TransformComponent* transform;
+    ENGINE_API void SetSpeed(float newSpeed);
+    ENGINE_API float GetSpeed() const;
+    ENGINE_API float GetAccelerationSquared() const;
 
-		float speed = 0.f;
-		Vector2Df previosPosition = { 0.f, 0.f };
-		Vector2Df acceleration = { 0.f, 0.f };
-	};
-}
+   private:
+    TransformComponent* transform;
 
+    float speed = 0.0F;
+    Vector2Df previosPosition = {0.0F, 0.0F};
+    Vector2Df acceleration = {0.0F, 0.0F};
+};
+}  // namespace MaxrEngine

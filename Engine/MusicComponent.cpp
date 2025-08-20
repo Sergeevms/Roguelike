@@ -1,63 +1,39 @@
 #include "pch.h"
+
 #include "MusicComponent.h"
 
-namespace MaxrEngine
-{
-	MusicComponent::MusicComponent(GameObject* gameObject) : Component(gameObject)
-	{
-	}
+#include "Component.h"
+#include "GameObject.h"
 
-	MusicComponent::~MusicComponent()
-	{
-		music->stop();
-	}
+namespace MaxrEngine {
+MusicComponent::MusicComponent(GameObject* gameObject)
+    : Component(gameObject) {}
 
-	void MusicComponent::Update(float deltaTime)
-	{
-	}
+MusicComponent::~MusicComponent() { music->stop(); }
 
-	void MusicComponent::Render()
-	{
-	}
+void MusicComponent::Update(float deltaTime) {}
 
-	void MusicComponent::SetMusic(sf::Music* newMusic)
-	{
-		music = newMusic;
-	}
+void MusicComponent::Render() {}
 
-	void MusicComponent::SetLoop(bool newLoop)
-	{
-		music->setLoop(newLoop);
-	}
+void MusicComponent::SetMusic(sf::Music* newMusic) { music = newMusic; }
 
-	void MusicComponent::SetVolume(float volume)
-	{
-		music->setVolume(volume);
-	}
+void MusicComponent::SetLoop(bool newLoop) { music->setLoop(newLoop); }
 
-	void MusicComponent::Play()
-	{
-		if (music->getStatus() != sf::Music::Playing)
-		{
-			music->play();
-		}
-	}
+void MusicComponent::SetVolume(float volume) { music->setVolume(volume); }
 
-	void MusicComponent::Stop()
-	{
-		music->stop();
-	}
-
-	void MusicComponent::Pause()
-	{
-		music->pause();
-	}
-
-	void MusicComponent::Resume()
-	{
-		if (music->getStatus() != sf::Music::Playing)
-		{
-			music->play();
-		}
-	}
+void MusicComponent::Play() {
+    if (music->getStatus() != sf::Music::Playing) {
+        music->play();
+    }
 }
+
+void MusicComponent::Stop() { music->stop(); }
+
+void MusicComponent::Pause() { music->pause(); }
+
+void MusicComponent::Resume() {
+    if (music->getStatus() != sf::Music::Playing) {
+        music->play();
+    }
+}
+}  // namespace MaxrEngine

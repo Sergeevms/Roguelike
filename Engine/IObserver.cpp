@@ -1,25 +1,22 @@
 #include "pch.h"
+
 #include "IObserver.h"
+
 #include <algorithm>
+#include <memory>
 
-namespace MaxrEngine
-{
-	void IObservable::AddObserver(std::weak_ptr<IObserver> observer)
-	{
-		observers.push_back(observer);
-	}
-
-	void IObservable::Emit()
-	{
-		auto self = shared_from_this();
-		std::for_each(observers.begin(), observers.end(),
-			[self](auto observer)
-			{
-				auto lockedObserver = observer.lock();
-				if (lockedObserver)
-				{
-					lockedObserver->Notify(self);
-				}
-			});
-	}
+namespace MaxrEngine {
+void IObservable::AddObserver(const std::weak_ptr<IObserver> observer) {
+    observers.push_back(observer);
 }
+
+void IObservable::Emit() {
+    auto self = shared_from_this();
+    std::for_each(observers.begin(), observers.end(), [self](auto observer) {
+        auto lockedObserver = observer.lock();
+        if (lockedObserver) {
+            lockedObserver->Notify(self);
+        }
+    });
+}
+}  // namespace MaxrEngine

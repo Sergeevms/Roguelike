@@ -1,28 +1,34 @@
 #include "AIPerceptionComponent.h"
+
+#include <memory>
+
 #include "AIBlackboard.h"
 #include "AIInputComponent.h"
+#include "GameObject.h"
+#include "IObserver.h"
+#include "Logger.h"
+#include "PerceptionComponent.h"
 
-namespace Roguelike
-{
-	AIPerceptionComponent::AIPerceptionComponent(MaxrEngine::GameObject* gameObject)
-		: PerceptionComponent(gameObject)
-	{
-		auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-		if (blackBoard)
-		{
-			blackBoard->Set("Detected Actors", &detectedActors);
-		}
-		else
-		{
-			LOG_WARN("AIBlackboard required for  AIPerceptionComponent");
-		}
-	}
+namespace Roguelike {
 
-	void AIPerceptionComponent::Notify(std::shared_ptr<IObservable> observable)
-	{
-		if (auto input = std::dynamic_pointer_cast<MaxrEngine::AIInputComponent>(observable))
-		{
-			SetVisionDirection(input->GetDirection());
-		}
-	}
+AIPerceptionComponent::AIPerceptionComponent(
+    MaxrEngine::GameObject* gameObject,
+    const PerceptionComponent::Parameters& parameters)
+    : PerceptionComponent(gameObject, parameters) {
+    auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
+    if (blackBoard != nullptr) {
+        blackBoard->Set("Detected Actors", &detectedActors);
+    } else {
+        LOG_ERROR("AIBlackboard required for AIPerceptionComponent");
+        gameObject->RemoveComponent(this);
+        return;
+    }
 }
+
+void AIPerceptionComponent::Notify(std::shared_ptr<IObservable> observable) {
+    if (auto input = std::dynamic_pointer_cast<MaxrEngine::AIInputComponent>(
+            observable)) {
+        SetVisionDirection(input->GetDirection());
+    }
+}
+}  // namespace Roguelike

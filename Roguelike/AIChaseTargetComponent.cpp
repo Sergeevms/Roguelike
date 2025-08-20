@@ -1,57 +1,66 @@
 #include "AIChaseTargetComponent.h"
+
 #include "AIBlackboard.h"
-#include "GameObject.h"
-#include "Utility.h"
 #include "AIInputComponent.h"
+#include "Component.h"
+#include "GameObject.h"
+#include "Logger.h"
+#include "TransformComponent.h"
+#include "Utility.h"
+#include "Vector.h"
 
-namespace Roguelike
-{
-	AIChaseTargetComponent::AIChaseTargetComponent(MaxrEngine::GameObject* gameObject)
-		: Component(gameObject)
-	{
-	}
+namespace Roguelike {
+Roguelike::AIChaseTargetComponent::AIChaseTargetComponent(
+    MaxrEngine::GameObject* gameObject, const Parameters& parameters)
+    : Component(gameObject),
+      minumumChaseRadius(parameters.minumumChaseRadius),
+      maximumChaseRadius(parameters.maximumChaseRadius) {}
 
-	void AIChaseTargetComponent::Update(float deltaTime)
-	{
-		auto blackBoard = gameObject->GetComponent<AIBlackboard>();
-		if (blackBoard)
-		{
-			bool isTargetVisible = false;
-			MaxrEngine::Vector2Df movingDirection;
-			auto inputComponent = gameObject->GetComponent<MaxrEngine::AIInputComponent>();
-			if (blackBoard->Get("isTargetVisible", isTargetVisible) && isTargetVisible)
-			{
-				auto transform = gameObject->GetComponent<MaxrEngine::TransformComponent>();
-				MaxrEngine::GameObject* target = nullptr;
-				if (blackBoard->Get("lastTarget", target))
-				{
-					auto betweenVector = target->GetComponent<MaxrEngine::TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
-					auto distance = betweenVector.GetLength();
-					if (InRange(distance, minumumChaseRadius, maximumChaseRadius))
-					{
-						movingDirection = betweenVector;
-					}
-				}
-			}
-			inputComponent->SetDirection(movingDirection);
-		}
-		else
-		{
-			LOG_ERROR("AIBlackboard requried for AIChaseComponent");
-		}
-	}
+// NOLINTBEGIN(misc-unused-parameters) : overrided virtual method
+void AIChaseTargetComponent::Update(float deltaTime) {
+    // Check that we have access to blackboard
+    auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
+    if (blackBoard != nullptr) {
+        // Create new moving direction, {0, 0} (not moving) by default
+        MaxrEngine::Vector2Df movingDirection;
 
-	void AIChaseTargetComponent::Render()
-	{
-	}
+        // Check that target visible and setted
+        bool isTargetVisible = false;
+        MaxrEngine::GameObject* target = nullptr;
+        if (blackBoard->Get("isTargetVisible", isTargetVisible) &&
+            isTargetVisible && blackBoard->Get("lastTarget", target) &&
+            target != nullptr) {
+            // Get vector between self and target
+            auto betweenVector =
+                target->GetComponent<MaxrEngine::TransformComponent>()
+                    ->GetWorldPosition() -
+                gameObject->GetComponent<MaxrEngine::TransformComponent>()
+                    ->GetWorldPosition();
 
-	void AIChaseTargetComponent::SetMaximumChaseRadius(float newMaximumRadius)
-	{
-		maximumChaseRadius = newMaximumRadius;
-	}
-
-	void AIChaseTargetComponent::SetMinimumChaseRadius(float newMinimuRadius)
-	{
-		minumumChaseRadius = newMinimuRadius;
-	}
+            // Check distance between target and self, update moving direction
+            // if needed.
+            auto distance = betweenVector.GetLength();
+            if (InRange(distance, minumumChaseRadius, maximumChaseRadius)) {
+                movingDirection = betweenVector;
+            }
+        }
+        // Update moving direction in input component
+        auto* inputComponent =
+            gameObject->GetComponent<MaxrEngine::AIInputComponent>();
+        inputComponent->SetDirection(movingDirection);
+    } else {
+        LOG_ERROR("AIBlackboard requried for AIChaseComponent");
+    }
 }
+// NOLINTEND(misc-unused-parameters) : overrided method
+
+void AIChaseTargetComponent::Render() {}
+
+void AIChaseTargetComponent::SetMaximumChaseRadius(float newMaximumRadius) {
+    maximumChaseRadius = newMaximumRadius;
+}
+
+void AIChaseTargetComponent::SetMinimumChaseRadius(float newMinimuRadius) {
+    minumumChaseRadius = newMinimuRadius;
+}
+}  // namespace Roguelike

@@ -1,45 +1,53 @@
 #include "pch.h"
+
 #include "KeyboardInputComponent.h"
-#include <SFML/Graphics.hpp>
 
-namespace MaxrEngine
-{
-	KeyboardInputComponent::KeyboardInputComponent(GameObject* gameObject) :
-		InputComponent(gameObject)
-	{
-	}
+#include "SFML/Window/Keyboard.hpp"
 
-	void KeyboardInputComponent::Update(float deltaTime)
-	{
-		verticalAxis = 0.f;
-		horizontalAxis = 0.f;
-		attack = false;
+#include "Component.h"
+#include "GameObject.h"
+#include "InputComponent.h"
+#include "Logger.h"
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			LOG_INFO("Forward input");
-			verticalAxis += 1.0f;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			LOG_INFO("Backward input");
-			verticalAxis -= 1.0f;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			LOG_INFO("Up input");
-			horizontalAxis += 1.0f;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			LOG_INFO("Up input");
-			horizontalAxis -= 1.0f;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			LOG_INFO("Attack input");
-			attack = true;
-			Emit();
-		}
-	}
+namespace MaxrEngine {
+KeyboardInputComponent::KeyboardInputComponent(GameObject* gameObject)
+    : InputComponent(gameObject) {}
+// NOLINTBEGIN(misc-unused-parameters) : inhereted method with parameter
+void KeyboardInputComponent::Update(float deltaTime) {
+    verticalAxis = 0.0F;
+    horizontalAxis = 0.0F;
+    attack = false;
+    block = false;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        LOG_INFO("Forward input");
+        verticalAxis += 1.0F;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        LOG_INFO("Backward input");
+        verticalAxis -= 1.0F;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        LOG_INFO("Right input");
+        horizontalAxis += 1.0F;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        LOG_INFO("Left input");
+        horizontalAxis -= 1.0F;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        LOG_INFO("Attack input");
+        attack = true;
+        Emit();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+        LOG_INFO("Block input");
+        block = true;
+    }
 }
+// NOLINTEND(misc-unused-parameters)
+}  // namespace MaxrEngine

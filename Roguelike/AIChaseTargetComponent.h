@@ -1,21 +1,26 @@
 #pragma once
-#include <Component.h>
-namespace Roguelike
-{
-	class AIChaseTargetComponent :
-		public MaxrEngine::Component
-	{
-	public:
-		AIChaseTargetComponent(MaxrEngine::GameObject* gameObject);
+#include "Component.h"
+#include "GameObject.h"
 
-		virtual void Update(float deltaTime);
-		virtual void Render();
+namespace Roguelike {
+class AIChaseTargetComponent : public MaxrEngine::Component {
+   public:
+    struct Parameters {
+        float minumumChaseRadius = 0.0F;
+        float maximumChaseRadius = 0.0F;
+    };
+    explicit AIChaseTargetComponent(MaxrEngine::GameObject* gameObject,
+                                    const Parameters& parameters = {0.0F,
+                                                                    0.0F});
 
-		void SetMaximumChaseRadius(float newMaximumRadius);
-		void SetMinimumChaseRadius(float newMinimuRadius);
-	private:
-		float minumumChaseRadius = 0.f;
-		float maximumChaseRadius = 0.f;
-	};
-}
+    void Update(float deltaTime) override;
+    void Render() override;
 
+    void SetMaximumChaseRadius(float newMaximumRadius);
+    void SetMinimumChaseRadius(float newMinimuRadius);
+
+   private:
+    float minumumChaseRadius = 0.0F;
+    float maximumChaseRadius = 0.0F;
+};
+}  // namespace Roguelike

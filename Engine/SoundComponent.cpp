@@ -1,65 +1,48 @@
 #include "pch.h"
+
 #include "SoundComponent.h"
 
-namespace MaxrEngine
-{
-	SoundComponent::SoundComponent(GameObject* gameObject) : Component(gameObject)
-	{
-		sound = new sf::Sound();
-	}
+#include "SFML/Audio/Sound.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
 
-	SoundComponent::~SoundComponent()
-	{
-		sound->stop();
-		delete sound;
-	}
+#include "Component.h"
+#include "GameObject.h"
 
-	void SoundComponent::Update(float deltaTime)
-	{
-	}
-
-	void SoundComponent::Render()
-	{
-	}
-
-	void SoundComponent::SetSound(const sf::SoundBuffer& newSound)
-	{
-		sound->setBuffer(newSound);
-	}
-
-	void SoundComponent::SetLoop(bool newLoop)
-	{
-		sound->setLoop(newLoop);
-	}
-
-	void SoundComponent::SetVolume(float volume)
-	{
-		sound->setVolume(volume);
-	}
-
-	void SoundComponent::Play()
-	{
-		if (sound->getStatus() != sf::Sound::Playing)
-		{
-			sound->play();
-		}
-	}
-
-	void SoundComponent::Stop()
-	{
-		sound->stop();
-	}
-
-	void SoundComponent::Pause()
-	{
-		sound->pause();
-	}
-
-	void SoundComponent::Resume()
-	{
-		if (sound->getStatus() != sf::Sound::Playing)
-		{
-			sound->play();
-		}
-	}
+namespace MaxrEngine {
+SoundComponent::SoundComponent(GameObject* gameObject) : Component(gameObject) {
+    sound = new sf::Sound();
 }
+
+SoundComponent::~SoundComponent() {
+    sound->stop();
+    delete sound;
+}
+
+void SoundComponent::Update(float deltaTime) {}
+
+void SoundComponent::Render() {}
+
+void SoundComponent::SetSound(const sf::SoundBuffer& newSound) {
+    sound->setBuffer(newSound);
+}
+
+void SoundComponent::SetLoop(bool newLoop) { sound->setLoop(newLoop); }
+
+void SoundComponent::SetVolume(float volume) { sound->setVolume(volume); }
+
+void SoundComponent::Play() {
+    if (sound->getStatus() != sf::Sound::Playing) {
+        sound->play();
+    }
+}
+
+void SoundComponent::Stop() { sound->stop(); }
+
+void SoundComponent::Pause() { sound->pause(); }
+
+void SoundComponent::Resume() {
+    if (sound->getStatus() != sf::Sound::Playing) {
+        sound->play();
+    }
+}
+}  // namespace MaxrEngine

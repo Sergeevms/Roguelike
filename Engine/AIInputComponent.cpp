@@ -1,36 +1,28 @@
 #include "pch.h"
+
 #include "AIInputComponent.h"
+
 #include "GameObject.h"
+#include "InputComponent.h"
 #include "TransformComponent.h"
+#include "Vector.h"
 
-namespace MaxrEngine
-{
-	AIInputComponent::AIInputComponent(GameObject* gameObject)
-		: InputComponent(gameObject)
-	{
-	}
+namespace MaxrEngine {
+AIInputComponent::AIInputComponent(GameObject* gameObject)
+    : InputComponent(gameObject) {}
 
-	void AIInputComponent::Update(float deltaTime)
-	{		
-	}
+void AIInputComponent::Update(float deltaTime) {}
 
-	void MaxrEngine::AIInputComponent::SetDirection(Vector2Df newDirection)
-	{
-		auto length = newDirection.GetLength();
-		if (length > 1.f)
-		{
-			newDirection *= 1.f / newDirection.GetLength();
-		}		
-		verticalAxis = newDirection.y;
-		horizontalAxis = newDirection.x;
-		if (length > 0.f)
-		{
-			Emit();
-		}
-	}
-
-	Vector2Df AIInputComponent::GetDirection() const
-	{
-		return { horizontalAxis, verticalAxis  };
-	}
+void MaxrEngine::AIInputComponent::SetDirection(const Vector2Df& newDirection) {
+    auto normalizedDirection = Normalized(newDirection);
+    verticalAxis = normalizedDirection.y;
+    horizontalAxis = normalizedDirection.x;
+    if (normalizedDirection.GetLength() > 0.0F) {
+        Emit();
+    }
 }
+
+Vector2Df AIInputComponent::GetDirection() const {
+    return {horizontalAxis, verticalAxis};
+}
+}  // namespace MaxrEngine

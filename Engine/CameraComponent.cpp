@@ -1,59 +1,65 @@
 #include "pch.h"
+
 #include "CameraComponent.h"
-#include <iostream>
+
 #include <cassert>
 
-namespace MaxrEngine
-{
-	CameraComponent::CameraComponent(GameObject* gameObject) : Component(gameObject)
-	{
-		view = new sf::View(sf::FloatRect(0, 0, 800, -600));
-		transform = gameObject->GetComponent<TransformComponent>();
-	}
+#include "SFML/Graphics/View.hpp"
+#include "SFML/System/Vector2.hpp"
 
-	CameraComponent::~CameraComponent()
-	{
-		delete view;
-	}
+#include "Component.h"
+#include "GameObject.h"
+#include "Logger.h"
+#include "TransformComponent.h"
+#include "Vector.h"
 
-	void CameraComponent::Update(float deltaTime)
-	{
-		auto position = transform->GetWorldPosition();
-		auto rotation = transform->GetWorldRotation();
+namespace MaxrEngine {
 
-		view->setCenter(Convert<sf::Vector2f, Vector2Df>(position));
-		view->setRotation(rotation);
-
-		window->setView(*view);
-	}
-
-	void CameraComponent::Render()
-	{
-		assert(window != nullptr && "NULL window render");
-		if (!window)
-		{
-			LOG_ERROR("NULL window render.");
-		}
-	}
-
-	void CameraComponent::SetWindow(sf::RenderWindow* newWindow)
-	{
-		window = newWindow;
-	}
-
-	void CameraComponent::ZoomBy(float newZoom)
-	{
-		assert(newZoom > 0.f && "Not allowed zoom lesser or equal than zero.");
-		if (newZoom <= 0)
-		{
-			LOG_WARN("Not allowed zoom lesser or equal than zero.");
-			return;
-		}
-		view->zoom(newZoom);
-	}
-
-	void CameraComponent::SetBaseResolution(int width, int height)
-	{
-		view->reset(sf::FloatRect(0.f, 0.f, static_cast<float>(width), static_cast<float>(-height)));
-	}
+CameraComponent::CameraComponent(GameObject* gameObject)
+    : Component(gameObject) {
+    constexpr float defaultResolutionWidth = 800.0F;
+    constexpr float defaultResolutionHeight = -600.0F;
+    view = new sf::View(
+        sf::FloatRect(0, 0, defaultResolutionWidth, -defaultResolutionHeight));
+    transform = gameObject->GetComponent<TransformComponent>();
 }
+
+CameraComponent::~CameraComponent() { delete view; }
+
+void CameraComponent::Update(
+    float deltaTime) {  // NOLINT(misc-unused-parameters) : overrided virtual
+                        // function with parameter
+    const auto& position = transform->GetWorldPosition();
+    auto rotation = transform->GetWorldRotation();
+
+    view->setCenter(Convert<sf::Vector2f>(position));
+    view->setRotation(rotation);
+
+    window->setView(*view);
+}
+
+void CameraComponent::Render() {
+    assert(window != nullptr && "NULL window render");
+    if (window == nullptr) {
+        LOG_ERROR("NULL window render.");
+    }
+}
+
+void CameraComponent::SetWindow(sf::RenderWindow* newWindow) {
+    window = newWindow;
+}
+
+void CameraComponent::ZoomBy(float newZoom) {
+    assert(newZoom > 0.0F && "Not allowed zoom lesser or equal than zero.");
+    if (newZoom <= 0) {
+        LOG_WARN("Not allowed zoom lesser or equal than zero.");
+        return;
+    }
+    view->zoom(newZoom);
+}
+
+void CameraComponent::SetBaseResolution(int width, int height) {
+    view->reset(sf::FloatRect(0.0F, 0.0F, static_cast<float>(width),
+                              static_cast<float>(-height)));
+}
+}  // namespace MaxrEngine

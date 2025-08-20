@@ -1,23 +1,19 @@
 #include "pch.h"
+
 #include "InputComponent.h"
 
-namespace MaxrEngine
-{
-	InputComponent::InputComponent(GameObject* gameObject) : Component(gameObject) {}
+#include "Component.h"
+#include "GameObject.h"
 
-	void InputComponent::Render() {}
+namespace MaxrEngine {
+InputComponent::InputComponent(GameObject* gameObject)
+    : Component(gameObject) {}
 
-	float InputComponent::GetHorizontalAxis() const
-	{
-		return horizontalAxis;
-	}
+void InputComponent::Render() {}
 
-	float InputComponent::GetVerticalAxis() const
-	{
-		return verticalAxis;
-	}
-	bool InputComponent::getAttack() const
-	{
-		return attack;
-	}
-}
+float InputComponent::GetHorizontalAxis() const { return horizontalAxis; }
+
+float InputComponent::GetVerticalAxis() const { return verticalAxis; }
+bool InputComponent::getAttack() const { return attack; }
+bool InputComponent::getBlock() const { return block; }
+}  // namespace MaxrEngine

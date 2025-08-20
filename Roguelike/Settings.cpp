@@ -1,49 +1,61 @@
 #include "Settings.h"
 
-namespace Roguelike
-{
-	Settings::Settings()
-	{
-		resourcesPath = "Resources\\";
-		soundPath = resourcesPath + "Sounds\\";
-		fontPath = resourcesPath + "Fonts\\";
-		texturePath = resourcesPath + "Textures\\";
-		textureMapsPath = resourcesPath + "TextureMaps\\";
+#include "SFML/Graphics/Color.hpp"
 
-		screenWidth = 1280;
-		screenHeight = 720;
-		gameName = L"Roguelike";
-		playerSize = 32;
-		playerSpeed = 400.f;
-		mapTileSize = 36;
+#include "DefaultActorsSettings.h"
+#include "Utility.h"
+#include "Vector.h"
 
-		enemySpeed = playerSpeed / 2.f;
-		enemyVisionRadius = 300.f;
-		enemyVisionAngle = 145.f;
-		enemySenseRadius = 150.f;
-		enemyChaseMaxRadius = enemyVisionRadius;
-		enemyChaseMinRadius = 40.f;
+namespace Roguelike {
+const SettingsStruct Settings::defaultsSettings{
 
-		playerHealth = 200.f;
-		enemyHealth = 100.f;
-		armorDamageReduction = 0.75f;
-		attackRange = 100.f;
-		attackCooldown = 2.f;
-		attackDamage = 30.f; 
-		
-		healthBarDistance = 4.f;
-		barHeight = 5.f;
-		barBorder = 1.f;
-		armorBarDistance = 2 * healthBarDistance + barHeight;
-	}
+    .screenWidth = 1280,
+    .screenHeight = 720,
+    .gameName = L"Roguelike",
 
-	MaxrEngine::Vector2Df Settings::ScreenCenter()
-	{
-		return ScreenSize() * 0.5f;
-	}
+    .resourcesPath = "Resources\\",
+    .soundPath = "Resources\\Sounds\\",
+    .fontPath = "Resources\\Fonts\\",
+    .texturePath = "Resources\\Textures\\",
+    .textureMapsPath = "Resources\\TextureMaps\\",
 
-	MaxrEngine::Vector2Df Settings::ScreenSize()
-	{
-		return 	MaxrEngine::Vector2Df({static_cast<float>(screenWidth), static_cast<float>(screenHeight)});
-	}
+    .playerTextureMap = {.name = "PlayerTextures",
+                         .sourcePath = "Resources\\TextureMaps\\Player.png",
+                         .elementPixelSize = {100, 80},
+                         .totalElements = 16,
+                         .isSmooth = true},
+    .enemyTextureMap = {.name = "EnemyTextures",
+                        .sourcePath = "Resources\\TextureMaps\\Enemy.png",
+                        .elementPixelSize = {96, 96},
+                        .totalElements = 15,
+                        .isSmooth = false},
+    .wallTextureMap = {.name = "WallTextures",
+                       .sourcePath = "Resources\\TextureMaps\\Wall.png",
+                       .elementPixelSize = {16, 16},
+                       .totalElements = 48,
+                       .isSmooth = false},
+    .floorTextureMap = {.name = "FloorTextures",
+                        .sourcePath = "Resources\\TextureMaps\\Floor.png",
+                        .elementPixelSize = {16, 16},
+                        .totalElements = 49,
+                        .isSmooth = false},
+
+    .playerParameters = DefaultSettings::defaultPlayerParameters,
+    .aiParameters = DefaultSettings::AIActorParameters,
+
+    .mapTileSize = 150,
+    .labyrinthParameters = {.width = 11,
+                            .heigth = 11,
+                            .isAdjustingSizeAndStart = true,
+                            .randSeed = -1},
+    .timeToRemoveAfterDeath = 4.0F};
+
+MaxrEngine::Vector2Df Settings::ScreenCenter() const {
+    return Half(ScreenSize());
 }
+
+MaxrEngine::Vector2Df Settings::ScreenSize() const {
+    return MaxrEngine::Vector2Df(
+        {static_cast<float>(screenWidth), static_cast<float>(screenHeight)});
+}
+}  // namespace Roguelike

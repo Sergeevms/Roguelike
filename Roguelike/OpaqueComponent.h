@@ -1,22 +1,20 @@
 #pragma once
+#include "SFML/Graphics/Rect.hpp"
+
 #include "Component.h"
-#include <SFML/Graphics.hpp>
-#include "PerceptionSystem.h"
 
-namespace Roguelike
-{
-	class OpaqueComponent :
-		public MaxrEngine::Component
-	{
-	public:
-		OpaqueComponent(MaxrEngine::GameObject* gameObject);
-		~OpaqueComponent();
+namespace Roguelike {
+class OpaqueComponent : public MaxrEngine::Component {
+   public:
+    friend class PerceptionSystem;
 
-		virtual void Update(float deltaTime) override;
-		virtual void Render() override;
-		friend class PerceptionSystem;
-	protected:
-		sf::FloatRect bounds;
-	};
-}
+    explicit OpaqueComponent(MaxrEngine::GameObject* gameObject);
+    ~OpaqueComponent();
 
+    void Update(float deltaTime) override;
+    void Render() override;
+
+   protected:
+    sf::FloatRect bounds;
+};
+}  // namespace Roguelike

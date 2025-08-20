@@ -1,45 +1,61 @@
 #pragma once
+#include <vector>
+
 #include "Component.h"
-#include "Vector.h"
-#include "TransformComponent.h"
 #include "IObserver.h"
-namespace Roguelike
-{
-	class PerceptionComponent :
-		public MaxrEngine::Component, public MaxrEngine::IObservable
-	{
-	public:
-		PerceptionComponent(MaxrEngine::GameObject* gameObject);
-		~PerceptionComponent();
+#include "TransformComponent.h"
+#include "Vector.h"
+namespace Roguelike {
+// Base component working with PerceptionSystem
+class PerceptionComponent : public MaxrEngine::Component,
+                            public MaxrEngine::IObservable {
+   public:
+    struct Parameters {
+        float visionAngle;
+        float visionRadius;
+        float visionDirectionX;
+        float visionDirectionY;
+        float senseRadius;
+    };
+    static constexpr Parameters defaultParameters = {.visionAngle = 120.0F,
+                                                     .visionRadius = 300.0F,
+                                                     .visionDirectionX = 1.0F,
+                                                     .visionDirectionY = 0.0F,
+                                                     .senseRadius = 100.0F};
 
-		virtual void Update(float deltaTime) override;
-		virtual void Render() override;
+    explicit PerceptionComponent(
+        MaxrEngine::GameObject* gameObject,
+        const Parameters& parameters = defaultParameters);
+    ~PerceptionComponent();
 
-		void SetVisionAngle(const float newVisionAngle);
-		float GetVisionAngle() const;
+    void Update(float deltaTime) override;
+    void Render() override;
 
-		void SetVisionRadius(const float newVisionRadius);
-		float GetVisionRadius() const;
+    void SetVisionAngle(const float newVisionAngle);
+    float GetVisionAngle() const;
 
-		void SetSenseRadius(const float newSenseRadius);
-		float GetSenseRadius() const;
+    void SetVisionRadius(const float newVisionRadius);
+    float GetVisionRadius() const;
 
-		void SetVisionDirection(const MaxrEngine::Vector2Df& newVisionDirection);
-		const MaxrEngine::Vector2Df& GetVisionDirection() const;
+    void SetSenseRadius(const float newSenseRadius);
+    float GetSenseRadius() const;
 
-		const MaxrEngine::TransformComponent* GetTransform() const;
+    void SetVisionDirection(const MaxrEngine::Vector2Df& newVisionDirection);
+    const MaxrEngine::Vector2Df& GetVisionDirection() const;
 
-		void UpdateDetectedActors();
-		void UpdateDetectedActors(const std::vector<MaxrEngine::GameObject*>& actors);
-		const std::vector<MaxrEngine::GameObject*>* GetDetectedActors();
-		
-	protected:
-		float visionAngle = 360.f;
-		float visionRadius = 300.f;
-		float senseRadius = 100.f;
-		MaxrEngine::Vector2Df visionDirection = { 1.f, 0.f };
-		MaxrEngine::TransformComponent* transform;
-		std::vector<MaxrEngine::GameObject*> detectedActors;
-	};
-}
+    const MaxrEngine::TransformComponent* GetTransform() const;
 
+    void UpdateDetectedActors();
+    void UpdateDetectedActors(
+        const std::vector<MaxrEngine::GameObject*>& actors);
+    const std::vector<MaxrEngine::GameObject*>* GetDetectedActors();
+
+   protected:
+    float visionAngle;
+    float visionRadius;
+    float senseRadius;
+    MaxrEngine::Vector2Df visionDirection;
+    MaxrEngine::TransformComponent* transform;
+    std::vector<MaxrEngine::GameObject*> detectedActors;
+};
+}  // namespace Roguelike

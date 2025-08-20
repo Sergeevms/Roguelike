@@ -1,47 +1,41 @@
 #pragma once
-#include "Component.h"
-#include <unordered_map>
 #include <string>
 #include <tuple>
-namespace MaxrEngine
-{
-	template<typename ... ValueTypes>
-	class AITypedBlackboardComponent :
-		public Component
-	{
-	public:
-		template<typename T>
-		using MapType = std::unordered_map<std::string, T>;
-		using Data = std::tuple<MapType<ValueTypes>...>;
+#include <unordered_map>
 
-		AITypedBlackboardComponent(GameObject* gameObject) : Component(gameObject) {};
+#include "Component.h"
 
-		virtual void Update(float deltaTime) {};
-		virtual void Render() {};
+namespace MaxrEngine {
+template <typename... ValueTypes>
+class AITypedBlackboardComponent : public Component {
+   public:
+    template <typename T>
+    using MapType = std::unordered_map<std::string, T>;
+    using Data = std::tuple<MapType<ValueTypes>...>;
 
-		template<typename T>
-		void Set(std::string key, const T& value)
-		{
-			std::get<MapType<T>>(data)[key] = value;
-		}
+    explicit AITypedBlackboardComponent(GameObject* gameObject)
+        : Component(gameObject) {};
 
-		template<typename T>
-		bool Get(std::string key, T & outValue) const
-		{
-			auto& map = std::get<MapType<T>>(data);
-			auto it = map.find(key);
-			if (it == map.end())
-			{
-				return false;
-			}
-			else
-			{
-				outValue = it->second;
-				return true;
-			}
-		}
-	protected:
-		Data data;
-	};
-}
+    virtual void Update(float deltaTime) {};
+    virtual void Render() {};
 
+    template <typename T>
+    void Set(std::string key, const T& value) {
+        std::get<MapType<T>>(data)[key] = value;
+    }
+
+    template <typename T>
+    bool Get(std::string key, T& outValue) const {
+        auto& map = std::get<MapType<T>>(data);
+        auto foundIt = map.find(key);
+        if (foundIt == map.end()) {
+            return false;
+        }
+        outValue = foundIt->second;
+        return true;
+    }
+
+   protected:
+    Data data;
+};
+}  // namespace MaxrEngine

@@ -1,6 +1,10 @@
 .vs/
 **/x64/
 **/x86/
+!*/packages/*/x64/
+!*/packages/*/x86/
 .vcxproj.user
 .kra
 Log.txt
+Doxyfile
+docs/html/*

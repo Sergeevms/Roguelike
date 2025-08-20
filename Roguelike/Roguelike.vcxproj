@@ -74,6 +74,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>google-*,bugprone-*,misc-*,perfomance-*,readability-*,clang-diagnostic-*,clang-analyzer-*,-readability-avoid-const-params-in-decls,-clang-diagnostic-pragma-once-outside-header,-misc-non-private-member-variables-in-classes</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -90,6 +104,9 @@
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)RunClangformat.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -110,6 +127,9 @@
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)RunClangformat.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -128,6 +148,9 @@
       <EntryPointSymbol>
       </EntryPointSymbol>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)RunClangformat.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -148,53 +171,71 @@
       <AdditionalLibraryDirectories>$(SolutionDir)SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)RunClangformat.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorComponent.cpp" />
+    <ClCompile Include="ActorMovementComponent.cpp" />
     <ClCompile Include="ActorRegisterSystem.cpp" />
+    <ClCompile Include="ActorSpriteDirectionComponent.cpp" />
+    <ClCompile Include="AIActor.cpp" />
+    <ClCompile Include="AIActorManagerSystem.cpp" />
     <ClCompile Include="ArmorBarComponent.cpp" />
     <ClCompile Include="ArmorComponent.cpp" />
     <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="BarComponent.cpp" />
+    <ClCompile Include="BlockComponent.cpp" />
     <ClCompile Include="HealthBarComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
+    <ClCompile Include="LabyrinthExit.cpp" />
     <ClCompile Include="OpaqueComponent.cpp" />
     <ClCompile Include="PerceptionComponent.cpp" />
     <ClCompile Include="PerceptionComponentDebugDraw.cpp" />
     <ClCompile Include="PerceptionSystem.cpp" />
+    <ClCompile Include="PlayerActor.cpp" />
     <ClCompile Include="SpriteOpaqueComponent.cpp" />
     <ClCompile Include="AIAttackComponent.cpp" />
     <ClCompile Include="AIChaseTargetComponent.cpp" />
-    <ClCompile Include="AIBlackboard.cpp" />
     <ClCompile Include="AIPerceptionComponent.cpp" />
     <ClCompile Include="AITargetSelector.cpp" />
     <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObjectContainer.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="LabyrinthBuilder.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAttackComponent.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="ActorMovementComponent.h" />
     <ClInclude Include="ActorRegisterSystem.h" />
+    <ClInclude Include="ActorSpriteDirectionComponent.h" />
+    <ClInclude Include="AIActor.h" />
+    <ClInclude Include="AIActorManagerSystem.h" />
     <ClInclude Include="ArmorBarComponent.h" />
     <ClInclude Include="ArmorComponent.h" />
     <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="BarComponent.h" />
+    <ClInclude Include="BlockComponent.h" />
+    <ClInclude Include="DefaultActorsSettings.h" />
     <ClInclude Include="HealthBarComponent.h" />
     <ClInclude Include="HealthComponent.h" />
+    <ClInclude Include="LabyrinthElement.h" />
+    <ClInclude Include="LabyrinthExit.h" />
     <ClInclude Include="OpaqueComponent.h" />
     <ClInclude Include="PerceptionComponent.h" />
     <ClInclude Include="PerceptionComponentDebugDraw.h" />
     <ClInclude Include="PerceptionSystem.h" />
+    <ClInclude Include="PlayerActor.h" />
     <ClInclude Include="SpriteOpaqueComponent.h" />
     <ClInclude Include="AIAttackComponent.h" />
     <ClInclude Include="AIChaseTargetComponent.h" />
@@ -203,14 +244,12 @@
     <ClInclude Include="AITargetSelector.h" />
     <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="DeveloperLevel.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObjectContainer.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="ISaveable.h" />
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="LabyrinthBuilder.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAttackComponent.h" />
     <ClInclude Include="Randomizer.h" />
     <ClInclude Include="Settings.h" />

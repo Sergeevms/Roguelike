@@ -1,65 +1,61 @@
 #pragma once
-#include "Vector.h"
 #include <string>
 
-namespace Roguelike
-{
-	class Settings
-	{
-	public:
-		static Settings* Instance()
-		{
-			static Settings world;
-			return &world;
-		};
-		MaxrEngine::Vector2Df ScreenCenter();
-		MaxrEngine::Vector2Df ScreenSize();
+#include "AIActor.h"
+#include "Actor.h"
+#include "LabyrinthBuilder.h"
+#include "ResourceSystem.h"
+#include "Vector.h"
 
-		//General settings
+namespace Roguelike {
+/** Struct storing game settings
+ */
+struct SettingsStruct {
+    // Window & camera parameters
+    int screenWidth;
+    int screenHeight;
+    std::wstring gameName;
 
-		int screenWidth;
-		int screenHeight;
-		std::wstring gameName;
+    // Paths to files
+    std::string resourcesPath;
+    std::string soundPath;
+    std::string fontPath;
+    std::string texturePath;
+    std::string textureMapsPath;
 
-		//Paths to files
-		std::string resourcesPath;
-		std::string soundPath;
-		std::string fontPath;
-		std::string texturePath;
-		std::string textureMapsPath;
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters playerTextureMap;
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters enemyTextureMap;
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters wallTextureMap;
+    MaxrEngine::ResourceSystem::TextureMapLoadingParameters floorTextureMap;
 
-		int playerSize;
-		float playerSpeed;
-		float enemySpeed;		
-		float enemyVisionRadius;
-		float enemyVisionAngle;
-		float enemySenseRadius;
-		float enemyChaseMaxRadius;
-		float enemyChaseMinRadius;
-		int mapTileSize;
+    Actor::Parameters playerParameters;
+    AIActor::Parameters aiParameters;
 
-		float playerHealth;
-		float enemyHealth;
-		float armorDamageReduction;
-		float attackRange;
-		float attackCooldown;
-		float attackDamage;
+    int mapTileSize;
 
-		float healthBarDistance;
-		float armorBarDistance;
-		float barHeight;
-		float barBorder;
-		
-	private:
-		Settings();
-		~Settings() = default;
-		Settings(const Settings&) = delete;
-		Settings operator= (const Settings&) = delete;
-	};
-
-	enum ActorsGroups
-	{
-		PlayerGroup,
-		EnemyGroup
-	};
+    LabyrinthBuilder::Parameters labyrinthParameters;
+    float timeToRemoveAfterDeath;
 };
+
+/** Singleton class storing current game settings
+ *   TODO(MaxrRusich) : serialization
+ */
+class Settings : public SettingsStruct {
+   public:
+    static Settings* Instance() {
+        static Settings world;
+        return &world;
+    };
+    MaxrEngine::Vector2Df ScreenCenter() const;
+    MaxrEngine::Vector2Df ScreenSize() const;
+
+   private:
+    static const SettingsStruct defaultsSettings;
+    Settings() : SettingsStruct(defaultsSettings) {};
+    ~Settings() = default;
+    Settings(const Settings&) = delete;
+    Settings operator=(const Settings&) = delete;
+};
+/** Enum to define Actors group*/
+enum ActorsGroups { PlayerGroup, EnemyGroup };
+};  // namespace Roguelike
