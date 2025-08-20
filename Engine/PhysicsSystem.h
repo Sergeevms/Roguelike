@@ -26,7 +26,7 @@ class PhysicsSystem : public IFixedUpdateSystem {
     PhysicsSystem& operator=(PhysicsSystem const&) = delete;
 
     static void ProcessCollision(Collision* collision);
-    void ProcessTriggering(Trigger* trigger);
+    void ProcessTriggerEnter(Trigger* trigger);
 
     std::vector<ColliderComponent*> colliders;
     std::map<ColliderComponent*, ColliderComponent*> triggersEnteredPair;

@@ -36,6 +36,7 @@ void BarComponent::Render() {
         LOG_WARN("Bars maxAmount should be positive");
         return;
     }
+    // Calculate bar position and size
     const auto& objectPosition =
         gameObject->GetComponent<MaxrEngine::TransformComponent>()
             ->GetWorldPosition();
@@ -43,6 +44,7 @@ void BarComponent::Render() {
     const MaxrEngine::Vector2Df filledBarSize = {
         barSize.x * currentAmount / maxAmount, barSize.y};
 
+    // Draw full bar border if needed
     if (abs(borderSize) > 0.0F) {
         sf::RectangleShape borderShape(Convert<sf::Vector2f>(barSize));
         borderShape.setFillColor(sf::Color::Transparent);
@@ -51,6 +53,8 @@ void BarComponent::Render() {
         borderShape.setPosition(Convert<sf::Vector2f>(barTopLeft));
         MaxrEngine::RenderSystem::Instance()->Render(borderShape);
     }
+
+    // Draw filled bar
     sf::RectangleShape barShape(Convert<sf::Vector2f>(filledBarSize));
     barShape.setFillColor(barColor);
     barShape.setPosition(Convert<sf::Vector2f>(barTopLeft));

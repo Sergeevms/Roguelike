@@ -108,10 +108,12 @@ float ArmorComponent::IncreaseArmorPoints(const float armorPointAmount) {
     if (currentArmorPoints > currentArmorPoints) {
         const float overArmorRestore = currentArmorPoints - maxArmorPoints;
         currentArmorPoints = maxArmorPoints;
+
         message << "Restoring " << overArmorRestore
                 << " not applied due to going over maxArmorPoints";
         LOG_INFO(message.str());
         message.clear();
+
         Emit();
         return overArmorRestore;
     }
