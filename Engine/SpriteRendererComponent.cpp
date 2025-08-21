@@ -61,7 +61,7 @@ bool SpriteRendererComponent::IsTextureRightDirected() const {
     return isTextureRightDirected;
 }
 
-ENGINE_API void SpriteRendererComponent::SetColor(const sf::Color newColor) {
+void SpriteRendererComponent::SetColor(const sf::Color newColor) {
     sprite->setColor(newColor);
 }
 

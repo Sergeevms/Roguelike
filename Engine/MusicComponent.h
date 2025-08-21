@@ -2,9 +2,9 @@
 #include "SFML/Audio/Music.hpp"
 
 #include "Component.h"
-#include "EngineAPI.h"
+
 namespace MaxrEngine {
-class ENGINE_API MusicComponent : public Component {
+class MusicComponent : public Component {
    public:
     explicit MusicComponent(GameObject* gameObject);
     ~MusicComponent();

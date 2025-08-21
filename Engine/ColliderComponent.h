@@ -6,7 +6,6 @@
 
 #include "Collision.h"
 #include "Component.h"
-#include "EngineAPI.h"
 #include "Trigger.h"
 
 namespace MaxrEngine {
@@ -14,26 +13,21 @@ class ColliderComponent : public Component {
    public:
     friend class PhysicsSystem;
 
-    explicit ENGINE_API ColliderComponent(GameObject* gameObject);
+    explicit ColliderComponent(GameObject* gameObject);
 
     void Update(float deltaTime) override = 0;
 
-    ENGINE_API void SetTrigger(bool newIsTrigger);
+    void SetTrigger(bool newIsTrigger);
 
-    ENGINE_API void SubscribeCollision(
-        std::function<void(Collision)> onCollisionAction);
-    ENGINE_API void UnsubscribeCollision(
-        std::function<void(Collision)> onCollisionAction);
+    void SubscribeCollision(std::function<void(Collision)> onCollisionAction);
+    void UnsubscribeCollision(std::function<void(Collision)> onCollisionAction);
 
-    ENGINE_API void SubscribeTriggerEntered(
-        std::function<void(Trigger)> onTriggerEntered);
-    ENGINE_API void UnsubscribeTriggerEntered(
+    void SubscribeTriggerEntered(std::function<void(Trigger)> onTriggerEntered);
+    void UnsubscribeTriggerEntered(
         std::function<void(Trigger)> onTriggerEntered);
 
-    ENGINE_API void SubscribeTriggerExit(
-        std::function<void(Trigger)> onTriggerExit);
-    ENGINE_API void UnsubscribeTriggerExit(
-        std::function<void(Trigger)> onTriggerExit);
+    void SubscribeTriggerExit(std::function<void(Trigger)> onTriggerExit);
+    void UnsubscribeTriggerExit(std::function<void(Trigger)> onTriggerExit);
 
    protected:
     sf::FloatRect bounds;

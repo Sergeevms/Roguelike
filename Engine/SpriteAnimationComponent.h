@@ -7,7 +7,6 @@
 #include "SFML/Graphics/Texture.hpp"
 
 #include "Component.h"
-#include "EngineAPI.h"
 #include "GameObject.h"
 #include "SpriteRendererComponent.h"
 
@@ -39,22 +38,21 @@ class SpriteAnimationComponent : public Component {
    public:
     /** Constructor. Checks if SpriteRendererComponent available for gameObject,
      * removes SpriteAnimationComponent otherwise*/
-    ENGINE_API explicit SpriteAnimationComponent(GameObject* gameObject);
+    explicit SpriteAnimationComponent(GameObject* gameObject);
     /** Updates timers, frame, currentAnimationName if needed*/
-    ENGINE_API void Update(float deltaTime) override;
+    void Update(float deltaTime) override;
     /** Overrides stored in component animation by name animationName. Updates
      * defaultAnimationName if isDefault is true or defaultAnimation not setted
      * yet
      */
-    ENGINE_API void AddAnimation(const std::string& animationName,
-                                 const Animation& animation,
-                                 bool isDefault = false);
+    void AddAnimation(const std::string& animationName,
+                      const Animation& animation, bool isDefault = false);
     /** Remove animation from component*/
-    ENGINE_API void RemoveAnimation(const std::string& animationName);
+    void RemoveAnimation(const std::string& animationName);
 
     /** Imideatly change current animation, set next animation to default*/
-    ENGINE_API void StartAnimation(const std::string& animationName,
-                                   const bool ignorePriority = false);
+    void StartAnimation(const std::string& animationName,
+                        const bool ignorePriority = false);
 
    protected:
     /** Updates timePerFrame, framesTextures, resets timer and curretFrame*/

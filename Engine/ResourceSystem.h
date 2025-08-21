@@ -9,8 +9,6 @@
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/System/Vector2.hpp"
 
-#include "EngineAPI.h"
-
 namespace MaxrEngine {
 class ResourceSystem {
    public:
@@ -21,44 +19,40 @@ class ResourceSystem {
         int totalElements;
         bool isSmooth = true;
     };
-    ENGINE_API static ResourceSystem* Instance();
+    static ResourceSystem* Instance();
 
-    ENGINE_API void LoadTexture(const std::string& name, std::string sourcePath,
-                                bool isSmooth = true);
-    ENGINE_API const sf::Texture* GetTextureShared(
-        const std::string& name) const;
-    ENGINE_API sf::Texture* GetTectureCopy(const std::string& name) const;
-    ENGINE_API void DeleteSharedTexture(const std::string& name);
+    void LoadTexture(const std::string& name, std::string sourcePath,
+                     bool isSmooth = true);
+    const sf::Texture* GetTextureShared(const std::string& name) const;
+    sf::Texture* GetTectureCopy(const std::string& name) const;
+    void DeleteSharedTexture(const std::string& name);
 
-    ENGINE_API void LoadTextureMap(const std::string& name,
-                                   std::string sourcePath,
-                                   sf::Vector2i elementPixelSize,
-                                   int totalElements, bool isSmooth = true);
-    ENGINE_API void LoadTextureMap(
-        const TextureMapLoadingParameters& parameters);
-    ENGINE_API const sf::Texture* GetTextureMapElementShared(
-        const std::string& name, int elementIndex) const;
-    ENGINE_API sf::Texture* GetTextureMapElementCopy(const std::string& name,
-                                                     int elementIndex) const;
-    ENGINE_API int GetTextureMapElementsCount(const std::string& name) const;
-    ENGINE_API void DeleteSharedTextureMap(const std::string& name);
+    void LoadTextureMap(const std::string& name, std::string sourcePath,
+                        sf::Vector2i elementPixelSize, int totalElements,
+                        bool isSmooth = true);
+    void LoadTextureMap(const TextureMapLoadingParameters& parameters);
+    const sf::Texture* GetTextureMapElementShared(const std::string& name,
+                                                  int elementIndex) const;
+    sf::Texture* GetTextureMapElementCopy(const std::string& name,
+                                          int elementIndex) const;
+    int GetTextureMapElementsCount(const std::string& name) const;
+    void DeleteSharedTextureMap(const std::string& name);
 
-    ENGINE_API void LoadSound(const std::string& name, std::string sourcePath);
-    ENGINE_API const sf::SoundBuffer* GetSoundShared(
-        const std::string& name) const;
-    ENGINE_API sf::SoundBuffer* GetSoundCopy(const std::string& name) const;
-    ENGINE_API void DeleteSound(const std::string& name);
+    void LoadSound(const std::string& name, std::string sourcePath);
+    const sf::SoundBuffer* GetSoundShared(const std::string& name) const;
+    sf::SoundBuffer* GetSoundCopy(const std::string& name) const;
+    void DeleteSound(const std::string& name);
 
-    ENGINE_API void LoadFont(const std::string& name, std::string sourcePath);
-    ENGINE_API const sf::Font* GetFontShared(const std::string& name) const;
-    ENGINE_API sf::Font* GetFontCopy(const std::string& name) const;
-    ENGINE_API void DeleteFont(const std::string& name);
+    void LoadFont(const std::string& name, std::string sourcePath);
+    const sf::Font* GetFontShared(const std::string& name) const;
+    sf::Font* GetFontCopy(const std::string& name) const;
+    void DeleteFont(const std::string& name);
 
-    ENGINE_API void LoadMusic(const std::string& name, std::string sourcePath);
-    ENGINE_API sf::Music* GetMusicShared(const std::string& name) const;
-    ENGINE_API void DeleteMusic(const std::string& name);
+    void LoadMusic(const std::string& name, std::string sourcePath);
+    sf::Music* GetMusicShared(const std::string& name) const;
+    void DeleteMusic(const std::string& name);
 
-    ENGINE_API void Clear();
+    void Clear();
 
    private:
     std::map<std::string, sf::Texture*> textures;

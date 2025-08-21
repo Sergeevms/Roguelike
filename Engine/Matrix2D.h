@@ -1,10 +1,9 @@
 #pragma once
 #include <array>
 
-#include "EngineAPI.h"
 #include "Vector.h"
 namespace MaxrEngine {
-class ENGINE_API Matrix2D {
+class Matrix2D {
    public:
     // Constructs identity matrix
     Matrix2D();

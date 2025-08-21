@@ -3,10 +3,9 @@
 #include "SFML/Audio/SoundBuffer.hpp"
 
 #include "Component.h"
-#include "EngineAPI.h"
 
 namespace MaxrEngine {
-class ENGINE_API SoundComponent : public Component {
+class SoundComponent : public Component {
    public:
     explicit SoundComponent(GameObject* gameObject);
     ~SoundComponent();

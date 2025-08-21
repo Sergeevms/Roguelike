@@ -3,11 +3,10 @@
 #include "SFML/Graphics/View.hpp"
 
 #include "Component.h"
-#include "EngineAPI.h"
 #include "TransformComponent.h"
 
 namespace MaxrEngine {
-class ENGINE_API CameraComponent : public Component {
+class CameraComponent : public Component {
    public:
     explicit CameraComponent(GameObject* gameObject);
     ~CameraComponent();
