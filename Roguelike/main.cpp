@@ -25,8 +25,10 @@ int main() {
     globalLogger->AddSink(std::make_shared<MaxrEngine::ConsoleSink>());
 #endif  // CREATE_CONSOLE_FOR_ENGINE_PRINT_OUTPUT
     // globalLogger->AddSink(std::make_shared<MaxrEngine::FileSink>("Log.txt"));
+
     globalLogger->SetLoggedLevels(MaxrEngine::LogLevel::ALL);
     LOG_INFO("ProgramStarted");
+
     auto* settings = Roguelike::Settings::Instance();
 
     MaxrEngine::RenderSystem::Instance()->CrateMainWindow(

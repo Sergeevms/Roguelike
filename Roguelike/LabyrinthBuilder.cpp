@@ -38,8 +38,10 @@ void LabyrinthBuilder::Generate(const Parameters& parameters) {
     } else {
         std::srand(parameters.randSeed);
     }
+
     // filling tileGrid with desired size by walls
     StartBuilding({parameters.width, parameters.heigth}, TileType::Wall);
+
     // setting DFS start position in labyrinth interior
     if (parameters.startPosition.x < 0 || parameters.startPosition.y < 0) {
         // Get random position in Labyrinth interior
@@ -59,6 +61,7 @@ void LabyrinthBuilder::Generate(const Parameters& parameters) {
     // stack for cells that will be processed
     std::stack<MaxrEngine::Vector2Di> cellStack;
     cellStack.push(startPosition);
+
     // Start DFS
     while (!cellStack.empty()) {
         // get cell for processing
@@ -110,9 +113,11 @@ void LabyrinthBuilder::AddRect(const RectFillingParameters& parameters) {
     const MaxrEngine::Vector2Di bottomLeft = {
         std::clamp(parameters.bottomLeft.x, 0, labyrinthTileWidth),
         std::clamp(parameters.bottomLeft.y, 0, labyrinthTileHeight)};
+
     const MaxrEngine::Vector2Di size = {
         std::clamp(parameters.size.x, 0, labyrinthTileWidth - bottomLeft.x),
         std::clamp(parameters.size.y, 0, labyrinthTileWidth - bottomLeft.y)};
+
     const MaxrEngine::Vector2Di topRight =
         bottomLeft + size - MaxrEngine::Vector2Di(1, 1);
     // Processing rect top and bottom border
@@ -214,6 +219,7 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
                     labyrinthTransform->GetWorldPosition(), textureId,
                     MaxrEngine::Vector2Di(settings->mapTileSize,
                                           settings->mapTileSize));
+
                 auto* wallTransform =
                     wall->GetGameObject()
                         ->GetComponent<MaxrEngine::TransformComponent>();
@@ -225,13 +231,16 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
                 labyrinth->isTileWalkable[i][j] = true;
                 const int textureId =
                     usableFloorTextureId[rand() % usableFloorTextureId.size()];
+
                 auto floor = std::make_shared<Floor>(
                     labyrinthTransform->GetWorldPosition(), textureId,
                     MaxrEngine::Vector2Di(settings->mapTileSize,
                                           settings->mapTileSize));
+
                 auto* floorTransform =
                     floor->GetGameObject()
                         ->GetComponent<MaxrEngine::TransformComponent>();
+
                 floorTransform->SetParent(labyrinthTransform);
                 floorTransform->SetLocalPosition(GetTylePosition({i, j}));
                 labyrinth->elements[i][j] = floor;
@@ -243,6 +252,7 @@ std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
                     labyrinthTransform->GetWorldPosition(), textureId,
                     MaxrEngine::Vector2Di(settings->mapTileSize,
                                           settings->mapTileSize));
+
                 auto* exitTransform =
                     exit->GetGameObject()
                         ->GetComponent<MaxrEngine::TransformComponent>();

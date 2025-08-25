@@ -18,10 +18,13 @@ AIActor::AIActor(const Parameters& parameters,
     auto input = gameObject->AddComponent<AIInputComponent>();
     auto enemyChase = gameObject->AddComponent<AIChaseTargetComponent>(
         parameters.chaseTargetParameters);
+
     gameObject->AddComponent<AIBlackboard>();
+
     auto perception = gameObject->AddComponent<AIPerceptionComponent>(
         parameters.perceptionParameters);
     input->AddObserver(perception);
+
     auto animationFind = parameters.baseActorParameters.animations.find(
         parameters.baseActorParameters.defaultAnimationName);
     if (animationFind != parameters.baseActorParameters.animations.end()) {
@@ -34,6 +37,7 @@ AIActor::AIActor(const Parameters& parameters,
         static_cast<int>(Settings::RenderLayers::Debug));
     auto targetSelector = gameObject->AddComponent<AITargetSelector>();
     perception->AddObserver(targetSelector);
+
     gameObject->AddComponent<AIAttackComponent>(
         parameters.baseActorParameters.attackComponentParameters);
 }

@@ -26,6 +26,7 @@ Actor::Actor(const Parameters& parameters,
         gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(position);
     gameObject->AddComponent<ActorComponent>(parameters.actorGroupID);
+
     // Add health and health bar component
     auto healthComponent =
         gameObject->AddComponent<HealthComponent>(parameters.maxHealthAmount);
@@ -33,6 +34,7 @@ Actor::Actor(const Parameters& parameters,
         parameters.healthBarParameters,
         static_cast<int>(Settings::RenderLayers::UI1));
     healthBar->SetHealthComponent(healthComponent);
+
     // Add sprite component, animation component
     const auto& defaultAnimation =
         parameters.animations.at(parameters.defaultAnimationName);
@@ -43,6 +45,7 @@ Actor::Actor(const Parameters& parameters,
         static_cast<int>(Settings::RenderLayers::Actors));
     render->SetTexture(*texture);
     render->SetPixelSize(parameters.spriteSize);
+
     auto animationComponent =
         gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
     for (const auto& animationPair : parameters.animations) {
@@ -51,6 +54,7 @@ Actor::Actor(const Parameters& parameters,
             animationPair.first == parameters.defaultAnimationName);
     }
     gameObject->AddComponent<ActorSpriteDirectionComponent>();
+
     // Add movement, Collider and Rigid body components
     gameObject->AddComponent<ActorMovementComponent>(parameters.movementSpeed);
     gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();

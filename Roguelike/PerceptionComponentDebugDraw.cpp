@@ -39,6 +39,7 @@ void PerceptionComponentDebugDraw::Render() {
         const auto& position =
             gameObject->GetComponent<MaxrEngine::TransformComponent>()
                 ->GetWorldPosition();
+        // Draw sense zone
         sf::CircleShape senseZone(perception->GetSenseRadius());
         senseZone.setFillColor(sf::Color::Transparent);
         senseZone.setOutlineColor(sf::Color::Red);
@@ -48,6 +49,8 @@ void PerceptionComponentDebugDraw::Render() {
         auto rect = senseZone.getLocalBounds();
         senseZone.setOrigin(Half(rect.width), Half(rect.height));
         MaxrEngine::RenderSystem::Instance()->Render(senseZone, layer);
+
+        // Draw vision direction
         sf::VertexArray visionDirection(sf::PrimitiveType::LineStrip, 2);
         auto direction = Normalized(perception->GetVisionDirection()) *
                          perception->GetVisionRadius();
@@ -58,21 +61,28 @@ void PerceptionComponentDebugDraw::Render() {
             Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position + direction),
             sf::Color::Green);
         MaxrEngine::RenderSystem::Instance()->Render(visionDirection, layer);
-        auto perceptionAngle = perception->GetVisionAngle();
-        if (perceptionAngle < fullCircleAngle) {
+
+        // Draw vision area, cone or circle depending on visionAngle
+        auto visionAngle = perception->GetVisionAngle();
+        if (visionAngle < fullCircleAngle) {
             // Additional 3 vertexex for cone center (as start and end) and arc
             // start
             sf::VertexArray visionCone(sf::PrimitiveType::LineStrip);
+            // Set up start point
             visionCone.append(sf::Vertex(
                 Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position),
                 sf::Color::Yellow));
-            Rotate(direction, Half(-perceptionAngle));
+            // Rotate direction to get first point of arc
+            Rotate(direction, Half(-visionAngle));
+            // Set first point of arc
             visionCone.append(sf::Vertex(
                 Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position +
                                                              direction),
                 sf::Color::Yellow));
+
             const auto angleStep =
-                perceptionAngle / static_cast<float>(arcLinesCount);
+                visionAngle / static_cast<float>(arcLinesCount);
+            // Draw arc rotating direction vector
             for (int i = 0; i < arcLinesCount; ++i) {
                 Rotate(direction, angleStep);
                 visionCone.append(sf::Vertex(
@@ -80,11 +90,13 @@ void PerceptionComponentDebugDraw::Render() {
                                                                  direction),
                     sf::Color::Yellow));
             }
+            // Add start point to finish cone and render it
             visionCone.append(sf::Vertex(
                 Convert<sf::Vector2f, MaxrEngine::Vector2Df>(position),
                 sf::Color::Yellow));
             MaxrEngine::RenderSystem::Instance()->Render(visionCone, layer);
         } else {
+            // If vision angle is 360 degree or more, just render it as circle
             sf::CircleShape visionZone(perception->GetVisionRadius());
             visionZone.setFillColor(sf::Color::Transparent);
             visionZone.setOutlineColor(sf::Color::Yellow);

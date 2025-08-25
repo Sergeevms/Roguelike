@@ -2,9 +2,9 @@ name: Build Roguelike solution
 
 on:
   push:
-    branches: [main, HM15]
+    branches: [main, HM15, develop]
   pull_request:
-    branches: [main, HM15]
+    branches: [main, HM15, develop]
 
 env:
   SOLUTION_FILE_PATH: .

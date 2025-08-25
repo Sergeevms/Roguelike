@@ -110,14 +110,17 @@ std::shared_ptr<AIActor> AIActorManagerSystem::SpawnActorAt(
     const AIActor::Parameters& actorParameters,
     const MaxrEngine::Vector2Df& position,
     const std::function<void(std::shared_ptr<AIActor>)>& postSpawnUpdate) {
+    // Create new actor and aplly postSpawnUpdate if setted
     auto actor =
         std::shared_ptr<AIActor>(new AIActor(actorParameters, position));
     if (postSpawnUpdate) {
         postSpawnUpdate(actor);
     }
+    // Add self to HealthComponent Observers list
     auto* healthComponent =
         actor->GetGameObject()->GetComponent<HealthComponent>();
     healthComponent->AddObserver(Instance());
+
     ++aIActorsCount;
     aIActors[actor->GetGameObject()->weak_from_this()] = position;
     return actor;
