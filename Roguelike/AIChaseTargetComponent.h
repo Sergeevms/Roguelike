@@ -14,7 +14,6 @@ class AIChaseTargetComponent : public MaxrEngine::Component {
                                                                     0.0F});
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     void SetMaximumChaseRadius(float newMaximumRadius);
     void SetMinimumChaseRadius(float newMinimuRadius);

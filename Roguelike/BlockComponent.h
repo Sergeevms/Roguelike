@@ -2,12 +2,14 @@
 #include "SFML/Graphics/Color.hpp"
 
 #include "Component.h"
+#include "IRenderable.h"
 #include "Vector.h"
 
 namespace Roguelike {
 /** Block component - blocks damage depending on input. In blocking state
  * affects movement speed*/
-class BlockComponent : public MaxrEngine::Component {
+class BlockComponent : public MaxrEngine::Component,
+                       public MaxrEngine::IRenderable {
    public:
     struct Parameters {
         /** Damage reduction in 0.0F - 1.0F range */
@@ -22,7 +24,8 @@ class BlockComponent : public MaxrEngine::Component {
         sf::Color iconColor;
     };
     explicit BlockComponent(MaxrEngine::GameObject* gameObject,
-                            const Parameters& parameters = defaultParameters);
+                            const Parameters& parameters = defaultParameters,
+                            const int layer = 0);
     /** Updates isBlocking depending on input. Changing moving speed if
      * isBlocking state changes*/
     void Update(float deltaTime) override;

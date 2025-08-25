@@ -26,8 +26,7 @@ AIPerceptionComponent::AIPerceptionComponent(
 }
 
 void AIPerceptionComponent::Notify(std::shared_ptr<IObservable> observable) {
-    if (auto input = std::dynamic_pointer_cast<MaxrEngine::AIInputComponent>(
-            observable)) {
+    if (auto input = std::dynamic_pointer_cast<AIInputComponent>(observable)) {
         SetVisionDirection(input->GetDirection());
     }
 }

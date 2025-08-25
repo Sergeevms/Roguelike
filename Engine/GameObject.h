@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "Component.h"
-#include "EngineAPI.h"
 #include "Logger.h"
 #include "TransformComponent.h"
 
@@ -20,14 +19,14 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
 
     ~GameObject();
 
-    ENGINE_API std::string GetName() const;
-    ENGINE_API void Print(int depth = 0);
+    std::string GetName() const;
+    void Print(int depth = 0);
 
     void Update(float deltaTime);
     void Render();
 
-    ENGINE_API void AddChild(GameObject* child);
-    ENGINE_API void RemoveChild(GameObject* child);
+    void AddChild(GameObject* child);
+    void RemoveChild(GameObject* child);
 
     template <typename T, typename... ArgsT>
     std::shared_ptr<T> AddComponent(ArgsT... args) {
@@ -54,7 +53,7 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
         return newComponent;
     }
 
-    ENGINE_API void RemoveComponent(Component* component) {
+    void RemoveComponent(Component* component) {
         std::ostringstream message;
         message << "Deleting component: "
                 << std::string(typeid(*component).name()) << " " << component;
@@ -67,7 +66,7 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
             components.end());
     }
 
-    ENGINE_API void RemoveComponent(std::weak_ptr<Component> component) {
+    void RemoveComponent(std::weak_ptr<Component> component) {
         std::ostringstream message;
         auto componentPtr = component.lock();
         message << "Deleting component: "

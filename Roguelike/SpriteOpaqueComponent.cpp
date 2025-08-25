@@ -4,6 +4,7 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Logger.h"
 #include "OpaqueComponent.h"
 #include "PerceptionSystem.h"
@@ -12,8 +13,9 @@
 
 namespace Roguelike {
 constexpr float outlineThickness = -2.0F;
-SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject)
-    : OpaqueComponent(gameObject), sprite(nullptr) {
+SpriteOpaqueComponent::SpriteOpaqueComponent(MaxrEngine::GameObject* gameObject,
+                                             const int layer)
+    : OpaqueComponent(gameObject), IRenderable(layer), sprite(nullptr) {
     auto* spriteRenderer =
         gameObject->GetComponent<MaxrEngine::SpriteRendererComponent>();
     if (spriteRenderer == nullptr) {
@@ -35,12 +37,11 @@ void SpriteOpaqueComponent::Update(float deltaTime) {
 }
 // NOLINTEND(misc-unused-parameters)
 void SpriteOpaqueComponent::Render() {
-    OpaqueComponent::Render();
     sf::RectangleShape rectangle(sf::Vector2f(bounds.width, bounds.height));
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setPosition(bounds.left, bounds.top);
     rectangle.setOutlineColor(sf::Color::Cyan);
     rectangle.setOutlineThickness(outlineThickness);
-    MaxrEngine::RenderSystem::Instance()->Render(rectangle);
+    MaxrEngine::RenderSystem::Instance()->Render(rectangle, layer);
 }
 }  // namespace Roguelike

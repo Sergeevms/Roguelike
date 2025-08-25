@@ -10,7 +10,6 @@ class ActorComponent : public MaxrEngine::Component {
     ~ActorComponent();
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     int GetGroupID() const;
     void SetGroupID(const int newGroupID);

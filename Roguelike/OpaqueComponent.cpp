@@ -15,6 +15,4 @@ OpaqueComponent::~OpaqueComponent() {
 }
 
 void OpaqueComponent::Update(float deltaTime) {}
-
-void OpaqueComponent::Render() {}
 }  // namespace Roguelike

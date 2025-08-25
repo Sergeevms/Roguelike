@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <string>
 
 #include "AIActor.h"
@@ -42,6 +43,16 @@ struct SettingsStruct {
  */
 class Settings : public SettingsStruct {
    public:
+    enum class RenderLayers {
+        BackGround,
+        Floor,
+        Walls,
+        Actors,
+        UI1,
+        UI2,
+        Debug,
+        Count
+    };
     static Settings* Instance() {
         static Settings world;
         return &world;

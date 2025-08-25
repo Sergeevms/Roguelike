@@ -2,15 +2,14 @@
 #include "SFML/Audio/Music.hpp"
 
 #include "Component.h"
-#include "EngineAPI.h"
+
 namespace MaxrEngine {
-class ENGINE_API MusicComponent : public Component {
+class MusicComponent : public Component {
    public:
     explicit MusicComponent(GameObject* gameObject);
     ~MusicComponent();
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     void SetMusic(sf::Music* newMusic);
     void SetLoop(bool newLoop);

@@ -7,13 +7,13 @@
 #include "TransformComponent.h"
 #include "Vector.h"
 
-namespace MaxrEngine {
-AIInputComponent::AIInputComponent(GameObject* gameObject)
+namespace Roguelike {
+AIInputComponent::AIInputComponent(MaxrEngine::GameObject* gameObject)
     : InputComponent(gameObject) {}
 
 void AIInputComponent::Update(float deltaTime) {}
 
-void MaxrEngine::AIInputComponent::SetDirection(const Vector2Df& newDirection) {
+void AIInputComponent::SetDirection(const MaxrEngine::Vector2Df& newDirection) {
     auto normalizedDirection = Normalized(newDirection);
     verticalAxis = normalizedDirection.y;
     horizontalAxis = normalizedDirection.x;
@@ -22,7 +22,7 @@ void MaxrEngine::AIInputComponent::SetDirection(const Vector2Df& newDirection) {
     }
 }
 
-Vector2Df AIInputComponent::GetDirection() const {
+MaxrEngine::Vector2Df AIInputComponent::GetDirection() const {
     return {horizontalAxis, verticalAxis};
 }
-}  // namespace MaxrEngine
+}  // namespace Roguelike
