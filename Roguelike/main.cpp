@@ -28,10 +28,19 @@ int main() {
     globalLogger->SetLoggedLevels(MaxrEngine::LogLevel::ALL);
     LOG_INFO("ProgramStarted");
     auto* settings = Roguelike::Settings::Instance();
+
     MaxrEngine::RenderSystem::Instance()->CrateMainWindow(
         sf::VideoMode(settings->screenWidth, settings->screenHeight),
         settings->gameName);
-    MaxrEngine::RenderSystem::Instance()->SetUpLayers(3);
+    MaxrEngine::RenderSystem::Instance()->SetUpLayers(
+        static_cast<int>(Roguelike::Settings::RenderLayers::Count));
+    MaxrEngine::RenderSystem::LayerBitmask activeLayers;
+#ifdef NDEBUG
+    activeLayers.SetLayerValue(
+        static_cast<int>(Roguelike::Settings::RenderLayers::Debug), false);
+#endif  // NDEBUG
+
+    MaxrEngine::RenderSystem::Instance()->SetActiveLayers(activeLayers);
 
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         settings->playerTextureMap);

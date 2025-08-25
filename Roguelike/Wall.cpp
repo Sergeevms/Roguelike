@@ -3,6 +3,7 @@
 #include "LabyrinthElement.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
+#include "Settings.h"
 #include "SpriteColliderComponent.h"
 #include "SpriteOpaqueComponent.h"
 #include "SpriteRendererComponent.h"
@@ -18,7 +19,8 @@ Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex,
     transform->SetWorldPosition(position);
 
     auto spriteRenderer =
-        gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
+        gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>(
+            static_cast<int>(Settings::RenderLayers::Walls));
     spriteRenderer->SetTexture(
         *MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
             "WallTextures", textureIndex));
@@ -27,8 +29,10 @@ Wall::Wall(const MaxrEngine::Vector2Df position, int textureIndex,
     auto body = gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
     body->SetKinematic(true);
 
-    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>(
+        static_cast<int>(Settings::RenderLayers::Debug));
 
-    gameObject->AddComponent<SpriteOpaqueComponent>();
+    gameObject->AddComponent<SpriteOpaqueComponent>(
+        static_cast<int>(Settings::RenderLayers::Debug));
 }
 }  // namespace Roguelike

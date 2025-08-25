@@ -9,8 +9,9 @@
 
 namespace Roguelike {
 ArmorBarComponent::ArmorBarComponent(MaxrEngine::GameObject* gameObject,
-                                     const Parameters& parameters)
-    : BarComponent(gameObject, parameters) {}
+                                     const Parameters& parameters,
+                                     const int layer)
+    : BarComponent(gameObject, parameters, layer) {}
 void ArmorBarComponent::Update(float deltTime) {}
 void ArmorBarComponent::Render() {
     if (!armorComponent.expired()) {

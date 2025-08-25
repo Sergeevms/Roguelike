@@ -227,7 +227,6 @@ xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)
   <ItemGroup>
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="AITypedBlackboardComponent.h" />
-    <ClInclude Include="AIInputComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
@@ -239,7 +238,6 @@ xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)
     <ClInclude Include="IFixedUpdateSystem.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="IRenderable.h" />
-    <ClInclude Include="KeyboardInputComponent.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Matrix2D.h" />
     <ClInclude Include="MovementComponent.h" />
@@ -262,7 +260,6 @@ xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IObserver.cpp" />
-    <ClCompile Include="AIInputComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -272,7 +269,6 @@ xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)
     <ClCompile Include="IFixedUpdateSystem.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="IRenderable.cpp" />
-    <ClCompile Include="KeyboardInputComponent.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Matrix2D.cpp" />
     <ClCompile Include="MovementComponent.cpp" />

@@ -8,6 +8,7 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Logger.h"
 #include "RenderSystem.h"
 #include "Utility.h"
@@ -22,8 +23,9 @@ const BarComponent::Parameters BarComponent::defaultBarParameters{
     .maxAmount = 1.0F};
 
 BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
-                           const Parameters& parameters)
+                           const Parameters& parameters, const int renderLayer)
     : Component(gameObject),
+      IRenderable(renderLayer),
       centerOffset(parameters.centerOffset),
       barSize(parameters.barSize),
       barColor(parameters.barColor),

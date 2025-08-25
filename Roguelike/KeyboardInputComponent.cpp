@@ -9,8 +9,9 @@
 #include "InputComponent.h"
 #include "Logger.h"
 
-namespace MaxrEngine {
-KeyboardInputComponent::KeyboardInputComponent(GameObject* gameObject)
+namespace Roguelike {
+KeyboardInputComponent::KeyboardInputComponent(
+    MaxrEngine::GameObject* gameObject)
     : InputComponent(gameObject) {}
 // NOLINTBEGIN(misc-unused-parameters) : inhereted method with parameter
 void KeyboardInputComponent::Update(float deltaTime) {
@@ -50,4 +51,4 @@ void KeyboardInputComponent::Update(float deltaTime) {
     }
 }
 // NOLINTEND(misc-unused-parameters)
-}  // namespace MaxrEngine
+}  // namespace Roguelike

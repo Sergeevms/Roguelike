@@ -6,13 +6,15 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "RenderSystem.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
 namespace MaxrEngine {
-SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject)
-    : Component(gameObject) {
+MaxrEngine::SpriteRendererComponent::SpriteRendererComponent(
+    GameObject* gameObject, const int layer)
+    : Component(gameObject), IRenderable(layer) {
     sprite = new sf::Sprite();
     scale = {1, -1};
     sprite->setScale({1, -1});

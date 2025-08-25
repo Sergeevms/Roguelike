@@ -4,6 +4,7 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Logger.h"
 #include "OpaqueComponent.h"
 #include "PerceptionSystem.h"
@@ -41,6 +42,6 @@ void SpriteOpaqueComponent::Render() {
     rectangle.setPosition(bounds.left, bounds.top);
     rectangle.setOutlineColor(sf::Color::Cyan);
     rectangle.setOutlineThickness(outlineThickness);
-    MaxrEngine::RenderSystem::Instance()->Render(rectangle);
+    MaxrEngine::RenderSystem::Instance()->Render(rectangle, layer);
 }
 }  // namespace Roguelike

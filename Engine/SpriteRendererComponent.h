@@ -11,7 +11,8 @@
 namespace MaxrEngine {
 class SpriteRendererComponent : public Component, public IRenderable {
    public:
-    explicit SpriteRendererComponent(GameObject* gameObject);
+    explicit SpriteRendererComponent(GameObject* gameObject,
+                                     const int layer = 0);
     ~SpriteRendererComponent();
 
     void Update(float deltaTime) override;

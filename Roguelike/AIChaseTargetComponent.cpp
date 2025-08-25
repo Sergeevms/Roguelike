@@ -22,8 +22,7 @@ void AIChaseTargetComponent::Update(float deltaTime) {
     if (blackBoard != nullptr) {
         bool isTargetVisible = false;
         MaxrEngine::Vector2Df movingDirection;
-        auto* inputComponent =
-            gameObject->GetComponent<MaxrEngine::AIInputComponent>();
+        auto* inputComponent = gameObject->GetComponent<AIInputComponent>();
         if (blackBoard->Get("isTargetVisible", isTargetVisible) &&
             isTargetVisible) {
             auto* transform =
