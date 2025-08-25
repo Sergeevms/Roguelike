@@ -45,8 +45,7 @@ void AIChaseTargetComponent::Update(float deltaTime) {
             }
         }
         // Update moving direction in input component
-        auto* inputComponent =
-            gameObject->GetComponent<AIInputComponent>();
+        auto* inputComponent = gameObject->GetComponent<AIInputComponent>();
         inputComponent->SetDirection(movingDirection);
     } else {
         LOG_ERROR("AIBlackboard requried for AIChaseComponent");
