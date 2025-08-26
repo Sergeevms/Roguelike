@@ -69,7 +69,19 @@ void GameWorld::DestroyGameObject(std::shared_ptr<GameObject> gameObject) {
 
 void GameWorld::Clear() {
     for (int i = static_cast<int>(gameObjects.size()) - 1; i >= 0; --i) {
+        DestroyGameObject(gameObjects[i]);
+    }
+    for (auto system : fixedUpdateSystems) {
+        system.second = 0.0F;
+    }
+}
+
+ENGINE_API void GameWorld::ClearImmediate() {
+    for (int i = static_cast<int>(gameObjects.size()) - 1; i >= 0; --i) {
         DestroyGameObjectImmediate(gameObjects[i]);
+    }
+    for (auto system : fixedUpdateSystems) {
+        system.second = 0.0F;
     }
 }
 

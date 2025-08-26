@@ -42,12 +42,12 @@ const SettingsStruct Settings::defaultsSettings{
     .aiParameters = DefaultSettings::AIActorParameters,
 
     .mapTileSize = 150,
-    .firstLevelParameters = {.builderParameters = {.width = 11,
-                                                   .heigth = 11,
+    .firstLevelParameters = {.builderParameters = {.width = 5,
+                                                   .heigth = 5,
                                                    .isAdjustingSizeAndStart =
                                                        true,
                                                    .randSeed = -1},
-                             .enemyCount = 3},
+                             .enemyCount = 1},
     .labyrinthParameters = {.width = 11,
                             .heigth = 11,
                             .isAdjustingSizeAndStart = true,

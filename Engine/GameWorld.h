@@ -23,6 +23,7 @@ class GameWorld {
     ENGINE_API void DestroyGameObject(GameObject* gameObject);
     ENGINE_API void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
     ENGINE_API void Clear();
+    ENGINE_API void ClearImmediate();
 
     ENGINE_API void RegisterFixedUpdateSytem(IFixedUpdateSystem* system);
     ENGINE_API void UnRegisterFixedUpdateSytem(IFixedUpdateSystem* system);

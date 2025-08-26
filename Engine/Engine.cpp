@@ -40,7 +40,7 @@ void Engine::Run() {  // NOLINT
         }
 
         if (!RenderSystem::Instance()->GetMainWindow().isOpen()) {
-            GameWorld::Instance()->Clear();
+            GameWorld::Instance()->ClearImmediate();
             break;
         }
 

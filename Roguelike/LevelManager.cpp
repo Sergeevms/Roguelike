@@ -27,6 +27,7 @@ void LevelManager::LoadNextLevel() {
         gameLevels[nextLevelNum]->GetPlayer()->Load(playerData);
     }
     ++nextLevelNum;
+    isAtExit = false;
 }
 void LevelManager::CheckConditions() {
     if (isAtExit) {
@@ -49,5 +50,7 @@ void LevelManager::CheckExited(MaxrEngine::Trigger trigger, bool onEnter) {
     }
     CheckConditions();
 }
-void LevelManager::GenerateLevel() {}
+void LevelManager::GenerateLevel() {
+    // gameLevels.push_back(std::make_unique<GameLevel>(*gameLevels.end()));
+}
 }  // namespace Roguelike

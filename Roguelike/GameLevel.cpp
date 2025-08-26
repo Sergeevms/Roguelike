@@ -39,8 +39,8 @@ void GameLevel::Restart() {
     Start();
 }
 void GameLevel::Stop() {
-    player.reset();
-    labyrinth.reset();
+    player = nullptr;
+    labyrinth = nullptr;
     MaxrEngine::GameWorld::Instance()->Clear();
 }
 std::shared_ptr<PlayerActor> GameLevel::GetPlayer() { return player; }
