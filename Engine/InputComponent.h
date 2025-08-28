@@ -13,11 +13,13 @@ class InputComponent : public Component, public IObservable {
     float GetVerticalAxis() const;
     bool getAttack() const;
     bool getBlock() const;
+    bool getLevelTransfer() const;
 
    protected:
     float horizontalAxis = 0.0F;
     float verticalAxis = 0.0F;
     bool attack = false;
     bool block = false;
+    bool levelTransfer = false;
 };
 }  // namespace MaxrEngine

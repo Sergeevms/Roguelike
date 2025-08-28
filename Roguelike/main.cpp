@@ -6,8 +6,11 @@
 
 #include <memory>
 
-#include "DeveloperLevel.h"
+// #include "DeveloperLevel.h"
 #include "Engine.h"
+#include "GameLevel.h"
+#include "LevelCompleteCondition.h"
+#include "LevelManager.h"
 #include "Logger.h"
 #include "RenderSystem.h"
 #include "ResourceSystem.h"
@@ -59,10 +62,19 @@ int main() {
     MaxrEngine::ResourceSystem::Instance()->LoadFont(
         "default", settings->fontPath + "Roboto-Regular.ttf");
 
-    auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();
-    developerLevel->Start();
+    Roguelike::LevelManager::Instance()->RegisterLevel(
+        settings->firstLevelParameters);
+
+    auto param = settings->firstLevelParameters;
+    param.builderParameters.width += 8;
+    param.builderParameters.height += 4;
+    param.enemyCount = 0;
+    param.completeConditions.clear();
+    param.completeConditions.push_back(
+        Roguelike::LevelCompleteCondition::Type::ExitReached);
+    Roguelike::LevelManager::Instance()->RegisterLevel(param);
+    Roguelike::LevelManager::Instance()->LoadNextLevel();
     MaxrEngine::Engine::Instance()->Run();
-    developerLevel->Stop();
 
     return 0;
 }

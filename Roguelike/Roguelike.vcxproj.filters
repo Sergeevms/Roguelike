@@ -129,6 +129,15 @@
     <ClCompile Include="AIActorManagerSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelCompleteCondition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="AIInputComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -264,6 +273,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardInputComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCompleteCondition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,10 +2,12 @@
 
 #include <algorithm>
 #include <cassert>
+#include <memory>
 #include <sstream>
 
 #include "Component.h"
 #include "GameObject.h"
+#include "ISaveable.h"
 #include "Logger.h"
 #include "Utility.h"
 
@@ -117,4 +119,17 @@ float ArmorComponent::IncreaseArmorPoints(const float armorPointAmount) {
     return 0.0F;
 }
 bool ArmorComponent::IsNotBroken() const { return currentArmorPoints > 0.0F; }
+void Roguelike::ArmorComponent::SaveImpl(
+    std::shared_ptr<ArmorSave> save) const {
+    save->maxArmorPoints = maxArmorPoints;
+    save->currentArmorPoints = currentArmorPoints;
+    save->damageReduction = damageReduction;
+}
+void Roguelike::ArmorComponent::LoadImpl(
+    std::shared_ptr<const ArmorSave> save) {
+    maxArmorPoints = save->maxArmorPoints;
+    currentArmorPoints = save->currentArmorPoints;
+    damageReduction = save->damageReduction;
+    Emit();
+}
 }  // namespace Roguelike

@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "CameraComponent.h"
 #include "KeyboardInputComponent.h"
+#include "LevelManager.h"
 #include "PlayerAttackComponent.h"
 #include "RenderSystem.h"
 #include "Settings.h"
@@ -16,7 +17,7 @@ PlayerActor::PlayerActor(const Actor::Parameters& parameters,
     auto attackComponent = gameObject->AddComponent<PlayerAttackComponent>(
         parameters.attackComponentParameters);
     inputComponent->AddObserver(attackComponent);
-
+    inputComponent->AddObserver(LevelManager::Instance());
     auto playerCamera = gameObject->AddComponent<MaxrEngine::CameraComponent>();
     playerCamera->SetWindow(
         &MaxrEngine::RenderSystem::Instance()->GetMainWindow());

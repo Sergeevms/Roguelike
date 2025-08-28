@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <string>
 #include <unordered_map>
 
@@ -7,10 +8,18 @@
 #include "BarComponent.h"
 #include "BlockComponent.h"
 #include "GameObjectContainer.h"
+#include "HealthComponent.h"
+#include "ISaveable.h"
 #include "SpriteAnimationComponent.h"
 #include "Vector.h"
 
 namespace Roguelike {
+class ActorSave {
+    friend class Actor;
+    std::shared_ptr<HealthSave> healthSave;
+    std::shared_ptr<ArmorSave> armorSave;
+    int actorGroupID = 0;
+};
 /**
  * \brief Base class for actors like player or enemy.
  * \details Class constructing GameObject with TransformComponent,
@@ -20,7 +29,7 @@ namespace Roguelike {
  * ArmorBarComponent. Parameters for components above are passed through
  * Actor::Parameters struct.
  */
-class Actor : public GameObjectContainer {
+class Actor : public GameObjectContainer, public ISaveable<Actor, ActorSave> {
    public:
     /**
      * \brief Struct storing parameters to build Actor
@@ -43,5 +52,10 @@ class Actor : public GameObjectContainer {
     };
     explicit Actor(const Parameters& parameters,
                    const MaxrEngine::Vector2Df& position = {0.0F, 0.0F});
+
+   private:
+    friend class ISaveable<Actor, ActorSave>;
+    void SaveImpl(std::shared_ptr<ActorSave> save) const;
+    void LoadImpl(std::shared_ptr<const ActorSave> save);
 };
 }  // namespace Roguelike

@@ -1,5 +1,7 @@
 #include "Actor.h"
 
+#include <memory>
+
 #include "ActorComponent.h"
 #include "ActorMovementComponent.h"
 #include "ActorSpriteDirectionComponent.h"
@@ -9,6 +11,7 @@
 #include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
 #include "HealthComponent.h"
+#include "ISaveable.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "Settings.h"
@@ -72,6 +75,28 @@ Actor::Actor(const Parameters& parameters,
             parameters.armorBarParameters,
             static_cast<int>(Settings::RenderLayers::UI1));
         armorBar->SetArmorComponent(armorComponent);
+    }
+}
+void Roguelike::Actor::SaveImpl(std::shared_ptr<ActorSave> save) const {
+    if (auto* healthComponent = gameObject->GetComponent<HealthComponent>()) {
+        save->healthSave = healthComponent->Save();
+    }
+    if (auto* armorComponent = gameObject->GetComponent<ArmorComponent>()) {
+        save->armorSave = armorComponent->Save();
+    }
+    if (auto* actorComponent = gameObject->GetComponent<ActorComponent>()) {
+        save->actorGroupID = actorComponent->GetGroupID();
+    }
+}
+void Roguelike::Actor::LoadImpl(std::shared_ptr<const ActorSave> save) {
+    if (auto* healthComponent = gameObject->GetComponent<HealthComponent>()) {
+        healthComponent->Load(save->healthSave);
+    }
+    if (auto* armorComponent = gameObject->GetComponent<ArmorComponent>()) {
+        armorComponent->Load(save->armorSave);
+    }
+    if (auto* actorComponent = gameObject->GetComponent<ActorComponent>()) {
+        actorComponent->SetGroupID(save->actorGroupID);
     }
 }
 }  // namespace Roguelike

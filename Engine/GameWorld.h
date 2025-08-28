@@ -22,6 +22,7 @@ class GameWorld {
     void DestroyGameObject(GameObject* gameObject);
     void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
     void Clear();
+    void ClearImmediate();
 
     void RegisterFixedUpdateSytem(IFixedUpdateSystem* system);
     void UnRegisterFixedUpdateSytem(IFixedUpdateSystem* system);
