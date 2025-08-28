@@ -1,6 +1,7 @@
 #include "Settings.h"
 
 #include "DefaultActorsSettings.h"
+#include "LevelCompleteCondition.h"
 #include "Utility.h"
 #include "Vector.h"
 
@@ -42,14 +43,16 @@ const SettingsStruct Settings::defaultsSettings{
     .aiParameters = DefaultSettings::AIActorParameters,
 
     .mapTileSize = 150,
-    .firstLevelParameters = {.builderParameters = {.width = 5,
-                                                   .heigth = 5,
-                                                   .isAdjustingSizeAndStart =
-                                                       true,
-                                                   .randSeed = -1},
-                             .enemyCount = 1},
+    .firstLevelParameters =
+        {.builderParameters = {.width = 5,
+                               .height = 5,
+                               .isAdjustingSizeAndStart = true,
+                               .randSeed = -1},
+         .completeConditions = {LevelCompleteCondition::Type::ExitReached,
+                                LevelCompleteCondition::Type::AllEnemyKilled},
+         .enemyCount = 1},
     .labyrinthParameters = {.width = 11,
-                            .heigth = 11,
+                            .height = 11,
                             .isAdjustingSizeAndStart = true,
                             .randSeed = -1},
     .timeToRemoveAfterDeath = 4.0F};

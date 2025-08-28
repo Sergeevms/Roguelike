@@ -21,7 +21,7 @@ class LabyrinthBuilder {
      */
     struct Parameters {
         int width;  /**< labyrinth width*/
-        int heigth; /**< labyrinth heigth*/
+        int height; /**< labyrinth height*/
         /** will be size and startPosition adjusted in Generate*/
         bool isAdjustingSizeAndStart;
         /** Seed for random. Using -1 as value will lead to using time(nullptr)
@@ -96,10 +96,17 @@ class LabyrinthBuilder {
     /** Get current exitCell. Return MaxrEngine::Vector2Di(-1, -1) if was not
      * setted*/
     const MaxrEngine::Vector2Di& GetExitCell() const;
+    /**
+     * @brief Get information about random seed used during labyrinth
+     * generation.
+     * @return - Used seed.
+     */
+    int GetUsedSeed() const;
 
    private:
     int labyrinthTileWidth = 0;  /**< Current labyrinth width*/
     int labyrinthTileHeight = 0; /**< Current labyrinth height*/
+    int usedSeed = -1;
     /** Current labyrinth TileType's*/
     std::vector<std::vector<TileType>> tileGrid;
     std::vector<int> usableFloorTextureId;

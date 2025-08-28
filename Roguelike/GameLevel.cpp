@@ -13,11 +13,12 @@
 namespace Roguelike {
 GameLevel::GameLevel(const Parameters& parameters) : parameters(parameters) {};
 void GameLevel::Start() {
-    auto settings = Settings::Instance();
+    const auto* settings = Settings::Instance();
     // Build labyrinth
     auto builder = std::make_unique<LabyrinthBuilder>();
     builder->Generate(parameters.builderParameters);
     labyrinth = builder->ConstructLabyrinth();
+    parameters.builderParameters.randSeed = builder->GetUsedSeed();
 
     // Get dead ends from labyrinth generation
     std::vector<MaxrEngine::Vector2Df> generationDeadEnds;

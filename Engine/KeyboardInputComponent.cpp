@@ -18,6 +18,7 @@ void KeyboardInputComponent::Update(float deltaTime) {
     horizontalAxis = 0.0F;
     attack = false;
     block = false;
+    levelTransfer = false;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
@@ -47,6 +48,11 @@ void KeyboardInputComponent::Update(float deltaTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
         LOG_INFO("Block input");
         block = true;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
+        LOG_INFO("Level transfer input");
+        levelTransfer = true;
+        Emit();
     }
 }
 // NOLINTEND(misc-unused-parameters)

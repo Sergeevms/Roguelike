@@ -1,7 +1,10 @@
 #include "LabyrinthExit.h"
 
+#include <memory>
+
 #include "Floor.h"
 #include "GameObject.h"
+#include "LevelCompleteCondition.h"
 #include "LevelManager.h"
 #include "RigidBodyComponent.h"
 #include "SpriteColliderComponent.h"
@@ -17,14 +20,22 @@ LabyrinthExit::LabyrinthExit(MaxrEngine::Vector2Df position, int textureIndex,
     exitTrigger->SetTrigger(true);
 
     auto onEnter = [](MaxrEngine::Trigger trigger) {
-        LevelManager::Instance()->CheckExited(trigger, true);
-        ;
+        auto conditions = LevelManager::Instance()->GetCompleteConditions();
+        for (auto condition : conditions) {
+            if (auto exitCondition =
+                    std::dynamic_pointer_cast<ExitReached>(condition))
+                exitCondition->CheckExited(trigger, true);
+        }
     };
     exitTrigger->SubscribeTriggerEntered(onEnter);
 
     auto onExit = [](MaxrEngine::Trigger trigger) {
-        LevelManager::Instance()->CheckExited(trigger, false);
-        ;
+        auto conditions = LevelManager::Instance()->GetCompleteConditions();
+        for (auto condition : conditions) {
+            if (auto exitCondition =
+                    std::dynamic_pointer_cast<ExitReached>(condition))
+                exitCondition->CheckExited(trigger, false);
+        }
     };
     exitTrigger->SubscribeTriggerExit(onExit);
 

@@ -33,14 +33,13 @@ LabyrinthBuilder::LabyrinthBuilder() {
 
 void LabyrinthBuilder::Generate(const Parameters& parameters) {
     // Set random seed
-    if (parameters.randSeed == -1) {
-        std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    } else {
-        std::srand(parameters.randSeed);
-    }
+    usedSeed = parameters.randSeed == -1
+                   ? static_cast<unsigned int>(std::time(nullptr))
+                   : parameters.randSeed;
+    std::srand(usedSeed);
 
     // filling tileGrid with desired size by walls
-    StartBuilding({parameters.width, parameters.heigth}, TileType::Wall);
+    StartBuilding({parameters.width, parameters.height}, TileType::Wall);
 
     // setting DFS start position in labyrinth interior
     if (parameters.startPosition.x < 0 || parameters.startPosition.y < 0) {
@@ -180,6 +179,8 @@ void LabyrinthBuilder::SetExitCell(const MaxrEngine::Vector2Di& newExitCell) {
 const MaxrEngine::Vector2Di& LabyrinthBuilder::GetExitCell() const {
     return exitCell;
 }
+
+int LabyrinthBuilder::GetUsedSeed() const { return usedSeed; }
 
 std::shared_ptr<Labyrinth> LabyrinthBuilder::ConstructLabyrinth() {
     auto* settings = Settings::Instance();
