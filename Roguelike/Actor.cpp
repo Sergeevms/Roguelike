@@ -14,6 +14,7 @@
 #include "ISaveable.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
+#include "Settings.h"
 #include "SpriteAnimationComponent.h"
 #include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
@@ -33,7 +34,8 @@ Actor::Actor(const Parameters& parameters,
     auto healthComponent =
         gameObject->AddComponent<HealthComponent>(parameters.maxHealthAmount);
     auto healthBar = gameObject->AddComponent<HealthBarComponent>(
-        parameters.healthBarParameters);
+        parameters.healthBarParameters,
+        static_cast<int>(Settings::RenderLayers::UI1));
     healthBar->SetHealthComponent(healthComponent);
 
     // Add sprite component, animation component
@@ -42,8 +44,8 @@ Actor::Actor(const Parameters& parameters,
     const auto* texture =
         MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
             defaultAnimation.textureMapName, 0);
-    auto render =
-        gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
+    auto render = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>(
+        static_cast<int>(Settings::RenderLayers::Actors));
     render->SetTexture(*texture);
     render->SetPixelSize(parameters.spriteSize);
 
@@ -59,15 +61,19 @@ Actor::Actor(const Parameters& parameters,
     // Add movement, Collider and Rigid body components
     gameObject->AddComponent<ActorMovementComponent>(parameters.movementSpeed);
     gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
-    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
+    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>(
+        static_cast<int>(Settings::RenderLayers::Debug));
     if (parameters.haveBlock) {
-        gameObject->AddComponent<BlockComponent>(parameters.blockParameters);
+        gameObject->AddComponent<BlockComponent>(
+            parameters.blockParameters,
+            static_cast<int>(Settings::RenderLayers::UI2));
     }
     if (parameters.haveArmor) {
         auto armorComponent = gameObject->AddComponent<ArmorComponent>(
             parameters.armorParameters);
         auto armorBar = gameObject->AddComponent<ArmorBarComponent>(
-            parameters.armorBarParameters);
+            parameters.armorBarParameters,
+            static_cast<int>(Settings::RenderLayers::UI1));
         armorBar->SetArmorComponent(armorComponent);
     }
 }

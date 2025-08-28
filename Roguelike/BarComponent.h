@@ -3,10 +3,12 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Vector.h"
 
 namespace Roguelike {
-class BarComponent : public MaxrEngine::Component {
+class BarComponent : public MaxrEngine::Component,
+                     public MaxrEngine::IRenderable {
    public:
     struct Parameters {
         MaxrEngine::Vector2Df centerOffset;
@@ -16,7 +18,8 @@ class BarComponent : public MaxrEngine::Component {
         float maxAmount = 0.0F;
     };
     explicit BarComponent(MaxrEngine::GameObject* gameObject,
-                          const Parameters& parameters = defaultBarParameters);
+                          const Parameters& parameters = defaultBarParameters,
+                          const int renderLayer = 0);
 
     void Update(float deltaTime) override = 0;
     void Render() override;

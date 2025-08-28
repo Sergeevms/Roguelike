@@ -30,7 +30,6 @@ class ArmorComponent : public MaxrEngine::Component,
         const ArmorComponent::Parameters& parameters = defaultParameters);
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     void SetMaxArmorPoints(const float newMaxArmorPoints);
     float GetMaxArmorPoints() const;

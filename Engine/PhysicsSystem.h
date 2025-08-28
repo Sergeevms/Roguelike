@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "Collision.h"
-#include "EngineAPI.h"
 #include "IFixedUpdateSystem.h"
 #include "Trigger.h"
 
@@ -11,12 +10,12 @@ namespace MaxrEngine {
 class ColliderComponent;
 class PhysicsSystem : public IFixedUpdateSystem {
    public:
-    ENGINE_API static PhysicsSystem* Instance();
+    static PhysicsSystem* Instance();
 
     void Update() override;
 
-    ENGINE_API void Subscribe(ColliderComponent* collider);
-    ENGINE_API void Unsubscribe(ColliderComponent* collider);
+    void Subscribe(ColliderComponent* collider);
+    void Unsubscribe(ColliderComponent* collider);
 
    private:
     PhysicsSystem() {};

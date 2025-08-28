@@ -23,8 +23,6 @@ ArmorComponent::ArmorComponent(MaxrEngine::GameObject* gameObject,
 
 void ArmorComponent::Update(float deltaTime) {}
 
-void ArmorComponent::Render() {}
-
 void ArmorComponent::SetMaxArmorPoints(const float newMaxArmorPoints) {
     assert(newMaxArmorPoints >= 0 && "maxArmorPoints supposed to be positive");
     if (newMaxArmorPoints < 0.0F) {
@@ -132,5 +130,6 @@ void Roguelike::ArmorComponent::LoadImpl(
     maxArmorPoints = save->maxArmorPoints;
     currentArmorPoints = save->currentArmorPoints;
     damageReduction = save->damageReduction;
+    Emit();
 }
 }  // namespace Roguelike

@@ -6,13 +6,15 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "RenderSystem.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
 namespace MaxrEngine {
-SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject)
-    : Component(gameObject) {
+MaxrEngine::SpriteRendererComponent::SpriteRendererComponent(
+    GameObject* gameObject, const int layer)
+    : Component(gameObject), IRenderable(layer) {
     sprite = new sf::Sprite();
     scale = {1, -1};
     sprite->setScale({1, -1});
@@ -30,7 +32,7 @@ void SpriteRendererComponent::Render() {
         sprite->setRotation(transform->GetWorldRotation());
         sprite->setScale(
             Convert<sf::Vector2f>(scale * transform->GetWorldScale()));
-        RenderSystem::Instance()->Render(*sprite);
+        RenderSystem::Instance()->Render(*sprite, layer);
     }
 }
 
@@ -61,7 +63,7 @@ bool SpriteRendererComponent::IsTextureRightDirected() const {
     return isTextureRightDirected;
 }
 
-ENGINE_API void SpriteRendererComponent::SetColor(const sf::Color newColor) {
+void SpriteRendererComponent::SetColor(const sf::Color newColor) {
     sprite->setColor(newColor);
 }
 

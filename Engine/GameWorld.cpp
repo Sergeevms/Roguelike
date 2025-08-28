@@ -76,7 +76,7 @@ void GameWorld::Clear() {
     }
 }
 
-ENGINE_API void GameWorld::ClearImmediate() {
+void GameWorld::ClearImmediate() {
     for (int i = static_cast<int>(gameObjects.size()) - 1; i >= 0; --i) {
         DestroyGameObjectImmediate(gameObjects[i]);
     }

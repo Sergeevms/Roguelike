@@ -13,8 +13,7 @@ namespace Roguelike {
 PlayerActor::PlayerActor(const Actor::Parameters& parameters,
                          const MaxrEngine::Vector2Df& position)
     : Actor(parameters, position) {
-    auto inputComponent =
-        gameObject->AddComponent<MaxrEngine::KeyboardInputComponent>();
+    auto inputComponent = gameObject->AddComponent<KeyboardInputComponent>();
     auto attackComponent = gameObject->AddComponent<PlayerAttackComponent>(
         parameters.attackComponentParameters);
     inputComponent->AddObserver(attackComponent);

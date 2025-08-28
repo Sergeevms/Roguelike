@@ -2,6 +2,7 @@
 
 #include "LabyrinthElement.h"
 #include "ResourceSystem.h"
+#include "Settings.h"
 #include "SpriteRendererComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
@@ -14,8 +15,8 @@ Floor::Floor(MaxrEngine::Vector2Df position, int textureIndex,
         gameObject->GetComponent<MaxrEngine::TransformComponent>();
     transform->SetWorldPosition(position);
 
-    auto sprite =
-        gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>();
+    auto sprite = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>(
+        static_cast<int>(Settings::RenderLayers::Floor));
     sprite->SetTexture(
         *MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
             "FloorTextures", textureIndex));

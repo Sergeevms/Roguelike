@@ -37,6 +37,15 @@ int main() {
     MaxrEngine::RenderSystem::Instance()->CrateMainWindow(
         sf::VideoMode(settings->screenWidth, settings->screenHeight),
         settings->gameName);
+    MaxrEngine::RenderSystem::Instance()->SetUpLayers(
+        static_cast<int>(Roguelike::Settings::RenderLayers::Count));
+    MaxrEngine::RenderSystem::LayerBitmask activeLayers;
+#ifdef NDEBUG
+    activeLayers.SetLayerValue(
+        static_cast<int>(Roguelike::Settings::RenderLayers::Debug), false);
+#endif  // NDEBUG
+
+    MaxrEngine::RenderSystem::Instance()->SetActiveLayers(activeLayers);
 
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         settings->playerTextureMap);

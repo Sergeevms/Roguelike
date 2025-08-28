@@ -47,7 +47,6 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
          * @param deltaTime - time passes since last Update
          */
         void Update(float deltaTime) override;
-        void Render() override {};
 
        protected:
         /**

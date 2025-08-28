@@ -17,8 +17,6 @@ HealthComponent::HealthComponent(MaxrEngine::GameObject* gameObject,
 
 void HealthComponent::Update(float deltaTime) {}
 
-void HealthComponent::Render() {}
-
 void HealthComponent::SetMaxHealth(const float newMaxHealth) {
     assert(newMaxHealth >= 0.0F && "maxHealth supposed to be positive");
     if (newMaxHealth < 0.0F) {
@@ -102,5 +100,6 @@ void HealthComponent::SaveImpl(std::shared_ptr<HealthSave> save) const {
 void HealthComponent::LoadImpl(std::shared_ptr<const HealthSave> save) {
     maxHealth = save->maxHealth;
     currentHealth = save->currentHealth;
+    Emit();
 }
 }  // namespace Roguelike

@@ -12,7 +12,6 @@ class OpaqueComponent : public MaxrEngine::Component {
     ~OpaqueComponent();
 
     void Update(float deltaTime) override;
-    void Render() override;
 
    protected:
     sf::FloatRect bounds;

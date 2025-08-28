@@ -39,7 +39,6 @@ void MovementComponent::Update(float deltaTime) {
         }
     }
 }
-void MovementComponent::Render() {}
 
 void MovementComponent::SetSpeed(float newSpeed) { speed = newSpeed; }
 

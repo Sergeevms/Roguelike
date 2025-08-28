@@ -24,8 +24,6 @@ TransformComponent::TransformComponent(GameObject* gameObject)
 
 void TransformComponent::Update(float deltaTime) {}
 
-void TransformComponent::Render() {}
-
 void TransformComponent::MoveBy(const Vector2Df& offset) {
     localPosition += offset;
     isUpdated = false;

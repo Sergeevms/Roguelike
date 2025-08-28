@@ -44,14 +44,14 @@ void Engine::Run() {  // NOLINT
             break;
         }
 
-        RenderSystem::Instance()->GetMainWindow().clear();
+        RenderSystem::Instance()->Clear();
 
         GameWorld::Instance()->Update(deltaTime);
         GameWorld::Instance()->FixedUpdate(deltaTime);
         GameWorld::Instance()->Render();
         GameWorld::Instance()->LateUpdate();
 
-        RenderSystem::Instance()->GetMainWindow().display();
+        RenderSystem::Instance()->Display();
     }
     LOG_INFO("Engine stopped");
 }

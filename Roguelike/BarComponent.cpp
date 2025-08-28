@@ -8,6 +8,7 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Logger.h"
 #include "RenderSystem.h"
 #include "Utility.h"
@@ -22,8 +23,9 @@ const BarComponent::Parameters BarComponent::defaultBarParameters{
     .maxAmount = 1.0F};
 
 BarComponent::BarComponent(MaxrEngine::GameObject* gameObject,
-                           const Parameters& parameters)
+                           const Parameters& parameters, const int renderLayer)
     : Component(gameObject),
+      IRenderable(renderLayer),
       centerOffset(parameters.centerOffset),
       barSize(parameters.barSize),
       barColor(parameters.barColor),
@@ -51,14 +53,14 @@ void BarComponent::Render() {
         borderShape.setOutlineColor(barColor);
         borderShape.setOutlineThickness(borderSize);
         borderShape.setPosition(Convert<sf::Vector2f>(barTopLeft));
-        MaxrEngine::RenderSystem::Instance()->Render(borderShape);
+        MaxrEngine::RenderSystem::Instance()->Render(borderShape, layer);
     }
 
     // Draw filled bar
     sf::RectangleShape barShape(Convert<sf::Vector2f>(filledBarSize));
     barShape.setFillColor(barColor);
     barShape.setPosition(Convert<sf::Vector2f>(barTopLeft));
-    MaxrEngine::RenderSystem::Instance()->Render(barShape);
+    MaxrEngine::RenderSystem::Instance()->Render(barShape, layer);
 }
 
 MaxrEngine::Vector2Df BarComponent::GetCenterOffset() const {

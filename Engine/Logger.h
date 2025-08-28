@@ -6,8 +6,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include "EngineAPI.h"
-
 namespace MaxrEngine {
 enum LogLevel {
     NONE = 0,
@@ -20,7 +18,7 @@ enum LogLevel {
 class LogSink {
    public:
     virtual void Log(LogLevel logLevel, const std::string& message) = 0;
-    void ENGINE_API SetLoggedLevels(LogLevel newLoggingLevels);
+    void SetLoggedLevels(LogLevel newLoggingLevels);
     virtual ~LogSink() = default;
 
    protected:
@@ -30,16 +28,14 @@ class LogSink {
 
 class ConsoleSink : public LogSink {
    public:
-    ENGINE_API virtual void Log(LogLevel logLevel,
-                                const std::string& message) override;
+    virtual void Log(LogLevel logLevel, const std::string& message) override;
 };
 
 class FileSink : public LogSink {
    public:
-    explicit ENGINE_API FileSink(const std::string& fileName);
-    ENGINE_API ~FileSink();
-    ENGINE_API virtual void Log(LogLevel logLevel,
-                                const std::string& message) override;
+    explicit FileSink(const std::string& fileName);
+    ~FileSink();
+    virtual void Log(LogLevel logLevel, const std::string& message) override;
 
    private:
     std::ofstream logFile;
@@ -47,12 +43,12 @@ class FileSink : public LogSink {
 
 class Logger {
    public:
-    void ENGINE_API AddSink(std::shared_ptr<LogSink> sink);
-    void ENGINE_API Log(LogLevel logLevel, const std::string& message);
-    void ENGINE_API Info(const std::string& message);
-    void ENGINE_API Warn(const std::string& message);
-    void ENGINE_API Error(const std::string& message);
-    void ENGINE_API SetLoggedLevels(LogLevel newLoggingLevels);
+    void AddSink(std::shared_ptr<LogSink> sink);
+    void Log(LogLevel logLevel, const std::string& message);
+    void Info(const std::string& message);
+    void Warn(const std::string& message);
+    void Error(const std::string& message);
+    void SetLoggedLevels(LogLevel newLoggingLevels);
 
    private:
     std::vector<std::shared_ptr<LogSink>> sinks;
@@ -62,16 +58,16 @@ class Logger {
 
 class LoggerRegister {
    public:
-    ENGINE_API static LoggerRegister& GetInstance() {
+    static LoggerRegister& GetInstance() {
         static LoggerRegister instance;
         return instance;
     }
 
-    ENGINE_API std::shared_ptr<Logger> GetLogger(const std::string& name);
-    ENGINE_API void SetDefaultLogger(std::shared_ptr<Logger> logger);
-    ENGINE_API void RegisterLogger(const std::string& name,
-                                   std::shared_ptr<Logger> logger);
-    ENGINE_API void UnregisterLogger(const std::string& name);
+    std::shared_ptr<Logger> GetLogger(const std::string& name);
+    void SetDefaultLogger(std::shared_ptr<Logger> logger);
+    void RegisterLogger(const std::string& name,
+                        std::shared_ptr<Logger> logger);
+    void UnregisterLogger(const std::string& name);
 
    private:
     LoggerRegister() = default;

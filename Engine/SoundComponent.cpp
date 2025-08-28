@@ -20,8 +20,6 @@ SoundComponent::~SoundComponent() {
 
 void SoundComponent::Update(float deltaTime) {}
 
-void SoundComponent::Render() {}
-
 void SoundComponent::SetSound(const sf::SoundBuffer& newSound) {
     sound->setBuffer(newSound);
 }

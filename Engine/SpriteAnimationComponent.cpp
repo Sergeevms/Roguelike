@@ -36,7 +36,6 @@ void SpriteAnimationComponent::Update(float deltaTime) {
         UpdateRendereTrexture();
     }
 }
-void SpriteAnimationComponent::Render() {}
 void SpriteAnimationComponent::AddAnimation(const std::string& animationName,
                                             const Animation& animation,
                                             bool isDefault) {

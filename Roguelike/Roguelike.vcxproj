@@ -147,6 +147,7 @@
       <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>$(SolutionDir)RunClangformat.bat</Command>
@@ -170,6 +171,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
       <Command>$(SolutionDir)RunClangformat.bat</Command>
@@ -183,6 +185,7 @@
     <ClCompile Include="ActorSpriteDirectionComponent.cpp" />
     <ClCompile Include="AIActor.cpp" />
     <ClCompile Include="AIActorManagerSystem.cpp" />
+    <ClCompile Include="AIInputComponent.cpp" />
     <ClCompile Include="ArmorBarComponent.cpp" />
     <ClCompile Include="ArmorComponent.cpp" />
     <ClCompile Include="AttackComponent.cpp" />
@@ -191,6 +194,7 @@
     <ClCompile Include="GameLevel.cpp" />
     <ClCompile Include="HealthBarComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
+    <ClCompile Include="KeyboardInputComponent.cpp" />
     <ClCompile Include="LabyrinthExit.cpp" />
     <ClCompile Include="LevelCompleteCondition.cpp" />
     <ClCompile Include="LevelManager.cpp" />
@@ -224,6 +228,7 @@
     <ClInclude Include="ActorSpriteDirectionComponent.h" />
     <ClInclude Include="AIActor.h" />
     <ClInclude Include="AIActorManagerSystem.h" />
+    <ClInclude Include="AIInputComponent.h" />
     <ClInclude Include="ArmorBarComponent.h" />
     <ClInclude Include="ArmorComponent.h" />
     <ClInclude Include="AttackComponent.h" />
@@ -233,6 +238,7 @@
     <ClInclude Include="GameLevel.h" />
     <ClInclude Include="HealthBarComponent.h" />
     <ClInclude Include="HealthComponent.h" />
+    <ClInclude Include="KeyboardInputComponent.h" />
     <ClInclude Include="LabyrinthElement.h" />
     <ClInclude Include="LabyrinthExit.h" />
     <ClInclude Include="LevelCompleteCondition.h" />
