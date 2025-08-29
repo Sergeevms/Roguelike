@@ -20,11 +20,11 @@ struct Animation {
     /** Vector storing framesTextures ID in texture map*/
     std::vector<int> frameIDs;
     /** Time needed to finish animation*/
-    float time;
+    float time = 0.0F;
     /** Is animation sprite directed to rigth*/
-    bool isRightDirected;
+    bool isRightDirected = true;
     /** Animation with lower priority wouldn change current in StartAnimation*/
-    int priority;
+    int priority = 0;
     /** Animation wouldn't stop until switched to another*/
     bool isLoop = false;
 };
