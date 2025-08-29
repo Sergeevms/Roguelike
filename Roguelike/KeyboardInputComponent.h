@@ -9,5 +9,8 @@ class KeyboardInputComponent : public MaxrEngine::InputComponent {
     explicit KeyboardInputComponent(MaxrEngine::GameObject* gameObject);
 
     void Update(float deltaTime) override;
+
+   private:
+    bool logInput = false;
 };
 }  // namespace Roguelike

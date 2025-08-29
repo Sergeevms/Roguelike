@@ -2,12 +2,15 @@
 
 #include "KeyboardInputComponent.h"
 
+#include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
-#include "Component.h"
+#include "EventSystem.h"
 #include "GameObject.h"
 #include "InputComponent.h"
 #include "Logger.h"
+#include "RenderSystem.h"
+#include "Settings.h"
 
 namespace Roguelike {
 KeyboardInputComponent::KeyboardInputComponent(
@@ -23,37 +26,74 @@ void KeyboardInputComponent::Update(float deltaTime) {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        LOG_INFO("Forward input");
+        if (logInput) {
+            LOG_INFO("Forward input");
+        }
         verticalAxis += 1.0F;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        LOG_INFO("Backward input");
+        if (logInput) {
+            LOG_INFO("Backward input");
+        }
         verticalAxis -= 1.0F;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        LOG_INFO("Right input");
+        if (logInput) {
+            LOG_INFO("Right input");
+        }
         horizontalAxis += 1.0F;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        LOG_INFO("Left input");
+        if (logInput) {
+            LOG_INFO("Left input");
+        }
         horizontalAxis -= 1.0F;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        LOG_INFO("Attack input");
-        attack = true;
-        Emit();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-        LOG_INFO("Block input");
-        block = true;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-        LOG_INFO("Level transfer input");
-        levelTransfer = true;
-        Emit();
+    auto keyEvents =
+        MaxrEngine::EventSystem::Instance()->GetSfEvents(sf::Event::KeyPressed);
+    for (auto event = keyEvents.first; event != keyEvents.second; event++) {
+        if (event->second.key.code == sf::Keyboard::Space) {
+            if (logInput) {
+                LOG_INFO("Attack input");
+            }
+            attack = true;
+            Emit();
+        }
+        if (event->second.key.code == sf::Keyboard::LShift) {
+            if (logInput) {
+                LOG_INFO("Block input");
+            }
+            block = true;
+        }
+        if (event->second.key.code == sf::Keyboard::T) {
+            if (logInput) {
+                LOG_INFO("Level transfer input");
+            }
+            levelTransfer = true;
+            Emit();
+        }
+        if (event->second.key.code == sf::Keyboard::F11) {
+            if (logInput) {
+                LOG_INFO("Turning debug render level on/off");
+            }
+            auto* renderSystem = MaxrEngine::RenderSystem::Instance();
+            auto layers = renderSystem->GetActiveLayers();
+            constexpr int debugLayer =
+                static_cast<int>(Settings::RenderLayers::Debug);
+            layers.SetLayerValue(debugLayer, !layers.GetLayerValue(debugLayer));
+            renderSystem->SetActiveLayers(layers);
+        }
+        if (event->second.key.code == sf::Keyboard::F10) {
+            if (logInput) {
+                LOG_INFO("Turning input loggin off");
+            } else {
+                LOG_INFO("Turning input loggin on");
+            }
+            logInput = !logInput;
+        }
     }
 }
 // NOLINTEND(misc-unused-parameters)

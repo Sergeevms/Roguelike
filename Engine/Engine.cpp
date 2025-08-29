@@ -9,6 +9,7 @@
 #include "SFML/System/Time.hpp"
 #include "SFML/Window/Event.hpp"
 
+#include "EventSystem.h"
 #include "GameWorld.h"
 #include "Logger.h"
 #include "RenderSystem.h"
@@ -27,19 +28,16 @@ Engine* Engine::Instance() {
 void Engine::Run() {  // NOLINT
     LOG_INFO("Engine runned");
     sf::Clock gameClock;
-    sf::Event event;
 
     while (RenderSystem::Instance()->GetMainWindow().isOpen()) {
         const sf::Time timeElapsed = gameClock.restart();
         const float deltaTime = timeElapsed.asSeconds();
 
-        while (RenderSystem::Instance()->GetMainWindow().pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                RenderSystem::Instance()->GetMainWindow().close();
-            }
-        }
+        EventSystem::Instance()->UpdateSfEvents();
 
-        if (!RenderSystem::Instance()->GetMainWindow().isOpen()) {
+        auto closeEvent =
+            EventSystem::Instance()->GetSfEvents(sf::Event::Closed);
+        if (closeEvent.first != closeEvent.second) {
             GameWorld::Instance()->ClearImmediate();
             break;
         }
