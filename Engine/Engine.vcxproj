@@ -225,6 +225,7 @@ xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EventSystem.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="AITypedBlackboardComponent.h" />
     <ClInclude Include="CameraComponent.h" />
@@ -259,6 +260,7 @@ xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="IObserver.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
