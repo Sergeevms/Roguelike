@@ -28,6 +28,6 @@ class PhysicsSystem : public IFixedUpdateSystem {
     void ProcessTriggerEnter(Trigger* trigger);
 
     std::vector<ColliderComponent*> colliders;
-    std::map<ColliderComponent*, ColliderComponent*> triggersEnteredPair;
+    std::multimap<ColliderComponent*, ColliderComponent*> triggersEnteredPair;
 };
 }  // namespace MaxrEngine

@@ -157,9 +157,20 @@ void PhysicsSystem::ProcessCollision(Collision* collision) {
     collision->second->OnCollision(*collision);
 }
 void PhysicsSystem::ProcessTriggerEnter(Trigger* trigger) {
-    if (triggersEnteredPair.find(trigger->first) == triggersEnteredPair.end() &&
-        triggersEnteredPair.find(trigger->second) ==
-            triggersEnteredPair.end()) {
+    auto* const triggerCollider =
+        trigger->first->isTrigger ? trigger->first : trigger->second;
+    auto* const objectCollider =
+        trigger->first->isTrigger ? trigger->second : trigger->first;
+    auto triggeredPairs = triggersEnteredPair.equal_range(triggerCollider);
+    bool isAlreadyTriggered = false;
+    for (auto triggerPair = triggeredPairs.first;
+         triggerPair != triggeredPairs.second; triggerPair++) {
+        if (triggerPair->second == objectCollider) {
+            isAlreadyTriggered = true;
+            break;
+        }
+    }
+    if (!isAlreadyTriggered) {
         std::ostringstream message;
         message << "Entered trigger " << trigger->first << " "
                 << trigger->second;
@@ -167,7 +178,7 @@ void PhysicsSystem::ProcessTriggerEnter(Trigger* trigger) {
         trigger->first->OnTriggerEntered(*trigger);
         trigger->second->OnTriggerEntered(*trigger);
 
-        triggersEnteredPair.emplace(trigger->first, trigger->second);
+        triggersEnteredPair.emplace(triggerCollider, objectCollider);
     }
 }
 }  // namespace MaxrEngine
