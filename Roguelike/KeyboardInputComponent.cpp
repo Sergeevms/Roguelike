@@ -52,6 +52,12 @@ void KeyboardInputComponent::Update(float deltaTime) {
         }
         horizontalAxis -= 1.0F;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+        if (logInput) {
+            LOG_INFO("Block input");
+        }
+        block = true;
+    }
     auto keyEvents =
         MaxrEngine::EventSystem::Instance()->GetSfEvents(sf::Event::KeyPressed);
     for (auto event = keyEvents.first; event != keyEvents.second; event++) {
@@ -61,12 +67,6 @@ void KeyboardInputComponent::Update(float deltaTime) {
             }
             attack = true;
             Emit();
-        }
-        if (event->second.key.code == sf::Keyboard::LShift) {
-            if (logInput) {
-                LOG_INFO("Block input");
-            }
-            block = true;
         }
         if (event->second.key.code == sf::Keyboard::T) {
             if (logInput) {
