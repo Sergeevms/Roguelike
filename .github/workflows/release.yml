@@ -2,7 +2,6 @@ name: Create Roguelike release
 
 on:
   push:
-    branches: [main]
     tags:
       - 'v*'
 
