@@ -44,17 +44,13 @@ const SettingsStruct Settings::defaultsSettings{
 
     .mapTileSize = 150,
     .firstLevelParameters =
-        {.builderParameters = {.width = 5,
-                               .height = 5,
+        {.builderParameters = {.width = 7,
+                               .height = 7,
                                .isAdjustingSizeAndStart = true,
                                .randSeed = -1},
          .completeConditions = {LevelCompleteCondition::Type::ExitReached,
                                 LevelCompleteCondition::Type::AllEnemyKilled},
          .enemyCount = 1},
-    .labyrinthParameters = {.width = 11,
-                            .height = 11,
-                            .isAdjustingSizeAndStart = true,
-                            .randSeed = -1},
     .timeToRemoveAfterDeath = 4.0F};
 
 MaxrEngine::Vector2Df Settings::ScreenCenter() const {

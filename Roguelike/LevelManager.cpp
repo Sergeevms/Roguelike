@@ -74,11 +74,11 @@ void LevelManager::GenerateLevel() {
     auto param = gameLevelParameters.rbegin();
     if (param != gameLevelParameters.rend()) {
         newLevelParameters = *param;
+        newLevelParameters.builderParameters.height += levelSizeIncrease;
+        newLevelParameters.builderParameters.width += levelSizeIncrease;
+        newLevelParameters.builderParameters.randSeed = -1;
+        newLevelParameters.enemyCount += enemiesSizeIncrease;
     }
-    newLevelParameters.builderParameters.height += 4;
-    newLevelParameters.builderParameters.width += 4;
-    newLevelParameters.builderParameters.randSeed = -1;
-    newLevelParameters.enemyCount += 3;
     gameLevelParameters.push_back(newLevelParameters);
 }
 }  // namespace Roguelike

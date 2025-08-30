@@ -73,5 +73,9 @@ class LevelManager : public MaxrEngine::IObserver {
         conditions;  ///< Current level completion conditions
     std::shared_ptr<ActorSave>
         playerData;  ///< Saved player data between levels
+    const int levelSizeIncrease =
+        4;  ///< Increase step for size of labyrinth of generated levels
+    const int enemiesSizeIncrease =
+        3;  ///< Increase step of enemy count of generated levels
 };
 }  // namespace Roguelike

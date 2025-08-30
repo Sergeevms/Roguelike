@@ -30,9 +30,6 @@
     <ClCompile Include="IDelayedAction.cpp">
       <Filter>Source Files\Interfaces and abstract classes</Filter>
     </ClCompile>
-    <ClCompile Include="DeveloperLevel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -157,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="ISaveable.h">
       <Filter>Header Files\Interfaces and abstract classes</Filter>
-    </ClInclude>
-    <ClInclude Include="DeveloperLevel.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>

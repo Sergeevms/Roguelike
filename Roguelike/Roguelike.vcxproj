@@ -209,7 +209,6 @@
     <ClCompile Include="AIPerceptionComponent.cpp" />
     <ClCompile Include="AITargetSelector.cpp" />
     <ClCompile Include="BackgroundMusic.cpp" />
-    <ClCompile Include="DeveloperLevel.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObjectContainer.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
@@ -255,7 +254,6 @@
     <ClInclude Include="AIPerceptionComponent.h" />
     <ClInclude Include="AITargetSelector.h" />
     <ClInclude Include="BackgroundMusic.h" />
-    <ClInclude Include="DeveloperLevel.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObjectContainer.h" />
     <ClInclude Include="IDelayedAction.h" />

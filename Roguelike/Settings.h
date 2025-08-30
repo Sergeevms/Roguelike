@@ -36,7 +36,6 @@ struct SettingsStruct {
     int mapTileSize;
 
     GameLevel::Parameters firstLevelParameters;
-    LabyrinthBuilder::Parameters labyrinthParameters;
     float timeToRemoveAfterDeath;
 };
 
