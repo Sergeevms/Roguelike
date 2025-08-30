@@ -6,7 +6,6 @@ InstallDir "$PROGRAMFILES\Roguelike"
 
 !ifdef VERSION
 	VIProductVersion "${VERSION}.0"
-	VIFIleVersion "${VERSION}.0"
 	VIAddVersionKey "FileVersion" "${VERSION}"
 !endif
 
