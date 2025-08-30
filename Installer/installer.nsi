@@ -1,7 +1,7 @@
 !include "MUI2.nsh"
 
 Name "Roguelike"
-OutFile "Roguelike installer.exe"
+OutFile "RoguelikeInstaller.exe"
 InstallDir "$PROGRAMFILES\Roguelike"
 
 !ifdef VERSION
@@ -68,7 +68,7 @@ SectionEnd
 
 Section "Uninstall"
 	Delete "$INSTDIR\Roguelike.exe"
-	Delete "$INSTDIR\Unistall.exe"
+	Delete "$INSTDIR\Uninstall.exe"
 	Delete "$INSTDIR\README.txt"
 	Delete "$INSTDIR\openal32.dll"
 	Delete "$INSTDIR\Resources\Fonts\Roboto-Regular.ttf"
