@@ -20,11 +20,9 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Restore NuGet packages
-        working-directory: ${{env.GITHUB_WORKSPACE}}
         run: nuget restore Roguelike.sln
 
       - name: Build
-        working-directory: ${{env.GITHUB_WORKSPACE}}
         run: msbuild Roguelike.sln /p:Configuration=Release /p:Platform=x64
 
       - name: Install NSIS
