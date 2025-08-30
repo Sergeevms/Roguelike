@@ -5,7 +5,8 @@ OutFile "RoguelikeInstaller.exe"
 InstallDir "$PROGRAMFILES\Roguelike"
 
 !ifdef VERSION
-	VIProductVersion "${VERSION}.0"
+	VIProductVersion "${VERSION}"
+	VIFIleVersion "${VERSION}"
 	VIAddVersionKey "FileVersion" "${VERSION}"
 !endif
 
