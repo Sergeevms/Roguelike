@@ -37,7 +37,7 @@ jobs:
           echo "VERSION=$version"
 
       - name: Create installer
-        run: makensis /DVERSION=${{ github.ref_name }} Installer\installer.nsi
+        run: makensis /DVERSION=$version Installer\installer.nsi
         shell: cmd
 
       - name: Create zip
