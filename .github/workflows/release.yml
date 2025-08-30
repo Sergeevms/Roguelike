@@ -63,9 +63,12 @@ jobs:
           Compress-Archive -Path Roguelike-arch -DestinationPath "Roguelike-arch-${{ github.ref_name }}.zip" -Force
         shell: powershell
 
-        - name: Create Release
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
             Installer\RoguelikeInstaller.exe
             Roguelike-arch-${{ github.ref_name }}.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
