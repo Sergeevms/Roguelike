@@ -47,7 +47,6 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
          * @param deltaTime - time passes since last Update
          */
         void Update(float deltaTime) override;
-        void Render() override {};
 
        protected:
         /**
@@ -127,6 +126,11 @@ class AIActorManagerSystem : public MaxrEngine::IFixedUpdateSystem,
      * @param newGameArea - Area where actors can be.
      */
     void Reset(const MaxrEngine::FloatRect& newGameArea);
+    /**
+     * @brief Gets the current count of AIActors
+     * @return - Number of remaining AIActors
+     */
+    int GetAiActorsCount() const;
 
    private:
     AIActorManagerSystem() {

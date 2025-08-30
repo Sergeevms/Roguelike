@@ -8,14 +8,14 @@
 #include "AITargetSelector.h"
 #include "Actor.h"
 #include "PerceptionComponentDebugDraw.h"
+#include "Settings.h"
 #include "Vector.h"
 
 namespace Roguelike {
 AIActor::AIActor(const Parameters& parameters,
                  const MaxrEngine::Vector2Df& position)
     : Actor(parameters.baseActorParameters, position) {
-    auto input = gameObject->AddComponent<MaxrEngine::AIInputComponent>();
-
+    auto input = gameObject->AddComponent<AIInputComponent>();
     auto enemyChase = gameObject->AddComponent<AIChaseTargetComponent>(
         parameters.chaseTargetParameters);
 
@@ -33,7 +33,8 @@ AIActor::AIActor(const Parameters& parameters,
                 ? MaxrEngine::Vector2Df(1.0F, 0.0F)
                 : MaxrEngine::Vector2Df(-1.0F, 0.0F));
     }
-    gameObject->AddComponent<PerceptionComponentDebugDraw>();
+    gameObject->AddComponent<PerceptionComponentDebugDraw>(
+        static_cast<int>(Settings::RenderLayers::Debug));
     auto targetSelector = gameObject->AddComponent<AITargetSelector>();
     perception->AddObserver(targetSelector);
 

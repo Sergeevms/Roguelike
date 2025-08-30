@@ -153,8 +153,10 @@ void AIActorManagerSystem::Notify(
 }
 void AIActorManagerSystem::Reset(const MaxrEngine::FloatRect& newGameArea) {
     aIActors.clear();
+    aIActorsCount = 0;
     gameArea = newGameArea;
 }
+int AIActorManagerSystem::GetAiActorsCount() const { return aIActorsCount; }
 AIActorManagerSystem::DelayedDeadAIActorDestroyerComponent::
     DelayedDeadAIActorDestroyerComponent(MaxrEngine::GameObject* gameObject)
     : Component(gameObject) {}

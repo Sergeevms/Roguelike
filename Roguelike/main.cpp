@@ -6,8 +6,10 @@
 
 #include <memory>
 
-#include "DeveloperLevel.h"
+// #include "DeveloperLevel.h"
 #include "Engine.h"
+#include "LevelCompleteCondition.h"
+#include "LevelManager.h"
 #include "Logger.h"
 #include "RenderSystem.h"
 #include "ResourceSystem.h"
@@ -34,6 +36,15 @@ int main() {
     MaxrEngine::RenderSystem::Instance()->CrateMainWindow(
         sf::VideoMode(settings->screenWidth, settings->screenHeight),
         settings->gameName);
+    MaxrEngine::RenderSystem::Instance()->SetUpLayers(
+        static_cast<int>(Roguelike::Settings::RenderLayers::Count));
+    MaxrEngine::RenderSystem::LayerBitmask activeLayers;
+#ifdef NDEBUG
+    activeLayers.SetLayerValue(
+        static_cast<int>(Roguelike::Settings::RenderLayers::Debug), false);
+#endif  // NDEBUG
+
+    MaxrEngine::RenderSystem::Instance()->SetActiveLayers(activeLayers);
 
     MaxrEngine::ResourceSystem::Instance()->LoadTextureMap(
         settings->playerTextureMap);
@@ -50,10 +61,8 @@ int main() {
     MaxrEngine::ResourceSystem::Instance()->LoadFont(
         "default", settings->fontPath + "Roboto-Regular.ttf");
 
-    auto developerLevel = std::make_shared<Roguelike::DeveloperLevel>();
-    developerLevel->Start();
+    Roguelike::LevelManager::Instance()->LoadNextLevel();
     MaxrEngine::Engine::Instance()->Run();
-    developerLevel->Stop();
 
     return 0;
 }

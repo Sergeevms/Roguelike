@@ -21,8 +21,9 @@ const BlockComponent::Parameters BlockComponent::defaultParameters = {
     .iconColor = sf::Color::Green};
 
 BlockComponent::BlockComponent(MaxrEngine::GameObject* gameObject,
-                               const Parameters& parameters)
+                               const Parameters& parameters, const int layer)
     : Component(gameObject),
+      IRenderable(layer),
       damageReduction(parameters.damageReduction),
       speedCoefficient(parameters.speedCoefficient),
       iconCenterOffset(parameters.iconCenterOffset),
@@ -65,7 +66,7 @@ void BlockComponent::Render() {
             gameObject->GetComponent<MaxrEngine::TransformComponent>();
         auto position = transform->GetWorldPosition() + iconCenterOffset;
         icon.setPosition(Convert<sf::Vector2f>(position));
-        MaxrEngine::RenderSystem::Instance()->Render(icon);
+        MaxrEngine::RenderSystem::Instance()->Render(icon, layer);
     }
 }
 float BlockComponent::ApplyDamage(const float damage) const {

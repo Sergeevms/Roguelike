@@ -27,5 +27,4 @@ void SpriteDirectionComponent::Update(float deltaTime) {
         inputPointer = gameObject->GetComponentSharedPtr<InputComponent>();
     }
 }
-void SpriteDirectionComponent::Render() {}
 }  // namespace MaxrEngine

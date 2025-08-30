@@ -29,7 +29,6 @@ class PerceptionComponent : public MaxrEngine::Component,
     ~PerceptionComponent();
 
     void Update(float deltaTime) override;
-    void Render() override;
 
     void SetVisionAngle(const float newVisionAngle);
     float GetVisionAngle() const;

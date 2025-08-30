@@ -1,10 +1,12 @@
 #include "HealthComponent.h"
 
 #include <cassert>
+#include <memory>
 #include <sstream>
 
 #include "Component.h"
 #include "GameObject.h"
+#include "ISaveable.h"
 #include "Logger.h"
 #include "Utility.h"
 
@@ -14,8 +16,6 @@ HealthComponent::HealthComponent(MaxrEngine::GameObject* gameObject,
     : Component(gameObject), maxHealth(maxHealth), currentHealth(maxHealth) {}
 
 void HealthComponent::Update(float deltaTime) {}
-
-void HealthComponent::Render() {}
 
 void HealthComponent::SetMaxHealth(const float newMaxHealth) {
     assert(newMaxHealth >= 0.0F && "maxHealth supposed to be positive");
@@ -93,4 +93,13 @@ float HealthComponent::IncreaseHealth(const float healingAmount) {
 }
 
 bool HealthComponent::IsAlive() const { return currentHealth > 0.0F; }
+void HealthComponent::SaveImpl(std::shared_ptr<HealthSave> save) const {
+    save->maxHealth = maxHealth;
+    save->currentHealth = currentHealth;
+}
+void HealthComponent::LoadImpl(std::shared_ptr<const HealthSave> save) {
+    maxHealth = save->maxHealth;
+    currentHealth = save->currentHealth;
+    Emit();
+}
 }  // namespace Roguelike

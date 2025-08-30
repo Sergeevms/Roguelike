@@ -12,7 +12,6 @@ class AITargetSelector : public MaxrEngine::Component,
     explicit AITargetSelector(MaxrEngine::GameObject* gameObject);
 
     void Update(float deltaTime) override;
-    void Render() override;
     void UpdateTarget();
     void Notify(std::shared_ptr<MaxrEngine::IObservable> observable) override;
 };

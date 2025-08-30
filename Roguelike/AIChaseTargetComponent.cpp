@@ -45,16 +45,13 @@ void AIChaseTargetComponent::Update(float deltaTime) {
             }
         }
         // Update moving direction in input component
-        auto* inputComponent =
-            gameObject->GetComponent<MaxrEngine::AIInputComponent>();
+        auto* inputComponent = gameObject->GetComponent<AIInputComponent>();
         inputComponent->SetDirection(movingDirection);
     } else {
         LOG_ERROR("AIBlackboard requried for AIChaseComponent");
     }
 }
 // NOLINTEND(misc-unused-parameters) : overrided method
-
-void AIChaseTargetComponent::Render() {}
 
 void AIChaseTargetComponent::SetMaximumChaseRadius(float newMaximumRadius) {
     maximumChaseRadius = newMaximumRadius;

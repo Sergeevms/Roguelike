@@ -30,9 +30,6 @@
     <ClCompile Include="IDelayedAction.cpp">
       <Filter>Source Files\Interfaces and abstract classes</Filter>
     </ClCompile>
-    <ClCompile Include="DeveloperLevel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,6 +126,21 @@
     <ClCompile Include="AIActorManagerSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelCompleteCondition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AIInputComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardInputComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -142,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="ISaveable.h">
       <Filter>Header Files\Interfaces and abstract classes</Filter>
-    </ClInclude>
-    <ClInclude Include="DeveloperLevel.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
@@ -252,6 +261,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AIActorManagerSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AIInputComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardInputComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCompleteCondition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

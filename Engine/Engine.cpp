@@ -9,6 +9,7 @@
 #include "SFML/System/Time.hpp"
 #include "SFML/Window/Event.hpp"
 
+#include "EventSystem.h"
 #include "GameWorld.h"
 #include "Logger.h"
 #include "RenderSystem.h"
@@ -27,31 +28,28 @@ Engine* Engine::Instance() {
 void Engine::Run() {  // NOLINT
     LOG_INFO("Engine runned");
     sf::Clock gameClock;
-    sf::Event event;
 
     while (RenderSystem::Instance()->GetMainWindow().isOpen()) {
         const sf::Time timeElapsed = gameClock.restart();
         const float deltaTime = timeElapsed.asSeconds();
 
-        while (RenderSystem::Instance()->GetMainWindow().pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                RenderSystem::Instance()->GetMainWindow().close();
-            }
-        }
+        EventSystem::Instance()->UpdateSfEvents();
 
-        if (!RenderSystem::Instance()->GetMainWindow().isOpen()) {
-            GameWorld::Instance()->Clear();
+        auto closeEvent =
+            EventSystem::Instance()->GetSfEvents(sf::Event::Closed);
+        if (closeEvent.first != closeEvent.second) {
+            GameWorld::Instance()->ClearImmediate();
             break;
         }
 
-        RenderSystem::Instance()->GetMainWindow().clear();
+        RenderSystem::Instance()->Clear();
 
         GameWorld::Instance()->Update(deltaTime);
         GameWorld::Instance()->FixedUpdate(deltaTime);
         GameWorld::Instance()->Render();
         GameWorld::Instance()->LateUpdate();
 
-        RenderSystem::Instance()->GetMainWindow().display();
+        RenderSystem::Instance()->Display();
     }
     LOG_INFO("Engine stopped");
 }

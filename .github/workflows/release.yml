@@ -1,0 +1,72 @@
+name: Create Roguelike release
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore Roguelike.sln
+
+      - name: Build
+        run: msbuild Roguelike.sln /p:Configuration=Release /p:Platform=x64
+
+      - name: Install NSIS
+        run: choco install nsis
+        shell: powershell
+
+      - name: Create installer
+        run: makensis /DVERSION=${{ github.ref_name }} Installer\installer.nsi
+        shell: cmd
+
+      - name: Create zip
+        run: |
+          # Create a directory for the portable version
+          mkdir Roguelike-arch
+          
+          # Copy the main executable and DLL
+          Copy-Item "x64\Release\Roguelike.exe" -Destination "Roguelike-arch\"
+          Copy-Item "x64\Release\openal32.dll" -Destination "Roguelike-arch\"
+          Copy-Item "Installer\README.txt" -Destination "Roguelike-arch\"
+          
+          # Create Resources directory structure
+          mkdir Roguelike-arch\Resources
+          mkdir Roguelike-arch\Resources\Fonts
+          mkdir Roguelike-arch\Resources\Sounds
+          mkdir Roguelike-arch\Resources\TextureMaps
+          
+          # Copy resource files
+          Copy-Item "Roguelike\Resources\Fonts\Roboto-Regular.ttf" -Destination "Roguelike-arch\Resources\Fonts\"
+          Copy-Item "Roguelike\Resources\Sounds\Clinthammer__Background_Music.wav" -Destination "Roguelike-arch\Resources\Sounds\"
+          Copy-Item "Roguelike\Resources\TextureMaps\Enemy.png" -Destination "Roguelike-arch\Resources\TextureMaps\"
+          Copy-Item "Roguelike\Resources\TextureMaps\Player.png" -Destination "Roguelike-arch\Resources\TextureMaps\"
+          Copy-Item "Roguelike\Resources\TextureMaps\Floor.png" -Destination "Roguelike-arch\Resources\TextureMaps\"
+          Copy-Item "Roguelike\Resources\TextureMaps\Wall.png" -Destination "Roguelike-arch\Resources\TextureMaps\"
+          
+          # Create a zip file
+          Compress-Archive -Path Roguelike-arch -DestinationPath "Roguelike-arch-${{ github.ref_name }}.zip" -Force
+        shell: powershell
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            Installer\RoguelikeInstaller.exe
+            Roguelike-arch-${{ github.ref_name }}.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

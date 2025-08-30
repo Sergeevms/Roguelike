@@ -6,14 +6,16 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 
 #include "GameObject.h"
+#include "IRenderable.h"
 #include "Logger.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
 #include "SpriteRendererComponent.h"
 
 namespace MaxrEngine {
-SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject)
-    : ColliderComponent(gameObject), sprite(nullptr) {
+SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject,
+                                                 int renderLayer)
+    : ColliderComponent(gameObject), IRenderable(renderLayer), sprite(nullptr) {
     auto* spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
     if (spriteRenderer == nullptr) {
         LOG_ERROR(
@@ -43,6 +45,6 @@ void SpriteColliderComponent::Render() {
     rectangle.setOutlineColor(sf::Color::White);
     rectangle.setOutlineThickness(outlineThickness);
 
-    RenderSystem::Instance()->Render(rectangle);
+    RenderSystem::Instance()->Render(rectangle, layer);
 }
 }  // namespace MaxrEngine

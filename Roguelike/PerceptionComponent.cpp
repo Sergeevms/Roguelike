@@ -28,8 +28,6 @@ PerceptionComponent::~PerceptionComponent() {
 
 void PerceptionComponent::Update(float deltaTime) {}
 
-void PerceptionComponent::Render() {}
-
 void PerceptionComponent::SetVisionAngle(const float newVisionAngle) {
     visionAngle = newVisionAngle;
 }

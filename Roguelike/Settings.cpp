@@ -1,8 +1,7 @@
 #include "Settings.h"
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "DefaultActorsSettings.h"
+#include "LevelCompleteCondition.h"
 #include "Utility.h"
 #include "Vector.h"
 
@@ -44,10 +43,14 @@ const SettingsStruct Settings::defaultsSettings{
     .aiParameters = DefaultSettings::AIActorParameters,
 
     .mapTileSize = 150,
-    .labyrinthParameters = {.width = 11,
-                            .heigth = 11,
-                            .isAdjustingSizeAndStart = true,
-                            .randSeed = -1},
+    .firstLevelParameters =
+        {.builderParameters = {.width = 7,
+                               .height = 7,
+                               .isAdjustingSizeAndStart = true,
+                               .randSeed = -1},
+         .completeConditions = {LevelCompleteCondition::Type::ExitReached,
+                                LevelCompleteCondition::Type::AllEnemyKilled},
+         .enemyCount = 1},
     .timeToRemoveAfterDeath = 4.0F};
 
 MaxrEngine::Vector2Df Settings::ScreenCenter() const {

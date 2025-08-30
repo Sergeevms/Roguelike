@@ -4,30 +4,30 @@
 #include <unordered_map>
 #include <vector>
 
-#include "EngineAPI.h"
 #include "GameObject.h"
 #include "IFixedUpdateSystem.h"
 
 namespace MaxrEngine {
 class GameWorld {
    public:
-    ENGINE_API static GameWorld* Instance();
+    static GameWorld* Instance();
 
     void Update(float deltaTime);
     void FixedUpdate(float deltaTime);
     void Render();
     void LateUpdate();
 
-    ENGINE_API GameObject* CreateGameObject();
-    ENGINE_API GameObject* CreateGameObject(std::string name);
-    ENGINE_API void DestroyGameObject(GameObject* gameObject);
-    ENGINE_API void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
-    ENGINE_API void Clear();
+    GameObject* CreateGameObject();
+    GameObject* CreateGameObject(std::string name);
+    void DestroyGameObject(GameObject* gameObject);
+    void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
+    void Clear();
+    void ClearImmediate();
 
-    ENGINE_API void RegisterFixedUpdateSytem(IFixedUpdateSystem* system);
-    ENGINE_API void UnRegisterFixedUpdateSytem(IFixedUpdateSystem* system);
+    void RegisterFixedUpdateSytem(IFixedUpdateSystem* system);
+    void UnRegisterFixedUpdateSytem(IFixedUpdateSystem* system);
 
-    ENGINE_API void Print() const;
+    void Print() const;
 
    private:
     GameWorld() {};

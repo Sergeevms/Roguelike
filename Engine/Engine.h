@@ -1,7 +1,7 @@
 #pragma once
-#include "EngineAPI.h"
+
 namespace MaxrEngine {
-class ENGINE_API Engine {
+class Engine {
    public:
     static Engine* Instance();
 

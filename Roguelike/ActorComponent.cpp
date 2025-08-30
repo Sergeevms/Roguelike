@@ -21,8 +21,6 @@ ActorComponent::~ActorComponent() {
 
 void ActorComponent::Update(float deltaTime) {}
 
-void ActorComponent::Render() {}
-
 int ActorComponent::GetGroupID() const { return groupID; }
 
 void ActorComponent::SetGroupID(const int newGroupID) { groupID = newGroupID; }

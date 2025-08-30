@@ -16,8 +16,7 @@ class AITypedBlackboardComponent : public Component {
     explicit AITypedBlackboardComponent(GameObject* gameObject)
         : Component(gameObject) {};
 
-    virtual void Update(float deltaTime) {};
-    virtual void Render() {};
+    void Update(float deltaTime) override {};
 
     template <typename T>
     void Set(std::string key, const T& value) {

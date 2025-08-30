@@ -1,8 +1,10 @@
 #pragma once
+#include <cstdint>
 #include <string>
 
 #include "AIActor.h"
 #include "Actor.h"
+#include "GameLevel.h"
 #include "LabyrinthBuilder.h"
 #include "ResourceSystem.h"
 #include "Vector.h"
@@ -33,7 +35,7 @@ struct SettingsStruct {
 
     int mapTileSize;
 
-    LabyrinthBuilder::Parameters labyrinthParameters;
+    GameLevel::Parameters firstLevelParameters;
     float timeToRemoveAfterDeath;
 };
 
@@ -42,6 +44,16 @@ struct SettingsStruct {
  */
 class Settings : public SettingsStruct {
    public:
+    enum class RenderLayers {
+        BackGround,
+        Floor,
+        Walls,
+        Actors,
+        UI1,
+        UI2,
+        Debug,
+        Count
+    };
     static Settings* Instance() {
         static Settings world;
         return &world;

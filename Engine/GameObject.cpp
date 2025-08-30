@@ -2,11 +2,12 @@
 
 #include "GameObject.h"
 
-#include <stdint.h>
-
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
+#include <memory>
 
+#include "IRenderable.h"
 #include "TransformComponent.h"
 
 namespace MaxrEngine {
@@ -49,7 +50,10 @@ void GameObject::Update(float deltaTime) {
 
 void GameObject::Render() {
     for (auto& component : components) {
-        component->Render();
+        if (auto renderable =
+                std::dynamic_pointer_cast<IRenderable>(component)) {
+            renderable->Render();
+        }
     }
 }
 

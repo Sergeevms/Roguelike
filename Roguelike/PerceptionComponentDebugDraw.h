@@ -2,14 +2,16 @@
 #include <memory>
 
 #include "Component.h"
+#include "IRenderable.h"
 #include "PerceptionComponent.h"
 
 namespace Roguelike {
-class PerceptionComponentDebugDraw : public MaxrEngine::Component {
+class PerceptionComponentDebugDraw : public MaxrEngine::Component,
+                                     public MaxrEngine::IRenderable {
    public:
     static constexpr int defaultArcLineCount = 50;
     explicit PerceptionComponentDebugDraw(
-        MaxrEngine::GameObject* gameObject,
+        MaxrEngine::GameObject* gameObject, const int layer = 0,
         const int arcLinesCount = defaultArcLineCount);
 
     void Update(float deltaTime) override;

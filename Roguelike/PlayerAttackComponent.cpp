@@ -22,41 +22,44 @@ void PlayerAttackComponent::Notify(
     std::shared_ptr<MaxrEngine::IObservable> observable) {
     if (auto input =
             std::dynamic_pointer_cast<MaxrEngine::InputComponent>(observable)) {
-        if (currentCooldown <= 0.0F && input->getAttack()) {
-            currentCooldown = cooldown;
-            const auto position =
-                gameObject->GetComponent<MaxrEngine::TransformComponent>()
-                    ->GetWorldPosition();
+        if (input->getAttack()) {
+            if (currentCooldown <= 0.0F) {
+                currentCooldown = cooldown;
+                const auto position =
+                    gameObject->GetComponent<MaxrEngine::TransformComponent>()
+                        ->GetWorldPosition();
 
-            auto targetsVector =
-                ActorRegisterSystem::Instance()->GetActorsNotInGroupList(
-                    ActorsGroups::PlayerGroup);
+                auto targetsVector =
+                    ActorRegisterSystem::Instance()->GetActorsNotInGroupList(
+                        ActorsGroups::PlayerGroup);
 
-            std::map<float, MaxrEngine::GameObject*> targets;
+                std::map<float, MaxrEngine::GameObject*> targets;
 
-            for (auto& possibleTarget : targetsVector) {
-                if (possibleTarget->GetComponent<HealthComponent>()
-                        ->IsAlive()) {
-                    const auto targetPosition =
-                        possibleTarget
-                            ->GetComponent<MaxrEngine::TransformComponent>()
-                            ->GetWorldPosition();
+                for (auto& possibleTarget : targetsVector) {
+                    if (possibleTarget->GetComponent<HealthComponent>()
+                            ->IsAlive()) {
+                        const auto targetPosition =
+                            possibleTarget
+                                ->GetComponent<MaxrEngine::TransformComponent>()
+                                ->GetWorldPosition();
 
-                    const auto distance =
-                        (targetPosition - position).GetLength();
-                    targets.emplace(std::pair<float, MaxrEngine::GameObject*>(
-                        distance, possibleTarget));
+                        const auto distance =
+                            (targetPosition - position).GetLength();
+                        targets.emplace(
+                            std::pair<float, MaxrEngine::GameObject*>(
+                                distance, possibleTarget));
+                    }
                 }
-            }
-            auto newTarget = targets.begin();
-            if (newTarget != targets.end()) {
-                target = newTarget->second->weak_from_this();
+                auto newTarget = targets.begin();
+                if (newTarget != targets.end()) {
+                    target = newTarget->second->weak_from_this();
+                } else {
+                    target = std::weak_ptr<MaxrEngine::GameObject>();
+                }
+                StartAttack();
             } else {
-                target = std::weak_ptr<MaxrEngine::GameObject>();
+                LOG_INFO("Attack is on cooldown");
             }
-            StartAttack();
-        } else {
-            LOG_INFO("Attack is on cooldown");
         }
     }
 }
