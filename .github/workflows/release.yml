@@ -29,12 +29,12 @@ jobs:
         shell: powershell
       - name: Extract version number
         id: extract_version
+        shell: pwsh
         run: |
-          # Remove leading 'v', append .0 if only three digits
-          VERSION="${GITHUB_REF##*/}"
-          VERSION="${VERSION#v}"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "VERSION=$VERSION"  # For log visibility
+          $version = $env:GITHUB_REF.Split('/')[-1]
+          $version = $version.TrimStart('v')
+          echo "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "VERSION=$version"
 
       - name: Create installer
         run: makensis /DVERSION=${{ github.ref_name }} Installer\installer.nsi
