@@ -37,7 +37,9 @@ jobs:
           echo "VERSION=$version"
 
       - name: Create installer
-        run: makensis /DVERSION=$env:VERSION Installer/installer.nsi
+        run: |
+            cd Installer
+            makensis /DVERSION=$env:VERSION Installer/installer.nsi
         shell: powershell
 
       - name: Create zip
@@ -68,11 +70,15 @@ jobs:
           Compress-Archive -Path Roguelike-arch -DestinationPath "Roguelike-arch-$env:VERSION.zip" -Force
         shell: powershell
 
+      - name: List files for debugging
+        run: Get-ChildItem -Recurse | Where-Object { $_.Name -like "*Roguelike*" -or $_.Name -like "*.exe" -or $_.Name -like "*.zip" }
+        shell: powershell
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            Installer\RoguelikeInstaller.exe
+            Installer/RoguelikeInstaller.exe
             Roguelike-arch-$env:VERSION.zip
           generate_release_notes: true
         env:
