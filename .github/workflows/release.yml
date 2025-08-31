@@ -37,8 +37,8 @@ jobs:
           echo "VERSION=$version"
 
       - name: Create installer
-        run: makensis /DVERSION=$version Installer\installer.nsi
-        shell: cmd
+        run: makensis /DVERSION=$env:VERSION Installer/installer.nsi
+        shell: powershell
 
       - name: Create zip
         run: |
@@ -65,7 +65,7 @@ jobs:
           Copy-Item "Roguelike\Resources\TextureMaps\Wall.png" -Destination "Roguelike-arch\Resources\TextureMaps\"
           
           # Create a zip file
-          Compress-Archive -Path Roguelike-arch -DestinationPath "Roguelike-arch-${{ github.ref_name }}.zip" -Force
+          Compress-Archive -Path Roguelike-arch -DestinationPath "Roguelike-arch-$env:VERSION.zip" -Force
         shell: powershell
 
       - name: Create Release
@@ -73,7 +73,7 @@ jobs:
         with:
           files: |
             Installer\RoguelikeInstaller.exe
-            Roguelike-arch-${{ github.ref_name }}.zip
+            Roguelike-arch-$env:VERSION.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,9 +5,9 @@ OutFile "RoguelikeInstaller.exe"
 InstallDir "$PROGRAMFILES\Roguelike"
 
 !ifdef VERSION
-	VIProductVersion "${VERSION}"
-	VIFIleVersion "${VERSION}"
-	VIAddVersionKey "FileVersion" "${VERSION}"
+	VIProductVersion "${VERSION}.0"
+	VIFIleVersion "${VERSION}.0"
+	VIAddVersionKey "FileVersion" "${VERSION}.0"
 !endif
 
 !define MUI_ABORTWARNING
