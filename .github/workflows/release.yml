@@ -67,7 +67,10 @@ jobs:
           Copy-Item "Roguelike\Resources\TextureMaps\Wall.png" -Destination "Roguelike-arch\Resources\TextureMaps\"
           
           # Create a zip file
-          Compress-Archive -Path Roguelike-arch -DestinationPath "Roguelike-arch-$env:VERSION.zip" -Force
+          $zipName = "Roguelike-arch-$env:VERSION.zip"
+          Compress-Archive -Path Roguelike-arch -DestinationPath $zipName -Force
+          echo "ZIP_NAME=$zipName" >> $env:GITHUB_ENV
+          echo "ZIP_NAME=$zipName"
         shell: powershell
 
       - name: List files for debugging
@@ -79,7 +82,7 @@ jobs:
         with:
           files: |
             Installer/RoguelikeInstaller.exe
-            Roguelike-arch-${{ steps.extract_version.outputs.version }}.zip
+            ${{ env.ZIP_NAME }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
