@@ -79,7 +79,7 @@ jobs:
         with:
           files: |
             Installer/RoguelikeInstaller.exe
-            Roguelike-arch-$env:VERSION.zip
+            Roguelike-arch-${{ steps.extract_version.outputs.version }}.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
