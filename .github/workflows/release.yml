@@ -39,7 +39,7 @@ jobs:
       - name: Create installer
         run: |
             cd Installer
-            makensis /DVERSION=$env:VERSION Installer/installer.nsi
+            makensis /DVERSION=$env:VERSION installer.nsi
         shell: powershell
 
       - name: Create zip
