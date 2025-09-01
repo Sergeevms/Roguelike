@@ -2,11 +2,13 @@
 
 #include <memory>
 
+#include "ColliderDebugRender.h"
 #include "Floor.h"
 #include "GameObject.h"
 #include "LevelCompleteCondition.h"
 #include "LevelManager.h"
 #include "RigidBodyComponent.h"
+#include "Settings.h"
 #include "SpriteColliderComponent.h"
 #include "Trigger.h"
 #include "Vector.h"
@@ -18,6 +20,8 @@ LabyrinthExit::LabyrinthExit(MaxrEngine::Vector2Df position, int textureIndex,
     auto exitTrigger =
         gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>();
     exitTrigger->SetTrigger(true);
+    gameObject->AddComponent<MaxrEngine::ColliderDebugRender>(
+        exitTrigger, static_cast<int>(Settings::RenderLayers::Debug));
 
     auto onEnter = [](MaxrEngine::Trigger trigger) {
         auto conditions = LevelManager::Instance()->GetCompleteConditions();

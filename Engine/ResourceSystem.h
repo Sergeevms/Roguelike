@@ -24,7 +24,7 @@ class ResourceSystem {
     void LoadTexture(const std::string& name, std::string sourcePath,
                      bool isSmooth = true);
     const sf::Texture* GetTextureShared(const std::string& name) const;
-    sf::Texture* GetTectureCopy(const std::string& name) const;
+    sf::Texture* GetTextureCopy(const std::string& name) const;
     void DeleteSharedTexture(const std::string& name);
 
     void LoadTextureMap(const std::string& name, std::string sourcePath,

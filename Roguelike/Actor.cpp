@@ -8,10 +8,13 @@
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
 #include "BlockComponent.h"
+#include "BoxColliderComponent.h"
+#include "ColliderDebugRender.h"
 #include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
 #include "HealthComponent.h"
 #include "ISaveable.h"
+#include "OffsetSpriteRendererComponent.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "Settings.h"
@@ -44,10 +47,21 @@ Actor::Actor(const Parameters& parameters,
     const auto* texture =
         MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
             defaultAnimation.textureMapName, 0);
-    auto render = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>(
-        static_cast<int>(Settings::RenderLayers::Actors));
+    auto render = gameObject->AddComponent<OffsetSpriteRendererComponent>();
+    render->SetLayer(static_cast<int>(Settings::RenderLayers::Actors));
     render->SetTexture(*texture);
-    render->SetPixelSize(parameters.spriteSize);
+    MaxrEngine::Vector2Df coefficient = {
+        parameters.size.x / parameters.imageSize.x,
+        parameters.size.y / parameters.imageSize.y,
+    };
+    MaxrEngine::Vector2Di desiredSize = {
+        static_cast<int>(parameters.spriteSize.x * coefficient.x),
+        static_cast<int>(parameters.spriteSize.y * coefficient.y)};
+    MaxrEngine::Vector2Df desiredOffset = {
+        parameters.spriteOffset.x * coefficient.x,
+        parameters.spriteOffset.y * coefficient.y};
+    render->SetPixelSize(desiredSize);
+    render->SetOffset(-desiredOffset);
 
     auto animationComponent =
         gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
@@ -61,8 +75,10 @@ Actor::Actor(const Parameters& parameters,
     // Add movement, Collider and Rigid body components
     gameObject->AddComponent<ActorMovementComponent>(parameters.movementSpeed);
     gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
-    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>(
-        static_cast<int>(Settings::RenderLayers::Debug));
+    auto collidder = gameObject->AddComponent<MaxrEngine::BoxColliderComponent>(
+        MaxrEngine::Vector2Df(parameters.size.x, parameters.size.y));
+    gameObject->AddComponent<MaxrEngine::ColliderDebugRender>(
+        collidder, static_cast<int>(Settings::RenderLayers::Debug));
     if (parameters.haveBlock) {
         gameObject->AddComponent<BlockComponent>(
             parameters.blockParameters,

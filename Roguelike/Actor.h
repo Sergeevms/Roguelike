@@ -39,7 +39,10 @@ class Actor : public GameObjectContainer, public ISaveable<Actor, ActorSave> {
         float maxHealthAmount;
         BarComponent::Parameters healthBarParameters;
         float movementSpeed;
+        MaxrEngine::Vector2Df size;
+        MaxrEngine::Vector2Di imageSize;
         MaxrEngine::Vector2Di spriteSize;
+        MaxrEngine::Vector2Df spriteOffset;
         std::string defaultAnimationName;
         std::unordered_map<std::string, MaxrEngine::Animation> animations;
         bool haveBlock;

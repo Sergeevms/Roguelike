@@ -29,7 +29,7 @@ class SpriteRendererComponent : public Component, public IRenderable {
     void FlipX(bool flip);
     void FlipY(bool flip);
 
-   private:
+   protected:
     Vector2Df scale;
     sf::Sprite* sprite;
     TransformComponent* transform;
