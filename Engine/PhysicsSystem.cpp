@@ -86,7 +86,7 @@ void PhysicsSystem::Unsubscribe(ColliderComponent* collider) {
     message << "Unsubscribe collider " << collider;
     LOG_INFO(message.str());
 
-    // Process trigger exit if collider was in triggeredPair
+    // Process trigger exit if colliderPtr was in triggeredPair
     for (auto triggeredPair = triggersEnteredPair.cbegin(),
               nextTriggeredPair = triggeredPair;
          triggeredPair != triggersEnteredPair.cend();

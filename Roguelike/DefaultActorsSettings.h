@@ -5,14 +5,14 @@
 namespace Roguelike {
 namespace DefaultSettings {
 
-constexpr int defaultActorSpriteSize = 70;
+constexpr int defaultActorSpriteSize = 65;
 constexpr float defaultActorSpriteSizeF = defaultActorSpriteSize;
 constexpr float defaultBarHeigth = 5.0F;
 constexpr float defaultBarBorderSize = -1.0F;
 constexpr float attackWindup = 0.5F;
 
 const Actor::Parameters defaultPlayerParameters = {
-    .actorGroupID = ActorsGroups::PlayerGroup,
+    .actorGroupID = Settings::ActorsGroups::Player,
     .maxHealthAmount = 200.0F,
     .healthBarParameters = {.centerOffset = {0.0F,
                                              (defaultActorSpriteSizeF / 2) +
@@ -22,7 +22,10 @@ const Actor::Parameters defaultPlayerParameters = {
                             .barColor = sf::Color(255, 0, 0),
                             .borderSize = defaultBarBorderSize},
     .movementSpeed = 400.0F,
-    .spriteSize = {defaultActorSpriteSize, defaultActorSpriteSize},
+    .size = {defaultActorSpriteSizeF, defaultActorSpriteSizeF},
+    .spriteOffsetParameters = {.originalSpriteTextureSize = {100, 80},
+                               .originalImageSize = {54, 54},
+                               .originalCenterOffset = {0, -10}},
     .defaultAnimationName = "Idle",
     .animations = {{"Idle",
                     {.textureMapName = "PlayerTextures",
@@ -87,7 +90,7 @@ const AIActor::Parameters AIActorParameters =
         // Set base Actor::Parameters fields
         .baseActorParameters =
             {
-                .actorGroupID = ActorsGroups::EnemyGroup,
+                .actorGroupID = Settings::ActorsGroups::Enemy,
                 .maxHealthAmount = 100.0F,
                 .healthBarParameters =
                     {.centerOffset = {0.0F, (defaultActorSpriteSizeF / 2) +
@@ -96,7 +99,11 @@ const AIActor::Parameters AIActorParameters =
                      .barColor = sf::Color(255, 0, 0),
                      .borderSize = defaultBarBorderSize},
                 .movementSpeed = 250.0F,
-                .spriteSize = {defaultActorSpriteSize, defaultActorSpriteSize},
+                .size = {defaultActorSpriteSizeF, defaultActorSpriteSizeF},
+                .spriteOffsetParameters = {.originalSpriteTextureSize = {96,
+                                                                         96},
+                                           .originalImageSize = {48, 48},
+                                           .originalCenterOffset = {0, 0}},
                 .defaultAnimationName = "Idle",
                 .animations = {{"Idle",
                                 {.textureMapName = "EnemyTextures",

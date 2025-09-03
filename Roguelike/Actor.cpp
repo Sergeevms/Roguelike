@@ -8,15 +8,17 @@
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
 #include "BlockComponent.h"
+#include "BoxColliderComponent.h"
+#include "ColliderDebugRender.h"
 #include "GameObjectContainer.h"
 #include "HealthBarComponent.h"
 #include "HealthComponent.h"
 #include "ISaveable.h"
+#include "OffsetSpriteRendererComponent.h"
 #include "ResourceSystem.h"
 #include "RigidBodyComponent.h"
 #include "Settings.h"
 #include "SpriteAnimationComponent.h"
-#include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
@@ -44,10 +46,10 @@ Actor::Actor(const Parameters& parameters,
     const auto* texture =
         MaxrEngine::ResourceSystem::Instance()->GetTextureMapElementShared(
             defaultAnimation.textureMapName, 0);
-    auto render = gameObject->AddComponent<MaxrEngine::SpriteRendererComponent>(
-        static_cast<int>(Settings::RenderLayers::Actors));
-    render->SetTexture(*texture);
-    render->SetPixelSize(parameters.spriteSize);
+    auto render = gameObject->AddComponent<OffsetSpriteRendererComponent>();
+    render->SetLayer(static_cast<int>(Settings::RenderLayers::Actors));
+    render->SetTexture(*texture, parameters.spriteOffsetParameters);
+    render->SetPixelSize(Convert<MaxrEngine::Vector2Di>(parameters.size));
 
     auto animationComponent =
         gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();
@@ -61,8 +63,10 @@ Actor::Actor(const Parameters& parameters,
     // Add movement, Collider and Rigid body components
     gameObject->AddComponent<ActorMovementComponent>(parameters.movementSpeed);
     gameObject->AddComponent<MaxrEngine::RigidBodyComponent>();
-    gameObject->AddComponent<MaxrEngine::SpriteColliderComponent>(
-        static_cast<int>(Settings::RenderLayers::Debug));
+    auto collidder = gameObject->AddComponent<MaxrEngine::BoxColliderComponent>(
+        MaxrEngine::Vector2Df(parameters.size.x, parameters.size.y));
+    gameObject->AddComponent<MaxrEngine::ColliderDebugRender>(
+        collidder, static_cast<int>(Settings::RenderLayers::Debug));
     if (parameters.haveBlock) {
         gameObject->AddComponent<BlockComponent>(
             parameters.blockParameters,

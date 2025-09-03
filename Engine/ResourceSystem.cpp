@@ -54,7 +54,7 @@ const sf::Texture* ResourceSystem::GetTextureShared(
     return nullptr;
 }
 
-sf::Texture* ResourceSystem::GetTectureCopy(const std::string& name) const {
+sf::Texture* ResourceSystem::GetTextureCopy(const std::string& name) const {
     auto texturePair = textures.find(name);
     if (texturePair != textures.end()) {
         return new sf::Texture(*texturePair->second);

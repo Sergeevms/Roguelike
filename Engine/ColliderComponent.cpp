@@ -8,11 +8,20 @@
 #include "Collision.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "PhysicsSystem.h"
 #include "Trigger.h"
 
 namespace MaxrEngine {
 ColliderComponent::ColliderComponent(GameObject* gameObject)
-    : Component(gameObject) {}
+    : Component(gameObject) {
+    PhysicsSystem::Instance()->Subscribe(this);
+}
+
+ColliderComponent::~ColliderComponent() {
+    PhysicsSystem::Instance()->Unsubscribe(this);
+}
+
+void ColliderComponent::Update(float deltaTime) {}
 
 void ColliderComponent::SetTrigger(bool newIsTrigger) {
     isTrigger = newIsTrigger;

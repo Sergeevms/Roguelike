@@ -31,7 +31,7 @@ void PlayerAttackComponent::Notify(
 
                 auto targetsVector =
                     ActorRegisterSystem::Instance()->GetActorsNotInGroupList(
-                        ActorsGroups::PlayerGroup);
+                        Settings::ActorsGroups::Player);
 
                 std::map<float, MaxrEngine::GameObject*> targets;
 

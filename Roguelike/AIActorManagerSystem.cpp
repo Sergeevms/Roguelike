@@ -57,8 +57,7 @@ void AIActorManagerSystem::Spawn(
     // Get actorSize to use to move spawn position if actor allready was spawned
     // at it
     const MaxrEngine::Vector2Df actorSize =
-        MaxrEngine::Convert<MaxrEngine::Vector2Df>(
-            actorParameters.baseActorParameters.spriteSize);
+        actorParameters.baseActorParameters.size;
     // Vector to store number of actors spawned at conrecte spawn point
     std::vector<int> actorSpawnedAt(spawnPositions.size(), 0);
     for (int i = 0, positionNumber = 0; i < count;
@@ -88,8 +87,7 @@ void AIActorManagerSystem::SpawnRandomly(
     // Get actorSize to use to move spawn position if actor already was spawned
     // at it
     const MaxrEngine::Vector2Df actorSize =
-        MaxrEngine::Convert<MaxrEngine::Vector2Df>(
-            actorParameters.baseActorParameters.spriteSize);
+        actorParameters.baseActorParameters.size;
     // Vector to store number of actors spawned at conrecte spawn point
     std::vector<int> actorSpawnedAt(spawnPositions.size(), 0);
     for (int i = 0; i < count; ++i) {
