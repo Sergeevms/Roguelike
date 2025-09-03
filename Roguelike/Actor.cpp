@@ -19,7 +19,6 @@
 #include "RigidBodyComponent.h"
 #include "Settings.h"
 #include "SpriteAnimationComponent.h"
-#include "SpriteColliderComponent.h"
 #include "SpriteRendererComponent.h"
 #include "TransformComponent.h"
 #include "Vector.h"
@@ -49,19 +48,8 @@ Actor::Actor(const Parameters& parameters,
             defaultAnimation.textureMapName, 0);
     auto render = gameObject->AddComponent<OffsetSpriteRendererComponent>();
     render->SetLayer(static_cast<int>(Settings::RenderLayers::Actors));
-    render->SetTexture(*texture);
-    MaxrEngine::Vector2Df coefficient = {
-        parameters.size.x / parameters.imageSize.x,
-        parameters.size.y / parameters.imageSize.y,
-    };
-    MaxrEngine::Vector2Di desiredSize = {
-        static_cast<int>(parameters.spriteSize.x * coefficient.x),
-        static_cast<int>(parameters.spriteSize.y * coefficient.y)};
-    MaxrEngine::Vector2Df desiredOffset = {
-        parameters.spriteOffset.x * coefficient.x,
-        parameters.spriteOffset.y * coefficient.y};
-    render->SetPixelSize(desiredSize);
-    render->SetOffset(-desiredOffset);
+    render->SetTexture(*texture, parameters.spriteOffsetParameters);
+    render->SetPixelSize(Convert<MaxrEngine::Vector2Di>(parameters.size));
 
     auto animationComponent =
         gameObject->AddComponent<MaxrEngine::SpriteAnimationComponent>();

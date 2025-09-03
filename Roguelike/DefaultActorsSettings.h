@@ -12,7 +12,7 @@ constexpr float defaultBarBorderSize = -1.0F;
 constexpr float attackWindup = 0.5F;
 
 const Actor::Parameters defaultPlayerParameters = {
-    .actorGroupID = ActorsGroups::PlayerGroup,
+    .actorGroupID = Settings::ActorsGroups::Player,
     .maxHealthAmount = 200.0F,
     .healthBarParameters = {.centerOffset = {0.0F,
                                              (defaultActorSpriteSizeF / 2) +
@@ -23,9 +23,9 @@ const Actor::Parameters defaultPlayerParameters = {
                             .borderSize = defaultBarBorderSize},
     .movementSpeed = 400.0F,
     .size = {defaultActorSpriteSizeF, defaultActorSpriteSizeF},
-    .imageSize = {54, 54},
-    .spriteSize = {100, 80},
-    .spriteOffset = {0, -10},
+    .spriteOffsetParameters = {.originalSpriteTextureSize = {100, 80},
+                               .originalImageSize = {54, 54},
+                               .originalCenterOffset = {0, -10}},
     .defaultAnimationName = "Idle",
     .animations = {{"Idle",
                     {.textureMapName = "PlayerTextures",
@@ -90,7 +90,7 @@ const AIActor::Parameters AIActorParameters =
         // Set base Actor::Parameters fields
         .baseActorParameters =
             {
-                .actorGroupID = ActorsGroups::EnemyGroup,
+                .actorGroupID = Settings::ActorsGroups::Enemy,
                 .maxHealthAmount = 100.0F,
                 .healthBarParameters =
                     {.centerOffset = {0.0F, (defaultActorSpriteSizeF / 2) +
@@ -100,9 +100,10 @@ const AIActor::Parameters AIActorParameters =
                      .borderSize = defaultBarBorderSize},
                 .movementSpeed = 250.0F,
                 .size = {defaultActorSpriteSizeF, defaultActorSpriteSizeF},
-                .imageSize = {48, 48},
-                .spriteSize = {96, 96},
-                .spriteOffset = {0, 0},
+                .spriteOffsetParameters = {.originalSpriteTextureSize = {96,
+                                                                         96},
+                                           .originalImageSize = {48, 48},
+                                           .originalCenterOffset = {0, 0}},
                 .defaultAnimationName = "Idle",
                 .animations = {{"Idle",
                                 {.textureMapName = "EnemyTextures",

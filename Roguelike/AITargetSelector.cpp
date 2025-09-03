@@ -38,7 +38,7 @@ void AITargetSelector::UpdateTarget() {
                 // TODO(MaxrRusich) : create a list of ActorGroups that should
                 // be targets
                 if (actor->GetComponent<ActorComponent>()->GetGroupID() ==
-                    ActorsGroups::PlayerGroup) {
+                    Settings::ActorsGroups::Player) {
                     auto between =
                         actor->GetComponent<MaxrEngine::TransformComponent>()
                             ->GetWorldPosition() -
