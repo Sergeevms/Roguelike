@@ -7,6 +7,7 @@
 #include <memory>
 
 // #include "DeveloperLevel.h"
+#include "DevelopLevel.h"
 #include "Engine.h"
 #include "LevelCompleteCondition.h"
 #include "LevelManager.h"
@@ -61,8 +62,11 @@ int main() {
     MaxrEngine::ResourceSystem::Instance()->LoadFont(
         "default", settings->fontPath + "Roboto-Regular.ttf");
 
-    Roguelike::LevelManager::Instance()->LoadNextLevel();
+    // Roguelike::LevelManager::Instance()->LoadNextLevel();
+    Roguelike::DevelopLevel level;
+    level.Start();
     MaxrEngine::Engine::Instance()->Run();
+    level.Stop();
 
     return 0;
 }

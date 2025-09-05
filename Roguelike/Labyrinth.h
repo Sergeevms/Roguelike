@@ -40,13 +40,16 @@ class Labyrinth : public GameObjectContainer {
      * Returns world coordinates of cell
      */
     const MaxrEngine::Vector2Df GetCellCoordinates(
-        const MaxrEngine::Vector2Di& cell);
+        const MaxrEngine::Vector2Di& cell) const;
     /**
      * @brief Method to get information about labyrinth borders
      * @returns rectangle in which labyrinths elements are, TopLeft is top left
      * wall coordinate, bottomRigth is bottom rigth wall coordinate
      */
-    const MaxrEngine::FloatRect GetLabyrinthCoodinatesRect();
+    const MaxrEngine::FloatRect GetLabyrinthCoodinatesRect() const;
+
+    const MaxrEngine::Vector2Di GetGridCoordinates(
+        const MaxrEngine::Vector2Df& point) const;
 
    private:
     /** Constructor*/

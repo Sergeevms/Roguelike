@@ -140,4 +140,10 @@ void Rotate(Vector2D<T>& vector, float angle) {
     vector.x = newX;
     vector.y = newY;
 }
+
+template <typename T>
+T CrossProduct(const Vector2D<T>& firstVector,
+               const Vector2D<T>& secondVector) {
+    return firstVector.x * secondVector.y - firstVector.y * secondVector.x;
+}
 }  // namespace MaxrEngine

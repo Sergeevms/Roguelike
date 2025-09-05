@@ -44,7 +44,7 @@ class LabyrinthBuilder {
     /** Struct describing parameters for AddRect */
     struct RectFillingParameters {
         MaxrEngine::Vector2Di
-            bottomLeft;  //**< Coordinates of bottom left corder of rect*/
+            bottomLeft;  //**< Coordinates of bottom left border of rect*/
         MaxrEngine::Vector2Di size;  //**< Size of rect */
         TileType
             borderTileType;  //**< TileType used for filling border of rect*/
