@@ -1,4 +1,6 @@
 #pragma once
+#ifdef ROGUELIKE_DEVELOPER_LEVEL
+
 #include "LabyrinthBuilder.h"
 #include "Scene.h"
 
@@ -10,3 +12,4 @@ class DevelopLevel : public MaxrEngine::Scene {
     virtual void Stop() override;
 };
 }  // namespace Roguelike
+#endif  // ROGUELIKE_DEVELOPER_LEVEL

@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "DefaultActorsSettings.h"
 #include "Labyrinth.h"
 #include "Settings.h"
 #include "Utility.h"
@@ -18,9 +19,10 @@ std::shared_ptr<NavigationSystem> NavigationSystem::Instance() {
                                           [](NavigationSystem*) {});
     return instance;
 };
+
 void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
     nodes.clear();
-    edges.clear();
+    borders.clear();
     auto walkable = labyrinth.GetIsTileWalkable();
     const Vector2Di labyrinthSize = {static_cast<int>(walkable.size()),
                                      static_cast<int>(walkable[0].size())};
@@ -70,7 +72,8 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
         }
     }
     const float offset =
-        static_cast<float>(Settings::Instance()->mapTileSize) / 3.0F;
+        Half(static_cast<float>(Settings::Instance()->mapTileSize) -
+             DefaultSettings::defaultActorSpriteSize);
 
     const std::vector<Vector2Df> rightTurnOffset = {{offset, -offset},
                                                     {offset, offset},
@@ -83,7 +86,7 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
 
     while (!untochedWalls.empty()) {
         const int firstNode = static_cast<int>(nodes.size());
-        const int firstEdge = static_cast<int>(edges.size());
+        const int firstEdge = static_cast<int>(borders.size());
         auto& blocked = *untochedWalls.begin();
         std::vector<Vector2Di> touchedWalls;
         Vector2Di startCell;
@@ -102,7 +105,7 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
         auto addNode = [this](const Vector2Df& newNode) {
             auto* prevNode = nodes.back().get();
             nodes.push_back(std::make_unique<Node>(newNode));
-            edges.push_back({prevNode, nodes.back().get()});
+            borders.push_back({prevNode, nodes.back().get()});
         };
         auto onLine = [](const Vector2Df& checkNodeCoord,
                          const Vector2Df& startNodeCoord,
@@ -117,10 +120,10 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
                             std::max(startNodeCoord.x, endNodeCoord.x)));
         };
 
-        while (static_cast<int>(edges.size()) - firstEdge < 3 ||
+        while (static_cast<int>(borders.size()) - firstEdge < 3 ||
                !onLine(nodes[firstNode]->coordinates,
-                       edges.back().first->coordinates,
-                       edges.back().second->coordinates)) {
+                       borders.back().first->coordinates,
+                       borders.back().second->coordinates)) {
             Vector2Di newCell;
             int turns = -1;
             Direction newDirection;
@@ -153,10 +156,10 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
         // Remove first added edge and node if it isn't on obstacle corner
         if (nodes[firstNode]->coordinates != nodes.back()->coordinates) {
             nodes.erase(nodes.begin() + firstNode);
-            edges.erase(edges.begin() + firstEdge);
+            borders.erase(borders.begin() + firstEdge);
         }
         nodes.pop_back();
-        edges.back().second = nodes[firstNode].get();
+        borders.back().second = nodes[firstNode].get();
         for (auto touchedWall : touchedWalls) {
             untochedWalls.erase(
                 std::remove_if(untochedWalls.begin(), untochedWalls.end(),
@@ -168,13 +171,14 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
     }
     auto lineClear = [this, &labyrinth, &tileWalkable](const Node* firstNode,
                                                        const Node* secondNode) {
+        constexpr float half = 0.5F;
         auto middleCell = labyrinth.GetGridCoordinates(
-            (firstNode->coordinates + secondNode->coordinates) * 0.5F);
+            (firstNode->coordinates + secondNode->coordinates) * half);
         if (!tileWalkable(middleCell)) {
             return false;
         }
         const auto line = secondNode->coordinates - firstNode->coordinates;
-        for (auto edge : edges) {
+        for (auto edge : borders) {
             if (firstNode == edge.first || firstNode == edge.second ||
                 secondNode == edge.first || secondNode == edge.second) {
                 continue;
@@ -206,14 +210,21 @@ void NavigationSystem::SetUpMap(const Labyrinth& labyrinth) {
     for (int i = 0; i < nodes.size(); ++i) {
         for (int j = i + 1; j < nodes.size(); ++j) {
             if (lineClear(nodes[i].get(), nodes[j].get())) {
-                nodes[i]->visibleNodes.push_back(nodes[j].get());
-                nodes[j]->visibleNodes.push_back(nodes[i].get());
+                const float distance =
+                    (nodes[i]->coordinates - nodes[j]->coordinates).GetLength();
+                nodes[i]->edges.push_back(Edge(nodes[j].get(), distance));
+                nodes[j]->edges.push_back(Edge(nodes[i].get(), distance));
             }
         }
     }
+    Emit();
 }
 std::vector<Vector2Df> NavigationSystem::GetPath(const Vector2Df& begin,
                                                  const Vector2Df& end) {
     return std::vector<Vector2Df>();
+}
+bool NavigationSystem::IsNotCrossingBorders(const Node* first,
+                                            const Node* second) {
+    return false;
 }
 }  // namespace Roguelike

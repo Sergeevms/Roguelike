@@ -7,6 +7,8 @@
 #include "GameWorld.h"
 #include "Labyrinth.h"
 #include "LabyrinthBuilder.h"
+#include "NavigationSystem.h"
+#include "NavigationSystemDebugRendererComponent.h"
 #include "PlayerActor.h"
 #include "Settings.h"
 #include "Vector.h"
@@ -19,6 +21,14 @@ void GameLevel::Start() {
     builder->Generate(parameters.builderParameters);
     labyrinth = builder->ConstructLabyrinth();
     parameters.builderParameters.randSeed = builder->GetUsedSeed();
+
+    auto* debugNavSystem = MaxrEngine::GameWorld::Instance()->CreateGameObject(
+        "Nav system debug render");
+    auto debugRender =
+        debugNavSystem->AddComponent<NavigationSystemDebugRendererComponent>(
+            static_cast<int>(Settings::RenderLayers::Debug));
+    NavigationSystem::Instance()->AddObserver(debugRender);
+    NavigationSystem::Instance()->SetUpMap(*labyrinth);
 
     // Get dead ends from labyrinth generation
     std::vector<MaxrEngine::Vector2Df> generationDeadEnds;

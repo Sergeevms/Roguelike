@@ -61,12 +61,13 @@ int main() {
         settings->soundPath + "Clinthammer__Background_Music.wav");
     MaxrEngine::ResourceSystem::Instance()->LoadFont(
         "default", settings->fontPath + "Roboto-Regular.ttf");
-
-    // Roguelike::LevelManager::Instance()->LoadNextLevel();
+#ifdef ROGUELIKE_DEVELOPER_LEVEL
     Roguelike::DevelopLevel level;
     level.Start();
+#else
+    Roguelike::LevelManager::Instance()->LoadNextLevel();
+#endif  // ROGUELIKE_DEVELOPER_LEVEL
     MaxrEngine::Engine::Instance()->Run();
-    level.Stop();
 
     return 0;
 }
