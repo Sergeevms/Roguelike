@@ -10,6 +10,7 @@
 #include "Rect.h"
 #include "Settings.h"
 #include "TransformComponent.h"
+#include "Utility.h"
 #include "Vector.h"
 #include "Wall.h"
 
@@ -70,7 +71,11 @@ std::vector<std::weak_ptr<Floor>> Labyrinth::GetFloors() const {
     return floors;
 }
 
-std::shared_ptr<LabyrinthExit>& Labyrinth::GetExit() { return exit; }
+const MaxrEngine::Vector2Di& Labyrinth::GetTileSize() const { return size; }
+
+const std::shared_ptr<LabyrinthExit>& Labyrinth::GetExit() const {
+    return exit;
+}
 
 const std::vector<std::vector<std::shared_ptr<LabyrinthElement>>>&
 Labyrinth::GetElements() const {
@@ -92,6 +97,12 @@ const std::vector<MaxrEngine::Vector2Di>& Labyrinth::GetGenerationDeadEnds()
 }
 const std::vector<std::vector<bool>>& Labyrinth::GetIsTileWalkable() const {
     return isTileWalkable;
+}
+bool Labyrinth::IsTileWalkable(MaxrEngine::Vector2Di cell) const {
+    if (!(InRange(cell.x, 0, size.x - 1) && InRange(cell.y, 0, size.y - 1))) {
+        return false;
+    }
+    return isTileWalkable[cell.x][cell.y];
 }
 const MaxrEngine::Vector2Df Roguelike::Labyrinth::GetCellCoordinates(
     const MaxrEngine::Vector2Di& cell) const {

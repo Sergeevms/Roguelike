@@ -9,10 +9,10 @@
 #include "Scene.h"
 namespace Roguelike {
 /**
- * @brief Represents a game level containing a labyrinth, player, and enemies
+ * @brief Represents a game level containing a labyrinthPtr, player, and enemies
  * @details Manages the lifecycle of a game level including starting,
  * restarting, and stopping the level. Provides access to the level's player and
- * labyrinth.
+ * labyrinthPtr.
  */
 class GameLevel : public MaxrEngine::Scene {
    public:
@@ -21,7 +21,7 @@ class GameLevel : public MaxrEngine::Scene {
      */
     struct Parameters {
         LabyrinthBuilder::Parameters
-            builderParameters;  ///< Parameters for labyrinth generation
+            builderParameters;  ///< Parameters for labyrinthPtr generation
         std::vector<LevelCompleteCondition::Type>
             completeConditions;  ///< Conditions to complete the level
         int enemyCount;          ///< Number of enemies to spawn in the level
@@ -35,7 +35,8 @@ class GameLevel : public MaxrEngine::Scene {
 
     /**
      * @brief Starts the game level
-     * @details Generates the labyrinth, spawns enemies, and places the player
+     * @details Generates the labyrinthPtr, spawns enemies, and places the
+     * player
      */
     void Start() override;
     /**
@@ -55,14 +56,14 @@ class GameLevel : public MaxrEngine::Scene {
      */
     std::shared_ptr<PlayerActor> GetPlayer();
     /**
-     * @brief Gets the labyrinth instance
-     * @return Shared pointer to the labyrinth
+     * @brief Gets the labyrinthPtr instance
+     * @return Shared pointer to the labyrinthPtr
      */
     std::shared_ptr<Labyrinth> GetLabyrinth();
 
    private:
     Parameters parameters;  ///< Configuration parameters for the level
     std::shared_ptr<PlayerActor> player;   ///< The player actor instance
-    std::shared_ptr<Labyrinth> labyrinth;  ///< The labyrinth instance
+    std::shared_ptr<Labyrinth> labyrinth;  ///< The labyrinthPtr instance
 };
 }  // namespace Roguelike

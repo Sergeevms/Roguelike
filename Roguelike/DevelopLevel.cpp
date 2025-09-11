@@ -20,7 +20,8 @@ void DevelopLevel::Start() {
         .borderTileType = LabyrinthBuilder::TileType::Wall,
         .fillingTileType = LabyrinthBuilder::TileType::Floor};
     builder.AddRect(rectFill);
-    builder.SetWall({2, 3});
+    // builder.SetWall({2, 3});
+    builder.SetWall({2, 2});
     auto labyrinth = builder.ConstructLabyrinth();
     auto* debugNavSystem = MaxrEngine::GameWorld::Instance()->CreateGameObject(
         "Nav system debug render");
@@ -28,7 +29,7 @@ void DevelopLevel::Start() {
         debugNavSystem->AddComponent<NavigationSystemDebugRendererComponent>(
             static_cast<int>(Settings::RenderLayers::Debug));
     NavigationSystem::Instance()->AddObserver(debugRender);
-    NavigationSystem::Instance()->SetUpMap(*labyrinth);
+    NavigationSystem::Instance()->SetUpMap(labyrinth);
     auto player =
         std::make_shared<PlayerActor>(Settings::Instance()->playerParameters);
 }

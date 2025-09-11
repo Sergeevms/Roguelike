@@ -28,7 +28,7 @@ void GameLevel::Start() {
         debugNavSystem->AddComponent<NavigationSystemDebugRendererComponent>(
             static_cast<int>(Settings::RenderLayers::Debug));
     NavigationSystem::Instance()->AddObserver(debugRender);
-    NavigationSystem::Instance()->SetUpMap(*labyrinth);
+    NavigationSystem::Instance()->SetUpMap(labyrinth);
 
     // Get dead ends from labyrinth generation
     std::vector<MaxrEngine::Vector2Df> generationDeadEnds;

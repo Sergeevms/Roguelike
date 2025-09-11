@@ -46,11 +46,11 @@ void NavigationSystemDebugRendererComponent::Notify(
             BottomRight.y = std::max(BottomRight.y, coordinates.y);
         }
         constexpr int nodeRadius = 4;
-        TopLeft.x -= nodeRadius;
-        TopLeft.y -= nodeRadius;
+        TopLeft.x -= 2 * nodeRadius;
+        TopLeft.y -= 2 * nodeRadius;
         sf::Vector2i size = {
-            static_cast<int>(BottomRight.x - TopLeft.x) + nodeRadius,
-            static_cast<int>(BottomRight.y - TopLeft.y) + nodeRadius};
+            static_cast<int>(BottomRight.x - TopLeft.x) + 4 * nodeRadius,
+            static_cast<int>(BottomRight.y - TopLeft.y) + 4 * nodeRadius};
         texture.create(size.x, size.y);
         size.y *= -1;
         auto view =
@@ -62,7 +62,7 @@ void NavigationSystemDebugRendererComponent::Notify(
         texture.setView(view);
         sf::CircleShape nodeCircle(nodeRadius);
         nodeCircle.setRadius(nodeRadius);
-        nodeCircle.setOrigin({half * nodeRadius, half * nodeRadius});
+        nodeCircle.setOrigin({nodeRadius, nodeRadius});
         nodeCircle.setFillColor(sf::Color::Cyan);
         sf::VertexArray lineArray(sf::PrimitiveType::Lines);
         sf::Vertex vertex;

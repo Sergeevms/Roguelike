@@ -23,7 +23,7 @@ class Labyrinth : public GameObjectContainer {
     /** Return Floor objects of Labytinth*/
     std::vector<std::weak_ptr<Floor>> GetFloors() const;
     /** Return LabyrinthExit from Labyrinth*/
-    std::shared_ptr<LabyrinthExit>& GetExit();
+    const std::shared_ptr<LabyrinthExit>& GetExit() const;
     /** Get all Labyrinth elements*/
     const std::vector<std::vector<std::shared_ptr<LabyrinthElement>>>&
     GetElements() const;
@@ -37,6 +37,12 @@ class Labyrinth : public GameObjectContainer {
     /** Get tile grid marking is tile walkable or not*/
     const std::vector<std::vector<bool>>& GetIsTileWalkable() const;
     /**
+     * Checks if a specific tile is walkable
+     * @param cell - grid coordinates of the tile to check
+     * @return true if the tile exists and is walkable
+     */
+    bool IsTileWalkable(MaxrEngine::Vector2Di cell) const;
+    /**
      * Returns world coordinates of cell
      */
     const MaxrEngine::Vector2Df GetCellCoordinates(
@@ -47,6 +53,11 @@ class Labyrinth : public GameObjectContainer {
      * wall coordinate, bottomRigth is bottom rigth wall coordinate
      */
     const MaxrEngine::FloatRect GetLabyrinthCoodinatesRect() const;
+    /**
+     * @brief Get labyrinth size in tiles
+     * @return - size of labyrinth in tiles
+     */
+    const MaxrEngine::Vector2Di& GetTileSize() const;
 
     const MaxrEngine::Vector2Di GetGridCoordinates(
         const MaxrEngine::Vector2Df& point) const;
@@ -54,7 +65,7 @@ class Labyrinth : public GameObjectContainer {
    private:
     /** Constructor*/
     explicit Labyrinth(const MaxrEngine::Vector2Di& size);
-    /** Labyrinth ssize in cells*/
+    /** Labyrinth size in cells*/
     MaxrEngine::Vector2Di size;
     /** Stores elements of Labyrinth (Wall, Floor, LabyrinthExit)*/
     std::vector<std::vector<std::shared_ptr<LabyrinthElement>>> elements;

@@ -19,7 +19,7 @@ namespace Roguelike {
  */
 constexpr float AIActorManagerSystemUpdateTime = 4.0F;
 /**
- * @brief System that controlls AIActor spawn, death, position in labyrinth.
+ * @brief System that controlls AIActor spawn, death, position in labyrinthPtr.
  * @details Provides functions to create AIActor instances with various spawn
  * patterns. Spawn point provided clamped to setted gameArea. Controls count of
  * AIActor spawned and alive. Removes AIActor from GameWorld that are not alive

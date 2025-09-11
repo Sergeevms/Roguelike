@@ -20,8 +20,8 @@ class LabyrinthBuilder {
      * generation used in Generate
      */
     struct Parameters {
-        int width;  /**< labyrinth width*/
-        int height; /**< labyrinth height*/
+        int width;  /**< labyrinthPtr width*/
+        int height; /**< labyrinthPtr height*/
         /** will be size and startPosition adjusted in Generate*/
         bool isAdjustingSizeAndStart;
         /** Seed for random. Using -1 as value will lead to using time(nullptr)
@@ -54,7 +54,7 @@ class LabyrinthBuilder {
 
     LabyrinthBuilder();
 
-    /** Generate new labyrinth grid consisting TileType using DFS algorithm
+    /** Generate new labyrinthPtr grid consisting TileType using DFS algorithm
      *Can be modified after generation using AddRect, SetWall, SetFloor*/
     void Generate(const Parameters& parameters);
 
@@ -64,7 +64,7 @@ class LabyrinthBuilder {
                        const TileType fillTileType = TileType::Empty);
 
     /** Fill rectangle (clamp bottomLeft coordinates and sizeto predefined
-     * labyrinth tileSize) in tileGrid according to RectFillingParameters If
+     * labyrinthPtr tileSize) in tileGrid according to RectFillingParameters If
      * cell of tileGrid on border of rect have fillingTileTypeOn value, it
      * doesn't change to borderTileType
      */
@@ -73,10 +73,10 @@ class LabyrinthBuilder {
     /** Constructs Labyrinth according to current tileGrid */
     std::shared_ptr<Labyrinth> ConstructLabyrinth();
 
-    /** Returns current labyrinth state grid, where true means that tile is
+    /** Returns current labyrinthPtr state grid, where true means that tile is
      * walkable throw, false othervise*/
     // std::vector<std::vector<bool>> GetIsWalkableGrid();
-    /** Returns dead ends after labyrinth generation by Generate*/
+    /** Returns dead ends after labyrinthPtr generation by Generate*/
     // std::vector<MaxrEngine::Vector2Di> GetGeneratedDeadEnds();
     /** Fill rectangle in tileGrid with TileType::Floor surronded with
      * TileType::Wall) converts previous placed walls to floor, but not floor to
@@ -89,7 +89,7 @@ class LabyrinthBuilder {
     void SetWall(MaxrEngine::Vector2Di position);
     /** Sets position tile to Wall*/
     void SetFloor(MaxrEngine::Vector2Di position);
-    /** Get current labyrinth size in tiles*/
+    /** Get current labyrinthPtr size in tiles*/
     MaxrEngine::Vector2Di GetTileSize() const;
     /** Set exitCell*/
     void SetExitCell(const MaxrEngine::Vector2Di& newExitCell);
@@ -97,17 +97,17 @@ class LabyrinthBuilder {
      * setted*/
     const MaxrEngine::Vector2Di& GetExitCell() const;
     /**
-     * @brief Get information about random seed used during labyrinth
+     * @brief Get information about random seed used during labyrinthPtr
      * generation.
      * @return - Used seed.
      */
     int GetUsedSeed() const;
 
    private:
-    int labyrinthTileWidth = 0;  /**< Current labyrinth width*/
-    int labyrinthTileHeight = 0; /**< Current labyrinth height*/
+    int labyrinthTileWidth = 0;  /**< Current labyrinthPtr width*/
+    int labyrinthTileHeight = 0; /**< Current labyrinthPtr height*/
     int usedSeed = -1;
-    /** Current labyrinth TileType's*/
+    /** Current labyrinthPtr TileType's*/
     std::vector<std::vector<TileType>> tileGrid;
     std::vector<int> usableFloorTextureId;
     /** Return directions that are availiable to move in DFS at
@@ -115,8 +115,9 @@ class LabyrinthBuilder {
     std::vector<MaxrEngine::Vector2Di> GetAvaliableDirections(
         const MaxrEngine::Vector2Di& currentCell,
         const std::vector<std::vector<bool>>& visitiedCells) const;
-    MaxrEngine::Vector2Di startPosition; /**< Saved start position if labyrinth
-                                            tileGrid filled by Generate*/
+    MaxrEngine::Vector2Di
+        startPosition; /**< Saved start position if labyrinthPtr
+                          tileGrid filled by Generate*/
     /** Cell where exit from Labyrinth is positioned. Setted during Generate or
      * manually throw SetExitCell*/
     MaxrEngine::Vector2Di exitCell;
@@ -125,7 +126,7 @@ class LabyrinthBuilder {
     /** Checks if TileType at position is kind of wall*/
     bool IsWall(MaxrEngine::Vector2Di position) const;
     /** Adjust startPoint and Labyrinth size (make coordinates odd (increase on
-     * one if needed) for DFS algorithm go throw all labyrinth)*/
+     * one if needed) for DFS algorithm go throw all labyrinthPtr)*/
     void AdjustStartPointAndSize();
     /** Make cell in middle of DFS step Floor and surrond it by Walls*/
     void ProcessMiddleCell(const MaxrEngine::Vector2Di& middleCell,
