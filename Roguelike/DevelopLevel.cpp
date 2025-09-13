@@ -20,7 +20,7 @@ void DevelopLevel::Start() {
         .borderTileType = LabyrinthBuilder::TileType::Wall,
         .fillingTileType = LabyrinthBuilder::TileType::Floor};
     builder.AddRect(rectFill);
-    // builder.SetWall({2, 3});
+    builder.SetWall({2, 3});
     builder.SetWall({2, 2});
     auto labyrinth = builder.ConstructLabyrinth();
     auto* debugNavSystem = MaxrEngine::GameWorld::Instance()->CreateGameObject(

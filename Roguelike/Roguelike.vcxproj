@@ -263,7 +263,9 @@
       <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)RunClangformat.bat</Command>
+      <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
+$(SolutionDir)RunClangformat.bat
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDevLevel|x64'">
@@ -285,7 +287,9 @@
       <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)RunClangformat.bat</Command>
+      <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
+$(SolutionDir)RunClangformat.bat
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -309,7 +313,9 @@
       <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)RunClangformat.bat</Command>
+      <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
+$(SolutionDir)RunClangformat.bat
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDevLevel|x64'">
@@ -333,7 +339,9 @@
       <Profile>true</Profile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)RunClangformat.bat</Command>
+      <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
+$(SolutionDir)RunClangformat.bat
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

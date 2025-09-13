@@ -1,6 +1,7 @@
 #include "NavigationSystem.h"
 
 #include <algorithm>
+#include <array>
 #include <memory>
 #include <queue>
 #include <unordered_map>
@@ -17,6 +18,19 @@
 namespace Roguelike {
 using Vector2Df = MaxrEngine::Vector2Df;
 using Vector2Di = MaxrEngine::Vector2Di;
+
+const std::array<Vector2Di, NavigationSystem::Direction::directionsCount>
+    NavigationSystem::Direction::directionVector = {
+        Vector2Di(-1, 0), Vector2Di(0, -1), Vector2Di(1, 0), Vector2Di(0, 1)};
+std::array<Vector2Df, NavigationSystem::Direction::directionsCount>
+    NavigationSystem::Direction::leftTurnOffset = {
+        Vector2Df(0.0F, 0.0F), Vector2Df(0.0F, 0.0F), Vector2Df(0.0F, 0.0F),
+        Vector2Df(0.0F, 0.0F)};
+std::array<Vector2Df, NavigationSystem::Direction::directionsCount>
+    NavigationSystem::Direction::rightTurnOffset = {
+        Vector2Df(0.0F, 0.0F), Vector2Df(0.0F, 0.0F), Vector2Df(0.0F, 0.0F),
+        Vector2Df(0.0F, 0.0F)};
+
 std::shared_ptr<NavigationSystem> NavigationSystem::Instance() {
     const static std::shared_ptr<NavigationSystem> instance =
         std::shared_ptr<NavigationSystem>(new NavigationSystem,
@@ -31,150 +45,18 @@ void Roguelike::NavigationSystem::SetUpMap(
     labyrinthPtr = newLabyrinth;
     auto labyrinth = newLabyrinth;
 
-    // Support functions and consts
-    constexpr int directionCount = 4;
-    enum Direction { Left, Up, Right, Down };
-    // Converts int to Direction, looped by direction count
-    auto direction = [](const int possibleDirection) {
-        return static_cast<Direction>((directionCount + possibleDirection) %
-                                      directionCount);
-    };
-    // Returns direction to right from current
-    auto turnRight = [&direction](const Direction currentDirection) {
-        return direction(currentDirection + 1);
-    };
-    // Returns direction to left from current
-    auto turnLeft = [&direction](const Direction currentDirection) {
-        return direction(currentDirection - 1);
-    };
-    // Vector to add according to direction casted to int to get next cell on
-    // that direction
-    const std::vector<Vector2Di> directionVector = {
-        {-1, 0}, {0, -1}, {1, 0}, {0, 1}};
-
-    // Check that tile don't have walkable neighbors
-    auto tileBlocked = [&labyrinth, &directionVector](const Vector2Di& cell) {
-        for (int i = 0; i < directionCount; i++) {
-            if (labyrinth->IsTileWalkable(cell + directionVector[i])) {
-                return false;
-            }
-        }
-        return true;
-    };
     // Vector to store unwalkable tiles that can be touched but not yet
-    std::vector<Vector2Di> untochedWalls;
-    const auto& labyrinthTileSize = labyrinth->GetTileSize();
-    for (auto x = 0; x < labyrinthTileSize.x; ++x) {
-        for (auto y = 0; y < labyrinthTileSize.y; ++y) {
-            if (!labyrinth->IsTileWalkable({x, y})) {
-                if (!tileBlocked({x, y})) {
-                    untochedWalls.push_back({x, y});
-                }
-            }
-        }
-    }
+    std::vector<Vector2Di> untochedCells = GetCellsToProcess();
 
-    const float offset =
+    Direction::SetOffset(
         Half(static_cast<float>(Settings::Instance()->mapTileSize) -
-             DefaultSettings::defaultActorSpriteSize);
-    // offset used to place Node on rigth turn in algo
-    const std::vector<Vector2Df> rightTurnOffset = {{offset, -offset},
-                                                    {offset, offset},
-                                                    {-offset, offset},
-                                                    {-offset, -offset}};
-    // offset used to place Node on left turn in algo
-    const std::vector<Vector2Df> leftTurnOffset = {{-offset, -offset},
-                                                   {offset, -offset},
-                                                   {offset, offset},
-                                                   {-offset, offset}};
+             DefaultSettings::defaultActorSpriteSize));
 
-    while (!untochedWalls.empty()) {
-        const int firstNode = static_cast<int>(nodes.size());
-        const int firstEdge = static_cast<int>(borders.size());
-        auto& blocked = *untochedWalls.begin();
-        std::vector<Vector2Di> touchedWalls;
-        Vector2Di startCell;
-        Direction currentDirection;
-        for (int i = 0; i < directionCount; ++i) {
-            startCell = blocked + directionVector[i];
-            if (labyrinth->IsTileWalkable(startCell)) {
-                nodes.push_back(std::make_unique<Node>(
-                    labyrinth->GetCellCoordinates(startCell) -
-                    leftTurnOffset[direction(i)]));
-                currentDirection = turnRight(direction(i));
-                break;
-            }
-        }
-        Vector2Di currentCell = startCell;
-        auto addNode = [this](const Vector2Df& newNode) {
-            auto* prevNode = nodes.back().get();
-            nodes.push_back(std::make_unique<Node>(newNode));
-            borders.push_back({prevNode, nodes.back().get()});
-        };
-        auto onLine = [](const Vector2Df& checkNodeCoord,
-                         const Vector2Df& startNodeCoord,
-                         const Vector2Df& endNodeCoord) {
-            return (checkNodeCoord.x == startNodeCoord.x &&
-                    InRange(checkNodeCoord.y,
-                            std::min(startNodeCoord.y, endNodeCoord.y),
-                            std::max(startNodeCoord.y, endNodeCoord.y))) ||
-                   (checkNodeCoord.y == startNodeCoord.y &&
-                    InRange(checkNodeCoord.x,
-                            std::min(startNodeCoord.x, endNodeCoord.x),
-                            std::max(startNodeCoord.x, endNodeCoord.x)));
-        };
-
-        while (static_cast<int>(borders.size()) - firstEdge < 3 ||
-               !onLine(nodes[firstNode]->coordinates,
-                       borders.back().first->coordinates,
-                       borders.back().second->coordinates)) {
-            Vector2Di newCell;
-            int turns = -1;
-            Direction newDirection;
-            for (newDirection = turnRight(currentDirection);
-                 turns < directionCount;
-                 newDirection = turnLeft(newDirection), ++turns) {
-                newCell = currentCell + directionVector[newDirection];
-                if (labyrinth->IsTileWalkable(newCell)) {
-                    break;
-                }
-            }
-            if (turns < 0) {
-                addNode(labyrinth->GetCellCoordinates(currentCell) +
-                        rightTurnOffset[currentDirection]);
-            } else {
-                touchedWalls.push_back(
-                    currentCell + directionVector[turnRight(currentDirection)]);
-                for (int i = 1; i <= turns; ++i) {
-                    addNode(labyrinth->GetCellCoordinates(currentCell) +
-                            leftTurnOffset[currentDirection]);
-                    currentDirection = turnLeft(currentDirection);
-                    touchedWalls.push_back(
-                        currentCell +
-                        directionVector[turnRight(currentDirection)]);
-                }
-            }
-            currentCell = newCell;
-            currentDirection = newDirection;
-        }
-        // Remove first added edge and node if it isn't on obstacle corner
-        if (nodes[firstNode]->coordinates != nodes.back()->coordinates) {
-            nodes.erase(nodes.begin() + firstNode);
-            borders.erase(borders.begin() + firstEdge);
-        }
-        nodes.pop_back();
-        borders.back().second = nodes[firstNode].get();
-        for (auto& touchedWall : touchedWalls) {
-            untochedWalls.erase(
-                std::remove_if(untochedWalls.begin(), untochedWalls.end(),
-                               [&touchedWall](const Vector2Di& cell) {
-                                   return cell == touchedWall;
-                               }),
-                untochedWalls.end());
-        }
+    while (!untochedCells.empty()) {
+        ProcessArea(untochedCells);
     }
 
-    AddEdges();
+    CreateEdges();
 
     Emit();
 }
@@ -300,7 +182,116 @@ bool NavigationSystem::IsNotCrossingBorders(const Node* firstNode,
     }
     return false;
 }
-void NavigationSystem::AddEdges() {
+std::vector<MaxrEngine::Vector2Di> NavigationSystem::GetCellsToProcess() const {
+    std::vector<MaxrEngine::Vector2Di> untochedCells;
+    // Check that tile don't have walkable neighbors
+    if (auto labyrinth = labyrinthPtr.lock()) {
+        auto tileBlocked = [&labyrinth](const Vector2Di& cell) {
+            return std::all_of(
+                Direction::directionVector.begin(),
+                Direction::directionVector.end(),
+                [&cell, &labyrinth](const Vector2Di& direction) {
+                    return !labyrinth->IsTileWalkable(cell + direction);
+                });
+        };
+        const auto& labyrinthTileSize = labyrinth->GetTileSize();
+        for (auto x = 0; x < labyrinthTileSize.x; ++x) {
+            for (auto y = 0; y < labyrinthTileSize.y; ++y) {
+                if (!labyrinth->IsTileWalkable({x, y})) {
+                    if (!tileBlocked({x, y})) {
+                        untochedCells.push_back({x, y});
+                    }
+                }
+            }
+        }
+    }
+    return untochedCells;
+}
+void NavigationSystem::ProcessArea(
+    std::vector<MaxrEngine::Vector2Di>& untouchedCells) {
+    auto labyrinth = labyrinthPtr.lock();
+    const int firstNode = static_cast<int>(nodes.size());
+    const int firstEdge = static_cast<int>(borders.size());
+    auto& startUnwalkableCell = *untouchedCells.begin();
+    std::vector<Vector2Di> touchedWalls;
+    Direction currentDirection;
+    // Find start cell
+    while (!labyrinth->IsTileWalkable(startUnwalkableCell +
+                                      currentDirection.DirectionVector())) {
+        currentDirection.TurnRight();
+    }
+    Vector2Di currentCell =
+        startUnwalkableCell + currentDirection.DirectionVector();
+    nodes.push_back(
+        std::make_unique<Node>(labyrinth->GetCellCoordinates(currentCell) -
+                               currentDirection.LeftTurnOffset()));
+    currentDirection.TurnRight();
+
+    auto addNode = [this](const Vector2Df& newNode) {
+        auto* prevNode = nodes.back().get();
+        nodes.push_back(std::make_unique<Node>(newNode));
+        borders.push_back({prevNode, nodes.back().get()});
+    };
+
+    if (std::all_of(Direction::directionVector.begin(),
+                    Direction::directionVector.end(),
+                    [&currentCell, &labyrinth](const Vector2Di& direction) {
+                        return !labyrinth->IsTileWalkable(currentCell +
+                                                          direction);
+                    })) {
+        for (int i = 0; i < Direction::directionsCount; ++i) {
+            addNode(labyrinth->GetCellCoordinates(currentCell) +
+                    currentDirection.LeftTurnOffset());
+            touchedWalls.push_back(currentCell +
+                                   currentDirection.DirectionVector());
+            currentDirection.TurnLeft();
+        }
+    }
+
+    while (static_cast<int>(borders.size()) - firstEdge < 3 ||
+           !OnSegment(nodes[firstNode]->coordinates,
+                      borders.back().first->coordinates,
+                      borders.back().second->coordinates)) {
+        Direction newDirection = Direction::TurnRight(currentDirection);
+        while (!labyrinth->IsTileWalkable(currentCell +
+                                          newDirection.DirectionVector())) {
+            newDirection.TurnLeft();
+        }
+        if (newDirection == Direction::TurnRight(currentDirection)) {
+            addNode(labyrinth->GetCellCoordinates(currentCell) +
+                    currentDirection.RightTurnOffset());
+            currentDirection.TurnRight();
+        } else {
+            touchedWalls.push_back(
+                currentCell +
+                Direction::TurnRight(currentDirection).DirectionVector());
+            while (currentDirection != newDirection) {
+                addNode(labyrinth->GetCellCoordinates(currentCell) +
+                        currentDirection.LeftTurnOffset());
+                touchedWalls.push_back(currentCell +
+                                       currentDirection.DirectionVector());
+                currentDirection.TurnLeft();
+            }
+        }
+        currentCell += currentDirection.DirectionVector();
+    }
+    // Remove first added edge and node if it isn't on obstacle corner
+    if (nodes[firstNode]->coordinates != nodes.back()->coordinates) {
+        nodes.erase(nodes.begin() + firstNode);
+        borders.erase(borders.begin() + firstEdge);
+    }
+    nodes.pop_back();
+    borders.back().second = nodes[firstNode].get();
+    for (auto& touchedWall : touchedWalls) {
+        untouchedCells.erase(
+            std::remove_if(untouchedCells.begin(), untouchedCells.end(),
+                           [&touchedWall](const Vector2Di& cell) {
+                               return cell == touchedWall;
+                           }),
+            untouchedCells.end());
+    }
+}
+void NavigationSystem::CreateEdges() {
     for (int i = 0; i < nodes.size(); ++i) {
         for (int j = i + 1; j < nodes.size(); ++j) {
             if (IsNotCrossingBorders(nodes[i].get(), nodes[j].get())) {
@@ -311,5 +302,93 @@ void NavigationSystem::AddEdges() {
             }
         }
     }
+}
+
+NavigationSystem::Direction::Direction(const Name direction)
+    : value(direction) {}
+NavigationSystem::Direction::Direction(const int direction) {
+    value = static_cast<Name>(direction % directionsCount);
+}
+
+int NavigationSystem::Direction::ToInt() const {
+    return static_cast<int>(value);
+}
+int NavigationSystem::Direction::ToInt(Name direction) {
+    return static_cast<int>(direction);
+}
+
+void NavigationSystem::Direction::TurnLeft() {
+    value =
+        static_cast<Name>((ToInt() - 1 + directionsCount) % directionsCount);
+}
+NavigationSystem::Direction NavigationSystem::Direction::TurnLeft(
+    const Direction direction) {
+    return TurnLeft(direction.value);
+}
+NavigationSystem::Direction NavigationSystem::Direction::TurnLeft(
+    const Name direction) {
+    return TurnLeft(ToInt(direction));
+}
+NavigationSystem::Direction NavigationSystem::Direction::TurnLeft(
+    const int direction) {
+    return Direction(direction - 1 + directionsCount);
+}
+
+void NavigationSystem::Direction::TurnRight() {
+    value = static_cast<Name>((ToInt() + 1) % directionsCount);
+}
+NavigationSystem::Direction NavigationSystem::Direction::TurnRight(
+    const Direction direction) {
+    return TurnRight(direction.value);
+}
+NavigationSystem::Direction NavigationSystem::Direction::TurnRight(
+    const Name direction) {
+    return TurnRight(ToInt(direction));
+}
+NavigationSystem::Direction NavigationSystem::Direction::TurnRight(
+    const int direction) {
+    return Direction(direction + 1);
+}
+const MaxrEngine::Vector2Di& NavigationSystem::Direction::DirectionVector()
+    const {
+    return directionVector[ToInt()];
+}
+const MaxrEngine::Vector2Di& NavigationSystem::Direction::DirectionVector(
+    Name direction) {
+    return directionVector[static_cast<int>(direction)];
+}
+const MaxrEngine::Vector2Di& NavigationSystem::Direction::DirectionVector(
+    const int direction) {
+    return Direction(direction).DirectionVector();
+}
+void NavigationSystem::Direction::SetOffset(const float offset) {
+    rightTurnOffset = {Vector2Df(offset, -offset), Vector2Df(offset, offset),
+                       Vector2Df(-offset, offset), Vector2Df(-offset, -offset)};
+    leftTurnOffset = {Vector2Df(-offset, -offset), Vector2Df(offset, -offset),
+                      Vector2Df(offset, offset), Vector2Df(-offset, offset)};
+}
+const MaxrEngine::Vector2Df& NavigationSystem::Direction::LeftTurnOffset()
+    const {
+    return leftTurnOffset[ToInt()];
+}
+const MaxrEngine::Vector2Df& NavigationSystem::Direction::LeftTurnOffset(
+    const Name direction) {
+    return leftTurnOffset[ToInt(direction)];
+}
+const MaxrEngine::Vector2Df& NavigationSystem::Direction::LeftTurnOffset(
+    const int direction) {
+    return Direction(direction).LeftTurnOffset();
+}
+const MaxrEngine::Vector2Df& NavigationSystem::Direction::RightTurnOffset()
+    const {
+    return rightTurnOffset[ToInt()];
+}
+const MaxrEngine::Vector2Df& NavigationSystem::Direction::RightTurnOffset(
+    const Name direction) {
+    return rightTurnOffset[ToInt(direction)];
+}
+const MaxrEngine::Vector2Df& NavigationSystem::Direction::RightTurnOffset(
+    const int direction) {
+    return Direction(direction).RightTurnOffset();
 }
 }  // namespace Roguelike

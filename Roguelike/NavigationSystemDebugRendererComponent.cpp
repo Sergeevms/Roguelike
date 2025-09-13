@@ -48,9 +48,10 @@ void NavigationSystemDebugRendererComponent::Notify(
         constexpr int nodeRadius = 4;
         TopLeft.x -= 2 * nodeRadius;
         TopLeft.y -= 2 * nodeRadius;
-        sf::Vector2i size = {
-            static_cast<int>(BottomRight.x - TopLeft.x) + 4 * nodeRadius,
-            static_cast<int>(BottomRight.y - TopLeft.y) + 4 * nodeRadius};
+        BottomRight.x += 2 * nodeRadius;
+        BottomRight.y += 2 * nodeRadius;
+        sf::Vector2i size = {static_cast<int>(BottomRight.x - TopLeft.x),
+                             static_cast<int>(BottomRight.y - TopLeft.y)};
         texture.create(size.x, size.y);
         size.y *= -1;
         auto view =
