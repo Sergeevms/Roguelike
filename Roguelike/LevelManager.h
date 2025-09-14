@@ -52,7 +52,7 @@ class LevelManager : public MaxrEngine::IObserver {
     /**
      * @brief Generates a new level with increased difficulty
      * @details Uses the last level parameters or default settings if no levels
-     * exist, then increases labyrinth size and enemy count for progressive
+     * exist, then increases labyrinthPtr size and enemy count for progressive
      * difficulty
      */
     void GenerateLevel();
@@ -74,7 +74,7 @@ class LevelManager : public MaxrEngine::IObserver {
     std::shared_ptr<ActorSave>
         playerData;  ///< Saved player data between levels
     const int levelSizeIncrease =
-        4;  ///< Increase step for size of labyrinth of generated levels
+        4;  ///< Increase step for size of labyrinthPtr of generated levels
     const int enemiesSizeIncrease =
         3;  ///< Increase step of enemy count of generated levels
 };

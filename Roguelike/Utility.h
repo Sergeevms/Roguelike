@@ -21,4 +21,18 @@ T Half(const T& value) {
     constexpr float half = 0.5F;
     return half * value;
 }
+
+template <typename T>
+bool OnSegment(MaxrEngine::Vector2D<T> pointToCheck,
+               MaxrEngine::Vector2D<T> firstSegmentPoint,
+               MaxrEngine::Vector2D<T> secondSegmentPoint) {
+    return (pointToCheck.x == firstSegmentPoint.x &&
+            InRange(pointToCheck.y,
+                    std::min(firstSegmentPoint.y, secondSegmentPoint.y),
+                    std::max(firstSegmentPoint.y, secondSegmentPoint.y))) ||
+           (pointToCheck.y == firstSegmentPoint.y &&
+            InRange(pointToCheck.x,
+                    std::min(firstSegmentPoint.x, secondSegmentPoint.x),
+                    std::max(firstSegmentPoint.x, secondSegmentPoint.x)));
+}
 }  // namespace Roguelike

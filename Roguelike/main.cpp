@@ -7,6 +7,7 @@
 #include <memory>
 
 // #include "DeveloperLevel.h"
+#include "DevelopLevel.h"
 #include "Engine.h"
 #include "LevelCompleteCondition.h"
 #include "LevelManager.h"
@@ -60,8 +61,12 @@ int main() {
         settings->soundPath + "Clinthammer__Background_Music.wav");
     MaxrEngine::ResourceSystem::Instance()->LoadFont(
         "default", settings->fontPath + "Roboto-Regular.ttf");
-
+#ifdef ROGUELIKE_DEVELOPER_LEVEL
+    Roguelike::DevelopLevel level;
+    level.Start();
+#else
     Roguelike::LevelManager::Instance()->LoadNextLevel();
+#endif  // ROGUELIKE_DEVELOPER_LEVEL
     MaxrEngine::Engine::Instance()->Run();
 
     return 0;

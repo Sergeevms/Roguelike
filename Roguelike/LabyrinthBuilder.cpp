@@ -41,7 +41,7 @@ void LabyrinthBuilder::Generate(const Parameters& parameters) {
     // filling tileGrid with desired size by walls
     StartBuilding({parameters.width, parameters.height}, TileType::Wall);
 
-    // setting DFS start position in labyrinth interior
+    // setting DFS start position in labyrinthPtr interior
     if (parameters.startPosition.x < 0 || parameters.startPosition.y < 0) {
         // Get random position in Labyrinth interior
         startPosition = {1 + (std::rand() % (labyrinthTileWidth - 2)),
@@ -108,7 +108,7 @@ void LabyrinthBuilder::StartBuilding(const MaxrEngine::Vector2Di& newTileSize,
 }
 
 void LabyrinthBuilder::AddRect(const RectFillingParameters& parameters) {
-    // Clamping rect bottomLeft and size to labyrinth size
+    // Clamping rect bottomLeft and size to labyrinthPtr size
     const MaxrEngine::Vector2Di bottomLeft = {
         std::clamp(parameters.bottomLeft.x, 0, labyrinthTileWidth),
         std::clamp(parameters.bottomLeft.y, 0, labyrinthTileHeight)};
@@ -285,7 +285,7 @@ std::vector<MaxrEngine::Vector2Di> LabyrinthBuilder::GetAvaliableDirections(
     // Checking all direction
     for (const auto& direction : directions) {
         auto possibleCell = currentCell + direction;
-        /* Checking that possible cell are in labyrinth and was not visited
+        /* Checking that possible cell are in labyrinthPtr and was not visited
             before*/
         if (InRect(interiorLabyrinthTopLeft, interiorLabyrinthBottomRight,
                    possibleCell) &&

@@ -8,14 +8,35 @@
 #include "LabyrinthElement.h"
 #include "LabyrinthExit.h"
 #include "Rect.h"
+#include "Settings.h"
 #include "TransformComponent.h"
+#include "Utility.h"
 #include "Vector.h"
 #include "Wall.h"
 
 namespace Roguelike {
-const MaxrEngine::FloatRect Labyrinth::GetLabyrinthCoodinatesRect() {
+const MaxrEngine::FloatRect Roguelike::Labyrinth::GetLabyrinthCoodinatesRect()
+    const {
     return MaxrEngine::FloatRect(GetCellCoordinates({0, 0}),
                                  GetCellCoordinates({size.x - 1, size.y - 1}));
+}
+
+const MaxrEngine::Vector2Di Labyrinth::GetGridCoordinates(
+    const MaxrEngine::Vector2Df& point) const {
+    const auto& tileSize =
+        static_cast<float>(Settings::Instance()->mapTileSize);
+    const auto floatSize = MaxrEngine::Convert<MaxrEngine::Vector2Df>(size);
+    const MaxrEngine::Vector2Df offset = {
+        (floatSize.x) * tileSize / 2.0F,
+        (floatSize.y) * tileSize / 2.0F,
+    };
+    MaxrEngine::Vector2Di cell = MaxrEngine::Convert<MaxrEngine::Vector2Di>(
+        (point -
+         gameObject->GetComponent<MaxrEngine::TransformComponent>()
+             ->GetWorldPosition() +
+         offset) *
+        (1.0F / tileSize));
+    return cell;
 }
 
 Labyrinth::Labyrinth(const MaxrEngine::Vector2Di& size)
@@ -50,7 +71,11 @@ std::vector<std::weak_ptr<Floor>> Labyrinth::GetFloors() const {
     return floors;
 }
 
-std::shared_ptr<LabyrinthExit>& Labyrinth::GetExit() { return exit; }
+const MaxrEngine::Vector2Di& Labyrinth::GetTileSize() const { return size; }
+
+const std::shared_ptr<LabyrinthExit>& Labyrinth::GetExit() const {
+    return exit;
+}
 
 const std::vector<std::vector<std::shared_ptr<LabyrinthElement>>>&
 Labyrinth::GetElements() const {
@@ -73,8 +98,14 @@ const std::vector<MaxrEngine::Vector2Di>& Labyrinth::GetGenerationDeadEnds()
 const std::vector<std::vector<bool>>& Labyrinth::GetIsTileWalkable() const {
     return isTileWalkable;
 }
-const MaxrEngine::Vector2Df Labyrinth::GetCellCoordinates(
-    const MaxrEngine::Vector2Di& cell) {
+bool Labyrinth::IsTileWalkable(MaxrEngine::Vector2Di cell) const {
+    if (!(InRange(cell.x, 0, size.x - 1) && InRange(cell.y, 0, size.y - 1))) {
+        return false;
+    }
+    return isTileWalkable[cell.x][cell.y];
+}
+const MaxrEngine::Vector2Df Roguelike::Labyrinth::GetCellCoordinates(
+    const MaxrEngine::Vector2Di& cell) const {
     auto* transform = elements[cell.x][cell.y]
                           ->GetGameObject()
                           ->GetComponent<MaxrEngine::TransformComponent>();
