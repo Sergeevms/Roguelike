@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Interfaces and abstract classes">
       <UniqueIdentifier>{7d78b36c-9bce-4dec-beee-3b54ed515b76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BehaviorTree">
+      <UniqueIdentifier>{1c9db04a-f68c-4541-b021-d27946a574d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Behaviour tree">
+      <UniqueIdentifier>{f80fd5b7-dfb3-4834-806a-4254a8ee2bfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +158,24 @@
     </ClCompile>
     <ClCompile Include="NavigationSystemDebugRendererComponent.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BTNode.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTMoveToPoint.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="AIControlComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AISpriteDirectionComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BTIdle.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTMoveAlongPath.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +325,24 @@
     </ClInclude>
     <ClInclude Include="NavigationSystemDebugRendererComponent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BTNode.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTMoveToPoint.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="AIControlComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AISpriteDirectionComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BTIdle.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTMoveAlongPath.h">
+      <Filter>Header Files\BehaviorTree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

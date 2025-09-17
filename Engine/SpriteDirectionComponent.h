@@ -13,7 +13,7 @@ class SpriteDirectionComponent : public Component {
     explicit SpriteDirectionComponent(GameObject* gameObject);
     void Update(float deltaTime) override;
 
-   private:
+   protected:
     std::weak_ptr<SpriteRendererComponent> rendererPointer;
     std::weak_ptr<InputComponent> inputPointer;
 };

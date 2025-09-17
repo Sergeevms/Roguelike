@@ -4,7 +4,6 @@
 
 #include "ActorComponent.h"
 #include "ActorMovementComponent.h"
-#include "ActorSpriteDirectionComponent.h"
 #include "ArmorBarComponent.h"
 #include "ArmorComponent.h"
 #include "BlockComponent.h"
@@ -58,7 +57,6 @@ Actor::Actor(const Parameters& parameters,
             animationPair.first, animationPair.second,
             animationPair.first == parameters.defaultAnimationName);
     }
-    gameObject->AddComponent<ActorSpriteDirectionComponent>();
 
     // Add movement, Collider and Rigid body components
     gameObject->AddComponent<ActorMovementComponent>(parameters.movementSpeed);

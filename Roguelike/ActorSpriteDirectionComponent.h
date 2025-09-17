@@ -11,7 +11,7 @@ class ActorSpriteDirectionComponent
     explicit ActorSpriteDirectionComponent(MaxrEngine::GameObject* gameObject);
     void Update(float deltaTime) override;
 
-   private:
+   protected:
     std::weak_ptr<HealthComponent> healthComponentPtr;
 };
 }  // namespace Roguelike

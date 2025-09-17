@@ -5,6 +5,7 @@
 #include "AIChaseTargetComponent.h"
 #include "AIInputComponent.h"
 #include "AIPerceptionComponent.h"
+#include "AISpriteDirectionComponent.h"
 #include "AITargetSelector.h"
 #include "Actor.h"
 #include "PerceptionComponentDebugDraw.h"
@@ -40,5 +41,7 @@ AIActor::AIActor(const Parameters& parameters,
 
     gameObject->AddComponent<AIAttackComponent>(
         parameters.baseActorParameters.attackComponentParameters);
+
+    gameObject->AddComponent<AISpriteDirectionComponent>();
 }
 }  // namespace Roguelike

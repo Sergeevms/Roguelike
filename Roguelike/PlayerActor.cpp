@@ -1,6 +1,7 @@
 #include "PlayerActor.h"
 
 #include "Actor.h"
+#include "ActorSpriteDirectionComponent.h"
 #include "CameraComponent.h"
 #include "KeyboardInputComponent.h"
 #include "LevelManager.h"
@@ -24,5 +25,6 @@ PlayerActor::PlayerActor(const Actor::Parameters& parameters,
     auto* settings = Settings::Instance();
     playerCamera->SetBaseResolution(settings->screenWidth,
                                     settings->screenHeight);
+    gameObject->AddComponent<ActorSpriteDirectionComponent>();
 }
 }  // namespace Roguelike

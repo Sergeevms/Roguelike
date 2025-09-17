@@ -1,4 +1,5 @@
 #pragma once
+#include <optional>
 #include <vector>
 
 #include "AITypedBlackboardComponent.h"
@@ -7,6 +8,8 @@
 
 namespace Roguelike {
 using AIBlackboard = MaxrEngine::AITypedBlackboardComponent<
-    bool, float, MaxrEngine::Vector2Df, MaxrEngine::GameObject*,
-    std::vector<MaxrEngine::GameObject*>*>;
+    bool, float, int, MaxrEngine::Vector2Df,
+    std::optional<MaxrEngine::Vector2Df>,
+    std::shared_ptr<std::vector<MaxrEngine::Vector2Df>>, std::optional<float>,
+    MaxrEngine::GameObject *, std::vector<MaxrEngine::GameObject *> *>;
 }
