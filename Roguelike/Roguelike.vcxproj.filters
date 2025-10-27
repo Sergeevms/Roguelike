@@ -159,9 +159,6 @@
     <ClCompile Include="NavigationSystemDebugRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BTNode.cpp">
-      <Filter>Source Files\Behaviour tree</Filter>
-    </ClCompile>
     <ClCompile Include="BTMoveToPoint.cpp">
       <Filter>Source Files\Behaviour tree</Filter>
     </ClCompile>
@@ -175,6 +172,33 @@
       <Filter>Source Files\Behaviour tree</Filter>
     </ClCompile>
     <ClCompile Include="BTMoveAlongPath.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTPatrol.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTDecorator.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTSelectPlayerAsTarget.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTCheckBoolBB.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTChaseTarget.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTComposite.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTAttackTarget.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTAttackAndChase.cpp">
+      <Filter>Source Files\Behaviour tree</Filter>
+    </ClCompile>
+    <ClCompile Include="BTAttackAndPatrol.cpp">
       <Filter>Source Files\Behaviour tree</Filter>
     </ClCompile>
   </ItemGroup>
@@ -342,6 +366,33 @@
       <Filter>Header Files\BehaviorTree</Filter>
     </ClInclude>
     <ClInclude Include="BTMoveAlongPath.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTPatrol.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTDecorator.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTSelectPlayerAsTarget.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTCheckBoolBB.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTChaseTarget.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTComposite.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTAttackTarget.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTAttackAndPatrol.h">
+      <Filter>Header Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BTAttackAndChase.h">
       <Filter>Header Files\BehaviorTree</Filter>
     </ClInclude>
   </ItemGroup>

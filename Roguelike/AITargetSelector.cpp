@@ -25,7 +25,7 @@ void AITargetSelector::UpdateTarget() {
     if (blackBoard != nullptr) {
         // Get detected actors from blackboard
         std::vector<MaxrEngine::GameObject*>* detectedActors = nullptr;
-        blackBoard->Get("Detected Actors", detectedActors);
+        blackBoard->Get("Perception_DetectedActors", detectedActors);
 
         // Add actors to map to sort them by distance
         std::map<float, MaxrEngine::GameObject*> targets;

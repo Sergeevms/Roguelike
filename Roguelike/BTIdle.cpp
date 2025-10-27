@@ -4,6 +4,7 @@
 #include <string>
 
 #include "AIBlackboard.h"
+#include "AIInputComponent.h"
 #include "AIPerceptionComponent.h"
 #include "BTNode.h"
 #include "GameObject.h"
@@ -18,6 +19,8 @@ void Roguelike::BTIdle::SetUpBlackboard(AIBlackboard* blackboard,
 BTNode::Status BTIdle::Execute(MaxrEngine::GameObject* object,
                                AIBlackboard* blackboard) {
     float timeToStay;
+    auto input = object->GetComponent<AIInputComponent>();
+    input->SetDirection({0, 0});
     if (blackboard->Get(std::string(durationBBName), timeToStay)) {
         std::optional<float> timeStayed;
         if (blackboard->Get(std::string(timerBBName), timeStayed) &&

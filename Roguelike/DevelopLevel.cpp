@@ -9,10 +9,12 @@
 #include "AIActorManagerSystem.h"
 #include "AIBlackboard.h"
 #include "AIControlComponent.h"
+#include "BTAttackAndChase.h"
 #include "BTIdle.h"
 #include "BTMoveAlongPath.h"
 #include "BTMoveToPoint.h"
 #include "BTNode.h"
+#include "BTPatrol.h"
 #include "GameWorld.h"
 #include "LabyrinthBuilder.h"
 #include "NavigationSystem.h"
@@ -24,16 +26,16 @@
 namespace Roguelike {
 void DevelopLevel::Start() {
     LabyrinthBuilder builder;
-    builder.StartBuilding({5, 5}, LabyrinthBuilder::TileType::Wall);
+    builder.StartBuilding({7, 6}, LabyrinthBuilder::TileType::Wall);
     const LabyrinthBuilder::RectFillingParameters rectFill = {
         .bottomLeft = {0, 0},
-        .size = {5, 5},
+        .size = {7, 6},
         .borderTileType = LabyrinthBuilder::TileType::Wall,
         .fillingTileType = LabyrinthBuilder::TileType::Floor};
     builder.AddRect(rectFill);
-    /*builder.SetWall({2, 3});
-    builder.SetWall({2, 2});*/
-    auto labyrinth = builder.ConstructLabyrinth();
+    builder.SetWall({2, 3});
+    builder.SetWall({2, 2});
+    labyrinth = builder.ConstructLabyrinth();
     AIActorManagerSystem::Instance()->Reset(
         labyrinth->GetLabyrinthCoodinatesRect());
     auto* debugNavSystem = MaxrEngine::GameWorld::Instance()->CreateGameObject(
@@ -44,7 +46,8 @@ void DevelopLevel::Start() {
     NavigationSystem::Instance()->AddObserver(debugRender);
     NavigationSystem::Instance()->SetUpMap(labyrinth);
     auto player =
-        std::make_shared<PlayerActor>(Settings::Instance()->playerParameters);
+        std::make_shared<PlayerActor>(Settings::Instance()->playerParameters,
+                                      labyrinth->GetCellCoordinates({5, 2}));
     auto ai = AIActorManagerSystem::Instance()->SpawnActorAt(
         Settings::Instance()->aiParameters,
         labyrinth->GetCellCoordinates({1, 1}));
@@ -52,30 +55,39 @@ void DevelopLevel::Start() {
     auto* chase = ai->GetGameObject()->GetComponent<AIChaseTargetComponent>();
     ai->GetGameObject()->RemoveComponent(chase);
 
-    std::unique_ptr<BTNode> node = std::make_unique<BTSequence>();
-    BTComposite* root = dynamic_cast<BTComposite*>(node.get());
+    /*std::unique_ptr<BTNode> node = std::make_unique<BTSequenceWM>();
+    BTComposite* root = dynamic_cast<BTComposite*>(node.get());*/
     auto control = ai->GetGameObject()->AddComponent<AIControlComponent>();
-    control->SetBTRoot(std::move(node));
+    auto root = std::make_unique<BTSelector>();
+    root->AddChild(BTAttackAndChase::Create());
+    control->SetBTRoot(std::move(root));
+    /*control->SetBTRoot(std::move(node));
 
     auto* blackboard = ai->GetGameObject()->GetComponent<AIBlackboard>();
 
-    BTIdle::SetUpBlackboard(blackboard, 2.F);
-    node = std::make_unique<BTIdle>();
-    root->AddChild(std::move(node));
+    auto afterPatrol = std::make_unique<BTSequenceWM>();
 
-    BTLookAroundIdle::SetUpBlackboard(blackboard, 3.f);
+    BTLookAroundIdle::SetUpBlackboard(blackboard, 3.0F);
     node = std::make_unique<BTLookAroundIdle>();
-    root->AddChild(std::move(node));
+    afterPatrol->AddChild(std::move(node));
+
+    BTIdle::SetUpBlackboard(blackboard, 2.0F);
+    node = std::make_unique<BTIdle>();
+    afterPatrol->AddChild(std::move(node));
 
     auto path = std::make_shared<std::vector<MaxrEngine::Vector2Df>>();
     path->push_back(labyrinth->GetCellCoordinates({3, 3}));
     path->push_back(labyrinth->GetCellCoordinates({1, 3}));
+    path->push_back(labyrinth->GetCellCoordinates({3, 1}));
     path->push_back(labyrinth->GetCellCoordinates({1, 1}));
 
-    BTMoveAlongPath::SetUpBlackboard(blackboard, path);
+    BTPatrol::SetUpBlackboard(blackboard, path);
+    node = BTPatrol::Create(std::move(afterPatrol));
+    root->AddChild(std::move(node));*/
+    /*BTMoveAlongPath::SetUpBlackboard(blackboard, path);
     node = BTMoveAlongPath::Create();
     root->AddChild(std::move(node));
-    /*BTMoveToPoint::SetUpBlackboard(blackboard,
+    BTMoveToPoint::SetUpBlackboard(blackboard,
                                    labyrinth->GetCellCoordinates({3, 3}));
     node = std::make_unique<BTMoveToPoint>();
     root->AddChild(std::move(node));*/

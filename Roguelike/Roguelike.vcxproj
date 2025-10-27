@@ -260,11 +260,11 @@
       <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <Profile>true</Profile>
+      <Profile>false</Profile>
     </Link>
     <PreBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
-$(SolutionDir)RunClangformat.bat
+call "$(SolutionDir)RunClangformat.bat"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -284,11 +284,11 @@ $(SolutionDir)RunClangformat.bat
       <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <Profile>true</Profile>
+      <Profile>false</Profile>
     </Link>
     <PreBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
-$(SolutionDir)RunClangformat.bat
+call "$(SolutionDir)RunClangformat.bat"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -310,11 +310,11 @@ $(SolutionDir)RunClangformat.bat
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Profile>true</Profile>
+      <Profile>false</Profile>
     </Link>
     <PreBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
-$(SolutionDir)RunClangformat.bat
+call "$(SolutionDir)RunClangformat.bat"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -336,11 +336,11 @@ $(SolutionDir)RunClangformat.bat
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;ws2_32.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Profile>true</Profile>
+      <Profile>false</Profile>
     </Link>
     <PreBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)SFML\SFML-2.5.1\lib\*.pdb" "$(SolutionDir)$(Platform)\$(Configuration)\"
-$(SolutionDir)RunClangformat.bat
+call "$(SolutionDir)RunClangformat.bat"
 </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -360,10 +360,18 @@ $(SolutionDir)RunClangformat.bat
     <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="BarComponent.cpp" />
     <ClCompile Include="BlockComponent.cpp" />
+    <ClCompile Include="BTAttackAndChase.cpp" />
+    <ClCompile Include="BTAttackAndPatrol.cpp" />
+    <ClCompile Include="BTAttackTarget.cpp" />
+    <ClCompile Include="BTChaseTarget.cpp" />
+    <ClCompile Include="BTCheckBoolBB.cpp" />
+    <ClCompile Include="BTComposite.cpp" />
+    <ClCompile Include="BTDecorator.cpp" />
     <ClCompile Include="BTIdle.cpp" />
     <ClCompile Include="BTMoveAlongPath.cpp" />
     <ClCompile Include="BTMoveToPoint.cpp" />
-    <ClCompile Include="BTNode.cpp" />
+    <ClCompile Include="BTPatrol.cpp" />
+    <ClCompile Include="BTSelectPlayerAsTarget.cpp" />
     <ClCompile Include="DevelopLevel.cpp" />
     <ClCompile Include="GameLevel.cpp" />
     <ClCompile Include="HealthBarComponent.cpp" />
@@ -412,10 +420,19 @@ $(SolutionDir)RunClangformat.bat
     <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="BarComponent.h" />
     <ClInclude Include="BlockComponent.h" />
+    <ClInclude Include="BTAttackAndChase.h" />
+    <ClInclude Include="BTAttackAndPatrol.h" />
+    <ClInclude Include="BTAttackTarget.h" />
+    <ClInclude Include="BTChaseTarget.h" />
+    <ClInclude Include="BTCheckBoolBB.h" />
+    <ClInclude Include="BTComposite.h" />
+    <ClInclude Include="BTDecorator.h" />
     <ClInclude Include="BTIdle.h" />
     <ClInclude Include="BTMoveAlongPath.h" />
     <ClInclude Include="BTMoveToPoint.h" />
     <ClInclude Include="BTNode.h" />
+    <ClInclude Include="BTPatrol.h" />
+    <ClInclude Include="BTSelectPlayerAsTarget.h" />
     <ClInclude Include="DefaultActorsSettings.h" />
     <ClInclude Include="DevelopLevel.h" />
     <ClInclude Include="GameLevel.h" />

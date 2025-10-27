@@ -46,14 +46,14 @@ void Roguelike::NavigationSystem::SetUpMap(
     auto labyrinth = newLabyrinth;
 
     // Vector to store unwalkable tiles that can be touched but not yet
-    std::vector<Vector2Di> untochedCells = GetCellsToProcess();
+    std::vector<Vector2Di> untouchedCells = GetCellsToProcess();
 
     Direction::SetOffset(
         Half(static_cast<float>(Settings::Instance()->mapTileSize) -
              DefaultSettings::defaultActorSpriteSize));
 
-    while (!untochedCells.empty()) {
-        ProcessArea(untochedCells);
+    while (!untouchedCells.empty()) {
+        ProcessArea(untouchedCells);
     }
 
     CreateEdges();
@@ -70,17 +70,15 @@ std::vector<Vector2Df> NavigationSystem::GetPath(const Vector2Df& begin,
         return {end};
     }
     using NodeWithWeight = std::pair<Node*, float>;
-    auto queueComporator = [](const NodeWithWeight& firstNode,
+    auto queueComparator = [](const NodeWithWeight& firstNode,
                               const NodeWithWeight& secondNode) {
-        return secondNode.second > firstNode.second;
+        return secondNode.second < firstNode.second;
     };
     std::priority_queue<NodeWithWeight, std::vector<NodeWithWeight>,
-                        decltype(queueComporator)>
-        nodesQueue(queueComporator);
+                        decltype(queueComparator)>
+        nodesQueue(queueComparator);
     nodesQueue.push(NodeWithWeight(start.get(), 0.0F));
 
-    // Addition weight for A* (distance from node to finish)
-    std::unordered_map<Node*, float> additionalCosts;
     // Current path to node weight
     std::unordered_map<Node*, float> currentWeights;
     // Node where from we came - to restore path
@@ -99,7 +97,6 @@ std::vector<Vector2Df> NavigationSystem::GetPath(const Vector2Df& begin,
         if (IsNotCrossingBorders(node.get(), finish.get())) {
             const float distance =
                 (finish->coordinates - node->coordinates).GetLength();
-            additionalCosts[node.get()] = distance;
             node->edges.push_back(Edge(finish.get(), distance));
             nodesToClear.insert(node.get());
         }
@@ -119,13 +116,15 @@ std::vector<Vector2Df> NavigationSystem::GetPath(const Vector2Df& begin,
             if (currentWeight == currentWeights.end() ||
                 currentWeight->second > newWeight) {
                 currentWeights[edge.node] = newWeight;
-                auto priorityWeight = newWeight + additionalCosts[edge.node];
+                auto priorityWeight =
+                    newWeight +
+                    (edge.node->coordinates - finish->coordinates).GetLength();
                 nodesQueue.push(NodeWithWeight(edge.node, priorityWeight));
                 cameFrom[edge.node] = currentNode.first;
             }
         }
     }
-    // Remove edges to finish from precalculated graph
+    // Remove edges to finish from pre-calculated graph
     for (const auto& node : nodesToClear) {
         node->edges.pop_back();
     }
@@ -134,10 +133,13 @@ std::vector<Vector2Df> NavigationSystem::GetPath(const Vector2Df& begin,
     if (cameFrom[currentNode] == nullptr) {
         return path;
     }
+
     while (cameFrom[currentNode] != start.get()) {
         path.push_back(currentNode->coordinates);
         currentNode = cameFrom[currentNode];
     }
+    path.push_back(currentNode->coordinates);
+
     std::reverse(path.begin(), path.end());
     return path;
 }
@@ -183,7 +185,7 @@ bool NavigationSystem::IsNotCrossingBorders(const Node* firstNode,
     return false;
 }
 std::vector<MaxrEngine::Vector2Di> NavigationSystem::GetCellsToProcess() const {
-    std::vector<MaxrEngine::Vector2Di> untochedCells;
+    std::vector<MaxrEngine::Vector2Di> untouchedCells;
     // Check that tile don't have walkable neighbors
     if (auto labyrinth = labyrinthPtr.lock()) {
         auto tileBlocked = [&labyrinth](const Vector2Di& cell) {
@@ -199,13 +201,13 @@ std::vector<MaxrEngine::Vector2Di> NavigationSystem::GetCellsToProcess() const {
             for (auto y = 0; y < labyrinthTileSize.y; ++y) {
                 if (!labyrinth->IsTileWalkable({x, y})) {
                     if (!tileBlocked({x, y})) {
-                        untochedCells.push_back({x, y});
+                        untouchedCells.push_back({x, y});
                     }
                 }
             }
         }
     }
-    return untochedCells;
+    return untouchedCells;
 }
 void NavigationSystem::ProcessArea(
     std::vector<MaxrEngine::Vector2Di>& untouchedCells) {

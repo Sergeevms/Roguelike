@@ -13,7 +13,7 @@
 
 namespace Roguelike {
 
-void Roguelike::BTMoveAlongPath::SetUpBlackboard(
+void BTMoveAlongPath::SetUpBlackboard(
     AIBlackboard* blackBoard,
     std::shared_ptr<std::vector<MaxrEngine::Vector2Df>> path) {
     blackBoard->Set(std::string(waypointBBName), -1);
@@ -23,15 +23,16 @@ void Roguelike::BTMoveAlongPath::SetUpBlackboard(
 std::unique_ptr<BTMoveAlongPath> BTMoveAlongPath::Create() {
     std::unique_ptr<BTMoveAlongPath> moveNode =
         std::unique_ptr<BTMoveAlongPath>(new BTMoveAlongPath);
-    std::unique_ptr<BTNode> childNode = std::make_unique<BTSetNextWaypoint>();
-    moveNode->AddChild(std::move(childNode));
-    childNode = std::make_unique<BTMoveToPoint>();
-    moveNode->AddChild(std::move(childNode));
+    moveNode->AddChild(std::make_unique<BTSetPathNextWaypoint>());
+    moveNode->AddChild(std::make_unique<BTMoveToPoint>());
     return moveNode;
 }
+void BTMoveAlongPath::Reset(AIBlackboard* blackboard) {
+    SetUpBlackboard(blackboard, nullptr);
+};
 
-BTNode::Status BTSetNextWaypoint::Execute(MaxrEngine::GameObject* object,
-                                          AIBlackboard* blackboard) {
+BTNode::Status BTSetPathNextWaypoint::Execute(MaxrEngine::GameObject* object,
+                                              AIBlackboard* blackboard) {
     std::shared_ptr<std::vector<MaxrEngine::Vector2Df>> path;
     if (blackboard->Get(std::string(BTMoveAlongPath::pathBBName), path) &&
         path) {
@@ -51,5 +52,12 @@ BTNode::Status BTSetNextWaypoint::Execute(MaxrEngine::GameObject* object,
         }
     }
     return BTNode::Status::Failure;
+};
+
+BTNode::Status BTClearPath::Execute(MaxrEngine::GameObject* object,
+                                    AIBlackboard* blackboard) {
+    BTMoveAlongPath::Reset(blackboard);
+    BTMoveToPoint::Reset(object, blackboard);
+    return Status::Success;
 };
 }  // namespace Roguelike

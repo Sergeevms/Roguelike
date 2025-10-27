@@ -45,7 +45,7 @@ class PerceptionComponent : public MaxrEngine::Component,
     const MaxrEngine::TransformComponent* GetTransform() const;
 
     void UpdateDetectedActors();
-    void UpdateDetectedActors(
+    virtual void UpdateDetectedActors(
         const std::vector<MaxrEngine::GameObject*>& actors);
     const std::vector<MaxrEngine::GameObject*>* GetDetectedActors();
 

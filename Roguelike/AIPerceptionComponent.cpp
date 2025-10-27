@@ -1,6 +1,8 @@
 #include "AIPerceptionComponent.h"
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "AIBlackboard.h"
 #include "AIInputComponent.h"
@@ -17,11 +19,24 @@ AIPerceptionComponent::AIPerceptionComponent(
     : PerceptionComponent(gameObject, parameters) {
     auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
     if (blackBoard != nullptr) {
-        blackBoard->Set("Detected Actors", &detectedActors);
+        blackBoard->Set(std::string(detectedActorsBBName), &detectedActors);
     } else {
         LOG_ERROR("AIBlackboard required for AIPerceptionComponent");
         gameObject->RemoveComponent(this);
         return;
+    }
+}
+
+void AIPerceptionComponent::UpdateDetectedActors(
+    const std::vector<MaxrEngine::GameObject*>& actors) {
+    PerceptionComponent::UpdateDetectedActors(actors);
+    auto* blackBoard = gameObject->GetComponent<AIBlackboard>();
+    if (blackBoard != nullptr) {
+        if (!detectedActors.empty()) {
+            blackBoard->Set(std::string(isActorsDetectedBBName), true);
+        } else {
+            blackBoard->Set(std::string(isActorsDetectedBBName), false);
+        }
     }
 }
 
